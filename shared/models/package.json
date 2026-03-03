@@ -1,0 +1,10 @@
+{
+    "name": "@festival/models",
+    "version": "1.0.0",
+    "description": "Shared Mongoose Schemas",
+    "main": "index.js",
+    "types": "index.d.ts",
+    "dependencies": {
+        "mongoose": "^8.0.0"
+    }
+}

@@ -1,0 +1,38 @@
+[
+    {
+        "slug": "gayatri-mantra",
+        "text": "ॐ भूर्भुवः स्वः तत्सवितुर्वरेण्यं भर्गो देवस्य धीमहि धियो यो नः प्रचोदयात्",
+        "transliteration": "Om Bhuur-Bhuvah Svah Tat-Savitur-Varennyam Bhargo Devasya Dhiimahi Dhiyo Yo Nah Pracodayaat",
+        "meaning": "We meditate on the glory of the Creator; Who has created the Universe; Who is worthy of Worship; Who is the embodiment of Knowledge and Light; Who is the remover of all Sin and Ignorance; May He enlighten our Intellect.",
+        "category": "religious",
+        "tags": [
+            "lights"
+        ],
+        "vibes": [
+            "spiritual"
+        ],
+        "translations": {
+            "hi": {
+                "text": "ॐ भूर्भुवः स्वः तत्सवितुर्वरेण्यं भर्गो देवस्य धीमहि धियो यो नः प्रचोदयात्",
+                "transliteration": "ओम भूर्भुवः स्वः...",
+                "meaning": "हम उस प्राणस्वरूप, दुःखनाशक, सुखस्वरूप, श्रेष्ठ, तेजस्वी, पापनाशक, देवस्वरूप परमात्मा को हम अन्तःकरण में धारण करें। वह परमात्मा हमारी बुद्धि को सन्मार्ग में प्रेरित करे।"
+            }
+        }
+    },
+    {
+        "slug": "shanti-mantra",
+        "text": "ॐ असतो मा सद्गमय । तमसो मा ज्योतिर्गमय । मृत्योर्मा अमृतंगमय । ॐ शान्तिः शान्तिः शान्तिः ॥",
+        "transliteration": "Om Asato Maa Sad-Gamaya | Tamaso Maa Jyotir-Gamaya | Mrtyor-Maa Amrtam-Gamaya | Om Shaantih Shaantih Shaantih ||",
+        "meaning": "Lead us from the unreal to the real, from darkness to light, from death to immortality. Peace, peace, peace.",
+        "category": "religious",
+        "vibes": [
+            "spiritual",
+            "solemn"
+        ],
+        "translations": {
+            "hi": {
+                "meaning": "हमें असत्य से सत्य की ओर ले चलें, अंधकार से प्रकाश की ओर ले चलें, मृत्यु से अमरता की ओर ले चलें। शांति, शांति, शांति।"
+            }
+        }
+    }
+]

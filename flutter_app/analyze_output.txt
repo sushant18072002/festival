@@ -1,0 +1,40 @@
+﻿Analyzing flutter_app...                                        
+
+   info - Don't invoke 'print' in production code - lib\app\data\models\calendar_model.dart:28:21 - avoid_print
+   info - Don't invoke 'print' in production code - lib\app\data\models\calendar_model.dart:41:9 - avoid_print
+   info - The import of 'package:flutter/foundation.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\app\data\services\notification_scheduler.dart:2:8 - unnecessary_import
+   info - The import of 'package:flutter/services.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\app\modules\favorites\favorites_view.dart:2:8 - unnecessary_import
+   info - Unnecessary override - lib\app\modules\initial\initial_load_view.dart:12:8 - unnecessary_overrides
+   info - The constant name 'INITIAL' isn't a lowerCamelCase identifier - lib\app\routes\app_pages.dart:22:16 - constant_identifier_names
+   info - The constant name 'HOME' isn't a lowerCamelCase identifier - lib\app\routes\app_routes.dart:5:16 - constant_identifier_names
+   info - The constant name 'CALENDAR' isn't a lowerCamelCase identifier - lib\app\routes\app_routes.dart:6:16 - constant_identifier_names
+   info - The constant name 'GALLERY' isn't a lowerCamelCase identifier - lib\app\routes\app_routes.dart:7:16 - constant_identifier_names
+   info - The constant name 'SETTINGS' isn't a lowerCamelCase identifier - lib\app\routes\app_routes.dart:8:16 - constant_identifier_names
+   info - The constant name 'DASHBOARD' isn't a lowerCamelCase identifier - lib\app\routes\app_routes.dart:9:16 - constant_identifier_names
+   info - The constant name 'INITIAL_LOAD' isn't a lowerCamelCase identifier - lib\app\routes\app_routes.dart:10:16 - constant_identifier_names
+   info - The constant name 'EVENT_DETAILS' isn't a lowerCamelCase identifier - lib\app\routes\app_routes.dart:11:16 - constant_identifier_names
+   info - The constant name 'IMAGE_DETAILS' isn't a lowerCamelCase identifier - lib\app\routes\app_routes.dart:12:16 - constant_identifier_names
+   info - The constant name 'FAVORITES' isn't a lowerCamelCase identifier - lib\app\routes\app_routes.dart:13:16 - constant_identifier_names
+   info - The constant name 'SEARCH' isn't a lowerCamelCase identifier - lib\app\routes\app_routes.dart:14:16 - constant_identifier_names
+   info - The constant name 'HOME' isn't a lowerCamelCase identifier - lib\app\routes\app_routes.dart:19:16 - constant_identifier_names
+   info - The constant name 'CALENDAR' isn't a lowerCamelCase identifier - lib\app\routes\app_routes.dart:20:16 - constant_identifier_names
+   info - The constant name 'GALLERY' isn't a lowerCamelCase identifier - lib\app\routes\app_routes.dart:21:16 - constant_identifier_names
+   info - The constant name 'SETTINGS' isn't a lowerCamelCase identifier - lib\app\routes\app_routes.dart:22:16 - constant_identifier_names
+   info - The constant name 'DASHBOARD' isn't a lowerCamelCase identifier - lib\app\routes\app_routes.dart:23:16 - constant_identifier_names
+   info - The constant name 'INITIAL_LOAD' isn't a lowerCamelCase identifier - lib\app\routes\app_routes.dart:24:16 - constant_identifier_names
+   info - The constant name 'EVENT_DETAILS' isn't a lowerCamelCase identifier - lib\app\routes\app_routes.dart:25:16 - constant_identifier_names
+   info - The constant name 'IMAGE_DETAILS' isn't a lowerCamelCase identifier - lib\app\routes\app_routes.dart:26:16 - constant_identifier_names
+   info - The constant name 'FAVORITES' isn't a lowerCamelCase identifier - lib\app\routes\app_routes.dart:27:16 - constant_identifier_names
+   info - The constant name 'SEARCH' isn't a lowerCamelCase identifier - lib\app\routes\app_routes.dart:28:16 - constant_identifier_names
+
+flutter : 26 issues found. (ran in 11.0s)
+At line:1 char:1
++ flutter analyze --no-pub 2>&1 | Out-File 
+-FilePath "analyze_output.tx ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2 
+   6 issues found. (ran in 11.0s):String) [],  
+   RemoteException
+    + FullyQualifiedErrorId : NativeCommandErr 
+   or
+ 

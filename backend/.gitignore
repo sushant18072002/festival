@@ -1,0 +1,8 @@
+node_modules/
+.env
+.env.*
+data/json/
+assets/optimized/
+assets/raw/
+deploy.lock
+backups/

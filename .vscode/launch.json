@@ -1,0 +1,99 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Flutter: Dev",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_dev.dart",
+            "cwd": "${workspaceFolder}/flutter_app",
+            "flutterMode": "debug"
+        },
+        {
+            "name": "Flutter: Prod",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_prod.dart",
+            "cwd": "${workspaceFolder}/flutter_app",
+            "flutterMode": "release"
+        },
+        {
+            "name": "Admin Dashboard: Dev (Local)",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/admin-dashboard",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run",
+                "dev"
+            ],
+            "console": "integratedTerminal",
+            "env": {
+                "NEXT_PUBLIC_ENV": "local"
+            }
+        },
+        {
+            "name": "Admin Dashboard: Prod (Online)",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/admin-dashboard",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run",
+                "dev"
+            ],
+            "console": "integratedTerminal",
+            "env": {
+                "NEXT_PUBLIC_ENV": "production"
+            }
+        },
+        {
+            "name": "Backend: Dev (Watch Feed)",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/backend",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run",
+                "dev"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Backend: Build All Feeds",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/backend",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run",
+                "build:feeds"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Backend: Seed Events",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/backend",
+            "program": "${workspaceFolder}/backend/src/scripts/seed_events.js",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Backend: Optimize Images",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/backend",
+            "program": "${workspaceFolder}/backend/src/scripts/optimize_images.js",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Backend: Deploy to S3",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/backend",
+            "program": "${workspaceFolder}/backend/src/scripts/upload_s3.js",
+            "console": "integratedTerminal"
+        }
+    ]
+}

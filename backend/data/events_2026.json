@@ -1,0 +1,891 @@
+[
+    {
+        "slug": "maha-shivratri-2026",
+        "title": "Maha Shivratri",
+        "category": "Religious",
+        "priority": 10,
+        "tags": [
+            "shiva",
+            "bhole",
+            "hindu",
+            "har har mahadev",
+            "spiritual",
+            "peaceful"
+        ],
+        "description": "Celebrating the cosmic dance of Lord Shiva and Parvati.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-02-15"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Shiva Trishul",
+            "filename": "shiva_trishul.json",
+            "s3_key": "lotties/shiva_trishul.json"
+        },
+        "notification_templates": [
+            "Har Har Mahadev! Wishing you a blessed Maha Shivratri.",
+            "Today is Maha Shivratri. May Lord Shiva bless you with peace and prosperity."
+        ]
+    },
+    {
+        "slug": "holi-2026",
+        "title": "Holi",
+        "category": "Festival",
+        "priority": 10,
+        "tags": [
+            "colors",
+            "fun",
+            "hindu",
+            "radha krishna",
+            "party",
+            "spring"
+        ],
+        "description": "The vibrant festival of colors, celebrating the victory of good over evil.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-03-04"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Holi Splash",
+            "filename": "holi_splash.json",
+            "s3_key": "lotties/holi_splash.json"
+        },
+        "notification_templates": [
+            "Happy Holi! Grab your colors, the festival of joy is here!",
+            "It's Holi! Wishing you a day filled with vibrant colors and love."
+        ]
+    },
+    {
+        "slug": "gudi-padwa-ugadi-2026",
+        "title": "Gudi Padwa & Ugadi",
+        "category": "Regional",
+        "priority": 8,
+        "tags": [
+            "new year",
+            "maharashtra",
+            "telugu",
+            "kannada",
+            "spring"
+        ],
+        "description": "The traditional New Year for Maharashtrians and South Indians.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-03-19"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Gudi Flag",
+            "filename": "gudi_flag.json",
+            "s3_key": "lotties/gudi_flag.json"
+        },
+        "notification_templates": [
+            "Happy Gudi Padwa and Ugadi! Wishing you a sweet and prosperous new year."
+        ]
+    },
+    {
+        "slug": "ram-navami-2026",
+        "title": "Ram Navami",
+        "category": "Religious",
+        "priority": 9,
+        "tags": [
+            "rama",
+            "ayodhya",
+            "hindu",
+            "spiritual"
+        ],
+        "description": "Celebrating the birth of Lord Rama.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-03-27"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Bow & Arrow",
+            "filename": "bow_arrow.json",
+            "s3_key": "lotties/bow_arrow.json"
+        },
+        "notification_templates": [
+            "Jai Shri Ram! May Lord Rama shower his blessings on Ram Navami."
+        ]
+    },
+    {
+        "slug": "hanuman-jayanti-2026",
+        "title": "Hanuman Jayanti",
+        "category": "Religious",
+        "priority": 8,
+        "tags": [
+            "hanuman",
+            "bajrangbali",
+            "strength",
+            "hindu"
+        ],
+        "description": "Celebrating the birth and superhuman strength of Lord Hanuman.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-04-04"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Mace Gada",
+            "filename": "mace_gada.json",
+            "s3_key": "lotties/mace_gada.json"
+        }
+    },
+    {
+        "slug": "raksha-bandhan-2026",
+        "title": "Raksha Bandhan",
+        "category": "Festival",
+        "priority": 9,
+        "tags": [
+            "rakhi",
+            "brother",
+            "sister",
+            "love",
+            "family"
+        ],
+        "description": "Celebrating the pure bond between brothers and sisters.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-08-28"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Rakhi Thread",
+            "filename": "rakhi_thread.json",
+            "s3_key": "lotties/rakhi_thread.json"
+        }
+    },
+    {
+        "slug": "krishna-janmashtami-2026",
+        "title": "Krishna Janmashtami",
+        "category": "Religious",
+        "priority": 10,
+        "tags": [
+            "krishna",
+            "kanha",
+            "dahi handi",
+            "hindu"
+        ],
+        "description": "Celebrating the divine birth of Lord Krishna.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-09-04"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Flute & Peacock",
+            "filename": "flute_peacock.json",
+            "s3_key": "lotties/flute_peacock.json"
+        }
+    },
+    {
+        "slug": "ganesh-chaturthi-2026",
+        "title": "Ganesh Chaturthi",
+        "category": "Festival",
+        "priority": 10,
+        "tags": [
+            "ganesha",
+            "bappa",
+            "modak",
+            "hindu",
+            "festival"
+        ],
+        "description": "Welcoming Lord Ganesha, the remover of obstacles.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-09-12"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Modak Drop",
+            "filename": "modak_drop.json",
+            "s3_key": "lotties/modak_drop.json"
+        },
+        "notification_templates": [
+            "Ganpati Bappa Morya! Welcome Lord Ganesha into your heart today."
+        ]
+    },
+    {
+        "slug": "navratri-2026",
+        "title": "Navratri & Durga Puja",
+        "category": "Festival",
+        "priority": 10,
+        "tags": [
+            "durga",
+            "garba",
+            "dandiya",
+            "devi",
+            "hindu",
+            "dance"
+        ],
+        "description": "Nine nights celebrating the divine feminine and Goddess Durga.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-10-08"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Garba Dance",
+            "filename": "garba_dance.json",
+            "s3_key": "lotties/garba_dance.json"
+        }
+    },
+    {
+        "slug": "dussehra-2026",
+        "title": "Vijayadashami / Dussehra",
+        "category": "Festival",
+        "priority": 10,
+        "tags": [
+            "ravana",
+            "rama",
+            "victory",
+            "hindu"
+        ],
+        "description": "The victory of good over evil, marking the end of Navratri.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-10-17"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Arrow Burning",
+            "filename": "arrow_burning.json",
+            "s3_key": "lotties/arrow_burning.json"
+        }
+    },
+    {
+        "slug": "diwali-2026",
+        "title": "Diwali",
+        "category": "Festival",
+        "priority": 10,
+        "tags": [
+            "lights",
+            "diya",
+            "crackers",
+            "lakshmi",
+            "hindu",
+            "party"
+        ],
+        "description": "The grand festival of lights.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-11-08"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Diwali Diyas",
+            "filename": "diwali_diyas.json",
+            "s3_key": "lotties/diwali_diyas.json"
+        }
+    },
+    {
+        "slug": "chhath-puja-2026",
+        "title": "Chhath Puja",
+        "category": "Regional",
+        "priority": 9,
+        "tags": [
+            "sun",
+            "bihar",
+            "river",
+            "spirituality"
+        ],
+        "description": "Ancient Hindu festival dedicated to Surya, the sun god.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-11-15"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Sun Worship",
+            "filename": "sun_worship.json",
+            "s3_key": "lotties/sun_worship.json"
+        }
+    },
+    {
+        "slug": "lohri-makar-sankranti-2026",
+        "title": "Lohri & Makar Sankranti",
+        "category": "Regional",
+        "priority": 9,
+        "tags": [
+            "harvest",
+            "kite",
+            "sun",
+            "bonfire"
+        ],
+        "description": "Harvest festivals celebrating the sun's transit into Capricorn.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-01-14"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Kites Flying",
+            "filename": "kites_flying.json",
+            "s3_key": "lotties/kites_flying.json"
+        }
+    },
+    {
+        "slug": "baisakhi-vishu-bihu-2026",
+        "title": "Baisakhi, Vishu & Bihu",
+        "category": "Regional",
+        "priority": 9,
+        "tags": [
+            "spring",
+            "harvest",
+            "punjab",
+            "kerala",
+            "assam"
+        ],
+        "description": "Spring harvest festivals across various Indian states.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-04-14"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Vishu Kani",
+            "filename": "vishu_kani.json",
+            "s3_key": "lotties/vishu_kani.json"
+        }
+    },
+    {
+        "slug": "onam-2026",
+        "title": "Onam",
+        "category": "Regional",
+        "priority": 9,
+        "tags": [
+            "kerala",
+            "mahabali",
+            "pookalam",
+            "boat race"
+        ],
+        "description": "Major annual harvest festival celebrated in Kerala.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-08-27"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Snake Boat",
+            "filename": "snake_boat.json",
+            "s3_key": "lotties/snake_boat.json"
+        }
+    },
+    {
+        "slug": "ramadan-start-2026",
+        "title": "Ramadan Begins",
+        "category": "Religious",
+        "priority": 9,
+        "tags": [
+            "islam",
+            "fasting",
+            "peace",
+            "quran",
+            "spiritual"
+        ],
+        "description": "The beginning of the holy month of fasting, prayer, and reflection.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-02-18"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Ramadan Lantern",
+            "filename": "ramadan_lantern.json",
+            "s3_key": "lotties/ramadan_lantern.json"
+        }
+    },
+    {
+        "slug": "eid-al-fitr-2026",
+        "title": "Eid al-Fitr",
+        "category": "Festival",
+        "priority": 10,
+        "tags": [
+            "islam",
+            "eid",
+            "celebration",
+            "feast",
+            "moon"
+        ],
+        "description": "The festival marking the end of the fasting month of Ramadan.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-03-20"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Crescent Moon",
+            "filename": "crescent_moon.json",
+            "s3_key": "lotties/crescent_moon.json"
+        },
+        "notification_templates": [
+            "Eid Mubarak! May this special day bring peace, happiness, and prosperity to everyone."
+        ]
+    },
+    {
+        "slug": "eid-al-adha-2026",
+        "title": "Eid al-Adha",
+        "category": "Religious",
+        "priority": 10,
+        "tags": [
+            "islam",
+            "sacrifice",
+            "eid",
+            "hajj",
+            "spiritual"
+        ],
+        "description": "The Feast of Sacrifice, honoring the willingness of Prophet Ibrahim to sacrifice his son.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-05-27"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Kaaba Glow",
+            "filename": "kaaba_glow.json",
+            "s3_key": "lotties/kaaba_glow.json"
+        }
+    },
+    {
+        "slug": "muharram-ashura-2026",
+        "title": "Muharram (Ashura)",
+        "category": "Religious",
+        "priority": 8,
+        "tags": [
+            "islam",
+            "mourning",
+            "spiritual",
+            "peace"
+        ],
+        "description": "Tenth day of Muharram, a day of remembrance and spiritual reflection.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-06-25"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Peace Dove",
+            "filename": "peace_dove.json",
+            "s3_key": "lotties/peace_dove.json"
+        }
+    },
+    {
+        "slug": "guru-gobind-singh-jayanti-2026",
+        "title": "Guru Gobind Singh Jayanti",
+        "category": "Religious",
+        "priority": 9,
+        "tags": [
+            "sikh",
+            "guru",
+            "khalsa",
+            "bravery",
+            "spiritual"
+        ],
+        "description": "Birth anniversary of the tenth Sikh Guru, Guru Gobind Singh Ji.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-01-05"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Khalsa Symbol",
+            "filename": "khalsa_symbol.json",
+            "s3_key": "lotties/khalsa_symbol.json"
+        }
+    },
+    {
+        "slug": "hola-mohalla-2026",
+        "title": "Hola Mohalla",
+        "category": "Festival",
+        "priority": 8,
+        "tags": [
+            "sikh",
+            "martial arts",
+            "festival",
+            "bravery"
+        ],
+        "description": "Sikh festival celebrated with martial arts exhibitions and poetry.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-03-04"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Nihang Warrior",
+            "filename": "nihang_warrior.json",
+            "s3_key": "lotties/nihang_warrior.json"
+        }
+    },
+    {
+        "slug": "guru-nanak-jayanti-2026",
+        "title": "Guru Nanak Jayanti",
+        "category": "Religious",
+        "priority": 10,
+        "tags": [
+            "sikh",
+            "guru nanak",
+            "gurpurab",
+            "peace",
+            "spiritual"
+        ],
+        "description": "Celebrating the birth of Guru Nanak Dev Ji, the founder of Sikhism.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-11-24"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Ek Onkar",
+            "filename": "ek_onkar.json",
+            "s3_key": "lotties/ek_onkar.json"
+        }
+    },
+    {
+        "slug": "mahavir-jayanti-2026",
+        "title": "Mahavir Jayanti",
+        "category": "Religious",
+        "priority": 9,
+        "tags": [
+            "jain",
+            "mahavir",
+            "peace",
+            "ahimsa",
+            "spiritual"
+        ],
+        "description": "Celebrating the birth anniversary of Lord Mahavira.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-03-30"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Peace Dove",
+            "filename": "peace_dove.json",
+            "s3_key": "lotties/peace_dove.json"
+        }
+    },
+    {
+        "slug": "paryushan-parv-2026",
+        "title": "Paryushan Parv",
+        "category": "Religious",
+        "priority": 9,
+        "tags": [
+            "jain",
+            "forgiveness",
+            "fasting",
+            "spiritual"
+        ],
+        "description": "Holy period of fasting, repentance, and forgiveness for Jains.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-09-08"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Folded Hands",
+            "filename": "folded_hands.json",
+            "s3_key": "lotties/folded_hands.json"
+        }
+    },
+    {
+        "slug": "buddha-purnima-2026",
+        "title": "Buddha Purnima",
+        "category": "Religious",
+        "priority": 9,
+        "tags": [
+            "buddha",
+            "peace",
+            "enlightenment",
+            "spiritual"
+        ],
+        "description": "Celebrating the birth, enlightenment, and death of Gautama Buddha.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-05-31"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Lotus Bloom",
+            "filename": "lotus_bloom.json",
+            "s3_key": "lotties/lotus_bloom.json"
+        }
+    },
+    {
+        "slug": "bodhi-day-2026",
+        "title": "Bodhi Day",
+        "category": "Religious",
+        "priority": 7,
+        "tags": [
+            "buddhism",
+            "meditation",
+            "enlightenment",
+            "spiritual"
+        ],
+        "description": "Commemorating the day Siddhartha Gautama achieved enlightenment.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-12-08"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Bodhi Tree",
+            "filename": "bodhi_tree.json",
+            "s3_key": "lotties/bodhi_tree.json"
+        }
+    },
+    {
+        "slug": "easter-2026",
+        "title": "Easter Sunday",
+        "category": "Religious",
+        "priority": 9,
+        "tags": [
+            "christian",
+            "resurrection",
+            "spring",
+            "peace"
+        ],
+        "description": "Celebrating the resurrection of Jesus Christ.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-04-05"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Easter Eggs",
+            "filename": "easter_eggs.json",
+            "s3_key": "lotties/easter_eggs.json"
+        }
+    },
+    {
+        "slug": "christmas-2026",
+        "title": "Christmas",
+        "category": "Festival",
+        "priority": 10,
+        "tags": [
+            "christian",
+            "holidays",
+            "winter",
+            "santa",
+            "jesus"
+        ],
+        "description": "Annual festival commemorating the birth of Jesus Christ.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-12-25"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Snow Tree",
+            "filename": "snow_tree.json",
+            "s3_key": "lotties/snow_tree.json"
+        },
+        "notification_templates": [
+            "Merry Christmas! May your days be merry and bright."
+        ]
+    },
+    {
+        "slug": "republic-day-2026",
+        "title": "Republic Day",
+        "category": "National",
+        "priority": 10,
+        "tags": [
+            "india",
+            "patriotic",
+            "flag",
+            "jai hind",
+            "parade"
+        ],
+        "description": "Honoring the date on which the Constitution of India came into effect.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-01-26"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Tricolor Flag",
+            "filename": "tricolor_flag.json",
+            "s3_key": "lotties/tricolor_flag.json"
+        },
+        "notification_templates": [
+            "Happy Republic Day! Let's honor the constitution and freedom of our nation."
+        ]
+    },
+    {
+        "slug": "independence-day-2026",
+        "title": "Independence Day",
+        "category": "National",
+        "priority": 10,
+        "tags": [
+            "india",
+            "patriotic",
+            "freedom",
+            "jai hind"
+        ],
+        "description": "Commemorating India's independence from the United Kingdom.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-08-15"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Kite Flying",
+            "filename": "kite_flying.json",
+            "s3_key": "lotties/kite_flying.json"
+        }
+    },
+    {
+        "slug": "shivaji-maharaj-jayanti-2026",
+        "title": "Shivaji Maharaj Jayanti",
+        "category": "National",
+        "priority": 9,
+        "tags": [
+            "shivaji",
+            "maratha",
+            "bravery",
+            "maharashtra"
+        ],
+        "description": "Birth anniversary of the great Maratha emperor, Chhatrapati Shivaji Maharaj.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-02-19"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Saffron Flag Waving",
+            "filename": "saffron_flag_waving.json",
+            "s3_key": "lotties/saffron_flag_waving.json"
+        }
+    },
+    {
+        "slug": "ambedkar-jayanti-2026",
+        "title": "Ambedkar Jayanti",
+        "category": "National",
+        "priority": 9,
+        "tags": [
+            "equality",
+            "constitution",
+            "india",
+            "dalit"
+        ],
+        "description": "Birth anniversary of B. R. Ambedkar, the father of the Indian Constitution.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-04-14"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Constitution Book",
+            "filename": "constitution_book.json",
+            "s3_key": "lotties/constitution_book.json"
+        }
+    },
+    {
+        "slug": "gandhi-jayanti-2026",
+        "title": "Gandhi Jayanti",
+        "category": "National",
+        "priority": 10,
+        "tags": [
+            "gandhi",
+            "bapu",
+            "non-violence",
+            "ahimsa",
+            "india"
+        ],
+        "description": "Birth anniversary of Mahatma Gandhi, the father of the nation.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-10-02"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Spinning Charkha",
+            "filename": "spinning_charkha.json",
+            "s3_key": "lotties/spinning_charkha.json"
+        }
+    },
+    {
+        "slug": "valentines-day-2026",
+        "title": "Valentine's Day",
+        "category": "International",
+        "priority": 7,
+        "tags": [
+            "love",
+            "romance",
+            "couple",
+            "heart",
+            "party"
+        ],
+        "description": "A global day celebrating love and affection between intimate companions.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-02-14"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Floating Hearts",
+            "filename": "floating_hearts.json",
+            "s3_key": "lotties/floating_hearts.json"
+        }
+    },
+    {
+        "slug": "international-yoga-day-2026",
+        "title": "International Yoga Day",
+        "category": "International",
+        "priority": 8,
+        "tags": [
+            "yoga",
+            "health",
+            "meditation",
+            "spiritual",
+            "peaceful"
+        ],
+        "description": "Recognizing the universal appeal and profound benefits of Yoga.",
+        "dates": [
+            {
+                "year": 2026,
+                "date": "2026-06-21"
+            }
+        ],
+        "lottie_overlay": {
+            "title": "Lotus Pose",
+            "filename": "lotus_pose.json",
+            "s3_key": "lotties/lotus_pose.json"
+        }
+    }
+]

@@ -1,0 +1,53 @@
+import 'package:get/get.dart';
+
+class AppTranslations extends Translations {
+  @override
+  Map<String, Map<String, String>> get keys => {
+    'en_US': {
+      'app_name': 'Utsav',
+      'good_morning': 'Good Morning',
+      'good_afternoon': 'Good Afternoon',
+      'good_evening': 'Good Evening',
+      'starry_night': 'Starry Night',
+      'happening_today': 'Happening Today',
+      'explore_vibes': 'Explore Vibes',
+      'for_you': 'For You ✨',
+      'daily_blessing': 'Daily Blessing',
+      'ready_to_celebrate': 'Ready to celebrate?',
+      'home': 'Home',
+      'calendar': 'Calendar',
+      'gallery': 'Gallery',
+      'quotes': 'Quotes',
+      'settings': 'Settings',
+      'profile': 'Profile',
+      'no_festivals': 'The void is silent.',
+      'card_builder': 'Card Builder',
+      'share': 'Share',
+      'download': 'Download',
+      'mark_celebrated': 'Mark as Celebrated',
+    },
+    'hi_IN': {
+      'app_name': 'उत्सव',
+      'good_morning': 'शुभ प्रभात',
+      'good_afternoon': 'शुभ दोपहर',
+      'good_evening': 'शुभ संध्या',
+      'starry_night': 'तारों भरी रात',
+      'happening_today': 'आज के पर्व',
+      'explore_vibes': 'अनुभव खोजें',
+      'for_you': 'आपके लिए ✨',
+      'daily_blessing': 'आज का आशीर्वाद',
+      'ready_to_celebrate': 'क्या आप उत्सव के लिए तैयार हैं?',
+      'home': 'मुख्य पृष्ठ',
+      'calendar': 'पंचांग',
+      'gallery': 'चित्रशाला',
+      'quotes': 'सुविचार',
+      'settings': 'सेटिंग्स',
+      'profile': 'प्रोफ़ाइल',
+      'no_festivals': 'आज कोई पर्व नहीं है।',
+      'card_builder': 'कार्ड बनाएं',
+      'share': 'साझा करें',
+      'download': 'डाउनलोड करें',
+      'mark_celebrated': 'उत्सव मनाया',
+    },
+  };
+}

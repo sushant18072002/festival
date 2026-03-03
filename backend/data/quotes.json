@@ -1,0 +1,160 @@
+[
+    {
+        "slug": "gandhi-be-the-change",
+        "text": "Be the change that you wish to see in the world.",
+        "author": "Mahatma Gandhi",
+        "source": "General",
+        "category": "national",
+        "tags": [
+            "freedom"
+        ],
+        "vibes": [
+            "spiritual"
+        ],
+        "is_featured": true,
+        "event_slug": "gandhi-jayanti",
+        "translations": {
+            "hi": {
+                "text": "वह बदलाव बनें जो आप दुनिया में देखना चाहते हैं।",
+                "author": "महात्मा गांधी"
+            }
+        }
+    },
+    {
+        "slug": "kalam-dream",
+        "text": "Dream, dream, dream. Dreams transform into thoughts and thoughts result in action.",
+        "author": "A.P.J. Abdul Kalam",
+        "category": "national",
+        "tags": [
+            "freedom"
+        ],
+        "vibes": [
+            "spiritual",
+            "patriotic"
+        ],
+        "is_featured": true,
+        "translations": {
+            "hi": {
+                "text": "सपने देखें, सपने देखें, सपने देखें। सपने विचारों में बदलते हैं और विचार क्रिया में परिणत होते हैं।",
+                "author": "ए.पी.जे. अब्दुल कलाम"
+            }
+        }
+    },
+    {
+        "slug": "vivekananda-arise",
+        "text": "Arise, awake, and stop not till the goal is reached.",
+        "author": "Swami Vivekananda",
+        "category": "religious",
+        "tags": [],
+        "vibes": [
+            "spiritual"
+        ],
+        "is_featured": true,
+        "translations": {
+            "hi": {
+                "text": "उठो, जागो और तब तक रुको नहीं जब तक लक्ष्य प्राप्त न हो जाए।",
+                "author": "स्वामी विवेकानंद"
+            }
+        }
+    },
+    {
+        "slug": "buddha-quote-1",
+        "text": "Peace comes from within. Do not seek it without.",
+        "author": "Gautama Buddha",
+        "source": "Dhammapada",
+        "category": "religious",
+        "tags": [
+            "wisdom"
+        ],
+        "vibes": [
+            "spiritual"
+        ],
+        "is_featured": true,
+        "translations": {
+            "hi": {
+                "text": "शांति भीतर से आती है। इसे बाहर मत खोजो।",
+                "author": "गौतम बुद्ध"
+            }
+        }
+    },
+    {
+        "slug": "buddha-quote-2",
+        "text": "Health is the greatest gift, contentment the greatest wealth, faithfulness the best relationship.",
+        "author": "Gautama Buddha",
+        "source": "Dhammapada",
+        "category": "religious",
+        "tags": [
+            "wisdom"
+        ],
+        "vibes": [
+            "spiritual"
+        ],
+        "is_featured": true,
+        "translations": {
+            "hi": {
+                "text": "स्वास्थ्य सबसे बड़ा उपहार है, संतोष सबसे बड़ा धन है, वफादारी सबसे अच्छा रिश्ता है।",
+                "author": "गौतम बुद्ध"
+            }
+        }
+    },
+    {
+        "slug": "buddha-quote-3",
+        "text": "What we think, we become.",
+        "author": "Gautama Buddha",
+        "source": "Dhammapada",
+        "category": "religious",
+        "tags": [
+            "wisdom"
+        ],
+        "vibes": [
+            "spiritual"
+        ],
+        "is_featured": true,
+        "translations": {
+            "hi": {
+                "text": "हम जो सोचते हैं, वही बन जाते हैं।",
+                "author": "गौतम बुद्ध"
+            }
+        }
+    },
+    {
+        "slug": "buddha-quote-4",
+        "text": "Radiate boundless love towards the entire world.",
+        "author": "Gautama Buddha",
+        "source": "Dhammapada",
+        "category": "religious",
+        "tags": [
+            "wisdom"
+        ],
+        "vibes": [
+            "spiritual"
+        ],
+        "is_featured": true,
+        "translations": {
+            "hi": {
+                "text": "पूरी दुनिया के प्रति असीम प्रेम बिखेरें।",
+                "author": "गौतम बुद्ध"
+            }
+        }
+    },
+    {
+        "slug": "buddha-quote-5",
+        "text": "Three things cannot be long hidden: the sun, the moon, and the truth.",
+        "author": "Gautama Buddha",
+        "source": "Dhammapada",
+        "category": "religious",
+        "tags": [
+            "wisdom"
+        ],
+        "vibes": [
+            "spiritual"
+        ],
+        "is_featured": true,
+        "translations": {
+            "hi": {
+                "text": "तीन चीजें लंबे समय तक नहीं छिप सकतीं: सूरज, चंद्रमा और सत्य।",
+                "author": "गौतम बुद्ध"
+            }
+        }
+    }
+]

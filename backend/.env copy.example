@@ -1,0 +1,6 @@
+MONGO_URI=mongodb://localhost:27017/utsav_share
+AWS_ACCESS_KEY_ID=your_access_key
+AWS_SECRET_ACCESS_KEY=your_secret_key
+AWS_REGION=ap-south-1
+AWS_BUCKET_NAME=utsav-app-content
+CLOUDFRONT_DOMAIN=d12345.cloudfront.net

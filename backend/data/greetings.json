@@ -1,0 +1,158 @@
+[
+    {
+        "slug": "diwali-prosperity-1",
+        "text": "May the divine light of Diwali shine with peace, prosperity, and happiness in your life. Happy Diwali!",
+        "category": "festival",
+        "tags": [
+            "lights",
+            "colors"
+        ],
+        "vibes": [
+            "spiritual",
+            "joyful"
+        ],
+        "event_slug": "diwali-festival-of-lights",
+        "translations": {
+            "hi": {
+                "text": "दीवाली का दिव्य प्रकाश आपके जीवन में शांति, समृद्धि और खुशियां लेकर आए। शुभ दीवाली!"
+            },
+            "mr": {
+                "text": "दिवाळीचा दैवी प्रकाश तुमच्या जीवनात शांती, समृद्धी आणि आनंद घेऊन येवो. शुभ दीपावली!"
+            }
+        }
+    },
+    {
+        "slug": "republic-day-pride",
+        "text": "Let us honor our Constitution and celebrate the spirit of a free India. Happy Republic Day!",
+        "category": "national",
+        "tags": [
+            "freedom"
+        ],
+        "vibes": [
+            "patriotic"
+        ],
+        "event_slug": "republic-day-india",
+        "translations": {
+            "hi": {
+                "text": "आइए हम अपने संविधान का सम्मान करें और एक स्वतंत्र भारत की भावना का जश्न मनाएं। गणतंत्र दिवस की शुभकामनाएं!"
+            }
+        }
+    },
+    {
+        "slug": "holi-colors-of-joy",
+        "text": "May your life be as colorful and joyful as the festival of Holi. Happy Holi!",
+        "category": "festival",
+        "tags": [
+            "colors"
+        ],
+        "vibes": [
+            "joyful",
+            "cultural"
+        ],
+        "event_slug": "holi-festival-of-colors",
+        "translations": {
+            "hi": {
+                "text": "आपका जीवन होली के त्योहार की तरह ही रंगीन और আনন্দময় हो। होली की शुभकामनाएं!"
+            }
+        }
+    },
+    {
+        "slug": "general-morning-blessing-1",
+        "text": "Good morning! May this day bring you endless joy and success.",
+        "category": "festival",
+        "tags": [],
+        "vibes": [
+            "joyful"
+        ],
+        "translations": {
+            "hi": {
+                "text": "सुप्रभात! यह दिन आपके लिए अनंत खुशियां और सफलता लाए।"
+            }
+        }
+    },
+    {
+        "slug": "buddha-morning-1",
+        "text": "Good morning! May the teachings of Buddha guide you to peace and joy today.",
+        "category": "religious",
+        "tags": [
+            "peace"
+        ],
+        "vibes": [
+            "spiritual",
+            "solemn"
+        ],
+        "translations": {
+            "hi": {
+                "text": "सुप्रभात! बुद्ध की शिक्षाएं आज आपको शांति और आनंद की ओर ले जाएं।"
+            }
+        }
+    },
+    {
+        "slug": "buddha-morning-2",
+        "text": "Wishing you a serene and mindful day ahead. Stay blessed!",
+        "category": "religious",
+        "tags": [
+            "peace"
+        ],
+        "vibes": [
+            "spiritual",
+            "solemn"
+        ],
+        "translations": {
+            "hi": {
+                "text": "आपको एक शांत और सचेत दिन की शुभकामनाएं। आशीर्वाद बना रहे!"
+            }
+        }
+    },
+    {
+        "slug": "buddha-morning-3",
+        "text": "Start your day with a calm mind and a pure heart. Good Morning.",
+        "category": "religious",
+        "tags": [
+            "peace"
+        ],
+        "vibes": [
+            "spiritual",
+            "solemn"
+        ],
+        "translations": {
+            "hi": {
+                "text": "अपने दिन की शुरुआत शांत मन और पवित्र हृदय से करें। सुप्रभात।"
+            }
+        }
+    },
+    {
+        "slug": "buddha-blessing-1",
+        "text": "May the divine light of Buddha bring clarity and peace to your life.",
+        "category": "religious",
+        "tags": [
+            "peace"
+        ],
+        "vibes": [
+            "spiritual",
+            "solemn"
+        ],
+        "translations": {
+            "hi": {
+                "text": "बुद्ध का दिव्य प्रकाश आपके जीवन में स्पष्टता और शांति लाए।"
+            }
+        }
+    },
+    {
+        "slug": "buddha-morning-4",
+        "text": "Sending you positive vibes and spiritual energy for a beautiful day.",
+        "category": "religious",
+        "tags": [
+            "peace"
+        ],
+        "vibes": [
+            "spiritual",
+            "solemn"
+        ],
+        "translations": {
+            "hi": {
+                "text": "एक सुंदर दिन के लिए आपको सकारात्मक और आध्यात्मिक ऊर्जा भेज रहा हूँ।"
+            }
+        }
+    }
+]

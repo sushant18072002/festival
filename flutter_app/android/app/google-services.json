@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "612216669934",
+    "project_id": "utsav-3bbc6",
+    "storage_bucket": "utsav-3bbc6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612216669934:android:f152179413f36ce80855ff",
+        "android_client_info": {
+          "package_name": "com.utsav.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1UUiPv93n9Xvjw_kwot3e0frrFu0heGo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
