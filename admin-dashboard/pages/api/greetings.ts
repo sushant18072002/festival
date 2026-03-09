@@ -15,7 +15,6 @@ export default async function handler(
             const total = await Greeting.countDocuments(filter);
             const greetings = await Greeting.find(filter)
                 .populate('category', 'code translations')
-                .populate('event_id', 'title slug')
                 .sort({ createdAt: -1 });
             res.status(200).json({ success: true, data: greetings, pagination: { total, page: 1, pages: 1 } });
         } catch (error) {

@@ -4,7 +4,7 @@ abstract class Routes {
   Routes._();
   static const HOME = _Paths.HOME;
   static const CALENDAR = _Paths.CALENDAR;
-  static const GALLERY = _Paths.GALLERY;
+  static const EXPLORE = _Paths.EXPLORE;
   static const SETTINGS = _Paths.SETTINGS;
   static const DASHBOARD = _Paths.DASHBOARD;
   static const INITIAL_LOAD = _Paths.INITIAL_LOAD;
@@ -21,7 +21,7 @@ abstract class _Paths {
   _Paths._();
   static const HOME = '/home';
   static const CALENDAR = '/calendar';
-  static const GALLERY = '/gallery';
+  static const EXPLORE = '/explore';
   static const SETTINGS = '/settings';
   static const DASHBOARD = '/dashboard';
   static const INITIAL_LOAD = '/initial_load';

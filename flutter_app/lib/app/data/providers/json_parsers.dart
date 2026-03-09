@@ -55,19 +55,13 @@ Map<String, EventModel> parseEventsCatalog(String jsonStr) {
   return map;
 }
 
-Map<String, List<ImageModel>> parseImageCatalog(String jsonStr) {
+List<ImageModel> parseImageList(String jsonStr) {
   final decoded = jsonDecode(jsonStr) as Map<String, dynamic>;
-  final eventsMap = decoded['events'] as Map<String, dynamic>? ?? {};
-
-  final map = <String, List<ImageModel>>{};
-  eventsMap.forEach((slug, dynamic imagesJson) {
-    if (imagesJson is List) {
-      map[slug] = imagesJson
-          .map((img) => ImageModel.fromJson(img as Map<String, dynamic>))
-          .toList();
-    }
-  });
-  return map;
+  // New schema: { version, images: [...] }
+  final List imagesList = decoded['images'] as List? ?? [];
+  return imagesList
+      .map((img) => ImageModel.fromJson(img as Map<String, dynamic>))
+      .toList();
 }
 
 List<GreetingModel> parseGreetings(String jsonStr) {

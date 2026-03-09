@@ -15,7 +15,6 @@ interface GreetingData {
     text: string;
     slug?: string;
     category?: string;
-    event_id?: string;
     is_active?: boolean;
     is_deleted?: boolean;
     translations?: { [key: string]: { text?: string } };
@@ -25,7 +24,6 @@ const initialFormState: GreetingData = {
     text: '',
     slug: '',
     category: '',
-    event_id: '',
     is_active: true,
     translations: {}
 };
@@ -33,7 +31,6 @@ const initialFormState: GreetingData = {
 export default function Greetings() {
     const [greetings, setGreetings] = useState<GreetingData[]>([]);
     const [categories, setCategories] = useState<any[]>([]);
-    const [events, setEvents] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
     const [editId, setEditId] = useState<string | null>(null);
@@ -45,7 +42,6 @@ export default function Greetings() {
     useEffect(() => {
         fetchGreetings();
         fetchCategories();
-        fetchEvents();
     }, [showTrash]);
 
     const fetchGreetings = async () => {
@@ -69,18 +65,14 @@ export default function Greetings() {
     };
 
     const fetchEvents = async () => {
-        try {
-            const res = await fetch('/api/events?limit=100');
-            const json = await res.json();
-            if (json.success) setEvents(json.data);
-        } catch (err) { /* silent */ }
+        // Events are now fetched via the Event page, not needed here.
+        // Greetings are globally reusable and assigned from the Event editor.
     };
 
     const handleEdit = (item: GreetingData) => {
         setFormData({
             ...item,
             category: typeof item.category === 'object' ? (item.category as any)?._id : item.category || '',
-            event_id: typeof item.event_id === 'object' ? (item.event_id as any)?._id : item.event_id || '',
         });
         setEditId(item._id || null);
         setShowForm(true);
@@ -172,11 +164,7 @@ export default function Greetings() {
         return cat.translations?.en?.name || cat.code || '—';
     };
 
-    const getEventTitle = (evt: any) => {
-        if (!evt) return '—';
-        if (typeof evt === 'string') return evt;
-        return evt.title || evt.slug || '—';
-    };
+    const getEventTitle = (_evt: any) => null; // kept for compatibility, greetings no longer link to events
 
     return (
         <div className="flex h-screen bg-slate-950 text-white">
@@ -265,12 +253,7 @@ export default function Greetings() {
                                                     {getCategoryName(item.category)}
                                                 </span>
                                             )}
-                                            {item.event_id && (
-                                                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-500/10 text-blue-400 text-xs font-medium rounded-lg border border-blue-500/20">
-                                                    <Globe className="w-3 h-3" />
-                                                    {getEventTitle(item.event_id)}
-                                                </span>
-                                            )}
+
                                         </div>
 
                                         {/* Translation indicator */}
@@ -377,39 +360,21 @@ export default function Greetings() {
                                         />
                                     </div>
 
-                                    {/* Category & Event (only in English) */}
                                     {activeLang === 'en' && (
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <div>
-                                                <label className="block text-sm font-medium text-slate-300 mb-2">Category</label>
-                                                <select
-                                                    value={formData.category || ''}
-                                                    onChange={e => setFormData(prev => ({ ...prev, category: e.target.value }))}
-                                                    className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/40 transition-all"
-                                                >
-                                                    <option value="">No Category</option>
-                                                    {categories.map(cat => (
-                                                        <option key={cat._id} value={cat._id}>
-                                                            {cat.translations?.en?.name || cat.code}
-                                                        </option>
-                                                    ))}
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <label className="block text-sm font-medium text-slate-300 mb-2">Linked Event</label>
-                                                <select
-                                                    value={formData.event_id || ''}
-                                                    onChange={e => setFormData(prev => ({ ...prev, event_id: e.target.value }))}
-                                                    className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/40 transition-all"
-                                                >
-                                                    <option value="">No Event (General)</option>
-                                                    {events.map(evt => (
-                                                        <option key={evt._id} value={evt._id}>
-                                                            {evt.title}
-                                                        </option>
-                                                    ))}
-                                                </select>
-                                            </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-slate-300 mb-2">Category</label>
+                                            <select
+                                                value={formData.category || ''}
+                                                onChange={e => setFormData(prev => ({ ...prev, category: e.target.value }))}
+                                                className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/40 transition-all"
+                                            >
+                                                <option value="">No Category</option>
+                                                {categories.map(cat => (
+                                                    <option key={cat._id} value={cat._id}>
+                                                        {cat.translations?.en?.name || cat.code}
+                                                    </option>
+                                                ))}
+                                            </select>
                                         </div>
                                     )}
 

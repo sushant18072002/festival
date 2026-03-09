@@ -1,891 +1,4509 @@
 [
-    {
-        "slug": "maha-shivratri-2026",
-        "title": "Maha Shivratri",
-        "category": "Religious",
-        "priority": 10,
-        "tags": [
-            "shiva",
-            "bhole",
-            "hindu",
-            "har har mahadev",
-            "spiritual",
-            "peaceful"
-        ],
-        "description": "Celebrating the cosmic dance of Lord Shiva and Parvati.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-02-15"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Shiva Trishul",
-            "filename": "shiva_trishul.json",
-            "s3_key": "lotties/shiva_trishul.json"
-        },
-        "notification_templates": [
-            "Har Har Mahadev! Wishing you a blessed Maha Shivratri.",
-            "Today is Maha Shivratri. May Lord Shiva bless you with peace and prosperity."
+  {
+    "slug": "maha-shivratri-2026",
+    "title": "Maha Shivratri",
+    "category": "Religious",
+    "priority": 10,
+    "tags": [
+      "shiva",
+      "bhole",
+      "hindu",
+      "har har mahadev",
+      "spiritual",
+      "peaceful"
+    ],
+    "description": "Celebrating the cosmic dance of Lord Shiva and Parvati.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-02-15"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Shiva Trishul",
+      "filename": "shiva_trishul.json",
+      "s3_key": "lotties/shiva_trishul.json"
+    },
+    "ambient_audio_slug": "shiva-chant-om-namah-shivaya",
+    "notification_templates": {
+      "discovery": "Did you know? Offering Bilva leaves to Shiva destroys the sins of 3 lifetimes. Prepare for Mahashivratri.",
+      "countdown": "Just 7 days until the great night of Shiva! Have you planned your fast and puja?",
+      "eve": "Tomorrow is Maha Shivaratri! Get ready for the sacred Jagaran.",
+      "day_of": "Happy Maha Shivaratri! May Lord Shiva bless you with strength, peace, and eternal wisdom. Om Namah Shivaya! 🙏"
+    },
+    "muhurat": {
+      "puja_time": "12:09 AM to 01:00 AM",
+      "type": "Nishita Kaal Puja Time",
+      "description": "The most auspicious window during the night to perform Shiva Puja, offering Bilva leaves and milk."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Purification",
+        "description": "Take a vow (Sankalpa) after taking a bath in the morning. Fast strictly for the whole day.",
+        "items_needed": [
+          "Water",
+          "Clean Clothes"
         ]
-    },
-    {
-        "slug": "holi-2026",
-        "title": "Holi",
-        "category": "Festival",
-        "priority": 10,
-        "tags": [
-            "colors",
-            "fun",
-            "hindu",
-            "radha krishna",
-            "party",
-            "spring"
-        ],
-        "description": "The vibrant festival of colors, celebrating the victory of good over evil.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-03-04"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Holi Splash",
-            "filename": "holi_splash.json",
-            "s3_key": "lotties/holi_splash.json"
-        },
-        "notification_templates": [
-            "Happy Holi! Grab your colors, the festival of joy is here!",
-            "It's Holi! Wishing you a day filled with vibrant colors and love."
+      },
+      {
+        "order": 2,
+        "title": "Abhisheka",
+        "description": "Perform Rudrabhishek of the Shiva Linga with water, milk, honey, and ghee.",
+        "items_needed": [
+          "Milk",
+          "Honey",
+          "Ghee",
+          "Water",
+          "Shiva Linga"
         ]
-    },
-    {
-        "slug": "gudi-padwa-ugadi-2026",
-        "title": "Gudi Padwa & Ugadi",
-        "category": "Regional",
-        "priority": 8,
-        "tags": [
-            "new year",
-            "maharashtra",
-            "telugu",
-            "kannada",
-            "spring"
-        ],
-        "description": "The traditional New Year for Maharashtrians and South Indians.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-03-19"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Gudi Flag",
-            "filename": "gudi_flag.json",
-            "s3_key": "lotties/gudi_flag.json"
-        },
-        "notification_templates": [
-            "Happy Gudi Padwa and Ugadi! Wishing you a sweet and prosperous new year."
+      },
+      {
+        "order": 3,
+        "title": "Offerings",
+        "description": "Offer Bilva (Bael) leaves, Dhatura flowers, and Bhasma (sacred ash) to Lord Shiva.",
+        "items_needed": [
+          "Bilva Leaves",
+          "Dhatura Flowers",
+          "Bhasma"
         ]
-    },
-    {
-        "slug": "ram-navami-2026",
-        "title": "Ram Navami",
-        "category": "Religious",
-        "priority": 9,
-        "tags": [
-            "rama",
-            "ayodhya",
-            "hindu",
-            "spiritual"
-        ],
-        "description": "Celebrating the birth of Lord Rama.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-03-27"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Bow & Arrow",
-            "filename": "bow_arrow.json",
-            "s3_key": "lotties/bow_arrow.json"
-        },
-        "notification_templates": [
-            "Jai Shri Ram! May Lord Rama shower his blessings on Ram Navami."
+      },
+      {
+        "order": 4,
+        "title": "Jagaran",
+        "description": "Stay awake throughout the night singing bhajans and chanting 'Om Namah Shivaya'.",
+        "items_needed": [
+          "Mala (Rosary)"
         ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Green",
+        "White",
+        "Saffron"
+      ],
+      "description": "Devotees typically wear simple, clean, unstitched clothes or traditional attire like a dhoti-kurta for men and a simple saree or salwar for women. Green is considered highly auspicious as it represents nature and Bilva leaves."
     },
-    {
-        "slug": "hanuman-jayanti-2026",
-        "title": "Hanuman Jayanti",
-        "category": "Religious",
-        "priority": 8,
-        "tags": [
-            "hanuman",
-            "bajrangbali",
-            "strength",
-            "hindu"
+    "recipes": [
+      {
+        "name": "Sabudana Khichdi",
+        "description": "A beloved fasting dish made with tapioca pearls, peanuts, and mild spices.",
+        "ingredients": [
+          "1 cup Sabudana (soaked)",
+          "1/2 cup Roasted peanuts (crushed)",
+          "1 Potato (boiled and cubed)",
+          "2 Green chilies",
+          "Sendha Namak (Rock salt)"
         ],
-        "description": "Celebrating the birth and superhuman strength of Lord Hanuman.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-04-04"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Mace Gada",
-            "filename": "mace_gada.json",
-            "s3_key": "lotties/mace_gada.json"
-        }
-    },
-    {
-        "slug": "raksha-bandhan-2026",
-        "title": "Raksha Bandhan",
-        "category": "Festival",
-        "priority": 9,
-        "tags": [
-            "rakhi",
-            "brother",
-            "sister",
-            "love",
-            "family"
-        ],
-        "description": "Celebrating the pure bond between brothers and sisters.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-08-28"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Rakhi Thread",
-            "filename": "rakhi_thread.json",
-            "s3_key": "lotties/rakhi_thread.json"
-        }
-    },
-    {
-        "slug": "krishna-janmashtami-2026",
-        "title": "Krishna Janmashtami",
-        "category": "Religious",
-        "priority": 10,
-        "tags": [
-            "krishna",
-            "kanha",
-            "dahi handi",
-            "hindu"
-        ],
-        "description": "Celebrating the divine birth of Lord Krishna.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-09-04"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Flute & Peacock",
-            "filename": "flute_peacock.json",
-            "s3_key": "lotties/flute_peacock.json"
-        }
-    },
-    {
-        "slug": "ganesh-chaturthi-2026",
-        "title": "Ganesh Chaturthi",
-        "category": "Festival",
-        "priority": 10,
-        "tags": [
-            "ganesha",
-            "bappa",
-            "modak",
-            "hindu",
-            "festival"
-        ],
-        "description": "Welcoming Lord Ganesha, the remover of obstacles.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-09-12"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Modak Drop",
-            "filename": "modak_drop.json",
-            "s3_key": "lotties/modak_drop.json"
-        },
-        "notification_templates": [
-            "Ganpati Bappa Morya! Welcome Lord Ganesha into your heart today."
+        "steps": [
+          "Soak sabudana overnight or for 4-5 hours until soft but not mushy.",
+          "Heat ghee in a pan, add cumin seeds and green chilies.",
+          "Add cubed potatoes and sauté for a minute.",
+          "Mix in the drained sabudana, crushed peanuts, and rock salt.",
+          "Cook on low heat until sabudana turns translucent. Garnish with coriander."
         ]
-    },
-    {
-        "slug": "navratri-2026",
-        "title": "Navratri & Durga Puja",
-        "category": "Festival",
-        "priority": 10,
-        "tags": [
-            "durga",
-            "garba",
-            "dandiya",
-            "devi",
-            "hindu",
-            "dance"
+      },
+      {
+        "name": "Thandai",
+        "description": "A cooling milk-based traditional drink infused with nuts, seeds, and spices.",
+        "ingredients": [
+          "1 liter Full-cream milk",
+          "1/4 cup Almonds & Pistachios",
+          "1 tbsp Melon seeds (Magaz)",
+          "1 tsp Fennel seeds (Saunf)",
+          "1/2 tsp Cardamom powder"
         ],
-        "description": "Nine nights celebrating the divine feminine and Goddess Durga.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-10-08"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Garba Dance",
-            "filename": "garba_dance.json",
-            "s3_key": "lotties/garba_dance.json"
-        }
-    },
-    {
-        "slug": "dussehra-2026",
-        "title": "Vijayadashami / Dussehra",
-        "category": "Festival",
-        "priority": 10,
-        "tags": [
-            "ravana",
-            "rama",
-            "victory",
-            "hindu"
-        ],
-        "description": "The victory of good over evil, marking the end of Navratri.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-10-17"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Arrow Burning",
-            "filename": "arrow_burning.json",
-            "s3_key": "lotties/arrow_burning.json"
-        }
-    },
-    {
-        "slug": "diwali-2026",
-        "title": "Diwali",
-        "category": "Festival",
-        "priority": 10,
-        "tags": [
-            "lights",
-            "diya",
-            "crackers",
-            "lakshmi",
-            "hindu",
-            "party"
-        ],
-        "description": "The grand festival of lights.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-11-08"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Diwali Diyas",
-            "filename": "diwali_diyas.json",
-            "s3_key": "lotties/diwali_diyas.json"
-        }
-    },
-    {
-        "slug": "chhath-puja-2026",
-        "title": "Chhath Puja",
-        "category": "Regional",
-        "priority": 9,
-        "tags": [
-            "sun",
-            "bihar",
-            "river",
-            "spirituality"
-        ],
-        "description": "Ancient Hindu festival dedicated to Surya, the sun god.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-11-15"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Sun Worship",
-            "filename": "sun_worship.json",
-            "s3_key": "lotties/sun_worship.json"
-        }
-    },
-    {
-        "slug": "lohri-makar-sankranti-2026",
-        "title": "Lohri & Makar Sankranti",
-        "category": "Regional",
-        "priority": 9,
-        "tags": [
-            "harvest",
-            "kite",
-            "sun",
-            "bonfire"
-        ],
-        "description": "Harvest festivals celebrating the sun's transit into Capricorn.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-01-14"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Kites Flying",
-            "filename": "kites_flying.json",
-            "s3_key": "lotties/kites_flying.json"
-        }
-    },
-    {
-        "slug": "baisakhi-vishu-bihu-2026",
-        "title": "Baisakhi, Vishu & Bihu",
-        "category": "Regional",
-        "priority": 9,
-        "tags": [
-            "spring",
-            "harvest",
-            "punjab",
-            "kerala",
-            "assam"
-        ],
-        "description": "Spring harvest festivals across various Indian states.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-04-14"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Vishu Kani",
-            "filename": "vishu_kani.json",
-            "s3_key": "lotties/vishu_kani.json"
-        }
-    },
-    {
-        "slug": "onam-2026",
-        "title": "Onam",
-        "category": "Regional",
-        "priority": 9,
-        "tags": [
-            "kerala",
-            "mahabali",
-            "pookalam",
-            "boat race"
-        ],
-        "description": "Major annual harvest festival celebrated in Kerala.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-08-27"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Snake Boat",
-            "filename": "snake_boat.json",
-            "s3_key": "lotties/snake_boat.json"
-        }
-    },
-    {
-        "slug": "ramadan-start-2026",
-        "title": "Ramadan Begins",
-        "category": "Religious",
-        "priority": 9,
-        "tags": [
-            "islam",
-            "fasting",
-            "peace",
-            "quran",
-            "spiritual"
-        ],
-        "description": "The beginning of the holy month of fasting, prayer, and reflection.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-02-18"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Ramadan Lantern",
-            "filename": "ramadan_lantern.json",
-            "s3_key": "lotties/ramadan_lantern.json"
-        }
-    },
-    {
-        "slug": "eid-al-fitr-2026",
-        "title": "Eid al-Fitr",
-        "category": "Festival",
-        "priority": 10,
-        "tags": [
-            "islam",
-            "eid",
-            "celebration",
-            "feast",
-            "moon"
-        ],
-        "description": "The festival marking the end of the fasting month of Ramadan.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-03-20"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Crescent Moon",
-            "filename": "crescent_moon.json",
-            "s3_key": "lotties/crescent_moon.json"
-        },
-        "notification_templates": [
-            "Eid Mubarak! May this special day bring peace, happiness, and prosperity to everyone."
+        "steps": [
+          "Soak the nuts, melon seeds, and fennel in warm water for 2 hours.",
+          "Blend the soaked ingredients into a smooth paste.",
+          "Boil milk, add sugar and the prepared paste.",
+          "Simmer for 10 minutes, add cardamom powder, and let it cool. Serve chilled."
         ]
+      }
+    ],
+    "playlist_links": [
+      {
+        "platform": "youtube",
+        "url": "https://www.youtube.com/watch?v=123",
+        "title": "Maha Shivratri Bhajans"
+      }
+    ]
+  },
+  {
+    "slug": "holi-2026",
+    "title": "Holi",
+    "category": "Festival",
+    "priority": 10,
+    "tags": [
+      "colors",
+      "fun",
+      "hindu",
+      "radha krishna",
+      "party",
+      "spring"
+    ],
+    "description": "The vibrant festival of colors, celebrating the victory of good over evil.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-03-04"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Holi Splash",
+      "filename": "holi_splash.json",
+      "s3_key": "lotties/holi_splash.json"
     },
-    {
-        "slug": "eid-al-adha-2026",
-        "title": "Eid al-Adha",
-        "category": "Religious",
-        "priority": 10,
-        "tags": [
-            "islam",
-            "sacrifice",
-            "eid",
-            "hajj",
-            "spiritual"
-        ],
-        "description": "The Feast of Sacrifice, honoring the willingness of Prophet Ibrahim to sacrifice his son.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-05-27"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Kaaba Glow",
-            "filename": "kaaba_glow.json",
-            "s3_key": "lotties/kaaba_glow.json"
-        }
+    "ambient_audio_slug": "holi-dhol-beats",
+    "notification_templates": {
+      "discovery": "Holi Fact: The festival marks the eternal and divine love of Radha and Krishna. Get ready for colors!",
+      "countdown": "One week left until Holi! Stock up on herbal Gulal and get your Gujiya recipes ready.",
+      "eve": "Tonight is Holika Dahan. May the fire burn away all negativity. Tomorrow we play colors!",
+      "day_of": "Happy Holi! 🎨 Wishing you a vibrant, joyous, and colorful day with your loved ones."
     },
-    {
-        "slug": "muharram-ashura-2026",
-        "title": "Muharram (Ashura)",
-        "category": "Religious",
-        "priority": 8,
-        "tags": [
-            "islam",
-            "mourning",
-            "spiritual",
-            "peace"
-        ],
-        "description": "Tenth day of Muharram, a day of remembrance and spiritual reflection.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-06-25"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Peace Dove",
-            "filename": "peace_dove.json",
-            "s3_key": "lotties/peace_dove.json"
-        }
+    "muhurat": {
+      "puja_time": "06:33 PM to 08:58 PM (Holika Dahan)",
+      "type": "Pradosh Kaal Muhurat",
+      "description": "The ideal evening time for lighting the Holika bonfire, signifying the victory of good over evil."
     },
-    {
-        "slug": "guru-gobind-singh-jayanti-2026",
-        "title": "Guru Gobind Singh Jayanti",
-        "category": "Religious",
-        "priority": 9,
-        "tags": [
-            "sikh",
-            "guru",
-            "khalsa",
-            "bravery",
-            "spiritual"
-        ],
-        "description": "Birth anniversary of the tenth Sikh Guru, Guru Gobind Singh Ji.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-01-05"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Khalsa Symbol",
-            "filename": "khalsa_symbol.json",
-            "s3_key": "lotties/khalsa_symbol.json"
-        }
-    },
-    {
-        "slug": "hola-mohalla-2026",
-        "title": "Hola Mohalla",
-        "category": "Festival",
-        "priority": 8,
-        "tags": [
-            "sikh",
-            "martial arts",
-            "festival",
-            "bravery"
-        ],
-        "description": "Sikh festival celebrated with martial arts exhibitions and poetry.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-03-04"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Nihang Warrior",
-            "filename": "nihang_warrior.json",
-            "s3_key": "lotties/nihang_warrior.json"
-        }
-    },
-    {
-        "slug": "guru-nanak-jayanti-2026",
-        "title": "Guru Nanak Jayanti",
-        "category": "Religious",
-        "priority": 10,
-        "tags": [
-            "sikh",
-            "guru nanak",
-            "gurpurab",
-            "peace",
-            "spiritual"
-        ],
-        "description": "Celebrating the birth of Guru Nanak Dev Ji, the founder of Sikhism.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-11-24"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Ek Onkar",
-            "filename": "ek_onkar.json",
-            "s3_key": "lotties/ek_onkar.json"
-        }
-    },
-    {
-        "slug": "mahavir-jayanti-2026",
-        "title": "Mahavir Jayanti",
-        "category": "Religious",
-        "priority": 9,
-        "tags": [
-            "jain",
-            "mahavir",
-            "peace",
-            "ahimsa",
-            "spiritual"
-        ],
-        "description": "Celebrating the birth anniversary of Lord Mahavira.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-03-30"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Peace Dove",
-            "filename": "peace_dove.json",
-            "s3_key": "lotties/peace_dove.json"
-        }
-    },
-    {
-        "slug": "paryushan-parv-2026",
-        "title": "Paryushan Parv",
-        "category": "Religious",
-        "priority": 9,
-        "tags": [
-            "jain",
-            "forgiveness",
-            "fasting",
-            "spiritual"
-        ],
-        "description": "Holy period of fasting, repentance, and forgiveness for Jains.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-09-08"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Folded Hands",
-            "filename": "folded_hands.json",
-            "s3_key": "lotties/folded_hands.json"
-        }
-    },
-    {
-        "slug": "buddha-purnima-2026",
-        "title": "Buddha Purnima",
-        "category": "Religious",
-        "priority": 9,
-        "tags": [
-            "buddha",
-            "peace",
-            "enlightenment",
-            "spiritual"
-        ],
-        "description": "Celebrating the birth, enlightenment, and death of Gautama Buddha.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-05-31"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Lotus Bloom",
-            "filename": "lotus_bloom.json",
-            "s3_key": "lotties/lotus_bloom.json"
-        }
-    },
-    {
-        "slug": "bodhi-day-2026",
-        "title": "Bodhi Day",
-        "category": "Religious",
-        "priority": 7,
-        "tags": [
-            "buddhism",
-            "meditation",
-            "enlightenment",
-            "spiritual"
-        ],
-        "description": "Commemorating the day Siddhartha Gautama achieved enlightenment.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-12-08"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Bodhi Tree",
-            "filename": "bodhi_tree.json",
-            "s3_key": "lotties/bodhi_tree.json"
-        }
-    },
-    {
-        "slug": "easter-2026",
-        "title": "Easter Sunday",
-        "category": "Religious",
-        "priority": 9,
-        "tags": [
-            "christian",
-            "resurrection",
-            "spring",
-            "peace"
-        ],
-        "description": "Celebrating the resurrection of Jesus Christ.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-04-05"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Easter Eggs",
-            "filename": "easter_eggs.json",
-            "s3_key": "lotties/easter_eggs.json"
-        }
-    },
-    {
-        "slug": "christmas-2026",
-        "title": "Christmas",
-        "category": "Festival",
-        "priority": 10,
-        "tags": [
-            "christian",
-            "holidays",
-            "winter",
-            "santa",
-            "jesus"
-        ],
-        "description": "Annual festival commemorating the birth of Jesus Christ.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-12-25"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Snow Tree",
-            "filename": "snow_tree.json",
-            "s3_key": "lotties/snow_tree.json"
-        },
-        "notification_templates": [
-            "Merry Christmas! May your days be merry and bright."
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Holika Dahan",
+        "description": "Gather around the bonfire on the eve of Holi, offer prayers, and roast stalks of wheat or gram in the fire.",
+        "items_needed": [
+          "Wood",
+          "Cow dung cakes",
+          "Wheat/Gram stalks",
+          "Kumkum"
         ]
-    },
-    {
-        "slug": "republic-day-2026",
-        "title": "Republic Day",
-        "category": "National",
-        "priority": 10,
-        "tags": [
-            "india",
-            "patriotic",
-            "flag",
-            "jai hind",
-            "parade"
-        ],
-        "description": "Honoring the date on which the Constitution of India came into effect.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-01-26"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Tricolor Flag",
-            "filename": "tricolor_flag.json",
-            "s3_key": "lotties/tricolor_flag.json"
-        },
-        "notification_templates": [
-            "Happy Republic Day! Let's honor the constitution and freedom of our nation."
+      },
+      {
+        "order": 2,
+        "title": "Preparation",
+        "description": "Oil your hair and skin in the morning to protect against harsh colors.",
+        "items_needed": [
+          "Coconut or Mustard Oil"
         ]
+      },
+      {
+        "order": 3,
+        "title": "Playing Colors",
+        "description": "Apply dry Gulal on elders' feet for blessings, and playfully splash wet colors on friends and family.",
+        "items_needed": [
+          "Gulal",
+          "Pichkari (Water Gun)",
+          "Water balloons"
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Feasting",
+        "description": "Share traditional sweets like Gujiya and drinks like Thandai with neighbors and loved ones.",
+        "items_needed": [
+          "Gujiya",
+          "Sweets"
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "White",
+        "Bright Yellow",
+        "Red"
+      ],
+      "description": "White is the universally loved color for Holi as it acts as a perfect canvas for the vibrant colors (Gulal) thrown during the day. Avoid expensive or newly bought clothes."
     },
-    {
-        "slug": "independence-day-2026",
-        "title": "Independence Day",
-        "category": "National",
-        "priority": 10,
-        "tags": [
-            "india",
-            "patriotic",
-            "freedom",
-            "jai hind"
+    "recipes": [
+      {
+        "name": "Traditional Gujiya",
+        "description": "A classic Holi sweet: deep-fried pastry filled with sweetened khoya and dried fruits.",
+        "ingredients": [
+          "2 cups Maida (All-purpose flour)",
+          "1 cup Khoya (Mawa)",
+          "1/2 cup Powdered sugar",
+          "Chopped dry fruits (Almonds, Cashews)",
+          "Cardamom powder",
+          "Ghee for frying"
         ],
-        "description": "Commemorating India's independence from the United Kingdom.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-08-15"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Kite Flying",
-            "filename": "kite_flying.json",
-            "s3_key": "lotties/kite_flying.json"
-        }
+        "steps": [
+          "Knead maida with water and 2 tbsp ghee to make a firm dough. Let it rest.",
+          "Roast khoya slightly, let it cool. Mix in sugar, dry fruits, and cardamom.",
+          "Roll small dough circles, place a spoonful of filling, fold into half moon, and seal the edges tightly.",
+          "Deep fry in medium-hot ghee until golden brown. Serve crisp."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "diwali-2026",
+    "title": "Diwali",
+    "category": "Festival",
+    "priority": 10,
+    "tags": [
+      "lights",
+      "diya",
+      "crackers",
+      "lakshmi",
+      "hindu",
+      "party"
+    ],
+    "description": "The grand festival of lights celebrating the return of Lord Rama to Ayodhya.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-11-08"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Diwali Diyas",
+      "filename": "diwali_diyas.json",
+      "s3_key": "lotties/diwali_diyas.json"
     },
-    {
-        "slug": "shivaji-maharaj-jayanti-2026",
-        "title": "Shivaji Maharaj Jayanti",
-        "category": "National",
-        "priority": 9,
-        "tags": [
-            "shivaji",
-            "maratha",
-            "bravery",
-            "maharashtra"
-        ],
-        "description": "Birth anniversary of the great Maratha emperor, Chhatrapati Shivaji Maharaj.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-02-19"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Saffron Flag Waving",
-            "filename": "saffron_flag_waving.json",
-            "s3_key": "lotties/saffron_flag_waving.json"
-        }
+    "ambient_audio_slug": "diwali-aarti-bells",
+    "muhurat": {
+      "puja_time": "06:01 PM to 08:00 PM",
+      "type": "Lakshmi Puja Muhurat",
+      "description": "The Pradosh Kaal mixed with Amavasya tithi, the ideal window to pray to Goddess Lakshmi and Lord Ganesha."
     },
-    {
-        "slug": "ambedkar-jayanti-2026",
-        "title": "Ambedkar Jayanti",
-        "category": "National",
-        "priority": 9,
-        "tags": [
-            "equality",
-            "constitution",
-            "india",
-            "dalit"
-        ],
-        "description": "Birth anniversary of B. R. Ambedkar, the father of the Indian Constitution.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-04-14"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Constitution Book",
-            "filename": "constitution_book.json",
-            "s3_key": "lotties/constitution_book.json"
-        }
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Cleaning (Safai)",
+        "description": "Start by thoroughly cleaning the entire house to welcome Goddess Lakshmi.",
+        "items_needed": []
+      },
+      {
+        "order": 2,
+        "title": "Decorating",
+        "description": "Light Diyas, hang Marigold garlands, and draw vibrant Rangoli at the entrance.",
+        "items_needed": [
+          "Diyas",
+          "Oil/Ghee",
+          "Rangoli colors",
+          "Flowers"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Lakshmi Puja",
+        "description": "Place idols of Ganesha and Lakshmi. Offer sweets, coins, and perform Aarti.",
+        "items_needed": [
+          "Idols",
+          "Silver/Gold coin",
+          "Sweets",
+          "Aarti plate"
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Celebration",
+        "description": "Distribute sweets to neighbors and burst green crackers safely.",
+        "items_needed": [
+          "Sweets",
+          "Sparklers"
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Gold",
+        "Red",
+        "Maroon",
+        "Bright Pink"
+      ],
+      "description": "Diwali is the grandest festival, calling for heavy, rich, and brand new traditional clothing. Silks, brocades, and bright festive colors are preferred."
     },
-    {
-        "slug": "gandhi-jayanti-2026",
-        "title": "Gandhi Jayanti",
-        "category": "National",
-        "priority": 10,
-        "tags": [
-            "gandhi",
-            "bapu",
-            "non-violence",
-            "ahimsa",
-            "india"
+    "recipes": [
+      {
+        "name": "Besan Ladoo",
+        "description": "Classic Diwali sweet made from roasted gram flour, ghee, and sugar.",
+        "ingredients": [
+          "2 cups Besan (Gram flour)",
+          "1 cup Ghee",
+          "1 cup Powdered sugar",
+          "Cardamom powder",
+          "Chopped almonds"
         ],
-        "description": "Birth anniversary of Mahatma Gandhi, the father of the nation.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-10-02"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Spinning Charkha",
-            "filename": "spinning_charkha.json",
-            "s3_key": "lotties/spinning_charkha.json"
-        }
-    },
-    {
-        "slug": "valentines-day-2026",
-        "title": "Valentine's Day",
-        "category": "International",
-        "priority": 7,
-        "tags": [
-            "love",
-            "romance",
-            "couple",
-            "heart",
-            "party"
-        ],
-        "description": "A global day celebrating love and affection between intimate companions.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-02-14"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Floating Hearts",
-            "filename": "floating_hearts.json",
-            "s3_key": "lotties/floating_hearts.json"
-        }
-    },
-    {
-        "slug": "international-yoga-day-2026",
-        "title": "International Yoga Day",
-        "category": "International",
-        "priority": 8,
-        "tags": [
-            "yoga",
-            "health",
-            "meditation",
-            "spiritual",
-            "peaceful"
-        ],
-        "description": "Recognizing the universal appeal and profound benefits of Yoga.",
-        "dates": [
-            {
-                "year": 2026,
-                "date": "2026-06-21"
-            }
-        ],
-        "lottie_overlay": {
-            "title": "Lotus Pose",
-            "filename": "lotus_pose.json",
-            "s3_key": "lotties/lotus_pose.json"
-        }
+        "steps": [
+          "Melt ghee in a heavy pan and add besan. Roast on low flame until golden brown and aromatic (approx 20 mins).",
+          "Let the mixture cool slightly.",
+          "Mix in sugar, cardamom, and nuts.",
+          "Take small portions and roll them tightly into round balls (ladoos)."
+        ]
+      }
+    ],
+    "notification_templates": {
+      "discovery": "Diwali marks Lord Rama's return to Ayodhya after 14 years. It is a celebration of inner light.",
+      "countdown": "Diwali is only a week away! Time to finish the deep cleaning and start making sweets.",
+      "eve": "Tomorrow is Diwali! Prepare the diyas and the rangoli to welcome Maa Lakshmi.",
+      "day_of": "Happy Diwali! 🪔✨ May your life be illuminated with endless prosperity, health, and joy."
     }
+  },
+  {
+    "slug": "navratri-2026",
+    "title": "Navratri & Durga Puja",
+    "category": "Festival",
+    "priority": 10,
+    "tags": [
+      "durga",
+      "garba",
+      "dandiya",
+      "devi",
+      "hindu",
+      "dance"
+    ],
+    "description": "Nine nights celebrating the divine feminine and Goddess Durga.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-10-08"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Garba Dance",
+      "filename": "garba_dance.json",
+      "s3_key": "lotties/garba_dance.json"
+    },
+    "ambient_audio_slug": "garba-dandiya-beat",
+    "muhurat": {
+      "puja_time": "06:11 AM to 10:11 AM (Ghatasthapana)",
+      "type": "Pratipada Tithi",
+      "description": "The most auspicious window to establish the Kalash on the first day of Sharadiya Navratri."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Ghatasthapana",
+        "description": "Sow barley seeds in clay and set up the copper Kalash.",
+        "items_needed": [
+          "Earthen pot",
+          "Barley",
+          "Kalash",
+          "Mango leaves",
+          "Coconut"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Fasting",
+        "description": "Observe a pure Sattvic fast throughout the 9 days.",
+        "items_needed": [
+          "Fruits",
+          "Buckwheat",
+          "Milk"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Garba / Dandiya",
+        "description": "Participate in traditional devotional dance rituals in the evening.",
+        "items_needed": [
+          "Dandiya Sticks",
+          "Traditional Attire"
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Maha Ashtami Kanya Pujan",
+        "description": "Worship young girls as the embodiment of Goddess Durga.",
+        "items_needed": [
+          "Puri",
+          "Halwa",
+          "Chana",
+          "Gifts"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Sabudana Vada",
+        "description": "Crispy fried tapioca pearl patties often eaten during fasting.",
+        "ingredients": [
+          "1 cup Sabudana",
+          "2 boiled potatoes",
+          "Roasted peanuts",
+          "Green chili",
+          "Rock salt"
+        ],
+        "steps": [
+          "Soak sabudana for 4 hours.",
+          "Mash potatoes and mix with sabudana, crushed peanuts, chili, and salt.",
+          "Shape into patties and deep fry until golden."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Red",
+        "Royal Blue",
+        "Yellow",
+        "Green",
+        "Grey",
+        "Orange",
+        "White",
+        "Pink",
+        "Purple"
+      ],
+      "description": "Each of the 9 days carries a specific color corresponding to the Navadurga."
+    },
+    "notification_templates": {
+      "discovery": "Navratri is not just a dance festival; it's a 9-day journey honoring the divine feminine.",
+      "countdown": "Sharad Navratri is 7 days away! Ready your Chaniya Cholis and Kurta Pajamas.",
+      "eve": "Tomorrow begins the 9 divine nights of Navratri! Jai Ambe Maa.",
+      "day_of": "Happy Navratri! Step into the cosmic rhythm of devotion and Garba."
+    }
+  },
+  {
+    "slug": "ganesh-chaturthi-2026",
+    "title": "Ganesh Chaturthi",
+    "category": "Festival",
+    "priority": 10,
+    "tags": [
+      "ganesha",
+      "bappa",
+      "modak",
+      "hindu",
+      "festival"
+    ],
+    "description": "Welcoming Lord Ganesha, the remover of obstacles.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-09-12"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Modak Drop",
+      "filename": "modak_drop.json",
+      "s3_key": "lotties/modak_drop.json"
+    },
+    "ambient_audio_slug": "ganesha-aarti",
+    "muhurat": {
+      "puja_time": "11:05 AM to 01:36 PM",
+      "type": "Madhyahna Ganesha Puja",
+      "description": "Ganesha is believed to have been born during Madhyahna (midday), making this the most auspicious time for Sthapana."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Pranapratishtha",
+        "description": "Install the eco-friendly Ganesha idol on a raised platform during the auspicious time.",
+        "items_needed": [
+          "Ganesha Idol",
+          "Wooden Stool",
+          "Red cloth"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Shodashopachara",
+        "description": "Perform 16-step worship including offering Durva grass, red Hibiscus flowers, and Modaks.",
+        "items_needed": [
+          "Durva grass",
+          "Hibiscus flowers",
+          "Modaks",
+          "Sandalwood paste"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Aarti",
+        "description": "Sing the Ganesh Aarti ('Jai Ganesh Jai Ganesh') with family while ringing bells and offering camphor.",
+        "items_needed": [
+          "Camphor",
+          "Aarti Thali",
+          "Bell"
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Visarjan",
+        "description": "After 1.5, 3, 5, 7, or 10 days, bid farewell and immerse the idol in a water body.",
+        "items_needed": [
+          "Water tank (for eco-friendly immersion)"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Ukadiche Modak",
+        "description": "Steamed sweet dumplings made of rice flour, filled with coconut and jaggery.",
+        "ingredients": [
+          "1 cup Rice flour",
+          "1 cup Grated fresh coconut",
+          "1/2 cup Jaggery",
+          "Cardamom powder",
+          "1 tsp Ghee"
+        ],
+        "steps": [
+          "Cook coconut and jaggery together until melting. Add cardamom. This is the filling.",
+          "Boil 1 cup water with a pinch of salt and ghee. Turn off heat, stir in rice flour, cover for 5 mins.",
+          "Knead the hot dough until smooth.",
+          "Shape dough into small bowls, fill with the coconut mixture, pinch the edges to form a peak.",
+          "Steam for 10-12 minutes. Serve hot with a drizzle of ghee."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Red",
+        "Yellow",
+        "Orange"
+      ],
+      "description": "Traditional Maharashtrian attire like Nauvari sarees for women and Kurta-pajamas with a Pheta (turban) for men are popular. Bright red is Ganesha's favored color."
+    },
+    "notification_templates": {
+      "discovery": "Ganesha loves Durva grass! Offering 21 blades of Durva clears obstacles. Prepare for Chaturthi.",
+      "countdown": "Bappa is arriving in 7 days! Have you booked your eco-friendly idol?",
+      "eve": "Tomorrow is Ganesh Chaturthi! Clean the mandap and prepare the Modak ingredients.",
+      "day_of": "Ganpati Bappa Morya! 🐘🌺 Wishing you an auspicious Ganesh Chaturthi filled with wisdom and joy."
+    }
+  },
+  {
+    "slug": "krishna-janmashtami-2026",
+    "title": "Krishna Janmashtami",
+    "category": "Religious",
+    "priority": 10,
+    "tags": [
+      "krishna",
+      "kanha",
+      "dahi handi",
+      "hindu"
+    ],
+    "description": "Celebrating the divine birth of Lord Krishna.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-09-04"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Flute & Peacock",
+      "filename": "flute_peacock.json",
+      "s3_key": "lotties/flute_peacock.json"
+    },
+    "ambient_audio_slug": "krishna-flute-melody",
+    "muhurat": {
+      "puja_time": "12:01 AM to 12:45 AM",
+      "type": "Nishita Kaal",
+      "description": "Midnight marks the exact time of Lord Krishna's birth in Mathura."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Fasting",
+        "description": "Observe a strict fast for the entire day until midnight.",
+        "items_needed": []
+      },
+      {
+        "order": 2,
+        "title": "Footprints",
+        "description": "Draw small footprints from the doorstep to the puja room symbolizing child Krishna entering the house.",
+        "items_needed": [
+          "Rice flour paste"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Midnight Bathing",
+        "description": "At midnight, bathe the idol of Bal Krishna (Laddu Gopal) in Panchamrit.",
+        "items_needed": [
+          "Panchamrit",
+          "Bal Krishna Idol"
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Swinging & Offering",
+        "description": "Dress the idol in new clothes, place Him in a swing, and offer Makhan Mishri.",
+        "items_needed": [
+          "New deity clothes",
+          "Swing",
+          "Makhan",
+          "Mishri"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Makhan Mishri",
+        "description": "Lord Krishna's absolute favorite: freshly churned white butter mixed with rock sugar.",
+        "ingredients": [
+          "1 cup Fresh cream (Malai) or homemade white butter",
+          "2 tbsp Mishri (crystallized sugar lumps)",
+          "Tulsi leaves"
+        ],
+        "steps": [
+          "If using cream, churn it vigorously until the whey separates and the white butter (makhan) gathers.",
+          "Collect the butter, wash it gently with chilled water.",
+          "Mix in the mishri crystals.",
+          "Place a Tulsi leaf on top before offering it to the deity."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Yellow",
+        "Orange",
+        "Peacock Blue"
+      ],
+      "description": "Bright, festive colors. Children are often dressed up as young Krishna or Radha, complete with a peacock feather resting on the crown."
+    },
+    "notification_templates": {
+      "discovery": "Did you know? Krishna's favorite Makhan Mishri represents the purity and sweetness of devotion.",
+      "countdown": "Only 1 week until Janmashtami! Get your Laddu Gopal's poshak and swing ready.",
+      "eve": "Tonight is Janmashtami Eve! The midnight bells will ring soon to celebrate His birth.",
+      "day_of": "Happy Janmashtami! May the melodies of Krishna's flute fill your life with love and joy. 🦚🍯"
+    }
+  },
+  {
+    "slug": "ram-navami-2026",
+    "title": "Ram Navami",
+    "category": "Religious",
+    "priority": 9,
+    "tags": [
+      "rama",
+      "ayodhya",
+      "hindu",
+      "spiritual"
+    ],
+    "description": "Celebrating the birth of Lord Rama.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-03-27"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Bow & Arrow",
+      "filename": "bow_arrow.json",
+      "s3_key": "lotties/bow_arrow.json"
+    },
+    "muhurat": {
+      "puja_time": "11:04 AM to 01:35 PM",
+      "type": "Madhyahna Muhurat",
+      "description": "The time during the middle of the day marking the exact moment Lord Rama was born in Ayodhya."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Morning Snana",
+        "description": "Take a holy bath early in the morning and wear clean, fresh clothes.",
+        "items_needed": [
+          "Water"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Cradle Setup",
+        "description": "Place a small idol of infant Rama (Ram Lalla) in a beautifully decorated miniature cradle.",
+        "items_needed": [
+          "Idol of Ram Lalla",
+          "Miniature Cradle",
+          "Flowers"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Madhyahna Puja",
+        "description": "Perform Aarti exactly at noon, the time of His birth, offering Panjiri and Panchamrit.",
+        "items_needed": [
+          "Aarti Thali",
+          "Panjiri",
+          "Panchamrit"
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Ramayana Path",
+        "description": "Read or listen to the Ramcharitmanas or chant the Rama Raksha Stotra.",
+        "items_needed": [
+          "Ramayana Book"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Panjiri",
+        "description": "A traditional wheat-based sweet offering commonly made for Ram Navami.",
+        "ingredients": [
+          "1 cup Whole wheat flour (Atta)",
+          "1/2 cup Ghee",
+          "1/2 cup Powdered sugar",
+          "Chopped dry fruits",
+          "Tulsi leaves"
+        ],
+        "steps": [
+          "Melt ghee in a heavy-bottomed pan.",
+          "Add wheat flour and roast continuously on low flame until it turns golden brown and gives off an aroma.",
+          "Turn off the heat, let it cool slightly, then mix in the sugar and dry fruits.",
+          "Offer to the deity with a Tulsi leaf before consuming."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Saffron",
+        "Yellow"
+      ],
+      "description": "Yellow is considered highly auspicious for Lord Rama. Devotees often wear yellow or ochre traditional clothing like kurtas, sarees, or dhotis."
+    },
+    "notification_templates": {
+      "discovery": "Lord Rama is the 7th avatar of Vishnu, born representing truth and morality. Tap to learn His story.",
+      "countdown": "Ram Navami is 7 days away! Prepare your home to welcome the birth of Lord Rama.",
+      "eve": "Tomorrow is Ram Navami. Prepare the cradle and the Panjiri prasadam!",
+      "day_of": "Happy Ram Navami! May the divine grace of Maryada Purushottam Ram always be with you. 🏹🙏"
+    }
+  },
+  {
+    "slug": "raksha-bandhan-2026",
+    "title": "Raksha Bandhan",
+    "category": "Festival",
+    "priority": 9,
+    "tags": [
+      "rakhi",
+      "brother",
+      "sister",
+      "love",
+      "family"
+    ],
+    "description": "Celebrating the pure bond between brothers and sisters.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-08-28"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Rakhi Thread",
+      "filename": "rakhi_thread.json",
+      "s3_key": "lotties/rakhi_thread.json"
+    },
+    "muhurat": {
+      "puja_time": "01:30 PM to 09:08 PM",
+      "type": "Aparahna Time",
+      "description": "The best time to tie the Rakhi, avoiding the inauspicious Bhadra period."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Preparation",
+        "description": "Prepare the Rakhi thali with an earthen lamp, kumkum, rice, and sweets.",
+        "items_needed": [
+          "Thali",
+          "Rakhi",
+          "Diya",
+          "Kumkum",
+          "Akshat (Rice)",
+          "Sweets"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Aarti",
+        "description": "The sister performs the Aarti of the brother to ward off the evil eye.",
+        "items_needed": [
+          "Aarti Thali"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Tying the Rakhi",
+        "description": "Sister ties the sacred Rakhi thread on the brother's right wrist.",
+        "items_needed": [
+          "Rakhi Thread"
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Vow & Sweets",
+        "description": "Brother pledges to protect her, and they feed each other sweets.",
+        "items_needed": [
+          "Sweets",
+          "Gifts"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Kaju Katli",
+        "description": "A diamond-shaped cashew fudge, universally loved for Rakhi.",
+        "ingredients": [
+          "1 cup Cashew powder",
+          "1/2 cup Sugar",
+          "1/4 cup Water",
+          "Silver leaf (optional)"
+        ],
+        "steps": [
+          "Boil sugar and water to single-string consistency.",
+          "Add cashew powder and stir quickly on low heat.",
+          "Wait until it leaves the pan sides. Knead gently.",
+          "Roll flat and cut into diamond shapes."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Pink",
+        "Yellow",
+        "Orange"
+      ],
+      "description": "Bright ethnic wear. Brothers often wear kurtas, and sisters wear vibrant salwar suits or lehengas."
+    },
+    "notification_templates": {
+      "discovery": "Did you know Raksha Bandhan literally translates to 'The Bond of Protection'?",
+      "countdown": "Only 1 week until Raksha Bandhan! Have you bought the perfect Rakhi and gift?",
+      "eve": "Tomorrow is Raksha Bandhan! Prepare the thali and the sweets.",
+      "day_of": "Happy Raksha Bandhan! Celebrate the unbreakable bond between brothers and sisters. 💕"
+    }
+  },
+  {
+    "slug": "eid-al-fitr-2026",
+    "title": "Eid al-Fitr",
+    "category": "Festival",
+    "priority": 10,
+    "tags": [
+      "islam",
+      "eid",
+      "celebration",
+      "feast",
+      "moon"
+    ],
+    "description": "The festival marking the end of the fasting month of Ramadan.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-03-20"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Crescent Moon",
+      "filename": "crescent_moon.json",
+      "s3_key": "lotties/crescent_moon.json"
+    },
+    "muhurat": {
+      "puja_time": "Morning (Post-Sunrise)",
+      "type": "Salat al-Eid",
+      "description": "The special Eid prayer performed in congregation in an open field or large mosque."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Zakat al-Fitr",
+        "description": "Give mandatory charity before the Eid prayer to purify those who fasted.",
+        "items_needed": [
+          "Money/Food equivalent"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Ghusl",
+        "description": "Perform full ablution (Ghusl) before heading out for prayers.",
+        "items_needed": [
+          "Water",
+          "Attar (Perfume)"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Salat al-Eid",
+        "description": "Attend the congregational prayer consisting of two Rakat with extra Takbirs.",
+        "items_needed": [
+          "Prayer Mat"
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Feasting",
+        "description": "Enjoy sweet dishes, especially Sheer Khurma, and exchange Eid Mubarak greetings.",
+        "items_needed": [
+          "Sheer Khurma",
+          "Eidi (Gifts/Cash)"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Sheer Khurma",
+        "description": "A rich vermicelli pudding made with milk, dates, and nuts, traditional for Eid-ul-Fitr.",
+        "ingredients": [
+          "1/2 cup Roasted fine vermicelli (Seviyan)",
+          "1 liter Full-fat milk",
+          "1/2 cup Sugar",
+          "Dates (Khurma)",
+          "Ghee",
+          "Almonds, Pistachios, Cardamom"
+        ],
+        "steps": [
+          "Fry vermicelli and chopped dry fruits in ghee until golden.",
+          "Boil milk and add chopped dates; let it simmer until reduced slightly.",
+          "Add the fried vermicelli and sugar.",
+          "Cook for 5-7 minutes. Serve hot or chilled."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "White",
+        "Green",
+        "Pastels"
+      ],
+      "description": "New or clean traditional clothes. Men often wear Shalwar Kameez or Kurta with Attar (non-alcoholic perfume)."
+    },
+    "notification_templates": {
+      "discovery": "Eid al-Fitr translates to the 'Festival of Breaking the Fast', marking the end of Ramadan.",
+      "countdown": "Only 7 days left of Ramadan! Let us multiply our good deeds as Eid approaches.",
+      "eve": "The new moon has been sighted! Tomorrow is Eid al-Fitr. Don't forget your Zakat.",
+      "day_of": "Eid Mubarak! 🌙✨ May Allah accept your fasting, prayers, and good deeds."
+    }
+  },
+  {
+    "slug": "christmas-2026",
+    "title": "Christmas",
+    "category": "Festival",
+    "priority": 10,
+    "tags": [
+      "christian",
+      "holidays",
+      "winter",
+      "santa",
+      "jesus"
+    ],
+    "description": "Annual festival commemorating the birth of Jesus Christ.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-12-25"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Snow Tree",
+      "filename": "snow_tree.json",
+      "s3_key": "lotties/snow_tree.json"
+    },
+    "ambient_audio_slug": "church-bells-christmas",
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Advent Preparation",
+        "description": "Set up the Christmas Tree and the Nativity Scene (Crib) depicting the birth of Jesus.",
+        "items_needed": [
+          "Christmas Tree",
+          "Decorations",
+          "Nativity Set"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Midnight Mass",
+        "description": "Attend the solemn Midnight Mass at the local church.",
+        "items_needed": [
+          "Bible",
+          "Rosary"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Caroling",
+        "description": "Sing joyful carols celebrating the Savior’s birth.",
+        "items_needed": [
+          "Carol Booklets"
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Feasting",
+        "description": "Share a grand Christmas dinner with plum cake and exchange gifts.",
+        "items_needed": [
+          "Plum Cake",
+          "Wine",
+          "Gifts"
+        ]
+      }
+    ],
+    "muhurat": {
+      "puja_time": "Midnight",
+      "type": "Midnight Mass",
+      "description": "The deeply spiritual Midnight Mass marking the exact moment of Christ's nativity."
+    },
+    "recipes": [
+      {
+        "name": "Traditional Plum Cake",
+        "description": "A dense, rich fruit cake synonymous with Christmas in India.",
+        "ingredients": [
+          "1 cup Flour",
+          "Mixed dry fruits and peels (soaked in rum/grape juice for weeks)",
+          "Butter",
+          "Brown Sugar",
+          "Eggs",
+          "Cinnamon, Nutmeg, Cloves"
+        ],
+        "steps": [
+          "Cream butter and sugar.",
+          "Add eggs one by one.",
+          "Fold in flour, spices, and the soaked fruits.",
+          "Bake at 160°C for 60-75 mins until a skewer comes out clean."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Red",
+        "Green",
+        "White",
+        "Gold"
+      ],
+      "description": "Festive elegant wear. Red dominates, symbolizing the blood of Christ, while Green represents eternal life."
+    },
+    "notification_templates": {
+      "discovery": "The star on top of the Christmas tree represents the Star of Bethlehem that guided the Wise Men.",
+      "countdown": "Just one week until Christmas! Time to wrap gifts and finish decorating the tree.",
+      "eve": "Tonight is Christmas Eve! Prepare for the joyous Midnight Mass.",
+      "day_of": "Merry Christmas! 🎄✨ May the birth of Jesus bring eternal joy and peace to your family."
+    }
+  },
+  {
+    "slug": "buddha-purnima-2026",
+    "title": "Buddha Purnima",
+    "category": "Religious",
+    "priority": 9,
+    "tags": [
+      "buddha",
+      "peace",
+      "enlightenment",
+      "spiritual"
+    ],
+    "description": "Celebrating the birth, enlightenment, and death of Gautama Buddha.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-05-31"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Lotus Bloom",
+      "filename": "lotus_bloom.json",
+      "s3_key": "lotties/lotus_bloom.json"
+    },
+    "ambient_audio_slug": "buddha-meditation",
+    "muhurat": {
+      "puja_time": "Morning",
+      "type": "Purnima",
+      "description": "The holiest day in Buddhism observing the birth, enlightenment, and death (Parinirvana) of Gautama Buddha."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Bathing the Buddha",
+        "description": "Pour water over the shoulders of a small Buddha statue, symbolizing purification of the mind from greed, anger, and ignorance.",
+        "items_needed": [
+          "Buddha Statue",
+          "Clean Water",
+          "Basin"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Sutra Chanting",
+        "description": "Visit a Vihara (temple) to listen to monks chant the Dharma.",
+        "items_needed": [
+          "White Clothes"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Vegetarianism",
+        "description": "Abstain from meat entirely in honor of the Buddha’s teachings of compassion (Ahimsa).",
+        "items_needed": [
+          "Vegetarian Food"
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Dana (Giving)",
+        "description": "Offer food and basic necessities to monks and the underprivileged.",
+        "items_needed": [
+          "Donations"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Kheer",
+        "description": "A simple sweet rice pudding. Legend says a woman named Sujata offered a bowl of milk-rice to Buddha right before his enlightenment.",
+        "ingredients": [
+          "Basmati Rice",
+          "Milk",
+          "Sugar"
+        ],
+        "steps": [
+          "Boil milk until thickened.",
+          "Add washed rice and cook on slow heat.",
+          "Stir in sugar. Serve simple without extravagant spices representing asceticism."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "White"
+      ],
+      "description": "Plain white clothing is highly encouraged to symbolize purity, simplicity, and the shedding of worldly desires."
+    },
+    "notification_templates": {
+      "discovery": "Buddha Purnima powerfully commemorates three events: Buddha's birth, his enlightenment, and his final nirvana.",
+      "countdown": "Buddha Purnima is in 7 days. Reflect on the Four Noble Truths.",
+      "eve": "Tomorrow is Buddha Purnima. Prepare for a day of peace, giving, and simple vegetarian means.",
+      "day_of": "Happy Buddha Purnima! ☸️ May you find true inner peace and walk the Middle Path."
+    }
+  },
+  {
+    "slug": "hanuman-jayanti-2026",
+    "title": "Hanuman Jayanti",
+    "category": "Religious",
+    "priority": 8,
+    "tags": [
+      "hanuman",
+      "bajrangbali",
+      "strength",
+      "hindu"
+    ],
+    "description": "Celebrating the birth and superhuman strength of Lord Hanuman.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-04-04"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Mace Gada",
+      "filename": "mace_gada.json",
+      "s3_key": "lotties/mace_gada.json"
+    },
+    "muhurat": {
+      "puja_time": "Sunrise",
+      "type": "Pratah Kaal",
+      "description": "Lord Hanuman was born at sunrise on the Full Moon day of Chaitra."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Temple Visit",
+        "description": "Visit a Hanuman temple early in the morning and offer Sindoor.",
+        "items_needed": [
+          "Sindoor",
+          "Jasmine Oil"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Chanting",
+        "description": "Read the Hanuman Chalisa, Bajrang Baan, or Sunderkand.",
+        "items_needed": [
+          "Hanuman Chalisa Book/App"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Offerings",
+        "description": "Offer Boondi Ladoos, betel leaves, and red flowers.",
+        "items_needed": [
+          "Boondi Ladoos",
+          "Red Hibiscus",
+          "Paan"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Boondi Ladoo",
+        "description": "Sweet gram flour droplets bound together, a favorite of Lord Hanuman.",
+        "ingredients": [
+          "Besan",
+          "Sugar",
+          "Ghee",
+          "Cardamom",
+          "Melon seeds"
+        ],
+        "steps": [
+          "Fry tiny droplets of besan batter in ghee.",
+          "Soak them in warm sugar syrup.",
+          "Add cardamom and seeds, shape into round balls while warm."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Red",
+        "Saffron"
+      ],
+      "description": "Red and Saffron are deeply associated with Hanuman, symbolizing energy and strength."
+    },
+    "notification_templates": {
+      "discovery": "Hanuman embodies pure devotion (Bhakti), strength (Shakti), and absolute surrender.",
+      "countdown": "Hanuman Jayanti is arriving in 7 days! Prepare to chant the powerful Chalisa.",
+      "eve": "Tomorrow is Hanuman Jayanti. Wake up early for the sunrise prayers.",
+      "day_of": "Happy Hanuman Jayanti! May Bajrangbali grant you boundless strength, courage, and devotion. 📿🐒"
+    }
+  },
+  {
+    "slug": "gudi-padwa-ugadi-2026",
+    "title": "Gudi Padwa & Ugadi",
+    "category": "Regional",
+    "priority": 8,
+    "tags": [
+      "new year",
+      "maharashtra",
+      "telugu",
+      "kannada",
+      "spring"
+    ],
+    "description": "The traditional New Year for Maharashtrians and South Indians.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-03-19"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Gudi Flag",
+      "filename": "gudi_flag.json",
+      "s3_key": "lotties/gudi_flag.json"
+    },
+    "muhurat": {
+      "puja_time": "06:15 AM to 08:30 AM",
+      "type": "Pratah Kaal Tithi",
+      "description": "The auspicious morning timeframe marking the beginning of the Hindu New Year."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Oil Bath",
+        "description": "Take a traditional Abhyanga Snan (oil bath) before sunrise.",
+        "items_needed": [
+          "Sesame Oil"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Hoisting the Gudi",
+        "description": "Erect the Gudi (a pole adorned with a silk cloth, neem leaves, and a copper pot inverted on top) outside the house.",
+        "items_needed": [
+          "Bamboo stick",
+          "Silk cloth",
+          "Neem and Mango leaves",
+          "Flower garland",
+          "Copper pot"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Pachadi/Neem Consumption",
+        "description": "Eat a mixture of Neem and Jaggery (or Ugadi Pachadi) signifying the acceptance of life's bitter-sweet moments.",
+        "items_needed": [
+          "Neem leaves",
+          "Jaggery",
+          "Ugadi Pachadi ingredients"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Shrikhand",
+        "description": "A Maharashtrian sweet dish made of strained yogurt flavored with saffron and cardamom.",
+        "ingredients": [
+          "500g Hung Curd",
+          "1 cup Powdered sugar",
+          "Saffron strands",
+          "Cardamom powder",
+          "Pistachios"
+        ],
+        "steps": [
+          "Whisk hung curd and sugar until entirely smooth.",
+          "Add saffron soaked in warm milk and cardamom powder.",
+          "Garnish with pistachios and serve chilled with puris."
+        ]
+      },
+      {
+        "name": "Ugadi Pachadi",
+        "description": "A six-taste concoction representing the diverse experiences of life.",
+        "ingredients": [
+          "Tamarind paste",
+          "Jaggery",
+          "Raw Mango",
+          "Neem flowers",
+          "Chili powder",
+          "Salt"
+        ],
+        "steps": [
+          "Mix all ingredients with water.",
+          "Serve a spoonful to family members before meals."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Yellow",
+        "Orange",
+        "Red"
+      ],
+      "description": "New traditional Indian attire. Nauvari sarees for women and Kurta/Dhoti for men."
+    },
+    "notification_templates": {
+      "discovery": "The bitter-sweet essence of Neem and Jaggery teaches us to accept life's duality gracefully.",
+      "countdown": "The Hindu New Year is just a week away! Ready the Gudi and the Shrikhand?",
+      "eve": "Tomorrow is Gudi Padwa and Ugadi! A glorious start to the new year.",
+      "day_of": "Happy Gudi Padwa & Ugadi! Wishing you a sweet and prosperous new beginning. 🌿🌟"
+    }
+  },
+  {
+    "slug": "dussehra-2026",
+    "title": "Vijayadashami / Dussehra",
+    "category": "Festival",
+    "priority": 10,
+    "tags": [
+      "ravana",
+      "rama",
+      "victory",
+      "hindu"
+    ],
+    "description": "The victory of good over evil, marking the end of Navratri.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-10-17"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Arrow Burning",
+      "filename": "arrow_burning.json",
+      "s3_key": "lotties/arrow_burning.json"
+    },
+    "muhurat": {
+      "puja_time": "02:04 PM to 02:51 PM",
+      "type": "Vijay Muhurat",
+      "description": "The definitive moment of victory, highly auspicious for starting any new endeavor or performing Shastra Puja."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Shastra Puja",
+        "description": "Worship weapons, tools, vehicles, and books as instruments of strength and knowledge.",
+        "items_needed": [
+          "Tools",
+          "Vehicles",
+          "Books",
+          "Kumkum",
+          "Flowers"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Aapta Leaves",
+        "description": "Exchange Aapta leaves (Banni) referring to them as 'Gold', signifying prosperity.",
+        "items_needed": [
+          "Aapta (Banni) leaves"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Ravana Dahan",
+        "description": "Witness the burning of the effigies of Ravana, Kumbhakarna, and Meghanada in the evening.",
+        "items_needed": []
+      },
+      {
+        "order": 4,
+        "title": "Simollanghan",
+        "description": "Cross the boundaries (metaphorical or physical) signifying breaking limits and embarking on new conquests.",
+        "items_needed": []
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Jalebi and Fafda",
+        "description": "A classic Gujarati Dussehra pairing uniting sweet and savory textures.",
+        "ingredients": [
+          "Jalebi",
+          "Fafda (Besan snack)"
+        ],
+        "steps": [
+          "Best sourced fresh from a sweet shop early in the morning.",
+          "Enjoy the contrasting crispy salty fafda with syrupy hot jalebis."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Orange",
+        "Gold",
+        "Red"
+      ],
+      "description": "Festive and formal traditional wear. Royal and bright colors reflecting victory."
+    },
+    "notification_templates": {
+      "discovery": "Dussehra marks the day Lord Rama defeated Ravana. It's the ultimate triumph of Dharma over Adharma.",
+      "countdown": "Only 7 days until Dussehra! Prepare your tools and vehicles for the Shastra Puja.",
+      "eve": "Tomorrow is Dussehra! The effigies will burn, and truth will prevail.",
+      "day_of": "Happy Dussehra (Vijayadashami)! May the forces of good continuously guide you to victory. 🏹🔥"
+    }
+  },
+  {
+    "slug": "chhath-puja-2026",
+    "title": "Chhath Puja",
+    "category": "Regional",
+    "priority": 9,
+    "tags": [
+      "sun",
+      "bihar",
+      "river",
+      "spirituality"
+    ],
+    "description": "Ancient Hindu festival dedicated to Surya, the sun god.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-11-15"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Sun Worship",
+      "filename": "sun_worship.json",
+      "s3_key": "lotties/sun_worship.json"
+    },
+    "muhurat": {
+      "puja_time": "05:27 PM (Sunset) & 06:33 AM (Sunrise)",
+      "type": "Arghya Time",
+      "description": "The precise timing of offering water to the Setting Sun (Sandhya Arghya) and the Rising Sun (Usha Arghya)."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Nahay Khay",
+        "description": "Take a holy dip in a river, clean the house, and eat a single sattvic meal.",
+        "items_needed": [
+          "Bottle gourd",
+          "Chana Dal",
+          "Rice"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Kharna",
+        "description": "Observe a strict fast for the entire day and break it after sunset with Rasiya (kheer) and Roti.",
+        "items_needed": [
+          "Rasiya",
+          "Roti"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Sandhya Arghya",
+        "description": "Stand in waist-deep water in a river/pond and offer Arghya to the setting sun.",
+        "items_needed": [
+          "Bamboo basket (Soop)",
+          "Fruits",
+          "Arghya pot",
+          "Water/Milk",
+          "Thekua"
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Usha Arghya",
+        "description": "Offer Arghya to the rising sun the next morning, completing the 36-hour strict fast.",
+        "items_needed": [
+          "Soop",
+          "Arghya offerings"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Thekua",
+        "description": "A deep-fried, crisp, sweet wheat biscuit that is the signature Prasad of Chhath Puja.",
+        "ingredients": [
+          "Whole wheat flour",
+          "Jaggery (melted in water)",
+          "Ghee",
+          "Fennel seeds",
+          "Dry coconut cuts"
+        ],
+        "steps": [
+          "Mix wheat flour with fennel, coconut, and ghee.",
+          "Knead a stiff dough using jaggery water.",
+          "Shape into ovals or rounds using a wooden mold.",
+          "Deep fry in pure ghee on medium heat until dark golden and crisp."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Yellow",
+        "Orange",
+        "Red"
+      ],
+      "description": "Vratis (fasting individuals) mostly wear unstitched, pure cotton yellow or orange sarees/dhotis."
+    },
+    "notification_templates": {
+      "discovery": "Chhath is uniquely dedicated to Chhathi Maiya and Surya Dev (The Sun), thanking them for sustaining life on Earth.",
+      "countdown": "Chhath Puja begins in 7 days. Time to prepare the wheat and jaggery for Thekua.",
+      "eve": "Tomorrow is Nahay Khay! Let the sacred 4-day festival of purity and devotion begin.",
+      "day_of": "Happy Chhath Puja! Stand in the holy waters and offer your prayers to the radiant Sun God. 🌅💧"
+    }
+  },
+  {
+    "slug": "lohri-makar-sankranti-2026",
+    "title": "Lohri & Makar Sankranti",
+    "category": "Regional",
+    "priority": 9,
+    "tags": [
+      "harvest",
+      "kite",
+      "sun",
+      "bonfire"
+    ],
+    "description": "Harvest festivals celebrating the sun's transit into Capricorn.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-01-14"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Kites Flying",
+      "filename": "kites_flying.json",
+      "s3_key": "lotties/kites_flying.json"
+    },
+    "muhurat": {
+      "puja_time": "07:15 PM (Lohri) | 08:30 AM (Makar Sankranti)",
+      "type": "Bonfire & Punya Kaal",
+      "description": "Lighting of the Lohri Bonfire at dusk, and the Punya Kaal bath at sunrise for Sankranti."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Bonfire (Lohri)",
+        "description": "Light the bonfire in the evening; circumambulate it while tossing til, rewri, and popcorn into the flames.",
+        "items_needed": [
+          "Wood",
+          "Peanuts",
+          "Rewri",
+          "Popcorn",
+          "Sesame seeds"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Holy Snan (Sankranti)",
+        "description": "Take a bath in a sacred river during the morning Punya Kaal.",
+        "items_needed": [
+          "Water"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Kite Flying",
+        "description": "Fly colorful kites on the terrace, soaking in the gentle winter sun.",
+        "items_needed": [
+          "Kites",
+          "Spool (Charkhi)"
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Til-Gud Exchange",
+        "description": "Exchange sesame and jaggery sweets saying 'Til gud ghya, god god bola'.",
+        "items_needed": [
+          "Til Ladoos"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Til Ke Ladoo",
+        "description": "Sesame and jaggery balls, rich in iron and calcium to keep the body warm.",
+        "ingredients": [
+          "1 cup Sesame seeds",
+          "3/4 cup Jaggery",
+          "1 tsp Ghee",
+          "Cardamom powder"
+        ],
+        "steps": [
+          "Dry roast sesame seeds until they pop.",
+          "Melt jaggery with water and ghee until frothy.",
+          "Mix roasted sesame seeds into the hot jaggery.",
+          "Apply drops of water to hands and quickly shape into round balls before it cools."
+        ]
+      },
+      {
+        "name": "Sarson Ka Saag & Makki Ki Roti",
+        "description": "The iconic Punjabi winter meal served during Lohri.",
+        "ingredients": [
+          "Mustard greens",
+          "Spinach",
+          "Corn flour",
+          "Butter/Ghee",
+          "Garlic",
+          "Spices"
+        ],
+        "steps": [
+          "Boil and blend greens.",
+          "Temper with garlic, ginger, and ghee.",
+          "Knead cornflour with warm water into discs and cook on a griddle. Serve with massive dollops of white butter."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Yellow",
+        "Orange",
+        "Bright Red",
+        "Black (specifically for Makar Sankranti in Maharashtra)"
+      ],
+      "description": "Warm Punjabi festive wear like Phulkari suits for Lohri, and often Black sarees for Sankranti to absorb the sun's heat."
+    },
+    "notification_templates": {
+      "discovery": "These festivals mark the end of winter solstice and the Sun's transit into Capricorn (Makara).",
+      "countdown": "Only a week left until Lohri & Makar Sankranti! Get your kites and peanuts ready.",
+      "eve": "Tonight is Lohri! Gather around the bonfire. Tomorrow, we fly kites for Sankranti!",
+      "day_of": "Happy Lohri & Makar Sankranti! May the harvest season bring you boundless prosperity. 🪁🔥"
+    }
+  },
+  {
+    "slug": "baisakhi-vishu-bihu-2026",
+    "title": "Baisakhi, Vishu & Bihu",
+    "category": "Regional",
+    "priority": 9,
+    "tags": [
+      "spring",
+      "harvest",
+      "punjab",
+      "kerala",
+      "assam"
+    ],
+    "description": "Spring harvest festivals across various Indian states.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-04-14"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Vishu Kani",
+      "filename": "vishu_kani.json",
+      "s3_key": "lotties/vishu_kani.json"
+    },
+    "muhurat": {
+      "puja_time": "Morning",
+      "type": "Pratah Kaal",
+      "description": "The commencement of the solar New Year across Punjab (Baisakhi), Kerala (Vishu), and Assam (Rongali Bihu)."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Vishu Kani",
+        "description": "In Kerala, view the auspicious 'Vishu Kani' (golden shower flowers, fruits, gold, mirror) first thing in the morning.",
+        "items_needed": [
+          "Konna flowers",
+          "Fruits",
+          "Gold",
+          "Mirror",
+          "Uruli"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Nagar Kirtan",
+        "description": "In Punjab, participate in Gurdwara processions celebrating the formation of the Khalsa panth.",
+        "items_needed": [
+          "Traditional clothes"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Bihu Dance",
+        "description": "In Assam, men and women perform the traditional Bihu dance to the beats of the Dhol and Pepa.",
+        "items_needed": [
+          "Gamosa",
+          "Dhol"
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Feasting",
+        "description": "Share a grand community or family feast celebrating the Spring harvest.",
+        "items_needed": [
+          "Sadhya/Langar/Pitha"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Til Pitha (Bihu)",
+        "description": "A classic Assamese sweet made of glutinous rice stuffed with black sesame and jaggery.",
+        "ingredients": [
+          "Sticky rice flour",
+          "Black sesame seeds",
+          "Jaggery"
+        ],
+        "steps": [
+          "Roast and grind sesame, mix with jaggery.",
+          "Spread rice flour thinly on a hot tawa.",
+          "Place the stuffing in the center and fold it into a cylindrical roll."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Yellow",
+        "Red",
+        "White/Gold"
+      ],
+      "description": "Vibrant yellow/orange for Baisakhi, Kerala Kasavu (White & Gold) for Vishu, and Muga silk dresses with red motifs for Bihu."
+    },
+    "notification_templates": {
+      "discovery": "Three states, three names, one majestic celebration of the Spring harvest!",
+      "countdown": "Spring New Year is approaching in 7 days! Prepare for the Bihu dances and Vishu Kani.",
+      "eve": "Tomorrow is Baisakhi, Vishu, and Bihu. Arrange the Kani and prepare traditional attire.",
+      "day_of": "Happy Baisakhi, Vishu, & Bihu! Wishing you a bountiful and joyous Solar New Year. 🌾☀️"
+    }
+  },
+  {
+    "slug": "onam-2026",
+    "title": "Onam",
+    "category": "Regional",
+    "priority": 9,
+    "tags": [
+      "kerala",
+      "mahabali",
+      "pookalam",
+      "boat race"
+    ],
+    "description": "Major annual harvest festival celebrated in Kerala.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-08-27"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Snake Boat",
+      "filename": "snake_boat.json",
+      "s3_key": "lotties/snake_boat.json"
+    },
+    "muhurat": {
+      "puja_time": "All Day",
+      "type": "Thiruvonam Asterism",
+      "description": "The main day of Onam when the spirit of the legendary King Mahabali visits Kerala."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Pookalam",
+        "description": "Create intricate floral carpets (Pookalam) at the entrance of the house to welcome King Mahabali.",
+        "items_needed": [
+          "Fresh colorful flowers"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Onakkodi",
+        "description": "Gift and wear new clothes, specifically Kerala Kasavu traditional wear.",
+        "items_needed": [
+          "New Clothes"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Onasadya",
+        "description": "Prepare and serve the grand 26-dish vegetarian feast on a plantain leaf.",
+        "items_needed": [
+          "Plantain leaves",
+          "26 traditional dishes"
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Vallam Kali",
+        "description": "Watch or participate in the spectacular Snake Boat races.",
+        "items_needed": []
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Palada Pradhaman",
+        "description": "The king of Onam sweets: a rich milk and rice-flakes dessert.",
+        "ingredients": [
+          "Rice ada (flakes)",
+          "Full cream milk",
+          "Sugar",
+          "Cardamom",
+          "Cashews"
+        ],
+        "steps": [
+          "Wash and soak the rice ada.",
+          "Boil milk and sugar until slightly reduced and pinkish.",
+          "Add the ada and cook until soft and thickened.",
+          "Garnish with cardamom and cashews."
+        ]
+      },
+      {
+        "name": "Avial",
+        "description": "A thick mixture of 13 vegetables and coconut, seasoned with coconut oil and curry leaves.",
+        "ingredients": [
+          "Mixed local veg (Yam, Plantain, Carrot, Beans, Ash gourd)",
+          "Grated coconut",
+          "Green chillies",
+          "Curd",
+          "Coconut oil",
+          "Curry leaves"
+        ],
+        "steps": [
+          "Boil vegetables lightly.",
+          "Grind coconut and chillies, add to vegetables.",
+          "Mix in beaten curd and simmer.",
+          "Finish with fresh coconut oil and curry leaves."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "White",
+        "Gold"
+      ],
+      "description": "The traditional Kerala Kasavu saree for women and Mundu for men, symbolizing elegance and purity."
+    },
+    "notification_templates": {
+      "discovery": "Onam celebrates the homecoming of the righteous and benevolent Asura King Mahabali.",
+      "countdown": "Onam is just a week away! Have you planned your 26-dish Onasadya menu?",
+      "eve": "Tomorrow is Thiruvonam. Prepare the grand Pookalam and get the plantain leaves ready.",
+      "day_of": "Happy Onam! 🌸🍛 May the spirit of King Mahabali bring prosperity, equality, and joy to your home."
+    }
+  },
+  {
+    "slug": "ramadan-start-2026",
+    "title": "Ramadan Begins",
+    "category": "Religious",
+    "priority": 9,
+    "tags": [
+      "islam",
+      "fasting",
+      "peace",
+      "quran",
+      "spiritual"
+    ],
+    "description": "The beginning of the holy month of fasting, prayer, and reflection.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-02-18"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Ramadan Lantern",
+      "filename": "ramadan_lantern.json",
+      "s3_key": "lotties/ramadan_lantern.json"
+    },
+    "muhurat": {
+      "puja_time": "Pre-Dawn to Sunset",
+      "type": "Sawm (Fasting)",
+      "description": "The daily period of absolute fasting during the holy month."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Suhoor",
+        "description": "Wake up before the Fajr adhan for the pre-dawn meal.",
+        "items_needed": [
+          "Dates",
+          "Water",
+          "Oats"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Fasting",
+        "description": "Abstain from food, water, and sinful behavior from dawn to dusk.",
+        "items_needed": []
+      },
+      {
+        "order": 3,
+        "title": "Iftar",
+        "description": "Break the fast immediately at sunset, traditionally with dates and water.",
+        "items_needed": [
+          "Dates",
+          "Water",
+          "Fruits"
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Taraweeh",
+        "description": "Perform the special lengthy night prayers in congregation.",
+        "items_needed": [
+          "Prayer Mat",
+          "Quran"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Fruit Chaat",
+        "description": "A refreshing and hydrating mix of fruits eaten during Iftar.",
+        "ingredients": [
+          "Bananas, Apples, Melons",
+          "Chaat Masala",
+          "Lemon Juice"
+        ],
+        "steps": [
+          "Chop all fruits evenly.",
+          "Sprinkle chaat masala and fresh lemon juice.",
+          "Toss gently and serve chilled immediately at Maghrib."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Modest Tones",
+        "White"
+      ],
+      "description": "Modest and comfortable clothing suitable for long periods of prayer and fasting."
+    },
+    "notification_templates": {
+      "discovery": "Ramadan is the month the Quran was first revealed to Prophet Muhammad via Angel Jibril.",
+      "countdown": "Only 7 days left until the blessed month of Ramadan begins. Prepare your heart and mind.",
+      "eve": "The crescent has been sighted! Ramadan Mubarak. Tomorrow begins our first fast.",
+      "day_of": "Ramadan Mubarak! 🌙 May this holy month bring you profound spiritual growth, patience, and peace."
+    }
+  },
+  {
+    "slug": "eid-al-adha-2026",
+    "title": "Eid al-Adha",
+    "category": "Religious",
+    "priority": 10,
+    "tags": [
+      "islam",
+      "sacrifice",
+      "eid",
+      "hajj",
+      "spiritual"
+    ],
+    "description": "The Feast of Sacrifice, honoring the willingness of Prophet Ibrahim to sacrifice his son.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-05-27"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Kaaba Glow",
+      "filename": "kaaba_glow.json",
+      "s3_key": "lotties/kaaba_glow.json"
+    },
+    "muhurat": {
+      "puja_time": "Morning (Post-Sunrise)",
+      "type": "Salat al-Eid",
+      "description": "The special Eid prayer followed by the Qurbani (sacrifice)."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Salat al-Eid",
+        "description": "Attend the congregational prayer.",
+        "items_needed": [
+          "Prayer Mat"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Qurbani",
+        "description": "Sacrifice a livestock animal honoring Prophet Ibrahim's obedience to God.",
+        "items_needed": [
+          "Livestock"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Meat Distribution",
+        "description": "Divide the meat into three equal parts: for family, relatives, and the poor.",
+        "items_needed": []
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Mutton Biryani",
+        "description": "The quintessential, aromatic meat and rice dish prepared using the fresh Qurbani meat.",
+        "ingredients": [
+          "Mutton",
+          "Basmati Rice",
+          "Yogurt",
+          "Onions",
+          "Whole Spices",
+          "Saffron"
+        ],
+        "steps": [
+          "Marinate mutton in yogurt and spices.",
+          "Parboil rice with whole spices.",
+          "Layer meat and rice in a heavy pot (Dum).",
+          "Seal and cook on low heat until the meat is tender."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Elegant traditional wear"
+      ],
+      "description": "Wear your best clothes for the prayer, honoring the spirit of sacrifice and celebration."
+    },
+    "notification_templates": {
+      "discovery": "Eid al-Adha honors the willingness of Prophet Ibrahim to sacrifice his son as an act of obedience to God.",
+      "countdown": "Eid al-Adha is in 7 days. Time to complete the Qurbani preparations.",
+      "eve": "Tomorrow is Eid al-Adha! Prepare for the morning prayers and the spirit of charity.",
+      "day_of": "Eid Mubarak! 🌙 May the spirit of sacrifice bring unity, peace, and abundance to your home."
+    }
+  },
+  {
+    "slug": "muharram-ashura-2026",
+    "title": "Muharram (Ashura)",
+    "category": "Religious",
+    "priority": 8,
+    "tags": [
+      "islam",
+      "mourning",
+      "spiritual",
+      "peace"
+    ],
+    "description": "Tenth day of Muharram, a day of remembrance and spiritual reflection.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-06-25"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Peace Dove",
+      "filename": "peace_dove.json",
+      "s3_key": "lotties/peace_dove.json"
+    },
+    "muhurat": {
+      "puja_time": "All Day",
+      "type": "Mourning/Fasting",
+      "description": "A day of profound grief marking the martyrdom of Imam Hussain at Karbala."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Majlis",
+        "description": "Attend gatherings to recite elegies (Nohas) commemorating the tragedy of Karbala.",
+        "items_needed": [
+          "Black clothes"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Ashura Procession",
+        "description": "Participate in or witness the solemn processions featuring Taziyas.",
+        "items_needed": [
+          "Taziya"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Fasting",
+        "description": "Many Sunnis fast on the 9th and 10th of Muharram.",
+        "items_needed": []
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Haleem / Khichda",
+        "description": "A slow-cooked, deeply nourishing meat and grain stew prepared in large cauldrons for community distribution.",
+        "ingredients": [
+          "Wheat, Barley, Lentils",
+          "Meat",
+          "Spices",
+          "Ghee"
+        ],
+        "steps": [
+          "Soak grains overnight.",
+          "Slow cook meat and grains together until they blend entirely.",
+          "Garnish with fried onions, ginger, and lemon."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Black"
+      ],
+      "description": "Strictly black clothing for Shia Muslims as a universal symbol of mourning and grief."
+    },
+    "notification_templates": {
+      "discovery": "Ashura marks the 10th day of Muharram, solemnizing the supreme sacrifice of Imam Hussain for justice.",
+      "countdown": "The Day of Ashura is 7 days away. A time for deep reflection and mourning.",
+      "eve": "Tonight brings the gravity of Ashura. We remember Karbala.",
+      "day_of": "Observing Ashura. May the legacy of Imam Hussain inspire truth, justice, and courage. 🖤"
+    }
+  },
+  {
+    "slug": "guru-gobind-singh-jayanti-2026",
+    "title": "Guru Gobind Singh Jayanti",
+    "category": "Religious",
+    "priority": 9,
+    "tags": [
+      "sikh",
+      "guru",
+      "khalsa",
+      "bravery",
+      "spiritual"
+    ],
+    "description": "Birth anniversary of the tenth Sikh Guru, Guru Gobind Singh Ji.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-01-05"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Khalsa Symbol",
+      "filename": "khalsa_symbol.json",
+      "s3_key": "lotties/khalsa_symbol.json"
+    },
+    "muhurat": {
+      "puja_time": "Morning",
+      "type": "Prakash Utsav",
+      "description": "Celebrating the birth of the 10th Sikh Guru who founded the Khalsa."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Akhand Path",
+        "description": "The conclusion of the 48-hour continuous reading of the Guru Granth Sahib.",
+        "items_needed": [
+          "Guru Granth Sahib"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Nagar Kirtan",
+        "description": "A massive holy procession led by the Panj Pyare carrying the Sikh flag (Nishan Sahib).",
+        "items_needed": [
+          "Nishan Sahib",
+          "Traditional Attire"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Langar",
+        "description": "Volunteering to cook and serve free food to everyone, regardless of caste or religion.",
+        "items_needed": [
+          "Langar ingredients"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Kada Prasad",
+        "description": "The sacred, incredibly rich sweet offered at the Gurdwara.",
+        "ingredients": [
+          "1 cup Whole wheat flour (Atta)",
+          "1 cup Ghee",
+          "1 cup Sugar",
+          "3 cups Water"
+        ],
+        "steps": [
+          "Boil water and sugar to make a syrup.",
+          "Roast the flour heavily in ghee until dark golden brown.",
+          "Carefully pour the syrup into the roasted flour, stirring continuously.",
+          "Serve hot with immense devotion."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Saffron",
+        "Blue",
+        "White"
+      ],
+      "description": "Traditional Sikh attire. Men often wear Turbans in saffron or blue, representing the Khalsa colors."
+    },
+    "notification_templates": {
+      "discovery": "Guru Gobind Singh Ji formulated the Five Ks (Panj Kakar) that define the Sikh identity today.",
+      "countdown": "Guru Gobind Singh Jayanti is in 7 days. Time to volunteer for the Langar preparations.",
+      "eve": "Tomorrow is the Prakash Utsav. The Akhand Path will conclude tomorrow morning.",
+      "day_of": "Waheguru Ji Ka Khalsa, Waheguru Ji Ki Fateh! 🙏 Honoring the courage and teachings of the 10th Guru."
+    }
+  },
+  {
+    "slug": "hola-mohalla-2026",
+    "title": "Hola Mohalla",
+    "category": "Festival",
+    "priority": 8,
+    "tags": [
+      "sikh",
+      "martial arts",
+      "festival",
+      "bravery"
+    ],
+    "description": "Sikh festival celebrated with martial arts exhibitions and poetry.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-03-04"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Nihang Warrior",
+      "filename": "nihang_warrior.json",
+      "s3_key": "lotties/nihang_warrior.json"
+    }
+  },
+  {
+    "slug": "guru-nanak-jayanti-2026",
+    "title": "Guru Nanak Jayanti",
+    "category": "Religious",
+    "priority": 10,
+    "tags": [
+      "sikh",
+      "guru nanak",
+      "gurpurab",
+      "peace",
+      "spiritual"
+    ],
+    "description": "Celebrating the birth of Guru Nanak Dev Ji, the founder of Sikhism.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-11-24"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Ek Onkar",
+      "filename": "ek_onkar.json",
+      "s3_key": "lotties/ek_onkar.json"
+    },
+    "muhurat": {
+      "puja_time": "Morning",
+      "type": "Gurpurab",
+      "description": "Celebrating the birth of the 1st Sikh Guru and the founder of Sikhism."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Prabhat Pheri",
+        "description": "Early morning processions starting from the Gurdwara singing hymns.",
+        "items_needed": [
+          "Musical Instruments"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Akhand Path",
+        "description": "48-hour continuous reading of the Guru Granth Sahib culminates today.",
+        "items_needed": [
+          "Guru Granth Sahib"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Kada Prasad & Langar",
+        "description": "Distribute the holy Prasad and serve free meals to the community.",
+        "items_needed": [
+          "Langar"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Kada Prasad",
+        "description": "Sacred wheat flour sweet.",
+        "ingredients": [
+          "Atta",
+          "Ghee",
+          "Sugar"
+        ],
+        "steps": [
+          "Roast atta in ghee.",
+          "Add sugar syrup.",
+          "Serve warm."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Saffron",
+        "White"
+      ],
+      "description": "Traditional elegant wear, heads must be covered respectfully."
+    },
+    "notification_templates": {
+      "discovery": "Guru Nanak Dev Ji taught three pillars: Naam Japo (chant), Kirat Karo (work honestly), Vand Chhako (share with others).",
+      "countdown": "Gurpurab is 7 days away. Time to join the Prabhat Pheris early in the morning.",
+      "eve": "Tomorrow is Guru Nanak Jayanti. The Gurdwaras will be beautifully illuminated.",
+      "day_of": "Happy Gurpurab! ✨ May the profound teachings of Guru Nanak Dev Ji inspire equity, truth, and compassion."
+    }
+  },
+  {
+    "slug": "mahavir-jayanti-2026",
+    "title": "Mahavir Jayanti",
+    "category": "Religious",
+    "priority": 9,
+    "tags": [
+      "jain",
+      "mahavir",
+      "peace",
+      "ahimsa",
+      "spiritual"
+    ],
+    "description": "Celebrating the birth anniversary of Lord Mahavira.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-03-30"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Peace Dove",
+      "filename": "peace_dove.json",
+      "s3_key": "lotties/peace_dove.json"
+    },
+    "muhurat": {
+      "puja_time": "Morning",
+      "type": "Pratah Kaal",
+      "description": "The celebration of the birth of the 24th and last Tirthankara, Lord Mahavira."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Abhisheka",
+        "description": "Ceremonial bathing of Lord Mahavira's idol.",
+        "items_needed": [
+          "Idol",
+          "Water",
+          "Milk"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Rath Yatra",
+        "description": "A peaceful procession carrying the idol on a chariot.",
+        "items_needed": [
+          "Chariot"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Ahimsa",
+        "description": "Engage strictly in non-violent acts and donate money or food to the poor and animal shelters.",
+        "items_needed": [
+          "Donation"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Pure Jain Thali",
+        "description": "Food prepared strictly without roots (no onion, garlic, or potatoes) adhering to supreme Ahimsa.",
+        "ingredients": [
+          "Green gram",
+          "Plantain",
+          "Spices without roots"
+        ],
+        "steps": [
+          "Prepare a simple, non-spicy meal that involves zero harm to microorganisms."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "White",
+        "Yellow"
+      ],
+      "description": "Simple clothes. Ascetics wear pure white to signify renunciation of worldly ties."
+    },
+    "notification_templates": {
+      "discovery": "Lord Mahavira's core message was 'Live and Let Live', establishing Ahimsa (Non-violence) as the supreme dharma.",
+      "countdown": "Mahavir Jayanti is 7 days away. Plan your donations for animal welfare.",
+      "eve": "Tomorrow is Mahavir Jayanti. Prepare for a day of absolute peace and compassion.",
+      "day_of": "Happy Mahavir Jayanti! 🌿 May the profound principles of Ahimsa and truth guide your life."
+    }
+  },
+  {
+    "slug": "paryushan-parv-2026",
+    "title": "Paryushan Parv",
+    "category": "Religious",
+    "priority": 9,
+    "tags": [
+      "jain",
+      "forgiveness",
+      "fasting",
+      "spiritual"
+    ],
+    "description": "Holy period of fasting, repentance, and forgiveness for Jains.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-09-08"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Folded Hands",
+      "filename": "folded_hands.json",
+      "s3_key": "lotties/folded_hands.json"
+    },
+    "muhurat": {
+      "puja_time": "8 Days",
+      "type": "Fasting & Reflection",
+      "description": "The most important Jain festival of profound fasting, deep reflection, and seeking forgiveness."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Fasting",
+        "description": "Observe intense fasting, drinking only boiled water.",
+        "items_needed": [
+          "Boiled Water"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Pratikraman",
+        "description": "A daily ritual reflecting on spiritual transgressions and repenting.",
+        "items_needed": [
+          "Pratikraman Book"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Samvatsari (Forgiveness)",
+        "description": "On the final day, seek forgiveness from all living beings saying 'Micchami Dukkadam'.",
+        "items_needed": []
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Moong Dal Soup",
+        "description": "A very thin, plain lentil soup for breaking intense fasts.",
+        "ingredients": [
+          "Moong dal",
+          "Salt",
+          "Cumin"
+        ],
+        "steps": [
+          "Boil moong dal until completely soft.",
+          "Add a pinch of salt and cumin.",
+          "Consume warm to ease the stomach."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "White"
+      ],
+      "description": "Plain white attire to symbolize purity, detachment, and humility."
+    },
+    "notification_templates": {
+      "discovery": "Paryushan ends with 'Micchami Dukkadam', deeply asking forgiveness from everyone we may have hurt, intentionally or unintentionally.",
+      "countdown": "Paryushan begins in 7 days. Time to mentally prepare for the spiritual fast.",
+      "eve": "Tomorrow Paryushan begins. May our journey inward be successful.",
+      "day_of": "Micchami Dukkadam! 🙏 Seeking forgiveness from all forms of life for any transgressions in thought, word, or deed."
+    }
+  },
+  {
+    "slug": "bodhi-day-2026",
+    "title": "Bodhi Day",
+    "category": "Religious",
+    "priority": 7,
+    "tags": [
+      "buddhism",
+      "meditation",
+      "enlightenment",
+      "spiritual"
+    ],
+    "description": "Commemorating the day Siddhartha Gautama achieved enlightenment.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-12-08"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Bodhi Tree",
+      "filename": "bodhi_tree.json",
+      "s3_key": "lotties/bodhi_tree.json"
+    }
+  },
+  {
+    "slug": "easter-2026",
+    "title": "Easter Sunday",
+    "category": "Religious",
+    "priority": 9,
+    "tags": [
+      "christian",
+      "resurrection",
+      "spring",
+      "peace"
+    ],
+    "description": "Celebrating the resurrection of Jesus Christ.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-04-05"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Easter Eggs",
+      "filename": "easter_eggs.json",
+      "s3_key": "lotties/easter_eggs.json"
+    }
+  },
+  {
+    "slug": "republic-day-2026",
+    "title": "Republic Day",
+    "category": "National",
+    "priority": 10,
+    "tags": [
+      "india",
+      "patriotic",
+      "flag",
+      "jai hind",
+      "parade"
+    ],
+    "description": "Honoring the date on which the Constitution of India came into effect.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-01-26"
+      }
+    ],
+    "ambient_audio_slug": "tricolor-patriotic",
+    "lottie_overlay": {
+      "title": "Tricolor Flag",
+      "filename": "tricolor_flag.json",
+      "s3_key": "lotties/tricolor_flag.json"
+    },
+    "muhurat": {
+      "puja_time": "Morning",
+      "type": "Flag Hoisting",
+      "description": "The unfurling of the National Flag across the country."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Flag Hoisting",
+        "description": "Unfurl the Tricolor and sing the National Anthem 'Jana Gana Mana'.",
+        "items_needed": [
+          "National Flag"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Parade Viewing",
+        "description": "Watch the grand Republic Day parade at Rajpath showcasing military might and cultural diversity.",
+        "items_needed": [
+          "Television"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Patriotic Programs",
+        "description": "Attend or participate in patriotic songs and dances at schools or community centers.",
+        "items_needed": []
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Tricolor Mithai",
+        "description": "Sweets designed in the three colors of the Indian flag.",
+        "ingredients": [
+          "Coconut/Khoya",
+          "Saffron color",
+          "Green color",
+          "Sugar"
+        ],
+        "steps": [
+          "Divide the sweet mixture into three parts.",
+          "Color one orange and one green.",
+          "Layer them sequentially and press into a barfi shape."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Saffron",
+        "White",
+        "Green"
+      ],
+      "description": "Dress respectfully in traditional or formal wear, often incorporating the colors of the national flag."
+    },
+    "notification_templates": {
+      "discovery": "On this day in 1950, the Constitution of India came into effect, turning the nation into a newly formed Republic.",
+      "countdown": "Republic Day is next week! Prepare your flag and tune into the majestic parade.",
+      "eve": "Tomorrow is Republic Day! Remember the sacrifices of our freedom fighters and the architects of our Constitution.",
+      "day_of": "Happy Republic Day! 🇮🇳 Let us pledge to uphold the values enshrined in our Constitution."
+    }
+  },
+  {
+    "slug": "independence-day-2026",
+    "title": "Independence Day",
+    "category": "National",
+    "priority": 10,
+    "tags": [
+      "india",
+      "patriotic",
+      "freedom",
+      "jai hind"
+    ],
+    "description": "Commemorating India's independence from the United Kingdom.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-08-15"
+      }
+    ],
+    "ambient_audio_slug": "tricolor-patriotic",
+    "lottie_overlay": {
+      "title": "Kite Flying",
+      "filename": "kite_flying.json",
+      "s3_key": "lotties/kite_flying.json"
+    },
+    "muhurat": {
+      "puja_time": "Morning",
+      "type": "Flag Hoisting",
+      "description": "The hoisting of the National Flag honoring India's freedom."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Prime Minister's Address",
+        "description": "Listen to the Prime Minister's speech from the Red Fort.",
+        "items_needed": []
+      },
+      {
+        "order": 2,
+        "title": "Flag Hoisting",
+        "description": "Hoist the Tricolor with pride at homes and offices.",
+        "items_needed": [
+          "National Flag"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Kite Flying",
+        "description": "Participate in the vibrant tradition of kite flying symbolizing freedom.",
+        "items_needed": [
+          "Kites",
+          "Spool"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Tricolor Pulao",
+        "description": "A patriotic rice dish featuring three distinct layers.",
+        "ingredients": [
+          "Basmati Rice",
+          "Carrot puree (Saffron)",
+          "Spinach puree (Green)"
+        ],
+        "steps": [
+          "Cook three separate batches of rice using the differently colored purees.",
+          "Layer them to form a beautiful, patriotic mound of Pulao."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Saffron",
+        "White",
+        "Green"
+      ],
+      "description": "The ubiquitous Tricolor themes dominate the attire today."
+    },
+    "notification_templates": {
+      "discovery": "The Indian National Anthem 'Jana Gana Mana' was originally composed in Bengali by Rabindranath Tagore.",
+      "countdown": "Independence Day is only 7 days away. Get your kites ready!",
+      "eve": "Tomorrow is Independence Day! Hang your flag proudly and prepare for a day of patriotic fervor.",
+      "day_of": "Happy Independence Day! 🇮🇳 Honoring the brave hearts who won us our freedom."
+    }
+  },
+  {
+    "slug": "shivaji-maharaj-jayanti-2026",
+    "title": "Shivaji Maharaj Jayanti",
+    "category": "National",
+    "priority": 9,
+    "tags": [
+      "shivaji",
+      "maratha",
+      "bravery",
+      "maharashtra"
+    ],
+    "description": "Birth anniversary of the great Maratha emperor, Chhatrapati Shivaji Maharaj.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-02-19"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Saffron Flag Waving",
+      "filename": "saffron_flag_waving.json",
+      "s3_key": "lotties/saffron_flag_waving.json"
+    },
+    "muhurat": {
+      "puja_time": "Morning",
+      "type": "Jayanti",
+      "description": "Celebrating the birth of Chhatrapati Shivaji Maharaj, the great Maratha warrior."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Garland Offering",
+        "description": "Offer garlands to the statues and portraits of Chhatrapati Shivaji Maharaj.",
+        "items_needed": [
+          "Garland",
+          "Shivaji Maharaj Portrait"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Processions",
+        "description": "Participate in magnificent processions featuring traditional Lezim dances.",
+        "items_needed": [
+          "Lezim",
+          "Dhol Tasha"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Powada Recitation",
+        "description": "Listen to heroic ballads (Powadas) recounting his valor.",
+        "items_needed": []
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Puran Poli",
+        "description": "The classic Maharashtrian sweet flatbread, synonymous with every major celebration in the state.",
+        "ingredients": [
+          "Chana Dal",
+          "Jaggery",
+          "Wheat Flour",
+          "Ghee"
+        ],
+        "steps": [
+          "Make the sweet lentil filling.",
+          "Stuff into wheat dough and roast generously with ghee."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Saffron (Bhagwa)"
+      ],
+      "description": "Traditional Maharashtrian attire with men often wearing the saffron pheta (turban) indicating Maratha pride."
+    },
+    "notification_templates": {
+      "discovery": "Shivaji Maharaj established a competent and progressive civil rule with the help of a disciplined military and well-structured administrative organizations.",
+      "countdown": "Shiv Jayanti is approaching in 7 days! Prepare to honor the great Maratha King.",
+      "eve": "Tomorrow is Shivaji Maharaj Jayanti. Prepare the garlands and look forward to the Powadas.",
+      "day_of": "Jai Bhavani, Jai Shivaji! 🚩 Honoring the legendary courage and vision of Chhatrapati Shivaji Maharaj today."
+    }
+  },
+  {
+    "slug": "ambedkar-jayanti-2026",
+    "title": "Ambedkar Jayanti",
+    "category": "National",
+    "priority": 9,
+    "tags": [
+      "equality",
+      "constitution",
+      "india",
+      "dalit"
+    ],
+    "description": "Birth anniversary of B. R. Ambedkar, the father of the Indian Constitution.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-04-14"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Constitution Book",
+      "filename": "constitution_book.json",
+      "s3_key": "lotties/constitution_book.json"
+    },
+    "muhurat": {
+      "puja_time": "All Day",
+      "type": "Jayanti",
+      "description": "Honoring the chief architect of the Indian Constitution, Dr. B.R. Ambedkar."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Tributes",
+        "description": "Offer floral tributes at statues of Dr. Ambedkar globally.",
+        "items_needed": [
+          "Flowers"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Pledge for Equality",
+        "description": "Reiterate the pledge against caste discrimination and inequality.",
+        "items_needed": []
+      },
+      {
+        "order": 3,
+        "title": "Educational Events",
+        "description": "Attend seminars emphasizing education and social justice.",
+        "items_needed": []
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Community Feasts",
+        "description": "Simple, egalitarian community meals shared by all regardless of background.",
+        "ingredients": [
+          "Various"
+        ],
+        "steps": [
+          "Cooked and shared collectively to foster unity."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Blue",
+        "White"
+      ],
+      "description": "Blue is deeply symbolic of the Dalit movement and Dr. Ambedkar's legacy of equality."
+    },
+    "notification_templates": {
+      "discovery": "Dr. Ambedkar held doctorates in economics from both Columbia University and the London School of Economics.",
+      "countdown": "Ambedkar Jayanti is 7 days away. A time to reflect on equality, liberty, and fraternity.",
+      "eve": "Tomorrow is Ambedkar Jayanti. Join the nation in honoring the architect of our Constitution.",
+      "day_of": "Happy Ambedkar Jayanti! 📘 Educate, Agitate, Organize. Let us uphold the vision of true equality."
+    }
+  },
+  {
+    "slug": "gandhi-jayanti-2026",
+    "title": "Gandhi Jayanti",
+    "category": "National",
+    "priority": 10,
+    "tags": [
+      "gandhi",
+      "bapu",
+      "non-violence",
+      "ahimsa",
+      "india"
+    ],
+    "description": "Birth anniversary of Mahatma Gandhi, the father of the nation.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-10-02"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Spinning Charkha",
+      "filename": "spinning_charkha.json",
+      "s3_key": "lotties/spinning_charkha.json"
+    },
+    "muhurat": {
+      "puja_time": "Morning",
+      "type": "Jayanti",
+      "description": "The birth anniversary of Mahatma Gandhi, observed as the International Day of Non-Violence."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Prarthana",
+        "description": "Attend multi-faith prayer meetings and sing 'Raghupati Raghava Raja Ram'.",
+        "items_needed": []
+      },
+      {
+        "order": 2,
+        "title": "Shramdaan",
+        "description": "Participate in cleanliness drives (Swachhata Abhiyan) offering voluntary labor.",
+        "items_needed": [
+          "Broom"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Spinning",
+        "description": "Engage in spinning the Charkha, symbolizing self-reliance.",
+        "items_needed": [
+          "Charkha"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Sattvic Food",
+        "description": "Simple, non-spicy vegetarian food reflecting Gandhi's principles of dietetics and Ahimsa.",
+        "ingredients": [
+          "Vegetables",
+          "Lentils",
+          "Minimal Oil"
+        ],
+        "steps": [
+          "Cooked simply without excessive spices or oil."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "White"
+      ],
+      "description": "Khadi clothing. Wearing handspun Khadi honors his vision of 'Swadeshi' and rural empowerment."
+    },
+    "notification_templates": {
+      "discovery": "Gandhi’s philosophy of 'Satyagraha' combined the Sanskrit words 'Satya' (Truth) and 'Agraha' (Firm grasping).",
+      "countdown": "Gandhi Jayanti is in 7 days. Plan your Shramdaan (cleanliness drive).",
+      "eve": "Tomorrow we celebrate the Father of the Nation. Prepare to spin the wheel of truth and non-violence.",
+      "day_of": "Happy Gandhi Jayanti! 🕊️ 'Be the change you wish to see in the world.' Honoring Bapu today."
+    }
+  },
+  {
+    "slug": "valentines-day-2026",
+    "title": "Valentine's Day",
+    "category": "International",
+    "priority": 7,
+    "tags": [
+      "love",
+      "romance",
+      "couple",
+      "heart",
+      "party"
+    ],
+    "description": "A global day celebrating love and affection between intimate companions.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-02-14"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Floating Hearts",
+      "filename": "floating_hearts.json",
+      "s3_key": "lotties/floating_hearts.json"
+    },
+    "muhurat": {
+      "puja_time": "All Day",
+      "type": "Observance",
+      "description": "A global celebration of love and affection."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Expressions of Love",
+        "description": "Exchange roses, chocolates, and personalized gifts.",
+        "items_needed": [
+          "Red Roses",
+          "Gifts"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Quality Time",
+        "description": "Spend dedicated, uninterrupted time with your significant other.",
+        "items_needed": []
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Chocolate Covered Strawberries",
+        "description": "A classic romantic treat.",
+        "ingredients": [
+          "Strawberries",
+          "Dark Chocolate"
+        ],
+        "steps": [
+          "Dip fresh strawberries into melted dark chocolate.",
+          "Let them cool on parchment paper."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Red",
+        "Pink",
+        "Black"
+      ],
+      "description": "Elegant outfits, predominantly red or pink, symbolizing romance."
+    },
+    "notification_templates": {
+      "discovery": "Valentine's Day originated as a Christian feast day honoring early martyrs named Saint Valentine.",
+      "countdown": "Valentine's Day is just 7 days away. Book your dinner reservations now!",
+      "eve": "Tomorrow is Valentine's Day. Finalize your romantic surprises.",
+      "day_of": "Happy Valentine's Day! ❤️ Celebrate the magic of love, companionship, and affection today."
+    }
+  },
+  {
+    "slug": "international-yoga-day-2026",
+    "title": "International Yoga Day",
+    "category": "International",
+    "priority": 8,
+    "tags": [
+      "yoga",
+      "health",
+      "meditation",
+      "spiritual",
+      "peaceful"
+    ],
+    "description": "Recognizing the universal appeal and profound benefits of Yoga.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-06-21"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Lotus Pose",
+      "filename": "lotus_pose.json",
+      "s3_key": "lotties/lotus_pose.json"
+    },
+    "ambient_audio_slug": "om-bells",
+    "muhurat": {
+      "puja_time": "Morning",
+      "type": "Global Observance",
+      "description": "Synchronized global yoga sessions to promote holistic health."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Surya Namaskar",
+        "description": "Perform Sun Salutations early in the morning facing the rising sun.",
+        "items_needed": [
+          "Yoga Mat"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Asana Practice",
+        "description": "Engage in a balanced sequence of physical postures.",
+        "items_needed": []
+      },
+      {
+        "order": 3,
+        "title": "Pranayama & Dhyana",
+        "description": "Practice deep breathing exercises followed by meditation for mental clarity.",
+        "items_needed": []
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Ayurvedic Herbal Tea",
+        "description": "A soothing, immunity-boosting morning brew.",
+        "ingredients": [
+          "Holy Basil (Tulsi)",
+          "Ginger",
+          "Turmeric",
+          "Honey"
+        ],
+        "steps": [
+          "Boil the herbs in water for 5 minutes.",
+          "Strain and add a spoon of honey.",
+          "Consume warm before or after the yoga practice."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "White",
+        "Earthy Tones"
+      ],
+      "description": "Comfortable, breathable cotton or linen activewear that allows free movement."
+    },
+    "notification_templates": {
+      "discovery": "Yoga does not just change the way we see things, it transforms the person who sees.",
+      "countdown": "Get your mats ready! International Yoga Day is only a week away.",
+      "eve": "Tomorrow is Yoga Day! Wake up early and unite your mind, body, and breath.",
+      "day_of": "Happy International Yoga Day! 🧘‍♀️ Breathe in peace, exhale stress. Embrace the journey inward."
+    }
+  },
+  {
+    "slug": "guru-purnima-2026",
+    "title": "Guru Purnima",
+    "category": "Religious",
+    "priority": 9,
+    "tags": [
+      "guru",
+      "teacher",
+      "spiritual",
+      "respect"
+    ],
+    "description": "A day to honor and express gratitude to spiritual and academic teachers.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-07-29"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Folded Hands",
+      "filename": "folded_hands.json",
+      "s3_key": "lotties/folded_hands.json"
+    },
+    "muhurat": {
+      "puja_time": "Morning",
+      "type": "Purnima Tithi",
+      "description": "Wiping out the darkness of ignorance (Gu) with the light of knowledge (Ru) on the full moon."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Guru Puja",
+        "description": "Visit and offer respects to your spiritual or academic teachers.",
+        "items_needed": [
+          "Garlands",
+          "Gifts",
+          "Sweets"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Vyasa Puja",
+        "description": "Offer prayers to Sage Ved Vyasa, the author of the Mahabharata.",
+        "items_needed": [
+          "Flowers",
+          "Incense"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Reflection",
+        "description": "Spend the day in meditation and reading spiritual scriptures.",
+        "items_needed": []
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Sooji Halwa",
+        "description": "A simple, pure offering for Gurus made from semolina.",
+        "ingredients": [
+          "1 cup Sooji (Semolina)",
+          "1 cup Sugar",
+          "1/2 cup Ghee",
+          "3 cups Water",
+          "Cardamom"
+        ],
+        "steps": [
+          "Roast sooji in ghee until aromatic.",
+          "Boil water and sugar separately to make a syrup.",
+          "Carefully pour syrup into roasted sooji, stir continuously to avoid lumps. Cook until thick."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Yellow",
+        "White"
+      ],
+      "description": "Simple, modest white or yellow clothes representing purity, learning, and dedication."
+    },
+    "notification_templates": {
+      "discovery": "Guru Purnima honors Sage Ved Vyasa and all teachers who guide us from darkness to light.",
+      "countdown": "Guru Purnima is in 7 days. Plan a visit or a message for the mentors in your life.",
+      "eve": "Tomorrow is Guru Purnima. Give thanks to the teachers who illuminate your path.",
+      "day_of": "Happy Guru Purnima! 🙏 May the wisdom of your gurus guide you to eternal truth."
+    }
+  },
+  {
+    "slug": "karva-chauth-2026",
+    "title": "Karva Chauth",
+    "category": "Religious",
+    "priority": 9,
+    "tags": [
+      "fasting",
+      "love",
+      "moon",
+      "marriage",
+      "women"
+    ],
+    "description": "A one-day festival celebrated by married Hindu women fasting from sunrise to moonrise for the safety and longevity of their husbands.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-10-29"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Sieve and Moon",
+      "filename": "sieve_moon.json",
+      "s3_key": "lotties/sieve_moon.json"
+    },
+    "muhurat": {
+      "puja_time": "05:46 PM to 07:02 PM",
+      "type": "Upavasa & Puja",
+      "description": "The strictest nirjala (waterless) fast observed by married women from sunrise to moonrise for their husband's long life."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Sargi",
+        "description": "Wake up before sunrise to eat the Sargi (pre-dawn meal) given by the mother-in-law.",
+        "items_needed": [
+          "Pheni",
+          "Fruits",
+          "Sweets",
+          "Nuts"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Nirjala Fast",
+        "description": "Abstain from all food and water throughout the day.",
+        "items_needed": []
+      },
+      {
+        "order": 3,
+        "title": "Evening Puja",
+        "description": "Listen to the Karva Chauth Katha and perform the puja of Goddess Parvati.",
+        "items_needed": [
+          "Karva (Clay pot)",
+          "Thali",
+          "Sweets",
+          "Kalash"
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Moonrise",
+        "description": "Look at the moon through a sieve, then look at the husband. The husband breaks her fast with a sip of water.",
+        "items_needed": [
+          "Sieve (Channi)",
+          "Water",
+          "Sweets"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Pheni",
+        "description": "A vermicelli-like sweet dish consumed pre-dawn during Sargi for sustained energy.",
+        "ingredients": [
+          "Pheni (fine roasted vermicelli)",
+          "Full cream milk",
+          "Sugar",
+          "Dry fruits"
+        ],
+        "steps": [
+          "Boil milk and reduce it slightly.",
+          "Add sugar and dry fruits.",
+          "Pour hot milk over the pheni in a bowl. Let it soften for 5 mins before eating."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Red",
+        "Maroon",
+        "Gold",
+        "Pink"
+      ],
+      "description": "Women dress up lavishly like brides. Red is highly prominent. Solah Shringar (16 adornments including Mehendi and Bindi) are essential."
+    },
+    "notification_templates": {
+      "discovery": "Sargi, eaten before dawn, is a symbol of a mother-in-law's blessing and care on Karva Chauth.",
+      "countdown": "Karva Chauth is 7 days away! Book your Mehendi appointments.",
+      "eve": "Tomorrow is Karva Chauth! Ensure the Sargi prep is ready for the pre-dawn meal.",
+      "day_of": "Happy Karva Chauth! 🌙 May your bond of love and devotion be blessed with longevity and happiness."
+    }
+  },
+  {
+    "slug": "dhanteras-2026",
+    "title": "Dhanteras",
+    "category": "Festival",
+    "priority": 9,
+    "tags": [
+      "wealth",
+      "gold",
+      "shopping",
+      "lakshmi",
+      "diwali"
+    ],
+    "description": "The first day that marks the festival of Diwali, dedicated to wealth and prosperity.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-11-06"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Gold Coins",
+      "filename": "gold_coins.json",
+      "s3_key": "lotties/gold_coins.json"
+    },
+    "ambient_audio_slug": "diwali-aarti-bells",
+    "muhurat": {
+      "puja_time": "05:47 PM to 07:43 PM",
+      "type": "Pradosh Kaal",
+      "description": "The ideal time for Lakshmi and Kubera Puja, marking the first day of the Diwali festival."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Purchasing",
+        "description": "Buy gold, silver, or new utensils as a sign of bringing Lakshmi (wealth) home.",
+        "items_needed": [
+          "Gold/Silver coin",
+          "New utensils",
+          "Broom"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Dhanvantari Puja",
+        "description": "Pray to Lord Dhanvantari, the physician of the Gods, for good health.",
+        "items_needed": [
+          "Flowers",
+          "Incense"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Yama Deepam",
+        "description": "Light a four-wick diya outside the main door facing south to ward off untimely death.",
+        "items_needed": [
+          "Clay Diya",
+          "Mustard Oil",
+          "4 wicks"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Panchamrit",
+        "description": "The holy nectar used in pujas.",
+        "ingredients": [
+          "Milk",
+          "Curd",
+          "Honey",
+          "Ghee",
+          "Sugar"
+        ],
+        "steps": [
+          "Mix all 5 ingredients in a silver or copper bowl.",
+          "Add Tulsi leaves.",
+          "Offer to deities and consume as Prasad."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Gold",
+        "Yellow",
+        "Red"
+      ],
+      "description": "Bright, rich colors welcoming wealth and prosperity into the home."
+    },
+    "notification_templates": {
+      "discovery": "Dhanteras honors both Lord Kubera (Wealth) and Lord Dhanvantari (Health and Ayurveda).",
+      "countdown": "Dhanteras is just a week away! Plan your gold or utensil purchases.",
+      "eve": "Tomorrow is Dhanteras. Clean your entrances and prepare the Yama Deepam.",
+      "day_of": "Happy Dhanteras! ✨ May Lord Kubera and Dhanvantari bless your home with health, wealth, and prosperity."
+    }
+  },
+  {
+    "slug": "bhai-dooj-2026",
+    "title": "Bhai Dooj",
+    "category": "Festival",
+    "priority": 8,
+    "tags": [
+      "brother",
+      "sister",
+      "family",
+      "love",
+      "diwali"
+    ],
+    "description": "The final day of Diwali, celebrating the bond between brothers and sisters.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-11-10"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Aarti Thali",
+      "filename": "aarti_thali.json",
+      "s3_key": "lotties/aarti_thali.json"
+    },
+    "muhurat": {
+      "puja_time": "01:10 PM to 03:22 PM",
+      "type": "Aparahna Kaal",
+      "description": "The afternoon period ideal for performing the Bhai Dooj Tikka ceremony."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Tilak",
+        "description": "Sister applies a Tikka of vermilion, dahi, and rice on the brother's forehead.",
+        "items_needed": [
+          "Kumkum",
+          "Dahi",
+          "Rice"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Aarti & Sweets",
+        "description": "Perform Aarti and feed sweets to the brother.",
+        "items_needed": [
+          "Aarti Thali",
+          "Sweets"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Feast",
+        "description": "Sister prepares a lavish, favorite meal for her brother.",
+        "items_needed": []
+      },
+      {
+        "order": 4,
+        "title": "Gifting",
+        "description": "Exchange gifts as tokens of love and protection.",
+        "items_needed": [
+          "Gifts"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Basundi",
+        "description": "A sweetened dense milk dessert, popular in Western India for Bhai Dooj.",
+        "ingredients": [
+          "1 liter Full fat milk",
+          "1/2 cup Sugar",
+          "Nutmeg powder",
+          "Cardamom",
+          "Saffron"
+        ],
+        "steps": [
+          "Boil milk and simmer on low heat, scraping the cream from the sides.",
+          "Wait until milk reduces to half volume.",
+          "Add sugar, saffron, and spices.",
+          "Serve chilled garnished with pistachios."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Pink",
+        "Orange",
+        "Yellow"
+      ],
+      "description": "Casual yet festive ethnic wear characterizing the warm, familial tone of the concluding day of Diwali."
+    },
+    "notification_templates": {
+      "discovery": "Bhai Dooj commemorates the day Lord Yama visited his sister Yami and granted her a boon.",
+      "countdown": "Bhai Dooj is returning in 7 days! Plan the perfect gift and feast for your sibling.",
+      "eve": "Tomorrow is Bhai Dooj! Time to prepare the Tilak thali and the favorite sweets.",
+      "day_of": "Happy Bhai Dooj! 👫 Cherish the sweet, lifelong bond of siblings today."
+    }
+  },
+  {
+    "slug": "vasant-panchami-2026",
+    "title": "Vasant Panchami",
+    "category": "Festival",
+    "priority": 8,
+    "tags": [
+      "saraswati",
+      "spring",
+      "knowledge",
+      "yellow",
+      "books"
+    ],
+    "description": "Festival dedicated to Goddess Saraswati, marking the preparation for the arrival of spring.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-01-24"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Veena",
+      "filename": "veena.json",
+      "s3_key": "lotties/veena.json"
+    },
+    "muhurat": {
+      "puja_time": "07:12 AM to 12:34 PM",
+      "type": "Purvahna Kaal",
+      "description": "The morning hours marking the onset of Spring and the worship of Goddess Saraswati."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Yellow Clothing",
+        "description": "Wake up early, bathe, and wear yellow clothes representing the blooming mustard fields.",
+        "items_needed": [
+          "Yellow Clothes"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Saraswati Puja",
+        "description": "Worship Goddess Saraswati, placing books, pens, and musical instruments near the idol.",
+        "items_needed": [
+          "Books",
+          "Pens",
+          "Instruments",
+          "Yellow Flowers"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Vidyaarambham",
+        "description": "Introduce young children to writing for the first time by writing 'Om' on rice.",
+        "items_needed": [
+          "Plate",
+          "Rice/Sand"
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Yellow Offerings",
+        "description": "Offer yellow sweets like Boondi or sweet saffron rice to the Goddess.",
+        "items_needed": [
+          "Sweet Yellow Rice"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Meethe Chawal (Sweet Yellow Rice)",
+        "description": "A fragrant yellow rice dish representing the vibrancy of Vasant (Spring).",
+        "ingredients": [
+          "1 cup Basmati Rice",
+          "3/4 cup Sugar",
+          "Saffron strands",
+          "Food color (yellow, optional)",
+          "Ghee",
+          "Cashews and Raisins",
+          "Cloves and Cardamom"
+        ],
+        "steps": [
+          "Soak rice for 30 mins. Boil it until 80% cooked.",
+          "In a pan, heat ghee, add cloves, cardamom, and dry fruits.",
+          "Add sugar and a little water to make a syrup. Add saffron.",
+          "Gently mix in the rice. Cover and simmer until fully cooked."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Yellow",
+        "Mustard",
+        "White"
+      ],
+      "description": "Yellow is absolutely mandatory. It signifies the brilliance of nature and the radiance of knowledge."
+    },
+    "notification_templates": {
+      "discovery": "Vasant Panchami honors Saraswati, the goddess of knowledge, arts, and music. Place your books near her today.",
+      "countdown": "Vasant Panchami is in 7 days! Time to bring out the yellow ethnic wear.",
+      "eve": "Tomorrow is Vasant Panchami. Prepare your books, pens, and sweet yellow rice for the puja.",
+      "day_of": "Happy Vasant Panchami! 🌼 May Goddess Saraswati bless you with immense knowledge, wisdom, and creativity."
+    }
+  },
+  {
+    "slug": "akshaya-tritiya-2026",
+    "title": "Akshaya Tritiya",
+    "category": "Religious",
+    "priority": 8,
+    "tags": [
+      "gold",
+      "auspicious",
+      "wealth",
+      "prosperity",
+      "lord vishnu"
+    ],
+    "description": "A highly auspicious and holy day for Hindu communities, considered to bring never-diminishing good fortune.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-04-19"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Kalash",
+      "filename": "kalash.json",
+      "s3_key": "lotties/kalash.json"
+    },
+    "muhurat": {
+      "puja_time": "05:40 AM to 12:18 PM",
+      "type": "Auspicious Timing",
+      "description": "The word 'Akshaya' means never diminishing. It is the most auspicious day for new investments and gold."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Snan & Dan",
+        "description": "Take an early bath and donate food, clothes, or water to the needy (very auspicious today).",
+        "items_needed": [
+          "Donation items e.g., grains, earthen pitchers"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Purchase Gold",
+        "description": "Buying gold or property today brings everlasting prosperity.",
+        "items_needed": [
+          "Gold Coin or Jewelry"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Vishnu & Lakshmi Puja",
+        "description": "Worship Lord Vishnu and Goddess Lakshmi with yellow flowers and Tulsi.",
+        "items_needed": [
+          "Yellow Flowers",
+          "Tulsi",
+          "Sandalwood"
+        ]
+      },
+      {
+        "order": 4,
+        "title": "New Beginnings",
+        "description": "Start new ledgers (Khata), marriages, or business ventures.",
+        "items_needed": []
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Puran Poli",
+        "description": "A sweet flatbread stuffed with lentil and jaggery, highly auspicious in Maharashtra/Gujarat.",
+        "ingredients": [
+          "1 cup Chana Dal",
+          "1 cup Jaggery",
+          "Nutmeg & Cardamom",
+          "Whole Wheat Flour",
+          "Ghee"
+        ],
+        "steps": [
+          "Boil chana dal until soft. Drain water.",
+          "Cook dal with jaggery, nutmeg, and cardamom until thick (Puran).",
+          "Stuff the Puran inside small wheat dough balls.",
+          "Roll gently and cook on a griddle with plenty of ghee."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Gold",
+        "Yellow",
+        "Red"
+      ],
+      "description": "Festive traditional wear recognizing the divine abundance of the day."
+    },
+    "notification_templates": {
+      "discovery": "Akshaya means 'endless'. Any good deeds, charity, or investments made today yield eternal benefits.",
+      "countdown": "Akshaya Tritiya is in 7 days! A great time to plan your auspicious investments.",
+      "eve": "Tomorrow is Akshaya Tritiya. Prepare for charity and the Lakshmi-Narayana puja.",
+      "day_of": "Happy Akshaya Tritiya! ✨ May your life be filled with never-ending prosperity, wealth, and joy."
+    }
+  },
+  {
+    "slug": "maha-navami-2026",
+    "title": "Maha Navami",
+    "category": "Festival",
+    "priority": 9,
+    "tags": [
+      "durga",
+      "navami",
+      "kanya puja",
+      "festival"
+    ],
+    "description": "The ninth and final day of Navratri, where Kanya Puja is performed.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-10-16"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Durga Face",
+      "filename": "durga_face.json",
+      "s3_key": "lotties/durga_face.json"
+    }
+  },
+  {
+    "slug": "teachers-day-2026",
+    "title": "Teachers' Day (India)",
+    "category": "National",
+    "priority": 8,
+    "tags": [
+      "teacher",
+      "education",
+      "sarvepalli radhakrishnan",
+      "respect"
+    ],
+    "description": "Celebrating the birth anniversary of Dr. Sarvepalli Radhakrishnan and honoring teachers.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-09-05"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Books and Apple",
+      "filename": "books_apple.json",
+      "s3_key": "lotties/books_apple.json"
+    },
+    "muhurat": {
+      "puja_time": "School Hours",
+      "type": "Observance",
+      "description": "Honoring Dr. Sarvepalli Radhakrishnan and all educators."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Gratitude Messages",
+        "description": "Write heartfelt notes and give handmade cards to teachers.",
+        "items_needed": [
+          "Pens",
+          "Cards"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Role Reversal",
+        "description": "Senior students take on the role of teachers for the day.",
+        "items_needed": []
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Handmade Chocolates",
+        "description": "A simple sweet gesture for educators.",
+        "ingredients": [
+          "Chocolate compound",
+          "Molds"
+        ],
+        "steps": [
+          "Melt chocolate, pour into molds, refrigerate, and gift pack."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Any respectful attire"
+      ],
+      "description": "Students often dress up as their favorite teachers or in formal wear."
+    },
+    "notification_templates": {
+      "discovery": "Teachers' Day marks the birth of Dr. Sarvepalli Radhakrishnan, India's second President and a renowned philosopher.",
+      "countdown": "Teachers' Day is returning in 7 days! Have you prepared a thank you note?",
+      "eve": "Tomorrow is Teachers' Day. A perfect time to reach out to the mentors who shaped you.",
+      "day_of": "Happy Teachers' Day! 🎓 Thank you to all the educators who ignite minds and inspire futures."
+    }
+  },
+  {
+    "slug": "childrens-day-2026",
+    "title": "Children's Day (India)",
+    "category": "National",
+    "priority": 7,
+    "tags": [
+      "children",
+      "chachanehru",
+      "fun",
+      "innocence"
+    ],
+    "description": "Celebrating the birth anniversary of Pandit Jawaharlal Nehru, emphasizing the importance of childhood.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-11-14"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Balloons",
+      "filename": "balloons.json",
+      "s3_key": "lotties/balloons.json"
+    },
+    "muhurat": {
+      "puja_time": "All Day",
+      "type": "Observance",
+      "description": "Celebrating the birth of Pt. Jawaharlal Nehru and the magic of childhood."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Games & Activities",
+        "description": "Organize fun games, picnics, and cultural events for children.",
+        "items_needed": [
+          "Toys",
+          "Games"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Pav Bhaji",
+        "description": "A universal favorite among kids.",
+        "ingredients": [
+          "Pav",
+          "Mixed Veggies",
+          "Butter",
+          "Spices"
+        ],
+        "steps": [
+          "Mash boiled veggies with spices and butter, serve with hot buttered buns."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Bright multi-colors"
+      ],
+      "description": "Colorful, playful, and extremely comfortable clothes."
+    },
+    "notification_templates": {
+      "discovery": "Children's Day in India is celebrated on Jawaharlal Nehru's birthday because of his deep affection for kids.",
+      "countdown": "Children's Day is in 7 days. Plan a surprise picnic!",
+      "eve": "Tomorrow is Children's Day! Let the kids be the bosses.",
+      "day_of": "Happy Children's Day! 🎈 Let us nurture the innocence and dreams of every child."
+    }
+  },
+  {
+    "slug": "world-environment-day-2026",
+    "title": "World Environment Day",
+    "category": "International",
+    "priority": 7,
+    "tags": [
+      "nature",
+      "earth",
+      "green",
+      "sustainability"
+    ],
+    "description": "A global day for encouraging worldwide awareness and action to protect our environment.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-06-05"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Sprouting Plant",
+      "filename": "sprouting_plant.json",
+      "s3_key": "lotties/sprouting_plant.json"
+    },
+    "muhurat": {
+      "puja_time": "All Day",
+      "type": "Observance",
+      "description": "Global day for environmental awareness and action."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Tree Plantation",
+        "description": "Plant native saplings in your community.",
+        "items_needed": [
+          "Saplings",
+          "Shovel"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Zero-Waste Meal",
+        "description": "Cook a meal utilizing all parts of the vegetables.",
+        "ingredients": [
+          "Vegetable Peels",
+          "Stems"
+        ],
+        "steps": [
+          "Use stems for stocks, and peels for crispy snacks."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Green",
+        "Earth Tones"
+      ],
+      "description": "Clothes made from sustainable, organic, or recycled fabrics."
+    },
+    "notification_templates": {
+      "discovery": "The UN has marked June 5 as World Environment Day since 1973 to encourage global awareness.",
+      "countdown": "World Environment Day is arriving. Plan a local clean-up drive.",
+      "eve": "Tomorrow is Environment Day. Let's pledge to reduce our carbon footprint.",
+      "day_of": "Happy World Environment Day! 🌍 The Earth is what we all have in common. Protect it."
+    }
+  },
+  {
+    "slug": "mothers-day-2026",
+    "title": "Mother's Day",
+    "category": "International",
+    "priority": 8,
+    "tags": [
+      "mother",
+      "love",
+      "family",
+      "respect"
+    ],
+    "description": "A celebration honoring the mother of the family, motherhood, and maternal bonds.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-05-10"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Mother and Child",
+      "filename": "mother_child.json",
+      "s3_key": "lotties/mother_child.json"
+    },
+    "muhurat": {
+      "puja_time": "All Day",
+      "type": "Observance",
+      "description": "Honoring mothers and motherhood globally."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Rest Day",
+        "description": "Take over all household chores so she can rest.",
+        "items_needed": []
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Breakfast in Bed",
+        "description": "A classic gesture of love.",
+        "ingredients": [
+          "Pancakes",
+          "Coffee",
+          "Fruit"
+        ],
+        "steps": [
+          "Prepare her favorite breakfast and serve it gracefully in bed."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Pastels"
+      ],
+      "description": "Comforting and soft hues."
+    },
+    "notification_templates": {
+      "discovery": "Mother's Day was first celebrated in 1908 by Anna Jarvis to honor her own mother.",
+      "countdown": "Mother's Day is next week. Have you chosen her gift?",
+      "eve": "Tomorrow is Mother's Day. Plan the perfect relaxing day for her.",
+      "day_of": "Happy Mother's Day! 💐 A mother's love is the fuel that enables a normal human being to do the impossible."
+    }
+  },
+  {
+    "slug": "fathers-day-2026",
+    "title": "Father's Day",
+    "category": "International",
+    "priority": 8,
+    "tags": [
+      "father",
+      "love",
+      "family",
+      "support"
+    ],
+    "description": "A celebration honoring fathers and celebrating fatherhood and paternal bonds.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-06-21"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Dad Hero",
+      "filename": "dad_hero.json",
+      "s3_key": "lotties/dad_hero.json"
+    },
+    "muhurat": {
+      "puja_time": "All Day",
+      "type": "Observance",
+      "description": "Honoring fathers and paternal bonds globally."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Quality Time",
+        "description": "Spend the day engaging in his favorite hobbies.",
+        "items_needed": []
+      }
+    ],
+    "recipes": [
+      {
+        "name": "His Favorite Meal",
+        "description": "Cook up absolute comfort food.",
+        "ingredients": [
+          "Various"
+        ],
+        "steps": [
+          "Tailor the recipe exactly to his liking."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Blue",
+        "Grey"
+      ],
+      "description": "Casual, relaxed weekend wear."
+    },
+    "notification_templates": {
+      "discovery": "Father's Day complements Mother's Day in celebrating parenting.",
+      "countdown": "Father's Day is 7 days away. Plan a day out with dad.",
+      "eve": "Tomorrow is Father's Day. Get ready to show your appreciation.",
+      "day_of": "Happy Father's Day! 👔 Honoring the silent sacrifices and the guiding hands of all fathers."
+    }
+  },
+  {
+    "slug": "womens-day-2026",
+    "title": "International Women's Day",
+    "category": "International",
+    "priority": 9,
+    "tags": [
+      "women",
+      "equality",
+      "empowerment",
+      "rights"
+    ],
+    "description": "A global holiday celebrating the social, economic, cultural, and political achievements of women.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-03-08"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Women Silhouette",
+      "filename": "women_silhouette.json",
+      "s3_key": "lotties/women_silhouette.json"
+    },
+    "muhurat": {
+      "puja_time": "All Day",
+      "type": "Observance",
+      "description": "Celebrating the social, economic, cultural, and political achievements of women."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Empowerment",
+        "description": "Acknowledge and elevate the women in your life and workplace.",
+        "items_needed": []
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Celebratory Cake",
+        "description": "A sweet tribute.",
+        "ingredients": [
+          "Flour",
+          "Sugar",
+          "Vanilla"
+        ],
+        "steps": [
+          "Bake and share with the incredible women around you."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Purple",
+        "Green",
+        "White"
+      ],
+      "description": "Purple signifies justice and dignity; heavily associated with Women's Day."
+    },
+    "notification_templates": {
+      "discovery": "International Women's Day has occurred for well over a century, tracing back to 1911.",
+      "countdown": "Women's Day is coming up. Recognize the female leaders around you.",
+      "eve": "Tomorrow is International Women's Day. Celebrate empowerment and equality.",
+      "day_of": "Happy Women's Day! 💜 Here's to strong women: May we know them. May we be them. May we raise them."
+    }
+  },
+  {
+    "slug": "chaitra-navratri-2026",
+    "title": "Chaitra Navratri",
+    "category": "Festival",
+    "priority": 9,
+    "tags": [
+      "durga",
+      "fasting",
+      "spring",
+      "hindu",
+      "devi"
+    ],
+    "description": "Nine days dedicated to the worship of Goddess Durga, occurring in the spring season.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-03-19"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Lion Ride",
+      "filename": "lion_ride.json",
+      "s3_key": "lotties/lion_ride.json"
+    },
+    "muhurat": {
+      "puja_time": "06:15 AM to 10:22 AM (Ghatasthapana)",
+      "type": "Pratipada Tithi Muhurat",
+      "description": "The invocation of Goddess Durga. This is the most crucial ritual marking the beginning of the 9-day festival."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Ghatasthapana",
+        "description": "Sow barley seeds in an earthen pot and establish the Kalash on the first day to invoke the Goddess.",
+        "items_needed": [
+          "Earthen pot",
+          "Mud",
+          "Barley seeds",
+          "Kalash (Copper/Brass pot)",
+          "Water",
+          "Coconut",
+          "Mango leaves"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Daily Puja",
+        "description": "Worship one of the nine forms of Navadurga each day, offering specific flowers and bhog.",
+        "items_needed": [
+          "Flowers",
+          "Incense",
+          "Diya",
+          "Sweets for Bhog"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Fasting (Vrat)",
+        "description": "Observe a pure, sattvic fast devoid of onion, garlic, wheat, or rice.",
+        "items_needed": [
+          "Buckwheat/Amaranth flour",
+          "Fruits",
+          "Milk"
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Kanya Pujan",
+        "description": "On the 8th or 9th day, invite and worship young girls as embodiments of the Goddess.",
+        "items_needed": [
+          "Gifts",
+          "Halwa",
+          "Puri",
+          "Chana"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Kuttu Ki Pakodi",
+        "description": "Crispy fritters made from buckwheat flour and potatoes, perfect for Navratri fasting.",
+        "ingredients": [
+          "1 cup Kuttu ka atta (Buckwheat flour)",
+          "2 Potatoes (boiled and mashed)",
+          "1 Green chili (chopped)",
+          "Sendha Namak (Rock salt)",
+          "Oil/Ghee for frying"
+        ],
+        "steps": [
+          "Mix kuttu atta, mashed potatoes, green chili, and rock salt.",
+          "Add a little water to form a thick batter.",
+          "Drop small spoonfuls into hot oil.",
+          "Fry until golden and crispy. Serve with mint-yogurt dip."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Red",
+        "Orange",
+        "Yellow",
+        "Green",
+        "White",
+        "Royal Blue",
+        "Pink",
+        "Purple",
+        "Peacock Green"
+      ],
+      "description": "Devotees often wear the designated auspicious color of the day representing the specific form of Goddess Durga being worshipped. Red is universally auspicious for the Goddess."
+    },
+    "notification_templates": {
+      "discovery": "Navratri signifies the 9 divine nights of Cosmic Energy. Tap to read about the 9 forms of Maa Durga.",
+      "countdown": "Navratri begins next week! Time to clean the puja room and plan your sattvic meals.",
+      "eve": "Tomorrow begins the sacred 9-day journey of Chaitra Navratri. Jai Mata Di!",
+      "day_of": "Happy Navratri! May Goddess Durga bless your home with health, wealth, and prosperity. ✨"
+    }
+  },
+  {
+    "slug": "nag-panchami-2026",
+    "title": "Nag Panchami",
+    "category": "Religious",
+    "priority": 7,
+    "tags": [
+      "snake",
+      "shiva",
+      "worship",
+      "hindu"
+    ],
+    "description": "A traditional worship of snakes or serpents observed by Hindus.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-08-16"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Snake Coil",
+      "filename": "snake_coil.json",
+      "s3_key": "lotties/snake_coil.json"
+    }
+  },
+  {
+    "slug": "vat-savitri-2026",
+    "title": "Vat Savitri",
+    "category": "Religious",
+    "priority": 7,
+    "tags": [
+      "banyan tree",
+      "marriage",
+      "women",
+      "fasting"
+    ],
+    "description": "A fasting festival observed by married women in North India tying threads around a banyan tree.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-05-31"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Banyan Tree",
+      "filename": "banyan_tree.json",
+      "s3_key": "lotties/banyan_tree.json"
+    }
+  },
+  {
+    "slug": "teej-2026",
+    "title": "Hariyali Teej",
+    "category": "Regional",
+    "priority": 8,
+    "tags": [
+      "green",
+      "monsoon",
+      "women",
+      "swings",
+      "shiva parvati"
+    ],
+    "description": "Monsoon festival celebrating the reunion of Goddess Parvati and Lord Shiva.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-08-15"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Swing Jhula",
+      "filename": "swing_jhula.json",
+      "s3_key": "lotties/swing_jhula.json"
+    }
+  },
+  {
+    "slug": "govardhan-puja-2026",
+    "title": "Govardhan Puja",
+    "category": "Religious",
+    "priority": 9,
+    "tags": [
+      "krishna",
+      "govardhan",
+      "mountain",
+      "diwali",
+      "food"
+    ],
+    "description": "The day after Diwali when Lord Krishna defeated Indra by lifting Govardhan Hill.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-11-09"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Mountain Lift",
+      "filename": "mountain_lift.json",
+      "s3_key": "lotties/mountain_lift.json"
+    }
+  },
+  {
+    "slug": "tulsi-vivah-2026",
+    "title": "Tulsi Vivah",
+    "category": "Religious",
+    "priority": 8,
+    "tags": [
+      "tulsi",
+      "vishnu",
+      "marriage",
+      "auspicious"
+    ],
+    "description": "The ceremonial marriage of the Tulsi plant (holy basil) to Lord Vishnu.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-11-20"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Tulsi Pot",
+      "filename": "tulsi_pot.json",
+      "s3_key": "lotties/tulsi_pot.json"
+    }
+  },
+  {
+    "slug": "makar-sankranti-2026",
+    "title": "Makar Sankranti",
+    "category": "Festival",
+    "priority": 9,
+    "tags": [
+      "kite flying",
+      "sun",
+      "sesame",
+      "jaggery",
+      "harvest"
+    ],
+    "description": "A pan-Indian solar festival marking the transition of the sun into Capricorn.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-01-14"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Kites Flying",
+      "filename": "kites_flying.json",
+      "s3_key": "lotties/kites_flying.json"
+    },
+    "muhurat": {
+      "puja_time": "07:15 PM (Lohri) | 08:30 AM (Makar Sankranti)",
+      "type": "Bonfire & Punya Kaal",
+      "description": "Lighting of the Lohri Bonfire at dusk, and the Punya Kaal bath at sunrise for Sankranti."
+    },
+    "ritual_steps": [
+      {
+        "order": 1,
+        "title": "Bonfire (Lohri)",
+        "description": "Light the bonfire in the evening; circumambulate it while tossing til, rewri, and popcorn into the flames.",
+        "items_needed": [
+          "Wood",
+          "Peanuts",
+          "Rewri",
+          "Popcorn",
+          "Sesame seeds"
+        ]
+      },
+      {
+        "order": 2,
+        "title": "Holy Snan (Sankranti)",
+        "description": "Take a bath in a sacred river during the morning Punya Kaal.",
+        "items_needed": [
+          "Water"
+        ]
+      },
+      {
+        "order": 3,
+        "title": "Kite Flying",
+        "description": "Fly colorful kites on the terrace, soaking in the gentle winter sun.",
+        "items_needed": [
+          "Kites",
+          "Spool (Charkhi)"
+        ]
+      },
+      {
+        "order": 4,
+        "title": "Til-Gud Exchange",
+        "description": "Exchange sesame and jaggery sweets saying 'Til gud ghya, god god bola'.",
+        "items_needed": [
+          "Til Ladoos"
+        ]
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Til Ke Ladoo",
+        "description": "Sesame and jaggery balls, rich in iron and calcium to keep the body warm.",
+        "ingredients": [
+          "1 cup Sesame seeds",
+          "3/4 cup Jaggery",
+          "1 tsp Ghee",
+          "Cardamom powder"
+        ],
+        "steps": [
+          "Dry roast sesame seeds until they pop.",
+          "Melt jaggery with water and ghee until frothy.",
+          "Mix roasted sesame seeds into the hot jaggery.",
+          "Apply drops of water to hands and quickly shape into round balls before it cools."
+        ]
+      },
+      {
+        "name": "Sarson Ka Saag & Makki Ki Roti",
+        "description": "The iconic Punjabi winter meal served during Lohri.",
+        "ingredients": [
+          "Mustard greens",
+          "Spinach",
+          "Corn flour",
+          "Butter/Ghee",
+          "Garlic",
+          "Spices"
+        ],
+        "steps": [
+          "Boil and blend greens.",
+          "Temper with garlic, ginger, and ghee.",
+          "Knead cornflour with warm water into discs and cook on a griddle. Serve with massive dollops of white butter."
+        ]
+      }
+    ],
+    "dress_guide": {
+      "colors": [
+        "Yellow",
+        "Orange",
+        "Bright Red",
+        "Black (specifically for Makar Sankranti in Maharashtra)"
+      ],
+      "description": "Warm Punjabi festive wear like Phulkari suits for Lohri, and often Black sarees for Sankranti to absorb the sun's heat."
+    },
+    "notification_templates": {
+      "discovery": "These festivals mark the end of winter solstice and the Sun's transit into Capricorn (Makara).",
+      "countdown": "Only a week left until Lohri & Makar Sankranti! Get your kites and peanuts ready.",
+      "eve": "Tonight is Lohri! Gather around the bonfire. Tomorrow, we fly kites for Sankranti!",
+      "day_of": "Happy Lohri & Makar Sankranti! May the harvest season bring you boundless prosperity. 🪁🔥"
+    }
+  },
+  {
+    "slug": "pongal-2026",
+    "title": "Pongal",
+    "category": "Regional",
+    "priority": 9,
+    "tags": [
+      "tamil nadu",
+      "harvest",
+      "sun",
+      "cattle",
+      "sweet"
+    ],
+    "description": "A multi-day Tamil harvest festival thanking the Sun God for agricultural abundance.",
+    "dates": [
+      {
+        "year": 2026,
+        "date": "2026-01-14"
+      }
+    ],
+    "lottie_overlay": {
+      "title": "Pongal Pot",
+      "filename": "pongal_pot.json",
+      "s3_key": "lotties/pongal_pot.json"
+    }
+  }
 ]

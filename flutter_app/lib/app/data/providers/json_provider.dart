@@ -16,7 +16,6 @@ import '../models/image_model.dart';
 import '../models/quiz_model.dart';
 import '../models/trivia_model.dart';
 import '../models/gamification_config_model.dart';
-import '../models/image_model.dart';
 import 'data_source.dart';
 import 'json_parsers.dart';
 
@@ -286,21 +285,21 @@ class JsonProvider implements DataSource {
   }
 
   @override
-  Future<Map<String, List<ImageModel>>?> getImageCatalog(String lang) async {
+  Future<List<ImageModel>?> getImageCatalog(String lang) async {
     final endpoint = '/images/images_$lang.json';
     try {
       final response = await _dio.get(endpoint);
       if (response.statusCode == 200) {
         final String jsonStr = response.data.toString();
         await _cacheBox.put('images_$lang', jsonStr);
-        return await compute(parseImageCatalog, jsonStr);
+        return await compute(parseImageList, jsonStr);
       }
     } catch (e) {
       debugPrint('Network Error: $e');
     }
     final cached = _cacheBox.get('images_$lang');
     if (cached != null) {
-      return await compute(parseImageCatalog, cached as String);
+      return await compute(parseImageList, cached as String);
     }
     return null;
   }

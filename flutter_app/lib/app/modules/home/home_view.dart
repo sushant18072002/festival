@@ -1,6 +1,6 @@
 // Removed unused dart:ui import
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:get/get.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -100,7 +100,9 @@ class HomeView extends GetView<HomeController> {
                                           color:
                                               TaxonomyIconResolver.resolveColor(
                                                 happeningNow.category!.color,
-                                                fallback: Colors.white,
+                                                fallback: Theme.of(
+                                                  context,
+                                                ).colorScheme.onSurface,
                                               ),
                                         ),
                                         const SizedBox(width: 4),
@@ -152,24 +154,8 @@ class HomeView extends GetView<HomeController> {
 
                 const SliverToBoxAdapter(child: CompatibilityQuizCard()),
 
-                // 3. Section Title
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      AppSpacing.md,
-                      AppSpacing.xl,
-                      AppSpacing.md,
-                      AppSpacing.sm,
-                    ),
-                    child: Obx(
-                      () => Text(
-                        controller.isForYouView.value
-                            ? 'for_you'.tr
-                            : 'explore_vibes'.tr,
-                        style: AppTextStyles.headlineMedium,
-                      ),
-                    ).animate().fade().slideY(begin: 0.2),
-                  ),
+                const SliverToBoxAdapter(
+                  child: SizedBox(height: AppSpacing.lg),
                 ),
 
                 // Glassmorphism Vibe Bar (Sticky)
@@ -252,44 +238,65 @@ class HomeView extends GetView<HomeController> {
       if (images.isEmpty) return _buildEmptyState();
 
       return SliverPadding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-        sliver: SliverMasonryGrid.count(
-          crossAxisCount: 2,
-          mainAxisSpacing: AppSpacing.sm,
-          crossAxisSpacing: AppSpacing.sm,
-          childCount: images.length,
-          itemBuilder: (context, index) {
-            // Add staggering effect
-            return TrendingImageCard(
-              image: images[index],
-              index: index,
-            ).animate(delay: (50 * index).ms).fade().slideY(begin: 0.2);
-          },
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.md,
+          vertical: AppSpacing.sm,
         ),
+        sliver: controller.isGridView.value
+            ? SliverMasonryGrid.count(
+                crossAxisCount: 2,
+                mainAxisSpacing: AppSpacing.sm,
+                crossAxisSpacing: AppSpacing.sm,
+                childCount: images.length,
+                itemBuilder: (context, index) {
+                  return TrendingImageCard(
+                    image: images[index],
+                    index: index,
+                  ).animate(delay: (50 * index).ms).fade().slideY(begin: 0.2);
+                },
+              )
+            : SliverList.separated(
+                itemCount: images.length,
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: AppSpacing.lg),
+                itemBuilder: (context, index) {
+                  return TrendingImageCard(
+                    image: images[index],
+                    index: index,
+                  ).animate(delay: (50 * index).ms).fade().slideY(begin: 0.2);
+                },
+              ),
       );
     });
   }
 
   Widget _buildEmptyState() {
     return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.xxl),
-        child: Column(
-          children: [
-            Icon(
-              Icons.nightlight_round,
-              size: 64,
-              color: AppColors.textMuted.withValues(alpha: 0.2),
+      child: Builder(
+        builder: (context) {
+          final isDark = Theme.of(context).brightness == Brightness.dark;
+          final emptyIconColor = isDark
+              ? Colors.white.withValues(alpha: 0.15)
+              : const Color(0xFF1A0B2E).withValues(alpha: 0.12);
+          final emptyTextColor = isDark
+              ? AppColors.textSecondary
+              : const Color(0xFF3D1F5C);
+          return Padding(
+            padding: const EdgeInsets.all(AppSpacing.xxl),
+            child: Column(
+              children: [
+                Icon(Icons.nightlight_round, size: 64, color: emptyIconColor),
+                AppSpacing.verticalMd,
+                Text(
+                  'no_festivals'.tr,
+                  style: AppTextStyles.headlineSmall.copyWith(
+                    color: emptyTextColor,
+                  ),
+                ),
+              ],
             ),
-            AppSpacing.verticalMd,
-            Text(
-              'no_festivals'.tr,
-              style: AppTextStyles.headlineSmall.copyWith(
-                color: AppColors.textSecondary,
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

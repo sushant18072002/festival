@@ -6,16 +6,22 @@
         "meaning": "We meditate on the glory of the Creator; Who has created the Universe; Who is worthy of Worship; Who is the embodiment of Knowledge and Light; Who is the remover of all Sin and Ignorance; May He enlighten our Intellect.",
         "category": "religious",
         "tags": [
-            "lights"
+            "sun",
+            "wisdom",
+            "vedic"
         ],
         "vibes": [
-            "spiritual"
+            "spiritual",
+            "morning"
         ],
         "translations": {
             "hi": {
                 "text": "ॐ भूर्भुवः स्वः तत्सवितुर्वरेण्यं भर्गो देवस्य धीमहि धियो यो नः प्रचोदयात्",
-                "transliteration": "ओम भूर्भुवः स्वः...",
-                "meaning": "हम उस प्राणस्वरूप, दुःखनाशक, सुखस्वरूप, श्रेष्ठ, तेजस्वी, पापनाशक, देवस्वरूप परमात्मा को हम अन्तःकरण में धारण करें। वह परमात्मा हमारी बुद्धि को सन्मार्ग में प्रेरित करे।"
+                "transliteration": "ॐ भूर्भुवः स्वः...",
+                "meaning": "हम उस प्राणस्वरूप, दुःखनाशक, सुखस्वरूप, श्रेष्ठ, तेजस्वी, पापनाशक, देवस्वरूप परमात्मा को अन्तःकरण में धारण करें। वह परमात्मा हमारी बुद्धि को सन्मार्ग में प्रेरित करे।"
+            },
+            "mr": {
+                "meaning": "आम्ही त्या सर्जनशील शक्तीच्या वैभवाचे ध्यान करतो; जिने विश्व निर्माण केले; जी पूजेच्या योग्य आहे. ती आमची बुद्धी प्रकाशित करो."
             }
         }
     },
@@ -25,6 +31,11 @@
         "transliteration": "Om Asato Maa Sad-Gamaya | Tamaso Maa Jyotir-Gamaya | Mrtyor-Maa Amrtam-Gamaya | Om Shaantih Shaantih Shaantih ||",
         "meaning": "Lead us from the unreal to the real, from darkness to light, from death to immortality. Peace, peace, peace.",
         "category": "religious",
+        "tags": [
+            "peace",
+            "vedic",
+            "universal"
+        ],
         "vibes": [
             "spiritual",
             "solemn"
@@ -32,6 +43,215 @@
         "translations": {
             "hi": {
                 "meaning": "हमें असत्य से सत्य की ओर ले चलें, अंधकार से प्रकाश की ओर ले चलें, मृत्यु से अमरता की ओर ले चलें। शांति, शांति, शांति।"
+            },
+            "mr": {
+                "meaning": "आम्हाला असत्यातून सत्याकडे घेऊन जा, अंधारातून प्रकाशाकडे घेऊन जा, मृत्यूतून अमरत्वाकडे घेऊन जा. शांती, शांती, शांती."
+            }
+        }
+    },
+    {
+        "slug": "om-namah-shivaya",
+        "text": "ॐ नमः शिवाय",
+        "transliteration": "Om Namah Shivaya",
+        "meaning": "I bow to Lord Shiva, the auspicious one, who is the source of all existence and transformation.",
+        "category": "religious",
+        "tags": [
+            "shiva",
+            "devotion",
+            "purification"
+        ],
+        "vibes": [
+            "spiritual",
+            "solemn"
+        ],
+        "event_slug": "maha-shivratri",
+        "translations": {
+            "hi": {
+                "meaning": "मैं भगवान शिव को नमन करता हूं, जो शुभ हैं, जो सभी अस्तित्व और परिवर्तन का स्रोत हैं।"
+            },
+            "mr": {
+                "meaning": "मी शुभ असे भगवान शिवाला प्रणाम करतो, जे सर्व अस्तित्व आणि परिवर्तनाचे मूळ आहेत."
+            }
+        }
+    },
+    {
+        "slug": "maha-mrityunjaya-mantra",
+        "text": "ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम् । उर्वारुकमिव बन्धनान् मृत्योर्मुक्षीय मामृतात् ॥",
+        "transliteration": "Om Tryambakam Yajamahe Sugandhim Pushtivardhanam | Urvaarukamiva Bandhanaan Mrityormuksheeya Maamrtaat ||",
+        "meaning": "We worship the three-eyed Lord Shiva, who is full of fragrance and who nourishes all beings. May He liberate us from the bondage of death and bestow upon us the nectar of immortality.",
+        "category": "religious",
+        "tags": [
+            "shiva",
+            "protection",
+            "healing"
+        ],
+        "vibes": [
+            "spiritual",
+            "solemn"
+        ],
+        "event_slug": "maha-shivratri",
+        "translations": {
+            "hi": {
+                "meaning": "हम तीन नेत्रों वाले भगवान शिव की पूजा करते हैं, जो सुगंध से परिपूर्ण हैं और जो सभी जीवों का पोषण करते हैं। वे हमें मृत्यु के बंधन से मुक्त करें और अमृत प्रदान करें।"
+            }
+        }
+    },
+    {
+        "slug": "ganesh-mantra",
+        "text": "ॐ गं गणपतये नमः",
+        "transliteration": "Om Gam Ganapataye Namah",
+        "meaning": "I salute Lord Ganesha, the remover of obstacles and the lord of all beginnings.",
+        "category": "religious",
+        "tags": [
+            "ganesha",
+            "success",
+            "beginnings"
+        ],
+        "vibes": [
+            "spiritual",
+            "joyful"
+        ],
+        "event_slug": "ganesh-chaturthi",
+        "translations": {
+            "hi": {
+                "meaning": "मैं भगवान गणेश को नमन करता हूं, जो विघ्नहर्ता हैं और सभी शुरुआतों के स्वामी हैं।"
+            },
+            "mr": {
+                "meaning": "मी भगवान गणेशाला नमस्कार करतो, जे विघ्नहर्ते आणि सर्व शुरुआतींचे स्वामी आहेत."
+            }
+        }
+    },
+    {
+        "slug": "durga-mantra",
+        "text": "ॐ दुं दुर्गायै नमः",
+        "transliteration": "Om Dum Durgaye Namah",
+        "meaning": "I bow to Goddess Durga, the invincible one, who bestows protection, strength, and blessings upon all her devotees.",
+        "category": "religious",
+        "tags": [
+            "durga",
+            "shakti",
+            "protection"
+        ],
+        "vibes": [
+            "spiritual",
+            "solemn"
+        ],
+        "event_slug": "navratri-durga-puja",
+        "translations": {
+            "hi": {
+                "meaning": "मैं देवी दुर्गा को नमन करता हूं, जो अजेय हैं और अपने सभी भक्तों को सुरक्षा, शक्ति और आशीर्वाद प्रदान करती हैं।"
+            }
+        }
+    },
+    {
+        "slug": "saraswati-mantra",
+        "text": "ॐ ऐं सरस्वत्यै नमः",
+        "transliteration": "Om Aim Saraswatyai Namah",
+        "meaning": "I bow to Goddess Saraswati, the goddess of wisdom, knowledge, arts, and speech.",
+        "category": "religious",
+        "tags": [
+            "saraswati",
+            "wisdom",
+            "arts"
+        ],
+        "vibes": [
+            "spiritual",
+            "morning"
+        ],
+        "translations": {
+            "hi": {
+                "meaning": "मैं देवी सरस्वती को नमन करता हूं, जो ज्ञान, विद्या, कला और वाणी की देवी हैं।"
+            }
+        }
+    },
+    {
+        "slug": "lakshmi-mantra",
+        "text": "ॐ श्रीं लक्ष्म्यै नमः",
+        "transliteration": "Om Shreem Lakshmyai Namah",
+        "meaning": "I bow to Goddess Lakshmi, the goddess of wealth, prosperity, fortune, and abundance.",
+        "category": "religious",
+        "tags": [
+            "lakshmi",
+            "prosperity",
+            "wealth"
+        ],
+        "vibes": [
+            "spiritual",
+            "joyful"
+        ],
+        "event_slug": "deepavali-festival-of-lights",
+        "translations": {
+            "hi": {
+                "meaning": "मैं देवी लक्ष्मी को नमन करता हूं, जो धन, समृद्धि, भाग्य और वैभव की देवी हैं।"
+            },
+            "mr": {
+                "meaning": "मी देवी लक्ष्मीला नमस्कार करतो, जी धन, समृद्धी, भाग्य आणि वैभवाची देवी आहे."
+            }
+        }
+    },
+    {
+        "slug": "krishna-mantra",
+        "text": "ॐ नमो भगवते वासुदेवाय",
+        "transliteration": "Om Namo Bhagavate Vasudevaya",
+        "meaning": "I bow to Lord Vasudeva (Krishna), the divine one who pervades all of creation.",
+        "category": "religious",
+        "tags": [
+            "krishna",
+            "devotion",
+            "love"
+        ],
+        "vibes": [
+            "spiritual",
+            "joyful"
+        ],
+        "event_slug": "krishna-janmashtami",
+        "translations": {
+            "hi": {
+                "meaning": "मैं भगवान वासुदेव (कृष्ण) को नमन करता हूं, जो दिव्य हैं और सारी सृष्टि में व्याप्त हैं।"
+            }
+        }
+    },
+    {
+        "slug": "ram-mantra",
+        "text": "ॐ श्री राम जय राम जय जय राम",
+        "transliteration": "Om Shri Ram Jai Ram Jai Jai Ram",
+        "meaning": "Victory to Lord Ram, the ideal king and embodiment of righteousness, courage, and devotion.",
+        "category": "religious",
+        "tags": [
+            "ram",
+            "dharma",
+            "righteousness"
+        ],
+        "vibes": [
+            "spiritual",
+            "patriotic"
+        ],
+        "event_slug": "ram-navami",
+        "translations": {
+            "hi": {
+                "meaning": "भगवान राम की जय, जो आदर्श राजा और धर्म, साहस और भक्ति के प्रतीक हैं।"
+            }
+        }
+    },
+    {
+        "slug": "hanuman-chalisa-opener",
+        "text": "श्री गुरु चरण सरोज रज, निज मन मुकुर सुधारि। बरनउँ रघुबर बिमल जसु, जो दायकु फल चारि।।",
+        "transliteration": "Shri Guru Charan Saroj Raj, Nij Man Mukur Sudhaari | Barnau Raghubar Bimal Jasu, Jo Daayaku Phal Chaari ||",
+        "meaning": "Cleansing the mirror of my heart with the dust from the lotus feet of my Guru, I describe the pure glory of Lord Ram, which bestows the four fruits of life.",
+        "category": "religious",
+        "tags": [
+            "hanuman",
+            "devotion",
+            "rama"
+        ],
+        "vibes": [
+            "spiritual",
+            "solemn"
+        ],
+        "event_slug": "hanuman-jayanti",
+        "translations": {
+            "hi": {
+                "meaning": "गुरु के चरण-कमलों की धूल से अपने मन-दर्पण को साफ करके, मैं श्री राम का पवित्र यश वर्णन करता हूं, जो चारों फल देने वाला है।"
             }
         }
     }

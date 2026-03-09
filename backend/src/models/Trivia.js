@@ -27,7 +27,16 @@ const triviaSchema = new Schema({
     },
     tags: [{
         type: String
-    }]
+    }],
+    translations: {
+        type: Map,
+        of: Object,
+        default: {}
+    },
+    is_deleted: {
+        type: Boolean,
+        default: false
+    }
 }, {
     timestamps: true,
     collection: 'trivia'

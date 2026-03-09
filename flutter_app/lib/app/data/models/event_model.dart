@@ -1,6 +1,44 @@
+import 'package:get/get.dart';
+import '../providers/data_repository.dart';
+
 import 'taxonomy_model.dart';
 import 'image_model.dart';
 import 'mantra_model.dart';
+
+TaxonomyItem? _resolveTaxonomy(dynamic e, String type) {
+  if (e == null) return null;
+
+  TaxonomyItem item;
+  if (e is String) {
+    item = TaxonomyItem(code: e, name: e.toUpperCase());
+  } else {
+    item = TaxonomyItem.fromJson(e);
+  }
+
+  if (Get.isRegistered<DataRepository>()) {
+    final tax = Get.find<DataRepository>().currentTaxonomy;
+    if (tax != null) {
+      List<TaxonomyItem> list = [];
+      if (type == 'category')
+        list = tax.categories;
+      else if (type == 'tag')
+        list = tax.tags;
+      else if (type == 'vibe')
+        list = tax.vibes;
+
+      final match = list.firstWhereOrNull((t) => t.code == item.code);
+      if (match != null) {
+        return TaxonomyItem(
+          code: item.code,
+          name: match.name.isNotEmpty ? match.name : item.name,
+          icon: match.icon ?? item.icon,
+          color: match.color ?? item.color,
+        );
+      }
+    }
+  }
+  return item;
+}
 
 class EventModel {
   final String id;
@@ -31,8 +69,12 @@ class EventModel {
   final AmbientAudio? ambientAudio;
   final List<FestivalRecipe> recipes;
   final DressGuide? dressGuide;
+  final NotificationTemplates? notifications;
   final List<PlaylistLink> playlistLinks;
   final List<MantraModel> mantras;
+  final List<String> quotes;
+  final List<String> greetings;
+  final List<String> images;
 
   /// Nearest upcoming occurrence: uses pre-computed nextDate or searches dates list.
   DateTime? get nextOccurrence {
@@ -71,8 +113,12 @@ class EventModel {
     this.ambientAudio,
     this.recipes = const [],
     this.dressGuide,
+    this.notifications,
     this.playlistLinks = const [],
     this.mantras = const [],
+    this.quotes = const [],
+    this.greetings = const [],
+    this.images = const [],
   });
 
   factory EventModel.fromJson(Map<String, dynamic> json) {
@@ -88,16 +134,11 @@ class EventModel {
           : null,
       vibes:
           (json['vibes'] as List?)
-              ?.map((e) => TaxonomyItem.fromJson(e))
+              ?.map((e) => _resolveTaxonomy(e, 'vibe')!)
               .toList() ??
           [],
       category: json['category'] != null
-          ? (json['category'] is String
-                ? TaxonomyItem(
-                    code: json['category'],
-                    name: (json['category'] as String).toUpperCase(),
-                  )
-                : TaxonomyItem.fromJson(json['category']))
+          ? _resolveTaxonomy(json['category'], 'category')
           : null,
       image: json['image'] != null ? ImageModel.fromJson(json['image']) : null,
       thumbnail: json['thumbnail'], // Map thumbnail
@@ -112,13 +153,9 @@ class EventModel {
           [],
       priority: json['priority'] ?? 0,
       tags:
-          (json['tags'] as List?)?.map((e) {
-            if (e is String) {
-              return TaxonomyItem(code: e, name: e.toUpperCase());
-            } else {
-              return TaxonomyItem.fromJson(e);
-            }
-          }).toList() ??
+          (json['tags'] as List?)
+              ?.map((e) => _resolveTaxonomy(e, 'tag')!)
+              .toList() ??
           [],
       facts:
           (json['facts'] as List?)
@@ -149,6 +186,9 @@ class EventModel {
       dressGuide: json['dress_guide'] != null
           ? DressGuide.fromJson(json['dress_guide'])
           : null,
+      notifications: json['notifications'] != null
+          ? NotificationTemplates.fromJson(json['notifications'])
+          : null,
       playlistLinks:
           (json['playlist_links'] as List?)
               ?.map((e) => PlaylistLink.fromJson(e))
@@ -159,6 +199,12 @@ class EventModel {
               ?.map((e) => MantraModel.fromJson(e))
               .toList() ??
           [],
+      quotes:
+          (json['quotes'] as List?)?.map((e) => e.toString()).toList() ?? [],
+      greetings:
+          (json['greetings'] as List?)?.map((e) => e.toString()).toList() ?? [],
+      images:
+          (json['images'] as List?)?.map((e) => e.toString()).toList() ?? [],
     );
   }
 
@@ -187,8 +233,12 @@ class EventModel {
       if (ambientAudio != null) 'ambient_audio': ambientAudio!.toJson(),
       'recipes': recipes.map((e) => e.toJson()).toList(),
       if (dressGuide != null) 'dress_guide': dressGuide!.toJson(),
+      if (notifications != null) 'notifications': notifications!.toJson(),
       'playlist_links': playlistLinks.map((e) => e.toJson()).toList(),
       'mantras': mantras.map((e) => e.toJson()).toList(),
+      'quotes': quotes,
+      'greetings': greetings,
+      'images': images,
     };
   }
 }
@@ -349,30 +399,58 @@ class RitualStep {
 }
 
 class AmbientAudio {
+  final String id;
+  final String slug;
   final String filename;
   final String s3Key;
   final int durationSeconds;
   final String title;
+  final bool isLoopable;
+  final int fadeInMs;
+  final int fadeOutMs;
+  final double defaultVolume;
+  final String mood;
 
   AmbientAudio({
-    required this.filename,
-    required this.s3Key,
+    this.id = '',
+    this.slug = '',
+    this.filename = '',
+    this.s3Key = '',
     this.durationSeconds = 0,
     this.title = '',
+    this.isLoopable = false,
+    this.fadeInMs = 0,
+    this.fadeOutMs = 0,
+    this.defaultVolume = 1.0,
+    this.mood = '',
   });
 
   factory AmbientAudio.fromJson(Map<String, dynamic> json) => AmbientAudio(
+    id: json['id'] ?? '',
+    slug: json['slug'] ?? '',
     filename: json['filename'] ?? '',
     s3Key: json['s3_key'] ?? '',
     durationSeconds: json['duration_seconds'] ?? 0,
     title: json['title'] ?? '',
+    isLoopable: json['is_loopable'] ?? false,
+    fadeInMs: json['fade_in_ms'] ?? 0,
+    fadeOutMs: json['fade_out_ms'] ?? 0,
+    defaultVolume: (json['default_volume'] ?? 1.0).toDouble(),
+    mood: json['mood'] ?? '',
   );
 
   Map<String, dynamic> toJson() => {
+    'id': id,
+    'slug': slug,
     'filename': filename,
     's3_key': s3Key,
     'duration_seconds': durationSeconds,
     'title': title,
+    'is_loopable': isLoopable,
+    'fade_in_ms': fadeInMs,
+    'fade_out_ms': fadeOutMs,
+    'default_volume': defaultVolume,
+    'mood': mood,
   };
 }
 
@@ -443,4 +521,36 @@ class PlaylistLink {
     'url': url,
     'title': title,
   };
+}
+
+class NotificationTemplates {
+  final String discovery;
+  final String countdown;
+  final String eve;
+  final String dayOf;
+
+  NotificationTemplates({
+    this.discovery = '',
+    this.countdown = '',
+    this.eve = '',
+    this.dayOf = '',
+  });
+
+  factory NotificationTemplates.fromJson(Map<String, dynamic> json) {
+    return NotificationTemplates(
+      discovery: json['discovery'] ?? '',
+      countdown: json['countdown'] ?? '',
+      eve: json['eve'] ?? '',
+      dayOf: json['day_of'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'discovery': discovery,
+      'countdown': countdown,
+      'eve': eve,
+      'day_of': dayOf,
+    };
+  }
 }

@@ -3,16 +3,17 @@ import 'dart:ui';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../data/models/event_model.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/smart_image.dart';
-import '../../../widgets/animated_countdown_chip.dart';
 
-/// Neo-Modern "Crystal Portal" Hero Banner
-/// A glass-morphic card with neon inner glows and cinematic typography.
+/// Neo-Modern Hero Banner — matches the design spec with
+/// FEATURED pill, countdown pill, "Upcoming Festival" label,
+/// large serif title and an "Explore" CTA button.
 class HeroBanner extends StatelessWidget {
   final EventModel event;
 
@@ -30,37 +31,38 @@ class HeroBanner extends StatelessWidget {
           Get.toNamed(Routes.EVENT_DETAILS, arguments: event);
         },
         child: Container(
-          height: 240, // Taller for cinematic feel
+          // 4:3 ratio for the banner
+          height: MediaQuery.of(context).size.width * (3 / 4) - 32,
+          constraints: const BoxConstraints(minHeight: 220, maxHeight: 320),
           margin: const EdgeInsets.symmetric(
             horizontal: AppSpacing.md,
             vertical: AppSpacing.sm,
           ),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(32), // More rounded
+            borderRadius: BorderRadius.circular(28),
             boxShadow: [
-              // Neon Bloom
               BoxShadow(
-                color: AppColors.primary.withValues(alpha: 0.15),
-                blurRadius: 20,
-                offset: const Offset(0, 10),
+                color: AppColors.primary.withValues(alpha: 0.12),
+                blurRadius: 24,
+                offset: const Offset(0, 12),
               ),
             ],
           ),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(32),
+            borderRadius: BorderRadius.circular(28),
             child: Stack(
               fit: StackFit.expand,
               children: [
-                // 1. Background Image
+                // 1. Background image
                 _buildBackground(),
 
-                // 2. Cinematic Gradient Overlay (Bottom Up)
+                // 2. Gradient scrim
                 _buildGradientOverlay(),
 
-                // 3. Glass Border (Inner)
+                // 3. Inner glass border
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(32),
+                    borderRadius: BorderRadius.circular(28),
                     border: Border.all(
                       color: Colors.white.withValues(alpha: 0.1),
                       width: 1.5,
@@ -68,37 +70,40 @@ class HeroBanner extends StatelessWidget {
                   ),
                 ),
 
-                // 4. Content Content
+                // 4. Content
                 Padding(
                   padding: const EdgeInsets.all(AppSpacing.lg),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Top Row: Tag & Date
+                      // Top row — "FEATURED" pill + countdown pill
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildGlassTag('FEATURED'),
+                          _buildPill(
+                            label: 'featured'.tr,
+                            color: AppColors.secondary,
+                          ),
+                          const Spacer(),
                           if (event.date != null)
-                            _buildGlassTag(
-                              _formatDate(event.date!),
-                              isDate: true,
-                            ),
+                            _buildCountdownPill(event.date!),
                         ],
                       ),
 
                       const Spacer(),
 
-                      // Countdown Label (Neon)
-                      if (event.date != null)
-                        AnimatedCountdownChip(
-                          targetDate: event.date!,
-                          isLarge: true,
-                        ).animate().fade().slideY(begin: 0.2),
+                      // "Upcoming Festival" category label
+                      Text(
+                        'upcoming_festival'.tr,
+                        style: AppTextStyles.labelMedium.copyWith(
+                          color: AppColors.primary,
+                          letterSpacing: 1.2,
+                        ),
+                      ).animate().fade(delay: 50.ms),
 
                       const SizedBox(height: 4),
 
-                      // Massive Title (DM Serif)
+                      // Main title (DM Serif Display)
                       Text(
                         event.title,
                         style: AppTextStyles.displayMedium.copyWith(
@@ -109,38 +114,73 @@ class HeroBanner extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ).animate().fade(delay: 100.ms).slideY(begin: 0.2),
 
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 12),
 
-                      // Location/Subtitle
+                      // Bottom row — location + Explore button
                       Row(
                         children: [
-                          const Icon(
-                            Icons.location_on_outlined,
-                            color: Colors.white70,
-                            size: 16,
-                          ),
-                          const SizedBox(width: 4),
-                          Expanded(
-                            child: Text(
-                              event.location,
-                              style: AppTextStyles.bodyMedium.copyWith(
-                                color: Colors.white70,
+                          if (event.location.isNotEmpty) ...[
+                            const Icon(
+                              LucideIcons.mapPin,
+                              color: Colors.white60,
+                              size: 13,
+                            ),
+                            const SizedBox(width: 4),
+                            Expanded(
+                              child: Text(
+                                event.location,
+                                style: AppTextStyles.bodySmall.copyWith(
+                                  color: Colors.white60,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                          // Action Arrow
-                          Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.arrow_forward,
-                              size: 16,
-                              color: Colors.black,
+                          ] else
+                            const Spacer(),
+                          // Explore CTA button
+                          GestureDetector(
+                            onTap: () {
+                              HapticFeedback.mediumImpact();
+                              Get.toNamed(
+                                Routes.EVENT_DETAILS,
+                                arguments: event,
+                              );
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppColors.primary.withValues(
+                                  alpha: 0.15,
+                                ),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.5,
+                                  ),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'explore'.tr,
+                                    style: AppTextStyles.labelMedium.copyWith(
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 6),
+                                  const Icon(
+                                    LucideIcons.arrowRight,
+                                    color: AppColors.primary,
+                                    size: 14,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -166,7 +206,7 @@ class HeroBanner extends StatelessWidget {
           fit: BoxFit.cover,
           width: double.infinity,
           height: double.infinity,
-          memCacheWidth: 800,
+          memCacheWidth: 900,
         ),
       );
     }
@@ -186,53 +226,82 @@ class HeroBanner extends StatelessWidget {
           end: Alignment.bottomCenter,
           colors: [
             Colors.transparent,
-            Colors.black.withValues(alpha: 0.3),
-            Colors.black.withValues(alpha: 0.8),
+            Colors.black.withValues(alpha: 0.25),
+            Colors.black.withValues(alpha: 0.78),
           ],
-          stops: const [0.0, 0.5, 1.0],
+          stops: const [0.0, 0.45, 1.0],
         ),
       ),
     );
   }
 
-  Widget _buildGlassTag(String text, {bool isDate = false}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: isDate
-            ? AppColors.secondary.withValues(alpha: 0.2)
-            : Colors.black.withValues(alpha: 0.3),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
-      ),
+  /// "FEATURED" pill on the top-left
+  Widget _buildPill({required String label, required Color color}) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-        child: Text(
-          text,
-          style: AppTextStyles.labelSmall.copyWith(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+        filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: 0.2),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: color.withValues(alpha: 0.4)),
+          ),
+          child: Text(
+            label,
+            style: AppTextStyles.labelSmall.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0.8,
+            ),
           ),
         ),
       ),
     );
   }
 
-  String _formatDate(DateTime date) {
-    const months = [
-      'JAN',
-      'FEB',
-      'MAR',
-      'APR',
-      'MAY',
-      'JUN',
-      'JUL',
-      'AUG',
-      'SEP',
-      'OCT',
-      'NOV',
-      'DEC',
-    ];
-    return '${date.day} ${months[date.month - 1]}';
+  /// Top-right countdown pill with a timer icon
+  Widget _buildCountdownPill(DateTime date) {
+    final daysLeft = date.difference(DateTime.now()).inDays;
+    if (daysLeft < 0) return const SizedBox.shrink();
+
+    final color = daysLeft <= 7
+        ? AppColors.error
+        : daysLeft <= 30
+        ? AppColors.accent
+        : AppColors.primary;
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: 0.15),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: color.withValues(alpha: 0.5)),
+            boxShadow: [
+              BoxShadow(color: color.withValues(alpha: 0.3), blurRadius: 8),
+            ],
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(LucideIcons.timer, size: 12, color: color),
+              const SizedBox(width: 4),
+              Text(
+                daysLeft == 0 ? 'today'.tr : '$daysLeft ${'days_left'.tr}',
+                style: AppTextStyles.labelSmall.copyWith(
+                  color: color,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

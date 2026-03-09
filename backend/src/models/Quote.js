@@ -21,8 +21,6 @@ const QuoteSchema = new Schema({
     tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }],
     vibes: [{ type: Schema.Types.ObjectId, ref: 'Vibe' }],
 
-    // --- Optional Event Link ---
-    event_id: { type: Schema.Types.ObjectId, ref: 'Event' },
 
     // --- Featured (for Quote of the Day rotation) ---
     is_featured: { type: Boolean, default: false },

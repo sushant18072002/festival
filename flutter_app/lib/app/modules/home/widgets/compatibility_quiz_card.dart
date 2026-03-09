@@ -46,7 +46,7 @@ class CompatibilityQuizCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          'Personality Quiz',
+                          'personality_quiz'.tr,
                           style: AppTextStyles.labelMedium.copyWith(
                             color: Colors.purpleAccent,
                           ),
@@ -55,16 +55,18 @@ class CompatibilityQuizCard extends StatelessWidget {
                     ),
                     const SizedBox(height: AppSpacing.sm),
                     Text(
-                      'Which festival matches your personality?',
+                      'quiz_card_title'.tr,
                       style: AppTextStyles.titleMedium.copyWith(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.sm),
                     Text(
-                      'Take the quiz and earn +25 Karma! ✨',
+                      'quiz_card_subtitle'.tr,
                       style: AppTextStyles.bodySmall.copyWith(
-                        color: Colors.white70,
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: 0.6),
                       ),
                     ),
                   ],

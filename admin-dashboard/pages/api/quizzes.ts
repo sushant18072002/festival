@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import dbConnect from '../../lib/mongodb';
-import Quiz from '../../models/Quiz';
+import dbConnect from '../../lib/dbConnect';
+import { Quiz } from '../../lib/models';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { method, query } = req;

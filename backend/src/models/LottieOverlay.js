@@ -5,7 +5,7 @@ const trackChanges = require('../middleware/trackChanges');
 const LottieOverlaySchema = new Schema({
     title: { type: String, required: true }, // E.g., "Holi Color Burst"
     filename: { type: String, required: true, unique: true }, // E.g., "holi.json"
-    asset_path: { type: String, required: true }, // E.g., "assets/lottie/holi.json"
+    s3_key: { type: String, required: true }, // E.g., "lotties/holi.json"
     is_active: { type: Boolean, default: true },
     tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }],
     // Soft Delete

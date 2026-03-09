@@ -28,10 +28,9 @@ export default async function handler(
 
     if (req.method === 'GET') {
         try {
-            const { trash, event_id, is_optimized, search } = req.query;
+            const { trash, is_optimized, search } = req.query;
             const filter: any = trash === 'true' ? { is_deleted: true } : { is_deleted: { $ne: true } };
 
-            if (event_id) filter.event_id = event_id;
             if (is_optimized === 'true') filter.is_optimized = true;
             if (is_optimized === 'false') filter.is_optimized = { $ne: true };
             if (search) filter.caption = { $regex: search, $options: 'i' };
@@ -40,16 +39,31 @@ export default async function handler(
             const limit = parseInt(req.query.limit as string) || 100; // Default high for gallery
             const skip = (page - 1) * limit;
 
-            const images = await Image.find(filter)
-                .populate('event_id')
-                .populate('greeting_id', 'text translations')
-                .populate('quote_id', 'text author translations')
-                .sort({ created_at: -1 })
-                .skip(skip)
-                .limit(limit)
-                .lean();
+            let images = [];
+            let total = 0;
 
-            const total = await Image.countDocuments(filter);
+            if (req.query.event_id) {
+                // Schema Inversion Proxy: The frontend asks for images "belonging" to an event
+                const event = await Event.findById(req.query.event_id)
+                    .populate({
+                        path: 'images',
+                        match: filter,
+                        options: { sort: { created_at: -1 } }
+                    })
+                    .lean();
+                images = event?.images || [];
+                total = images.length;
+            } else {
+                images = await Image.find(filter)
+                    .populate('greeting_id', 'text translations')
+                    .populate('quote_id', 'text author translations')
+                    .sort({ created_at: -1 })
+                    .skip(skip)
+                    .limit(limit)
+                    .lean();
+
+                total = await Image.countDocuments(filter);
+            }
 
             const { DeployConfig } = require('../../lib/models');
             const deployConfig = await DeployConfig.findOne({ key: 'server_deployment' });
@@ -106,7 +120,6 @@ export default async function handler(
                 const s3Key = `${base}/${env}/image/original/${filename.replace(path.extname(filename), '.webp')}`;
 
                 const imageDoc = await Image.create({
-                    event_id: Array.isArray(fields.event_id) ? fields.event_id[0] : fields.event_id,
                     filename: filename,
                     s3_key: s3Key,
                     caption: Array.isArray(fields.caption) ? fields.caption[0] : fields.caption,
@@ -127,8 +140,22 @@ export default async function handler(
             req.on('data', (chunk) => chunks.push(chunk));
             req.on('end', async () => {
                 const body = JSON.parse(Buffer.concat(chunks).toString());
-                const { _id, ...updateData } = body;
-                const image = await Image.findByIdAndUpdate(_id, updateData, { new: true }).populate('event_id');
+                const { _id, event_id, ...updateData } = body;
+
+                // Allow omitting _id if we want to do bulk operations eventually, but for now _id is required
+                const image = await Image.findByIdAndUpdate(_id, updateData, { new: true });
+
+                // Proxy relations to Event master array
+                if (event_id !== undefined) {
+                    if (event_id === null) {
+                        // Unlink request: Pull this image ID from all Events
+                        await Event.updateMany({}, { $pull: { images: _id } });
+                    } else {
+                        // Link request: Push this image ID to the specific Event
+                        await Event.findByIdAndUpdate(event_id, { $addToSet: { images: _id } });
+                    }
+                }
+
                 res.status(200).json({ success: true, data: image });
             });
         } catch (error) {

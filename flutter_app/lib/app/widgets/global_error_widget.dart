@@ -15,27 +15,32 @@ class GlobalErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final iconColor = isDark
+        ? Colors.white54
+        : const Color(0xFF3D1F5C).withValues(alpha: 0.5);
+    final titleColor = isDark ? Colors.white : const Color(0xFF1A0B2E);
+    final bodyColor = isDark
+        ? Colors.white54
+        : const Color(0xFF3D1F5C).withValues(alpha: 0.7);
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.xl),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.cloud_off_rounded,
-              color: Colors.white54,
-              size: 80,
-            ),
+            Icon(Icons.cloud_off_rounded, color: iconColor, size: 80),
             const SizedBox(height: AppSpacing.md),
             Text(
               'Connection Lost',
-              style: AppTextStyles.headlineMedium.copyWith(color: Colors.white),
+              style: AppTextStyles.headlineMedium.copyWith(color: titleColor),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
               message,
-              style: AppTextStyles.bodyMedium.copyWith(color: Colors.white54),
+              style: AppTextStyles.bodyMedium.copyWith(color: bodyColor),
               textAlign: TextAlign.center,
             ),
             if (onRetry != null) ...[
@@ -44,7 +49,7 @@ class GlobalErrorWidget extends StatelessWidget {
                 onPressed: onRetry,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
+                  foregroundColor: Colors.black,
                   padding: const EdgeInsets.symmetric(
                     horizontal: AppSpacing.lg,
                     vertical: AppSpacing.sm,

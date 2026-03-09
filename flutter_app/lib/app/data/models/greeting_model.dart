@@ -6,6 +6,7 @@ class GreetingModel {
   final String language;
   final TaxonomyItem? category;
   final List<TaxonomyItem> vibes;
+  final List<TaxonomyItem> tags;
 
   GreetingModel({
     required this.id,
@@ -13,6 +14,7 @@ class GreetingModel {
     this.language = 'en',
     this.category,
     this.vibes = const [],
+    this.tags = const [],
   });
 
   factory GreetingModel.fromJson(Map<String, dynamic> json) {
@@ -34,6 +36,15 @@ class GreetingModel {
               )
               .toList() ??
           [],
+      tags:
+          (json['tags'] as List?)
+              ?.map(
+                (e) => e is String
+                    ? TaxonomyItem(code: e, name: e)
+                    : TaxonomyItem.fromJson(e),
+              )
+              .toList() ??
+          [],
     );
   }
 
@@ -44,6 +55,7 @@ class GreetingModel {
       'language': language,
       if (category != null) 'category': category!.toJson(),
       'vibes': vibes.map((e) => e.toJson()).toList(),
+      'tags': tags.map((e) => e.toJson()).toList(),
     };
   }
 }

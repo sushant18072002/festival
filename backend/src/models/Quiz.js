@@ -46,6 +46,11 @@ const quizSchema = new Schema({
     isActive: {
         type: Boolean,
         default: true
+    },
+    translations: {
+        type: Map,
+        of: Object,
+        default: {}
     }
 }, {
     timestamps: true,

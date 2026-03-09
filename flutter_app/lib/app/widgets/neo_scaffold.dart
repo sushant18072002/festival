@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
 import 'painters/mesh_gradient_painter.dart';
 import 'painters/noise_painter.dart';
 
 /// The foundational scaffold for the Neo-Modern aesthetic.
 /// Provides:
-/// 1. Kinetic Mesh Gradient Background
+/// 1. Kinetic Mesh Gradient Background (adapts to light / dark theme)
 /// 2. Film Grain / Noise Overlay
 /// 3. Proper Safe Area and App Bar handling
 class NeoScaffold extends StatefulWidget {
@@ -53,21 +52,27 @@ class _NeoScaffoldState extends State<NeoScaffold>
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    // Use caller's override → theme's scaffold color → AppColors fallback
+    final bgColor =
+        widget.backgroundColor ?? Theme.of(context).scaffoldBackgroundColor;
+
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: widget.backgroundColor ?? AppColors.backgroundDark,
-      // We don't use the scaffold's appBar because we want the gradient to go behind it
-      // So we stack everything manually
+      backgroundColor: bgColor,
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // 1. Kinetic Gradient Background
+          // 1. Kinetic Gradient Background (theme-aware)
           if (!widget.hideGradient)
             AnimatedBuilder(
               animation: _controller,
               builder: (context, child) {
                 return CustomPaint(
-                  painter: MeshGradientPainter(_controller.value),
+                  painter: MeshGradientPainter(
+                    _controller.value,
+                    isDark: isDark,
+                  ),
                   size: Size.infinite,
                 );
               },

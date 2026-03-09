@@ -11,13 +11,38 @@
             "spiritual",
             "joyful"
         ],
-        "event_slug": "diwali-festival-of-lights",
+        "event_slug": "deepavali-festival-of-lights",
         "translations": {
             "hi": {
                 "text": "दीवाली का दिव्य प्रकाश आपके जीवन में शांति, समृद्धि और खुशियां लेकर आए। शुभ दीवाली!"
             },
             "mr": {
                 "text": "दिवाळीचा दैवी प्रकाश तुमच्या जीवनात शांती, समृद्धी आणि आनंद घेऊन येवो. शुभ दीपावली!"
+            },
+            "gu": {
+                "text": "દીવાળીનો દિવ્ય પ્રકાશ આપના જીવનમાં શાંતિ, સમૃद्धि અને ખુશી લઈ આવે. શુભ દીવળઁ!"
+            },
+            "bn": {
+                "text": "দীপাবলির ঐশ্বরিক আলো আপনার জীবনে শান্তি, সমৃদ্ধি এবং সুখ নিয়ে আসুক। শুভ দীপাবলি!"
+            }
+        }
+    },
+    {
+        "slug": "diwali-light-1",
+        "text": "On this auspicious occasion of Diwali, may your home be filled with love, laughter, and infinite blessings. Happy Diwali!",
+        "category": "festival",
+        "tags": [
+            "lights",
+            "family"
+        ],
+        "vibes": [
+            "joyful",
+            "spiritual"
+        ],
+        "event_slug": "deepavali-festival-of-lights",
+        "translations": {
+            "hi": {
+                "text": "दीपावली के इस शुभ अवसर पर, आपका घर प्रेम, हँसी और अनंत आशीर्वाद से भरा रहे। हैप्पी दीवाली!"
             }
         }
     },
@@ -26,15 +51,38 @@
         "text": "Let us honor our Constitution and celebrate the spirit of a free India. Happy Republic Day!",
         "category": "national",
         "tags": [
-            "freedom"
+            "freedom",
+            "india"
         ],
         "vibes": [
             "patriotic"
         ],
-        "event_slug": "republic-day-india",
+        "event_slug": "republic-independence-day",
         "translations": {
             "hi": {
                 "text": "आइए हम अपने संविधान का सम्मान करें और एक स्वतंत्र भारत की भावना का जश्न मनाएं। गणतंत्र दिवस की शुभकामनाएं!"
+            },
+            "mr": {
+                "text": "आपल्या संविधानाचा सन्मान करूया आणि स्वतंत्र भारताच्या भावनेचे उत्सव साजरा करूया. गणतंत्र दिनाच्या शुभेच्छा!"
+            }
+        }
+    },
+    {
+        "slug": "republic-day-2",
+        "text": "Proud to be Indian! May our nation always prosper and our flag fly high. Jai Hind!",
+        "category": "national",
+        "tags": [
+            "freedom",
+            "india",
+            "unity"
+        ],
+        "vibes": [
+            "patriotic"
+        ],
+        "event_slug": "republic-independence-day",
+        "translations": {
+            "hi": {
+                "text": "भारतीय होने पर गर्व है! हमारा देश हमेशा फले-फूले और हमारा तिरंगा ऊंचा लहरे। जय हिन्द!"
             }
         }
     },
@@ -43,7 +91,8 @@
         "text": "May your life be as colorful and joyful as the festival of Holi. Happy Holi!",
         "category": "festival",
         "tags": [
-            "colors"
+            "colors",
+            "spring"
         ],
         "vibes": [
             "joyful",
@@ -52,21 +101,211 @@
         "event_slug": "holi-festival-of-colors",
         "translations": {
             "hi": {
-                "text": "आपका जीवन होली के त्योहार की तरह ही रंगीन और আনন্দময় हो। होली की शुभकामनाएं!"
+                "text": "आपका जीवन होली के त्योहार की तरह ही रंगीन और आनंदमय हो। होली की शुभकामनाएं!"
+            },
+            "mr": {
+                "text": "तुमचे आयुष्य होळी सणाइतकेच रंगीत आणि आनंदी असो. होळीच्या शुभेच्छा!"
+            }
+        }
+    },
+    {
+        "slug": "holi-love-colors",
+        "text": "Let the colors of Holi spread love, joy, and happiness in your life. Happy Holi!",
+        "category": "festival",
+        "tags": [
+            "colors",
+            "love"
+        ],
+        "vibes": [
+            "joyful",
+            "romantic"
+        ],
+        "event_slug": "holi-festival-of-colors",
+        "translations": {
+            "hi": {
+                "text": "होली के रंग आपके जीवन में प्रेम, आनंद और खुशियां फैलाएं। होली की हार्दिक शुभकामनाएं!"
             }
         }
     },
     {
         "slug": "general-morning-blessing-1",
         "text": "Good morning! May this day bring you endless joy and success.",
-        "category": "festival",
-        "tags": [],
+        "category": "general",
+        "tags": [
+            "morning",
+            "positivity"
+        ],
         "vibes": [
-            "joyful"
+            "joyful",
+            "morning"
         ],
         "translations": {
             "hi": {
                 "text": "सुप्रभात! यह दिन आपके लिए अनंत खुशियां और सफलता लाए।"
+            },
+            "mr": {
+                "text": "शुभ सकाळ! हा दिवस तुमच्यासाठी अनंत आनंद आणि यश घेऊन येवो."
+            }
+        }
+    },
+    {
+        "slug": "morning-blessing-2",
+        "text": "Rise and shine! May your morning be as bright as your beautiful smile. Good morning!",
+        "category": "general",
+        "tags": [
+            "morning",
+            "positivity"
+        ],
+        "vibes": [
+            "morning",
+            "joyful"
+        ],
+        "translations": {
+            "hi": {
+                "text": "उठो और चमको! आपकी सुबह आपकी खूबसूरत मुस्कान जितनी तेज हो। सुप्रभात!"
+            }
+        }
+    },
+    {
+        "slug": "eid-blessing-1",
+        "text": "Wishing you and your family a blessed Eid. May Allah shower you with happiness and peace. Eid Mubarak!",
+        "category": "religious",
+        "tags": [
+            "peace",
+            "family"
+        ],
+        "vibes": [
+            "spiritual",
+            "joyful"
+        ],
+        "event_slug": "eid-al-fitr",
+        "translations": {
+            "hi": {
+                "text": "आपको और आपके परिवार को ईद की ढेर सारी बधाइयाँ। अल्लाह आप पर खुशियाँ और चैन बरसाए। ईद मुबारक!"
+            }
+        }
+    },
+    {
+        "slug": "christmas-joy-1",
+        "text": "May the spirit of Christmas bring joy, peace, and warmth to your heart and home. Merry Christmas!",
+        "category": "religious",
+        "tags": [
+            "peace",
+            "family",
+            "lights"
+        ],
+        "vibes": [
+            "joyful",
+            "spiritual"
+        ],
+        "event_slug": "christmas",
+        "translations": {
+            "hi": {
+                "text": "क्रिसमस की भावना आपके दिल और घर में खुशी, शांति और गर्माहट लेकर आए। मेरी क्रिसमस!"
+            }
+        }
+    },
+    {
+        "slug": "navratri-blessing-1",
+        "text": "May Goddess Durga bless you with strength, wisdom, and prosperity. Happy Navratri!",
+        "category": "religious",
+        "tags": [
+            "goddess",
+            "devotion"
+        ],
+        "vibes": [
+            "spiritual",
+            "cultural"
+        ],
+        "event_slug": "navratri-durga-puja",
+        "translations": {
+            "hi": {
+                "text": "देवी दुर्गा आपको शक्ति, विवेक और समृद्धि से आशीर्वाद दें। शुभ नवरात्रि!"
+            },
+            "mr": {
+                "text": "देवी दुर्गा तुम्हाला शक्ती, बुद्धिमत्ता आणि समृद्धी देऊन आशीर्वाद देव़ो. शुभ नवरात्री!"
+            }
+        }
+    },
+    {
+        "slug": "ganesh-chaturthi-1",
+        "text": "May Lord Ganesha remove all obstacles from your path and bless you with wisdom and prosperity. Ganpati Bappa Morya!",
+        "category": "religious",
+        "tags": [
+            "devotion",
+            "wisdom"
+        ],
+        "vibes": [
+            "spiritual",
+            "joyful"
+        ],
+        "event_slug": "ganesh-chaturthi",
+        "translations": {
+            "hi": {
+                "text": "भगवान गणेश आपके मार्ग से सभी बाधाएं दूर करें और आपको बुद्धि और समृद्धि का आशीर्वाद दें। गणपति बप्पा मोरया!"
+            },
+            "mr": {
+                "text": "गणपती बाप्पा तुमच्या मार्गातील सर्व अडथळे दूर करोत आणि बुद्धी व समृद्धी देऊन आशीर्वाद देवोत. गणपती बाप्पा मोरया!"
+            }
+        }
+    },
+    {
+        "slug": "maha-shivratri-1",
+        "text": "May Lord Shiva bless you with peace, prosperity, and enlightenment. Happy Maha Shivratri!",
+        "category": "religious",
+        "tags": [
+            "devotion",
+            "peace"
+        ],
+        "vibes": [
+            "spiritual",
+            "solemn"
+        ],
+        "event_slug": "maha-shivratri",
+        "translations": {
+            "hi": {
+                "text": "भगवान शिव आपको शांति, समृद्धि और ज्ञान का आशीर्वाद दें। महाशिवरात्रि की हार्दिक शुभकामनाएं!"
+            }
+        }
+    },
+    {
+        "slug": "independence-day-1",
+        "text": "Freedom is our pride and our greatest treasure. Happy Independence Day! Jai Hind!",
+        "category": "national",
+        "tags": [
+            "freedom",
+            "india",
+            "unity"
+        ],
+        "vibes": [
+            "patriotic"
+        ],
+        "event_slug": "republic-independence-day",
+        "translations": {
+            "hi": {
+                "text": "आजादी हमारी शान और हमारी सबसे बड़ी धरोहर है। स्वतंत्रता दिवस की बधाई! जय हिन्द!"
+            }
+        }
+    },
+    {
+        "slug": "raksha-bandhan-1",
+        "text": "May the bond of love between brothers and sisters grow stronger with time. Happy Raksha Bandhan!",
+        "category": "festival",
+        "tags": [
+            "family",
+            "love"
+        ],
+        "vibes": [
+            "romantic",
+            "joyful"
+        ],
+        "event_slug": "raksha-bandhan",
+        "translations": {
+            "hi": {
+                "text": "भाई-बहन के प्रेम का बंधन समय के साथ मजबूत होता रहे। रक्षाबंधन की हार्दिक शुभकामनाएं!"
+            },
+            "mr": {
+                "text": "भाऊ-बहिणीच्या प्रेमाचे बंधन काळासोबत अधिक मजबूत होत जावो. रक्षाबंधनाच्या शुभेच्छा!"
             }
         }
     },
@@ -75,49 +314,17 @@
         "text": "Good morning! May the teachings of Buddha guide you to peace and joy today.",
         "category": "religious",
         "tags": [
-            "peace"
+            "peace",
+            "wisdom"
         ],
         "vibes": [
             "spiritual",
-            "solemn"
+            "morning"
         ],
+        "event_slug": "buddha-purnima",
         "translations": {
             "hi": {
                 "text": "सुप्रभात! बुद्ध की शिक्षाएं आज आपको शांति और आनंद की ओर ले जाएं।"
-            }
-        }
-    },
-    {
-        "slug": "buddha-morning-2",
-        "text": "Wishing you a serene and mindful day ahead. Stay blessed!",
-        "category": "religious",
-        "tags": [
-            "peace"
-        ],
-        "vibes": [
-            "spiritual",
-            "solemn"
-        ],
-        "translations": {
-            "hi": {
-                "text": "आपको एक शांत और सचेत दिन की शुभकामनाएं। आशीर्वाद बना रहे!"
-            }
-        }
-    },
-    {
-        "slug": "buddha-morning-3",
-        "text": "Start your day with a calm mind and a pure heart. Good Morning.",
-        "category": "religious",
-        "tags": [
-            "peace"
-        ],
-        "vibes": [
-            "spiritual",
-            "solemn"
-        ],
-        "translations": {
-            "hi": {
-                "text": "अपने दिन की शुरुआत शांत मन और पवित्र हृदय से करें। सुप्रभात।"
             }
         }
     },
@@ -126,12 +333,14 @@
         "text": "May the divine light of Buddha bring clarity and peace to your life.",
         "category": "religious",
         "tags": [
-            "peace"
+            "peace",
+            "wisdom"
         ],
         "vibes": [
             "spiritual",
             "solemn"
         ],
+        "event_slug": "buddha-purnima",
         "translations": {
             "hi": {
                 "text": "बुद्ध का दिव्य प्रकाश आपके जीवन में स्पष्टता और शांति लाए।"
@@ -139,19 +348,62 @@
         }
     },
     {
-        "slug": "buddha-morning-4",
-        "text": "Sending you positive vibes and spiritual energy for a beautiful day.",
-        "category": "religious",
+        "slug": "onam-harvest-1",
+        "text": "May the harvest festival of Onam bring joy, peace, and prosperity to your family. Happy Onam!",
+        "category": "festival",
         "tags": [
-            "peace"
+            "harvest",
+            "family"
+        ],
+        "vibes": [
+            "joyful",
+            "cultural"
+        ],
+        "event_slug": "onam",
+        "translations": {
+            "hi": {
+                "text": "ओणम का उत्सव आपके परिवार में खुशी, शांति और समृद्धि लेकर आए। ओणम की शुभकामनाएं!"
+            },
+            "ml": {
+                "text": "ഓണം ആഘോഷം നിങ്ങളുടെ കുടുംബത്തിൽ സന്തോഷം, ശാന്തി, സമൃദ്ധി കൊണ്ടുവരട്ടെ! ഓണാശംസകൾ!"
+            }
+        }
+    },
+    {
+        "slug": "yogaday-blessing-1",
+        "text": "Let yoga unite your body, mind, and soul. Wishing you health and harmony on International Yoga Day!",
+        "category": "national",
+        "tags": [
+            "wellness",
+            "health"
         ],
         "vibes": [
             "spiritual",
-            "solemn"
+            "morning"
         ],
+        "event_slug": "international-yoga-day",
         "translations": {
             "hi": {
-                "text": "एक सुंदर दिन के लिए आपको सकारात्मक और आध्यात्मिक ऊर्जा भेज रहा हूँ।"
+                "text": "योग आपके शरीर, मन और आत्मा को एक करे। अंतर्राष्ट्रीय योग दिवस पर स्वास्थ्य और सामंजस्य की कामना!"
+            }
+        }
+    },
+    {
+        "slug": "womens-day-1",
+        "text": "Here's to strong women — may we know them, may we be them, may we raise them. Happy Women's Day!",
+        "category": "national",
+        "tags": [
+            "empowerment",
+            "women"
+        ],
+        "vibes": [
+            "patriotic",
+            "joyful"
+        ],
+        "event_slug": "international-womens-day",
+        "translations": {
+            "hi": {
+                "text": "सशक्त महिलाओं के लिए — हम उन्हें जानें, हम उन जैसी बनें, हम उन्हें पाल-पोसकर बड़ा करें। महिला दिवस की शुभकामनाएं!"
             }
         }
     }

@@ -10,6 +10,7 @@ import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_animations.dart';
 import 'dart:ui' as ui;
+import 'package:share_plus/share_plus.dart';
 
 /// Neo-Modern Trending Image Card
 /// Floating style with no extensive borders.
@@ -112,47 +113,79 @@ class _TrendingImageCardState extends State<TrendingImageCard> {
                     ),
                   ),
 
-                  // 3. Download Badge (Glass Pill)
+                  // 3. Details Column (Title, Categories, Downloads)
                   Positioned(
                     bottom: 12,
                     left: 12,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.1),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.download_rounded,
-                            color: AppColors.textSecondary,
-                            size: 12,
+                    right: 90, // Leave space for action buttons
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Title / Description
+                        Text(
+                          widget.image.displayLabel,
+                          style: AppTextStyles.labelMedium.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            shadows: const [
+                              Shadow(color: Colors.black45, blurRadius: 4),
+                            ],
                           ),
-                          const SizedBox(width: 4),
-                          Text(
-                            _formatCount(widget.image.downloads),
-                            style: AppTextStyles.labelSmall.copyWith(
-                              color: Colors.white,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: 6),
+
+                        // Premium badge (replaces legacy download count)
+                        if (widget.image.isPremium)
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.black.withValues(alpha: 0.4),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: Colors.white.withValues(alpha: 0.2),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(
+                                  Icons.workspace_premium_rounded,
+                                  color: Colors.amber,
+                                  size: 12,
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  'HD',
+                                  style: AppTextStyles.labelSmall.copyWith(
+                                    color: Colors.amber,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
+                      ],
                     ),
                   ),
 
-                  // 4. Favorite Button (Glass Circle)
+                  // 4. Action Buttons (Share & Favorite)
                   Positioned(
                     bottom: 8,
                     right: 8,
-                    child: _buildFavoriteButton(),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _buildShareButton(),
+                        const SizedBox(width: 8),
+                        _buildFavoriteButton(),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -217,6 +250,40 @@ class _TrendingImageCardState extends State<TrendingImageCard> {
     );
   }
 
+  Widget _buildShareButton() {
+    return Semantics(
+      label: 'Share',
+      button: true,
+      child: GestureDetector(
+        onTap: () {
+          HapticFeedback.mediumImpact();
+          _shareImage();
+        },
+        child: AnimatedContainer(
+          duration: 200.ms,
+          width: 36,
+          height: 36,
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.15),
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
+          ),
+          child: const Icon(Icons.send_rounded, size: 18, color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _shareImage() async {
+    try {
+      final msg =
+          "Look at this amazing festival vibe! ✨\nCheck it out here: ${widget.image.url}";
+      await Share.share(msg);
+    } catch (e) {
+      Get.snackbar('Error', 'Could not share image.');
+    }
+  }
+
   Widget _buildFavoriteButton() {
     return Obx(() {
       final controller = Get.find<FavoritesController>();
@@ -254,11 +321,5 @@ class _TrendingImageCardState extends State<TrendingImageCard> {
         ),
       );
     });
-  }
-
-  String _formatCount(int count) {
-    if (count >= 1000000) return '${(count / 1000000).toStringAsFixed(1)}M';
-    if (count >= 1000) return '${(count / 1000).toStringAsFixed(1)}K';
-    return count.toString();
   }
 }

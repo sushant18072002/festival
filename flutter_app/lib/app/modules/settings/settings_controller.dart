@@ -9,7 +9,7 @@ import '../../data/services/notification_service.dart';
 import '../../data/services/notification_settings_model.dart';
 import '../home/home_controller.dart';
 import '../calendar/calendar_controller.dart';
-import '../gallery/gallery_controller.dart';
+import '../explore/explore_controller.dart';
 
 class SettingsController extends GetxController {
   final _storage = GetStorage();
@@ -28,6 +28,7 @@ class SettingsController extends GetxController {
   final highContrast = false.obs;
   final largeText = false.obs;
   final reduceAnimations = false.obs;
+  final isDarkMode = false.obs;
 
   // ─── My Festivals (Phase 19) ────────────────────────────────────────────
   // List of event IDs the user wants to prioritize
@@ -40,6 +41,12 @@ class SettingsController extends GetxController {
   void onInit() {
     super.onInit();
     currentLang.value = _storage.read('lang') ?? 'en';
+    // Sanitize legacy lang codes (en_US → en)
+    if (currentLang.value.length > 2) {
+      currentLang.value = currentLang.value.substring(0, 2);
+      _storage.write('lang', currentLang.value);
+    }
+
     _notifSettings = Get.find<NotificationSettingsModel>();
 
     festivalEventNotifs.value = _notifSettings.festivalEvents;
@@ -54,6 +61,8 @@ class SettingsController extends GetxController {
     highContrast.value = _storage.read('high_contrast') ?? false;
     largeText.value = _storage.read('large_text') ?? false;
     reduceAnimations.value = _storage.read('reduce_animations') ?? false;
+    isDarkMode.value = _storage.read('is_dark_mode') ?? Get.isPlatformDarkMode;
+
     myFestivals.assignAll(
       List<String>.from(_storage.read('my_festivals') ?? []),
     );
@@ -146,10 +155,16 @@ class SettingsController extends GetxController {
     Get.find<DataRepository>().toggleRemote(value);
     Get.find<HomeController>().fetchFeed();
     Get.find<CalendarController>().fetchCalendarData();
-    Get.find<GalleryController>().fetchData();
+    Get.find<ExploreController>().fetchData();
   }
 
   // ─── Theme & Accessibility ────────────────────────────────────────────────
+
+  void toggleTheme(bool value) {
+    isDarkMode.value = value;
+    _storage.write('is_dark_mode', value);
+    Get.changeThemeMode(value ? ThemeMode.dark : ThemeMode.light);
+  }
 
   void toggleHighContrast(bool value) {
     highContrast.value = value;

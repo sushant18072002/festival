@@ -16,7 +16,6 @@ interface MantraData {
     meaning: string;
     slug?: string;
     category?: string;
-    event_id?: string;
     is_active?: boolean;
     is_deleted?: boolean;
     translations?: { [key: string]: { text?: string; transliteration?: string; meaning?: string } };
@@ -28,7 +27,6 @@ const initialFormState: MantraData = {
     meaning: '',
     slug: '',
     category: '',
-    event_id: '',
     is_active: true,
     translations: {}
 };
@@ -36,7 +34,6 @@ const initialFormState: MantraData = {
 export default function Mantras() {
     const [mantras, setMantras] = useState<MantraData[]>([]);
     const [categories, setCategories] = useState<any[]>([]);
-    const [events, setEvents] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
     const [editId, setEditId] = useState<string | null>(null);
@@ -45,7 +42,7 @@ export default function Mantras() {
     const [activeLang, setActiveLang] = useState('en');
     const [showTrash, setShowTrash] = useState(false);
 
-    useEffect(() => { fetchMantras(); fetchCategories(); fetchEvents(); }, [showTrash]);
+    useEffect(() => { fetchMantras(); fetchCategories(); }, [showTrash]);
 
     const fetchMantras = async () => {
         setLoading(true);
@@ -66,18 +63,13 @@ export default function Mantras() {
     };
 
     const fetchEvents = async () => {
-        try {
-            const res = await fetch('/api/events?limit=100');
-            const json = await res.json();
-            if (json.success) setEvents(json.data);
-        } catch (err) { /* silent */ }
+        // Mantras are global, assigned to events from the Event editor.
     };
 
     const handleEdit = (item: MantraData) => {
         setFormData({
             ...item,
             category: typeof item.category === 'object' ? (item.category as any)?._id : item.category || '',
-            event_id: typeof item.event_id === 'object' ? (item.event_id as any)?._id : item.event_id || '',
         });
         setEditId(item._id || null);
         setShowForm(true);
@@ -151,11 +143,7 @@ export default function Mantras() {
         return cat.translations?.en?.name || cat.code;
     };
 
-    const getEventTitle = (evt: any) => {
-        if (!evt) return null;
-        if (typeof evt === 'string') return evt;
-        return evt.title || evt.slug;
-    };
+    const getEventTitle = (_evt: any) => null; // Mantras no longer link to events directly
 
     return (
         <div className="flex h-screen bg-slate-950 text-white">
@@ -246,11 +234,7 @@ export default function Mantras() {
                                                             <Tag className="w-3 h-3" /> {getCategoryName(item.category)}
                                                         </span>
                                                     )}
-                                                    {getEventTitle(item.event_id) && (
-                                                        <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-500/10 text-blue-400 text-xs font-medium rounded-lg border border-blue-500/20">
-                                                            <Globe className="w-3 h-3" /> {getEventTitle(item.event_id)}
-                                                        </span>
-                                                    )}
+
                                                 </div>
 
                                                 <div className="flex items-center gap-1 mt-3">
@@ -358,33 +342,18 @@ export default function Mantras() {
                                     </div>
 
                                     {activeLang === 'en' && (
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <div>
-                                                <label className="block text-sm font-medium text-slate-300 mb-2">Category</label>
-                                                <select
-                                                    value={formData.category || ''}
-                                                    onChange={e => setFormData(prev => ({ ...prev, category: e.target.value }))}
-                                                    className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-amber-500/40 transition-all"
-                                                >
-                                                    <option value="">No Category</option>
-                                                    {categories.map(cat => (
-                                                        <option key={cat._id} value={cat._id}>{cat.translations?.en?.name || cat.code}</option>
-                                                    ))}
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <label className="block text-sm font-medium text-slate-300 mb-2">Linked Event</label>
-                                                <select
-                                                    value={formData.event_id || ''}
-                                                    onChange={e => setFormData(prev => ({ ...prev, event_id: e.target.value }))}
-                                                    className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-amber-500/40 transition-all"
-                                                >
-                                                    <option value="">No Event (General)</option>
-                                                    {events.map(evt => (
-                                                        <option key={evt._id} value={evt._id}>{evt.title}</option>
-                                                    ))}
-                                                </select>
-                                            </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-slate-300 mb-2">Category</label>
+                                            <select
+                                                value={formData.category || ''}
+                                                onChange={e => setFormData(prev => ({ ...prev, category: e.target.value }))}
+                                                className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-amber-500/40 transition-all"
+                                            >
+                                                <option value="">No Category</option>
+                                                {categories.map(cat => (
+                                                    <option key={cat._id} value={cat._id}>{cat.translations?.en?.name || cat.code}</option>
+                                                ))}
+                                            </select>
                                         </div>
                                     )}
 

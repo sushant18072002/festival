@@ -68,34 +68,33 @@ class DynamicOverlayWidget extends StatelessWidget {
     return TextAlign.center;
   }
 
-  Widget _buildTextNode(String text, Map<String, dynamic>? config) {
+  Widget _buildTextNode(String text, OverlayConfig? config) {
     if (config == null || text.isEmpty) return const SizedBox.shrink();
 
     // Layout
-    final positionStr = config['position'] as String? ?? 'bottom';
-    final paddingVal = (config['padding'] as num?)?.toDouble() ?? 14.0;
-    final maxWidthPct = (config['max_width'] as num?)?.toDouble() ?? 80.0;
-    final marginTop = (config['margin_top'] as num?)?.toDouble() ?? 0.0;
-    final marginBottom = (config['margin_bottom'] as num?)?.toDouble() ?? 0.0;
-    final marginLeft = (config['margin_left'] as num?)?.toDouble() ?? 0.0;
-    final marginRight = (config['margin_right'] as num?)?.toDouble() ?? 0.0;
+    final positionStr = config.position;
+    final paddingVal = config.padding.toDouble();
+    final maxWidthPct = config.maxWidth.toDouble();
+    final marginTop = config.marginTop.toDouble();
+    final marginBottom = config.marginBottom.toDouble();
+    final marginLeft = config.marginLeft.toDouble();
+    final marginRight = config.marginRight.toDouble();
 
     // Typography
-    final fontSize = (config['font_size'] as num?)?.toDouble() ?? 24.0;
-    final fontFamily = config['font_family'] as String? ?? 'DM Serif Display';
-    final fontWeightNum = config['font_weight'] as int? ?? 400;
-    final fontStyleStr = config['font_style'] as String? ?? 'normal';
-    final textAlignStr = config['text_align'] as String?;
-    final letterSpacingPct =
-        (config['letter_spacing'] as num?)?.toDouble() ?? 0.0;
-    final lineHeightDec = (config['line_height'] as num?)?.toDouble() ?? 14.0;
+    final fontSize = config.fontSize.toDouble();
+    final fontFamily = config.fontFamily;
+    final fontWeightNum = config.fontWeight.toInt();
+    final fontStyleStr = config.fontStyle;
+    final textAlignStr = config.textAlign;
+    final letterSpacingPct = config.letterSpacing.toDouble();
+    final lineHeightDec = config.lineHeight.toDouble();
 
     // Visuals
-    final color = _parseColor(config['color'] as String?);
-    final hasShadow = config['shadow'] != false;
-    final hasGlassBg = config['glass_bg'] == true;
-    final glassOpacity = (config['glass_opacity'] as num?)?.toDouble() ?? 0.25;
-    final glassBlur = (config['glass_blur'] as num?)?.toDouble() ?? 8.0;
+    final color = _parseColor(config.color);
+    final hasShadow = config.shadow;
+    final hasGlassBg = config.glassBg;
+    final glassOpacity = config.glassOpacity;
+    final glassBlur = config.glassBlur.toDouble();
 
     final baseAlignment = _parsePosition(positionStr);
 

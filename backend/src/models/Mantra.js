@@ -15,14 +15,18 @@ const MantraSchema = new Schema({
     transliteration: { type: String, trim: true },                // "Om Namah Shivaya"
     meaning: { type: String, trim: true },                        // "I bow to Lord Shiva"
     slug: { type: String, unique: true, sparse: true },
+    audio_file: { type: String, trim: true },                     // S3 key: "audio/mantras/om_namah_shivaya.aac"
+    language: {
+        type: String,
+        enum: ['sa', 'hi', 'en', 'mr', 'ta', 'neutral'],
+        default: 'sa'                                             // Sanskrit by default
+    },
 
     // --- Taxonomy ---
     category: { type: Schema.Types.ObjectId, ref: 'Category' },
     tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }],
     vibes: [{ type: Schema.Types.ObjectId, ref: 'Vibe' }],
 
-    // --- Event Link ---
-    event_id: { type: Schema.Types.ObjectId, ref: 'Event' },
 
     // --- Status ---
     is_active: { type: Boolean, default: true },

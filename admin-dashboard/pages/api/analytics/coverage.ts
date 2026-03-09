@@ -20,34 +20,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
             // Events with muhurat data (muhurat.puja_time filled in)
             Event.countDocuments({
-                'muhurat.puja_time': { $exists: true, $ne: null, $ne: '' },
+                'muhurat.puja_time': { $exists: true, $ne: null },
                 is_deleted: { $ne: true }
             }),
 
             // Events with ambient audio linked
             Event.countDocuments({
-                'ambient_audio.s3_key': { $exists: true, $ne: null, $ne: '' },
+                'ambient_audio.s3_key': { $exists: true, $ne: null },
                 is_deleted: { $ne: true }
             }),
         ]);
 
-        // ── Step 2: eventsWithImages — Images link to events via event_id ─────────
-        const allEvents = await Event.find({ is_deleted: { $ne: true } }, { _id: 1, slug: 1 }).lean();
-        const allEventIds: string[] = (allEvents as any[]).map((e: any) => e._id.toString());
-
-        const imageEventIds = await Image.distinct('event_id', {
-            event_id: { $ne: null },
-            is_deleted: { $ne: true },
-        });
-        const imageEventIdSet = new Set((imageEventIds as any[]).map((id) => id.toString()));
-        const eventsWithImages = allEventIds.filter((id) => imageEventIdSet.has(id)).length;
-
-        // ── Step 3: eventsWithGreetings — Greetings link via event_id ─────────────
-        const greetings = await Greeting.find({}, { event_id: 1 }).lean();
-        const greetingEventIdSet = new Set(
-            (greetings as any[]).map((g) => g.event_id?.toString()).filter(Boolean)
-        );
-        const eventsWithGreetings = allEventIds.filter((id) => greetingEventIdSet.has(id)).length;
+        const allEvents = await Event.find({ is_deleted: { $ne: true } }, { _id: 1, images: 1, greetings: 1 }).lean();
+        const eventsWithImages = (allEvents as any[]).filter(e => e.images?.length > 0).length;
+        const eventsWithGreetings = (allEvents as any[]).filter(e => e.greetings?.length > 0).length;
 
         return res.status(200).json({
             success: true,

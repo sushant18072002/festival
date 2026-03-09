@@ -33,7 +33,12 @@ const EventSchema = new Schema({
   description: String,
   wiki_link: String,
   lottie_overlay: { type: Schema.Types.ObjectId, ref: 'LottieOverlay' },
-  notification_templates: [{ type: String }],
+  notification_templates: {
+    discovery: { type: String, trim: true },
+    countdown: { type: String, trim: true },
+    eve: { type: String, trim: true },
+    day_of: { type: String, trim: true }
+  },
   category: { type: Schema.Types.ObjectId, ref: 'Category' },
 
   // Date Handling
@@ -103,21 +108,16 @@ const EventSchema = new Schema({
   // --- Auspicious Timing ---
   muhurat: {
     puja_time: String,                       // "6:15 PM - 8:45 PM"
-    type: String,                            // "Pradosh Kaal Lakshmi Puja"
+    type: { type: String },                  // "Pradosh Kaal Lakshmi Puja"
     description: String,
     translations: {
-      hi: { puja_time: String, type: String, description: String },
-      mr: { puja_time: String, type: String, description: String }
+      hi: { puja_time: String, type: { type: String }, description: String },
+      mr: { puja_time: String, type: { type: String }, description: String }
     }
   },
 
-  // --- Ambient Audio ---
-  ambient_audio: {
-    filename: String,                        // "diwali_aarti_bells.aac"
-    s3_key: String,
-    duration_seconds: Number,
-    title: String                            // "Aarti Bells"
-  },
+  // --- Ambient Audio (reference to AmbientAudio master collection) ---
+  ambient_audio: { type: Schema.Types.ObjectId, ref: 'AmbientAudio' },
 
   // --- Countdown ---
   countdown_config: {
@@ -130,6 +130,24 @@ const EventSchema = new Schema({
   mantras: [{
     type: Schema.Types.ObjectId,
     ref: 'Mantra'
+  }],
+
+  // --- Quotes ---
+  quotes: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Quote'
+  }],
+
+  // --- Greetings ---
+  greetings: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Greeting'
+  }],
+
+  // --- Images ---
+  images: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Image'
   }],
 
   // --- Festival Recipes ---

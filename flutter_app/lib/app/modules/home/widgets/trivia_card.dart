@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
@@ -26,6 +27,8 @@ class _TriviaCardState extends State<TriviaCard> {
 
   int? selectedIndex;
   bool isAnswered = false;
+  bool _isPlaying = false; // whether expanded quiz mode is showing
+  bool _isDark = true; // set during build, used by helper methods
 
   @override
   void initState() {
@@ -49,7 +52,6 @@ class _TriviaCardState extends State<TriviaCard> {
     final bool isCorrect = index == _trivia!.correctAnswerIndex;
     final int reward = _trivia!.karmaReward > 0 ? _trivia!.karmaReward : 10;
 
-    // Check if already answered today
     final alreadyAnswered =
         _storage.read<bool>('trivia_answered_${_trivia!.id}') ?? false;
 
@@ -59,23 +61,25 @@ class _TriviaCardState extends State<TriviaCard> {
         _storage.write('trivia_answered_${_trivia!.id}', true);
       }
       Get.snackbar(
-        'Correct! 🎉',
+        'trivia_correct'.tr,
         alreadyAnswered
-            ? 'You already answered this trivia correctly.'
-            : '+$reward Karma earned. Keep learning!',
+            ? 'trivia_already_answered'.tr
+            : '+$reward ${"karma_earned".tr}',
         snackPosition: SnackPosition.TOP,
         backgroundColor: AppColors.primary,
-        colorText: Colors.white,
+        colorText: Colors.black,
         margin: const EdgeInsets.all(16),
+        borderRadius: 20,
       );
     } else {
       Get.snackbar(
-        'Almost!',
-        'The correct answer is ${_trivia!.options[_trivia!.correctAnswerIndex]}. Keep learning!',
+        'trivia_wrong'.tr,
+        '${'correct_answer_is'.tr} ${_trivia!.options[_trivia!.correctAnswerIndex]}',
         snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.black87,
         colorText: Colors.white,
         margin: const EdgeInsets.all(16),
+        borderRadius: 20,
       );
     }
 
@@ -84,6 +88,9 @@ class _TriviaCardState extends State<TriviaCard> {
 
   @override
   Widget build(BuildContext context) {
+    _isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = _isDark;
+    final cardBg = isDark ? AppColors.surfaceGlass : const Color(0xFFF3EFFC);
     return Container(
       margin: const EdgeInsets.symmetric(
         horizontal: AppSpacing.md,
@@ -91,89 +98,190 @@ class _TriviaCardState extends State<TriviaCard> {
       ),
       child: GlassContainer(
         borderRadius: BorderRadius.circular(24),
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        color: AppColors.surfaceGlass,
+        color: cardBg,
         child: FutureBuilder<TriviaModel?>(
           future: _triviaFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(AppSpacing.lg),
+              return const Padding(
+                padding: EdgeInsets.all(AppSpacing.lg),
+                child: Center(
                   child: CircularProgressIndicator(color: AppColors.primary),
                 ),
               );
             }
             if (!snapshot.hasData || snapshot.data == null) {
-              return Center(
-                child: Text(
-                  'No trivia available today.',
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: Colors.white70,
-                  ),
-                ),
-              );
+              return const SizedBox.shrink();
             }
 
             _trivia = snapshot.data;
             final reward = _trivia!.karmaReward > 0 ? _trivia!.karmaReward : 10;
 
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.school_rounded,
-                      color: Colors.blueAccent,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Daily Cultural Trivia',
-                      style: AppTextStyles.labelMedium.copyWith(
-                        color: Colors.blueAccent,
-                      ),
-                    ),
-                    const Spacer(),
-                    if (isAnswered)
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(24),
+              child: Stack(
+                children: [
+                  // Background decorative lightbulb
+                  Positioned(
+                    top: -10,
+                    right: -10,
+                    child:
+                        Icon(
+                              LucideIcons.lightbulb,
+                              size: 90,
+                              color: AppColors.primary.withValues(alpha: 0.05),
+                            )
+                            .animate(onPlay: (c) => c.repeat(reverse: true))
+                            .rotate(
+                              duration: const Duration(seconds: 8),
+                              begin: -0.05,
+                              end: 0.05,
+                            ),
+                  ),
+                  // Content
+                  Padding(
+                    padding: const EdgeInsets.all(AppSpacing.lg),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Header row
+                        Row(
+                          children: [
+                            const Icon(
+                              LucideIcons.brain,
+                              color: AppColors.primary,
+                              size: 18,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              'daily_trivia'.tr,
+                              style: AppTextStyles.titleMedium.copyWith(
+                                color: isDark
+                                    ? Colors.white
+                                    : const Color(0xFF1A0B2E),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const Spacer(),
+                            // Karma badge or CULTURE QUIZ label
+                            if (isAnswered)
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color:
+                                      selectedIndex ==
+                                          _trivia!.correctAnswerIndex
+                                      ? AppColors.success.withValues(alpha: 0.2)
+                                      : AppColors.error.withValues(alpha: 0.2),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Text(
+                                  selectedIndex == _trivia!.correctAnswerIndex
+                                      ? '+$reward ${"karma".tr}'
+                                      : 'try_tomorrow'.tr,
+                                  style: AppTextStyles.labelSmall.copyWith(
+                                    color:
+                                        selectedIndex ==
+                                            _trivia!.correctAnswerIndex
+                                        ? AppColors.success
+                                        : AppColors.error,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ).animate().fade().scale()
+                            else
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: AppColors.primary.withValues(
+                                      alpha: 0.3,
+                                    ),
+                                  ),
+                                ),
+                                child: Text(
+                                  'culture_quiz'.tr,
+                                  style: AppTextStyles.labelSmall.copyWith(
+                                    color: AppColors.primary,
+                                    letterSpacing: 0.5,
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
-                        decoration: BoxDecoration(
-                          color: selectedIndex == _trivia!.correctAnswerIndex
-                              ? Colors.green.withValues(alpha: 0.2)
-                              : Colors.red.withValues(alpha: 0.2),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          selectedIndex == _trivia!.correctAnswerIndex
-                              ? '+$reward Karma'
-                              : 'Try Tomorrow',
-                          style: AppTextStyles.labelSmall.copyWith(
-                            color: selectedIndex == _trivia!.correctAnswerIndex
-                                ? Colors.green
-                                : Colors.redAccent,
+                        const SizedBox(height: AppSpacing.md),
+                        // Question text
+                        Text(
+                          _trivia!.question,
+                          style: AppTextStyles.bodyLarge.copyWith(
+                            color: isDark
+                                ? Colors.white.withValues(alpha: 0.85)
+                                : const Color(0xFF251042),
+                            height: 1.45,
                           ),
                         ),
-                      ).animate().fade().scale(),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.md),
-                Text(
-                  _trivia!.question,
-                  style: AppTextStyles.titleLarge.copyWith(
-                    color: Colors.white,
-                    height: 1.3,
+                        const SizedBox(height: AppSpacing.lg),
+                        // Expanded answer options OR single Play Now button
+                        if (_isPlaying) ...[
+                          ...List.generate(_trivia!.options.length, (index) {
+                            return _buildOptionTile(index);
+                          }),
+                        ] else ...[
+                          // "Play Now" button
+                          GestureDetector(
+                            onTap: () {
+                              HapticFeedback.lightImpact();
+                              setState(() => _isPlaying = true);
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                              decoration: BoxDecoration(
+                                color: AppColors.primary.withValues(
+                                  alpha: 0.08,
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.35,
+                                  ),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'play_now'.tr,
+                                    style: AppTextStyles.labelLarge.copyWith(
+                                      color: AppColors.primary,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  const Icon(
+                                    LucideIcons.arrowRight,
+                                    color: AppColors.primary,
+                                    size: 16,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ).animate().fade(duration: 500.ms),
+                        ],
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: AppSpacing.lg),
-                ...List.generate(_trivia!.options.length, (index) {
-                  return _buildOptionTile(index);
-                }),
-              ],
+                ],
+              ),
             );
           },
         ),
@@ -188,23 +296,27 @@ class _TriviaCardState extends State<TriviaCard> {
     bool isCorrect = index == _trivia!.correctAnswerIndex;
 
     Color? backgroundColor;
-    Color borderColor = Colors.white.withValues(alpha: 0.1);
-    Color textColor = Colors.white70;
+    Color borderColor = _isDark
+        ? Colors.white.withValues(alpha: 0.1)
+        : const Color(0xFF7C3AED).withValues(alpha: 0.15);
+    Color textColor = _isDark ? Colors.white70 : const Color(0xFF3D1F5C);
 
     if (isAnswered) {
       if (isCorrect) {
-        backgroundColor = Colors.green.withValues(alpha: 0.2);
-        borderColor = Colors.green;
-        textColor = Colors.white;
+        backgroundColor = AppColors.success.withValues(alpha: 0.15);
+        borderColor = AppColors.success;
+        textColor = _isDark ? Colors.white : const Color(0xFF1A0B2E);
       } else if (isSelected && !isCorrect) {
-        backgroundColor = Colors.red.withValues(alpha: 0.2);
-        borderColor = Colors.redAccent;
-        textColor = Colors.white;
+        backgroundColor = AppColors.error.withValues(alpha: 0.15);
+        borderColor = AppColors.error;
+        textColor = _isDark ? Colors.white : const Color(0xFF1A0B2E);
       }
     } else if (isSelected) {
-      backgroundColor = Colors.white.withValues(alpha: 0.1);
-      borderColor = Colors.white;
-      textColor = Colors.white;
+      backgroundColor = _isDark
+          ? Colors.white.withValues(alpha: 0.1)
+          : const Color(0xFF7C3AED).withValues(alpha: 0.1);
+      borderColor = _isDark ? Colors.white : const Color(0xFF7C3AED);
+      textColor = _isDark ? Colors.white : const Color(0xFF1A0B2E);
     }
 
     return GestureDetector(
@@ -214,8 +326,12 @@ class _TriviaCardState extends State<TriviaCard> {
         margin: const EdgeInsets.only(bottom: 8),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
-          color: backgroundColor ?? Colors.black.withValues(alpha: 0.2),
-          borderRadius: BorderRadius.circular(16),
+          color:
+              backgroundColor ??
+              (_isDark
+                  ? Colors.black.withValues(alpha: 0.2)
+                  : Colors.white.withValues(alpha: 0.8)),
+          borderRadius: BorderRadius.circular(14),
           border: Border.all(color: borderColor),
         ),
         child: Row(
@@ -223,20 +339,20 @@ class _TriviaCardState extends State<TriviaCard> {
             Expanded(
               child: Text(
                 _trivia!.options[index],
-                style: AppTextStyles.bodyLarge.copyWith(color: textColor),
+                style: AppTextStyles.bodyMedium.copyWith(color: textColor),
               ),
             ),
             if (isAnswered && isCorrect)
               const Icon(
-                Icons.check_circle_rounded,
-                color: Colors.green,
-                size: 20,
+                LucideIcons.circleCheck,
+                color: AppColors.success,
+                size: 18,
               ).animate().scale(delay: 200.ms),
             if (isAnswered && isSelected && !isCorrect)
-              const Icon(
-                Icons.cancel_rounded,
-                color: Colors.redAccent,
-                size: 20,
+              Icon(
+                LucideIcons.circleX,
+                color: AppColors.error,
+                size: 18,
               ).animate().scale(delay: 200.ms),
           ],
         ),

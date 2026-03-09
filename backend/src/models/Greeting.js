@@ -17,8 +17,6 @@ const GreetingSchema = new Schema({
     tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }],
     vibes: [{ type: Schema.Types.ObjectId, ref: 'Vibe' }],
 
-    // --- Optional Event Link ---
-    event_id: { type: Schema.Types.ObjectId, ref: 'Event' },
 
     // --- Status ---
     is_active: { type: Boolean, default: true },

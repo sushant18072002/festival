@@ -75,13 +75,13 @@ const VALIDATION_RULES = {
     'calendar_data': null,  // top-level keys are years — just check it's non-empty
     'search_index': null,   // array
     'events_catalog': ['events'],
-    'images': ['events'],
+    'images': ['images'],
     'greetings': ['greetings'],
     'quotes': ['quotes'],
     'mantras': ['mantras'],
-    'quiz': ['quizzes'],
-    'trivia': ['trivia'],
-    'gamification': ['avatar_tiers', 'trophies'],
+    'quiz': null,           // Allow empty gamification/quizzes in dev/stage
+    'trivia': null,
+    'gamification': null,
 };
 
 const validateJson = (relativePath, jsonString) => {
@@ -112,22 +112,48 @@ const validateJson = (relativePath, jsonString) => {
 };
 
 
+// Build a map of { s3Key → etag } for an entire S3 prefix in ONE API call
+const listS3EtagMap = async (s3Prefix) => {
+    const etagMap = {};
+    let continuationToken = null;
+    do {
+        const res = await s3.listObjectsV2({
+            Bucket: BUCKET_NAME,
+            Prefix: s3Prefix,
+            ContinuationToken: continuationToken
+        }).promise();
+        for (const obj of (res.Contents || [])) {
+            etagMap[obj.Key] = obj.ETag?.replace(/"/g, '');
+        }
+        continuationToken = res.NextContinuationToken;
+    } while (continuationToken);
+    return etagMap;
+};
+
 const uploadDir = async (localDir, s3Prefix, cacheControl) => {
     const files = await fs.readdir(localDir);
 
+    // One API call to list ALL existing S3 objects with their ETags
+    console.log(`  🔍 Scanning S3 folder: ${s3Prefix} (${files.length} local files)`);
+    const s3EtagMap = await listS3EtagMap(s3Prefix + '/');
+
+    let uploaded = 0, skipped = 0;
     for (const file of files) {
         const filePath = path.join(localDir, file);
         const fileContent = await fs.readFile(filePath);
         const s3Key = `${s3Prefix}/${file}`;
         const contentType = mime.lookup(filePath) || 'application/octet-stream';
 
-        // Optimization: Skip if already uploaded (for images)
-        if (s3Prefix.includes('image')) {
-            const existing = await Image.findOne({ s3_key: s3Key, is_s3_uploaded: true });
-            if (existing) {
-                console.log(`Skipping (already on S3): ${s3Key}`);
-                continue;
+        // Local MD5 vs S3 ETag — no network call per file
+        const localHash = crypto.createHash('md5').update(fileContent).digest('hex');
+        const remoteEtag = s3EtagMap[s3Key];
+
+        if (remoteEtag && remoteEtag === localHash) {
+            skipped++;
+            if (s3Prefix.includes('image')) {
+                await Image.updateOne({ s3_key: s3Key }, { $set: { is_s3_uploaded: true } });
             }
+            continue;
         }
 
         const params = {
@@ -140,9 +166,9 @@ const uploadDir = async (localDir, s3Prefix, cacheControl) => {
 
         try {
             await withRetry(() => s3.upload(params).promise(), `s3.upload ${s3Key}`);
-            console.log(`Uploaded: ${s3Key}`);
+            console.log(`  ↑ Uploaded: ${s3Key}`);
+            uploaded++;
 
-            // Update DB if it's an image (fix prefix check)
             if (s3Prefix.includes('image')) {
                 await Image.updateOne(
                     { s3_key: s3Key },
@@ -151,9 +177,10 @@ const uploadDir = async (localDir, s3Prefix, cacheControl) => {
             }
         } catch (err) {
             console.error(`Failed to upload ${s3Key}:`, err.message);
-            throw err; // Bubble up for rollback
+            throw err;
         }
     }
+    console.log(`  ✅ ${s3Prefix}: ${uploaded} uploaded, ${skipped} skipped (unchanged).`);
 }
 
 const asyncBackupS3Folder = async (sourcePrefix, targetPrefix) => {
@@ -240,16 +267,17 @@ const deploy = async () => {
         // 3. Generate and Upload Dynamic Data JSONs (RAM-based Streaming)
         // Cache-Control: 1 hour
 
-        const { generateFeedMemory } = require('./generate_feed');
-        const { generateEventDetailMemory } = require('./generate_event_detail');
-        const { generateCalendarMemory } = require('./generate_calendar');
-        const { generateSearchIndexMemory } = require('./generate_search_index');
-        const { generateGreetingsMemory } = require('./generate_greetings');
-        const { generateQuotesMemory } = require('./generate_quotes');
-        const { generateMantrasMemory } = require('./generate_mantras');
-        const generateQuizzes = require('./generate_quiz');
-        const generateTrivia = require('./generate_trivia');
-        const generateGamification = require('./generate_gamification');
+        const { generateFeedMemory } = require('./generators/generate_feed');
+        const { generateEventDetailMemory } = require('./generators/generate_event_detail');
+        const { generateCalendarMemory } = require('./generators/generate_calendar');
+        const { generateSearchIndexMemory } = require('./generators/generate_search_index');
+        const { generateGreetingsMemory } = require('./generators/generate_greetings');
+        const { generateQuotesMemory } = require('./generators/generate_quotes');
+        const { generateMantrasMemory } = require('./generators/generate_mantras');
+        const { generateImagesMemory } = require('./generators/generate_images');
+        const generateQuizzes = require('./generators/generate_quiz');
+        const generateTrivia = require('./generators/generate_trivia');
+        const generateGamification = require('./generators/generate_gamification');
 
         console.log(`Generating JSONs for ${LANGUAGES.length} languages in memory...`);
 
@@ -269,14 +297,15 @@ const deploy = async () => {
             ...(await generateSearchIndexMemory()),    // loops all langs internally
             ...(await generateGreetingsMemory()),      // loops all langs internally
             ...(await generateQuotesMemory()),         // loops all langs internally
-            ...(await generateMantrasMemory())         // loops all langs internally
+            ...(await generateMantrasMemory()),        // loops all langs internally
+            ...(await generateImagesMemory())          // loops all langs internally
         };
 
         // Run the new generators which only need to run once per language loop
         for (const lang of LANGUAGES) {
-            memoryPayloads[`quiz_${lang}.json`] = JSON.stringify(await generateQuizzes(lang));
-            memoryPayloads[`trivia_${lang}.json`] = JSON.stringify(await generateTrivia(lang));
-            memoryPayloads[`gamification_${lang}.json`] = JSON.stringify(await generateGamification(lang));
+            memoryPayloads[`quizzes/quiz_${lang}.json`] = JSON.stringify(await generateQuizzes(lang));
+            memoryPayloads[`trivia/trivia_${lang}.json`] = JSON.stringify(await generateTrivia(lang));
+            memoryPayloads[`gamification/gamification_${lang}.json`] = JSON.stringify(await generateGamification(lang));
             console.log(`  ✓ Gamification/Trivia/Quiz generated: ${lang}`);
         }
 
@@ -403,9 +432,10 @@ const deploy = async () => {
         }
 
         // 6. Invalidate CloudFront Cache (JSONs)
+        const enableCloudFront = process.env.ENABLE_CLOUDFRONT === 'true';
         const distId = process.env.CLOUDFRONT_DISTRIBUTION_ID;
-        if (distId) {
-            console.log('Validating CloudFront CDN configuration before invalidation...');
+        if (enableCloudFront && distId) {
+            console.log('Invalidating CloudFront CDN cache...');
             try {
                 const cloudfront = new AWS.CloudFront({
                     accessKeyId: process.env.AWS_ACCESS_KEY_ID,

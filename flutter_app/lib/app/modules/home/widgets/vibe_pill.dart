@@ -1,28 +1,32 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
 import '../../../theme/app_animations.dart';
 
 /// Neo-Modern Vibe Pill
-/// Unselected: Frosted Glass
+/// Unselected: Frosted glass (dark) / soft pastel pill (light)
 /// Selected: Neon Gradient with inner glow
 class VibePill extends StatelessWidget {
   final String label;
   final String? emoji;
+  final IconData? iconData;
   final String? vibeCode;
   final bool isSelected;
+  final bool isDark;
   final VoidCallback onTap;
 
   const VibePill({
     super.key,
     required this.label,
     this.emoji,
+    this.iconData,
     this.vibeCode,
     required this.isSelected,
     required this.onTap,
+    this.isDark = true,
   });
 
   @override
@@ -31,6 +35,19 @@ class VibePill extends StatelessWidget {
     final gradient = isSelected && vibeCode != null
         ? AppColors.getVibeGradient(vibeCode!)
         : null;
+
+    // Unselected pill style — adapts to light/dark
+    final unselectedBg = isDark
+        ? AppColors.surfaceGlass
+        : const Color(0xFFEDE9F6); // soft lavender in light mode
+
+    final unselectedBorder = isDark
+        ? Colors.white.withValues(alpha: 0.1)
+        : const Color(0xFF7C3AED).withValues(alpha: 0.18);
+
+    final unselectedTextColor = isDark
+        ? Colors.white
+        : const Color(0xFF3D1F5C); // deep purple on light bg
 
     return GestureDetector(
       onTap: () {
@@ -43,23 +60,17 @@ class VibePill extends StatelessWidget {
         margin: const EdgeInsets.only(right: AppSpacing.sm),
         padding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.md,
-          vertical: AppSpacing.sm, // Slightly taller for touch targets
+          vertical: AppSpacing.xs,
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          // Background: Gradient (Selected) or Glass (Unselected)
           gradient: isSelected ? gradient : null,
-          color: isSelected ? null : AppColors.surfaceGlass,
+          color: isSelected ? null : unselectedBg,
 
-          // Border: None (Selected) or White/10% (Unselected)
           border: isSelected
               ? null
-              : Border.all(
-                  color: Colors.white.withValues(alpha: 0.1),
-                  width: 1,
-                ),
+              : Border.all(color: unselectedBorder, width: 1),
 
-          // Shadows
           boxShadow: isSelected
               ? [
                   BoxShadow(
@@ -69,34 +80,45 @@ class VibePill extends StatelessWidget {
                     offset: const Offset(0, 4),
                   ),
                 ]
-              : [],
+              : isDark
+              ? []
+              : [
+                  BoxShadow(
+                    color: const Color(0xFF7C3AED).withValues(alpha: 0.08),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(30),
-          child: BackdropFilter(
-            // Blur only for unselected glass state
-            filter: ImageFilter.blur(
-              sigmaX: isSelected ? 0 : 5,
-              sigmaY: isSelected ? 0 : 5,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (emoji != null) ...[
-                  Text(emoji!, style: const TextStyle(fontSize: 16)),
-                  AppSpacing.horizontalXs,
-                ],
-                Text(
-                  label,
-                  style: AppTextStyles.labelMedium.copyWith(
-                    color: isSelected
-                        ? Colors.black
-                        : Colors.white, // Black text on neon
-                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                  ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (iconData != null) ...[
+                Icon(
+                  iconData,
+                  size: 16,
+                  color: isSelected ? Colors.black : unselectedTextColor,
                 ),
+                AppSpacing.horizontalXs,
+              ] else if (emoji != null) ...[
+                Text(emoji!, style: const TextStyle(fontSize: 16)),
+                AppSpacing.horizontalXs,
               ],
-            ),
+              Text(
+                label.isNotEmpty
+                    ? label
+                    : (vibeCode ?? 'Vibe'), // fallback if missing
+                style: AppTextStyles.labelMedium.copyWith(
+                  color: isSelected
+                      ? Colors
+                            .black // Dark text on bright neon gradient
+                      : unselectedTextColor,
+                  fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
+                ),
+              ),
+            ],
           ),
         ),
       ),

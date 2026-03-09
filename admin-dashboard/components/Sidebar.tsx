@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { LayoutDashboard, Calendar, Image as ImageIcon, Settings, LogOut, MessageCircle, Quote, BookOpen, Music, Gamepad2, Brain, Trophy } from 'lucide-react';
+import { LayoutDashboard, Calendar, Image as ImageIcon, Settings, LogOut, MessageCircle, Quote, BookOpen, Music, Gamepad2, Brain, Trophy, Sunrise } from 'lucide-react';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
 
@@ -12,6 +12,7 @@ const Sidebar = () => {
         { name: 'Events', icon: Calendar, path: '/events' },
         { name: 'Images', icon: ImageIcon, path: '/images' },
         { name: 'Greetings', icon: MessageCircle, path: '/greetings' },
+        { name: 'Home Greetings', icon: Sunrise, path: '/home-greetings' },
         { name: 'Quotes', icon: Quote, path: '/quotes' },
         { name: 'Mantras', icon: BookOpen, path: '/mantras' },
         { name: 'Audio', icon: Music, path: '/audio' },

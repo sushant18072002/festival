@@ -28,6 +28,13 @@ class GlassContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final borderRadiusRaw = borderRadius ?? BorderRadius.circular(20);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final defaultBorder = Border.all(
+      color: isDark
+          ? Colors.white.withValues(alpha: 0.2)
+          : Colors.black.withValues(alpha: 0.08),
+      width: 1.5,
+    );
 
     Widget container = Container(
       margin: margin,
@@ -40,12 +47,7 @@ class GlassContainer extends StatelessWidget {
             decoration: BoxDecoration(
               color: color.withValues(alpha: opacity),
               borderRadius: borderRadiusRaw,
-              border:
-                  border ??
-                  Border.all(
-                    color: Colors.white.withValues(alpha: 0.2),
-                    width: 1.5,
-                  ),
+              border: border ?? defaultBorder,
             ),
             child: child,
           ),

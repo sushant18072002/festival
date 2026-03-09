@@ -247,9 +247,14 @@ export default function Settings() {
             <Sidebar />
             <main className="flex-1 p-8 overflow-y-auto">
                 <div className="flex justify-between items-center mb-8">
-                    <div>
-                        <h1 className="text-3xl font-bold text-white tracking-tight">Settings</h1>
-                        <p className="text-slate-400 mt-1">Manage taxonomy and global configurations.</p>
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20">
+                            <SettingsIcon className="w-6 h-6 text-white" />
+                        </div>
+                        <div>
+                            <h1 className="text-3xl font-bold text-white tracking-tight">Settings</h1>
+                            <p className="text-slate-400 mt-1">Manage taxonomy and global configurations.</p>
+                        </div>
                     </div>
                 </div>
 

@@ -9,7 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@festival/models": "file:../shared/models",
+    "@ant-design/icons": "^6.1.0",
+    "antd": "^6.3.1",
     "aws-sdk": "^2.1693.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",

@@ -35,7 +35,6 @@ interface ImageData {
     _id: string;
     filename: string;
     s3_key: string;
-    event_id?: string | { _id: string; title: string };
     tags?: string[];
     categories?: string[];
     media_type: 'image' | 'video' | 'gif';
@@ -53,7 +52,7 @@ interface ImageData {
     caption?: string;
     share_text?: string;
     credits?: string;
-    language?: string; // Added language field
+    language: string; // Added language field
 
     // Standalone & Overlay
     is_standalone?: boolean;
@@ -82,14 +81,13 @@ const initialFormState: Partial<ImageData> = {
     caption: '',
     share_text: '',
     credits: '',
-    tags: [],
-    categories: [],
+    tags: [], categories: [], media_type: 'image', language: 'neutral',
+    is_standalone: false, has_overlay: false,
     translations: {}
 };
 
 export default function Images() {
     const [images, setImages] = useState<ImageData[]>([]);
-    const [events, setEvents] = useState<EventSimple[]>([]);
     const [categories, setCategories] = useState<TaxonomyItem[]>([]);
     const [tags, setTags] = useState<TaxonomyItem[]>([]);
     const [greetings, setGreetings] = useState<any[]>([]);
@@ -145,20 +143,17 @@ export default function Images() {
 
     const fetchMetadata = async () => {
         try {
-            const [evtRes, catRes, tagRes, greetRes, quoteRes] = await Promise.all([
-                fetch('/api/events?limit=100'),
+            const [catRes, tagRes, greetRes, quoteRes] = await Promise.all([
                 fetch('/api/categories'),
                 fetch('/api/tags'),
                 fetch('/api/greetings?limit=100'),
                 fetch('/api/quotes?limit=100')
             ]);
-            const evtData = await evtRes.json();
             const catData = await catRes.json();
             const tagData = await tagRes.json();
             const greetData = await greetRes.json();
             const quoteData = await quoteRes.json();
 
-            if (evtData.success) setEvents(evtData.data);
             if (catData.success) setCategories(catData.data);
             if (tagData.success) setTags(tagData.data);
             if (greetData.success) setGreetings(greetData.data);
@@ -170,11 +165,6 @@ export default function Images() {
 
     const handleEdit = (img: ImageData) => {
         setEditingImage(img);
-
-        let eventId = img.event_id;
-        if (typeof eventId === 'object' && eventId !== null) {
-            eventId = (eventId as any)._id;
-        }
 
         let greetingId = img.greeting_id;
         if (typeof greetingId === 'object' && greetingId !== null) {
@@ -188,12 +178,11 @@ export default function Images() {
 
         setFormData({
             ...img,
-            event_id: eventId as string,
             greeting_id: greetingId as string,
             quote_id: quoteId as string,
             show_watermark: img.show_watermark !== undefined ? img.show_watermark : true,
-            tags: img.tags || [],
-            categories: img.categories || [],
+            tags: (img.tags || []).map(t => (typeof t === 'object' && t !== null) ? (t as any)._id : t),
+            categories: (img.categories || []).map(c => (typeof c === 'object' && c !== null) ? (c as any)._id : c),
             translations: img.translations || {}
         });
         setActiveLang('en');
@@ -334,8 +323,13 @@ export default function Images() {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                     <div>
-                        <h1 className="text-3xl font-bold tracking-tight">Gallery</h1>
-                        <p className="text-slate-400 mt-1">Manage your visual assets and media library.</p>
+                        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">
+                            <div className="p-2.5 bg-emerald-500/10 rounded-xl border border-emerald-500/20">
+                                <ImageIcon className="w-6 h-6 text-emerald-400" />
+                            </div>
+                            Gallery
+                        </h1>
+                        <p className="text-slate-400 mt-2">Manage your visual assets and media library.</p>
                     </div>
 
                     <div className="flex items-center gap-3">
@@ -450,7 +444,7 @@ export default function Images() {
                             <motion.div
                                 key={img._id}
                                 layoutId={`image-${img._id}`}
-                                className="group relative aspect-[3/4] bg-slate-900 rounded-2xl shadow-md shadow-black/20 border border-slate-800 overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1"
+                                className="group relative aspect-[3/4] bg-slate-900 rounded-2xl shadow-lg shadow-black/40 border border-slate-800 overflow-hidden hover:border-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300 hover:-translate-y-1.5"
                             >
                                 <img
                                     src={getImageUrl(img.s3_key)}
@@ -515,8 +509,8 @@ export default function Images() {
                                 )}
 
                                 {/* Overlay Actions */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4">
-                                    <p className="text-white font-bold truncate text-sm">{img.caption || 'Untitled'}</p>
+                                <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-4 z-20">
+                                    <p className="text-white font-bold truncate text-sm drop-shadow-md">{img.caption || 'Untitled'}</p>
 
                                     <div className="flex items-center gap-2 mt-3">
                                         {viewMode === 'active' ? (
@@ -579,7 +573,6 @@ export default function Images() {
                     tags={tags}
                     greetings={greetings}
                     quotes={quotes}
-                    events={events}
                     viewMode={viewMode}
                     handleSubmit={handleSubmit}
                     handleDelete={handleDelete}

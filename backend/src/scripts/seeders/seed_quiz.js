@@ -1,12 +1,12 @@
-require('dotenv').config({ path: __dirname + '/../../.env' });
+require('dotenv').config({ path: __dirname + '/../../../.env' });
 const mongoose = require('mongoose');
 const Quiz = require('../../models/Quiz');
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/utsav_share';
 
 const seedQuiz = async () => {
     try {
-        await mongoose.connect(MONGODB_URI);
+        await mongoose.connect(MONGO_URI);
         console.log('Connected to MongoDB.');
 
         const festivalPersonalityQuiz = {

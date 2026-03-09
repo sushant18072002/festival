@@ -86,7 +86,6 @@ interface ImageEditModalProps {
     tags: TaxonomyItem[];
     greetings: any[];
     quotes: any[];
-    events: any[];
     viewMode: 'active' | 'trash';
     handleSubmit: (e: React.FormEvent) => void;
     handleDelete: (id: string, permanent?: boolean) => void;
@@ -96,7 +95,7 @@ interface ImageEditModalProps {
 export default function ImageEditModal({
     editingImage, setEditingImage, formData, setFormData,
     activeLang, setActiveLang, getFieldValue, updateField,
-    categories, tags, greetings, quotes, events,
+    categories, tags, greetings, quotes,
     viewMode, handleSubmit, handleDelete, handleRestore
 }: ImageEditModalProps) {
     if (!editingImage) return null;
@@ -254,19 +253,6 @@ export default function ImageEditModal({
                                                     <option value="te">Telugu</option>
                                                     <option value="kn">Kannada</option>
                                                     <option value="ml">Malayalam</option>
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <label className="block text-xs font-medium text-slate-400 mb-1">Linked Event</label>
-                                                <select
-                                                    className="w-full border border-slate-800 p-2.5 rounded-lg bg-slate-900 text-sm"
-                                                    value={(formData.event_id as string) || ''}
-                                                    onChange={(e) => setFormData({ ...formData, event_id: e.target.value || undefined })}
-                                                >
-                                                    <option value="">-- Unlinked --</option>
-                                                    {events.map(evt => (
-                                                        <option key={evt._id} value={evt._id}>{evt.title}</option>
-                                                    ))}
                                                 </select>
                                             </div>
                                             <div>

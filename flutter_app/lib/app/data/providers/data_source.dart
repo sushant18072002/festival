@@ -22,7 +22,7 @@ abstract class DataSource {
   Future<List<SearchItem>?> getSearchIndex(String lang);
   Future<Map<String, EventModel>?> getEventsCatalog(String lang);
   Future<EventModel?> getEventBySlug(String slug, String lang);
-  Future<Map<String, List<ImageModel>>?> getImageCatalog(String lang);
+  Future<List<ImageModel>?> getImageCatalog(String lang);
   Future<List<GreetingModel>?> getGreetings(String lang);
   Future<List<QuoteModel>?> getQuotes(String lang);
   Future<List<MantraModel>?> getMantras(String lang);

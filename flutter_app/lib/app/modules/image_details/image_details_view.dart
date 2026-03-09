@@ -70,12 +70,20 @@ class _ImageDetailsViewState extends State<ImageDetailsView>
   Widget build(BuildContext context) {
     final ImageModel image = Get.arguments as ImageModel;
     final repo = Get.find<DataRepository>();
-    final relatedImages = image.eventId != null
-        ? repo.allImages
-              .where((i) => i.eventId == image.eventId && i.id != image.id)
+    // Related images: match by shared categories or tags
+    final imageCats = image.categories.toSet();
+    final imageTags = image.tags.toSet();
+    final relatedImages = imageCats.isEmpty && imageTags.isEmpty
+        ? <ImageModel>[]
+        : repo.allImages
+              .where(
+                (i) =>
+                    i.id != image.id &&
+                    (i.categories.any((c) => imageCats.contains(c)) ||
+                        i.tags.any((t) => imageTags.contains(t))),
+              )
               .take(10)
-              .toList()
-        : <ImageModel>[];
+              .toList();
 
     // Log view (debounced implicitly by page navigation)
     AnalyticsService.instance.logEventView(
@@ -240,17 +248,14 @@ class _ImageDetailsViewState extends State<ImageDetailsView>
                       ),
                       child: Column(
                         children: [
-                          if (image.downloads > 0 || image.hasOverlay)
+                          if (image.hasOverlay)
                             Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                const Text(
-                                  '🔥',
-                                  style: TextStyle(fontSize: 12),
-                                ),
+                                const Text('✨', style: TextStyle(fontSize: 12)),
                                 const SizedBox(width: 4),
                                 Text(
-                                  '${image.downloads > 0 ? image.downloads : 124} downloads',
+                                  'Overlay available',
                                   style: AppTextStyles.labelSmall.copyWith(
                                     color: AppColors.accent,
                                     fontWeight: FontWeight.bold,
@@ -258,8 +263,7 @@ class _ImageDetailsViewState extends State<ImageDetailsView>
                                 ),
                               ],
                             ),
-                          if (image.downloads > 0 || image.hasOverlay)
-                            const SizedBox(height: 4),
+                          if (image.hasOverlay) const SizedBox(height: 4),
                           Text(
                             image.displayLabel,
                             textAlign: TextAlign.center,

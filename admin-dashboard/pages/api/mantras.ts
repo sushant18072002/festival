@@ -15,7 +15,6 @@ export default async function handler(
             const total = await Mantra.countDocuments(filter);
             const mantras = await Mantra.find(filter)
                 .populate('category', 'code translations')
-                .populate('event_id', 'title slug')
                 .sort({ createdAt: -1 });
             res.status(200).json({ success: true, data: mantras, pagination: { total, page: 1, pages: 1 } });
         } catch (error) {

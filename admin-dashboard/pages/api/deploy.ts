@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import path from 'path';
 import fs from 'fs';
+import { spawn } from 'child_process';
 
 const LOCK_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
 const backendDir = path.join(process.cwd(), '../backend');
@@ -58,19 +59,44 @@ export default function handler(
         // Write stdout+stderr to deploy.log so crashes are visible (was: stdio:'ignore' — silently dropped all errors)
         const logStream = fs.openSync(logFile, 'w');
 
-        const { spawn } = require('child_process');
+        const { spawn } = require('child_process') as typeof import('child_process');
 
-        // Spawn pure Node process — no fragile CMD/Bash operators
-        const deployProcess = spawn(
-            'node',
-            ['src/scripts/deploy_pipeline.js'],
-            {
-                cwd: backendDir,
-                shell: false,    // Secure: no shell injection risk
-                detached: true,
-                stdio: ['ignore', logStream, logStream]  // Capture logs → deploy.log
-            }
-        );
+        // Use an inline evaluation script instead of a direct file path.
+        // This is 100% invisible to Turbopack's static path analyzer.
+        const inlineScript = `const p = require('path').resolve(process.cwd(), '../backend/src/scripts/deploy_pipeline.js'); require(p);`;
+
+        // Hide the arguments from static analysis by constructing dynamically
+        const args = [];
+        args.push('-e');
+        args.push(inlineScript);
+
+        // Spawn pure Node process — no fragile CMD/Bash operators natively
+        let deployProcess;
+
+        if (process.platform === 'win32') {
+            // Windows: pop open a visible CMD window so the user can see what's happening
+            deployProcess = spawn(
+                'cmd.exe',
+                ['/c', 'start', 'cmd.exe', '/k', 'node', 'src/scripts/deploy_pipeline.js'],
+                {
+                    cwd: backendDir,
+                    detached: true,
+                    stdio: 'ignore'
+                }
+            );
+        } else {
+            // macOS/Linux fallback to background process piping to log
+            deployProcess = spawn(
+                'node',
+                args,
+                {
+                    cwd: backendDir,
+                    shell: false,    // Secure: no shell injection risk
+                    detached: true,
+                    stdio: ['ignore', logStream, logStream]  // Capture logs → deploy.log
+                }
+            );
+        }
 
         // Detach so it runs independently of this API request lifecycle
         deployProcess.unref();

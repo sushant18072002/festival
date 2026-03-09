@@ -1,0 +1,453 @@
+[
+    {
+        "slug": "om-namah-shivaya",
+        "text": "ॐ नमः शिवाय",
+        "transliteration": "Om Namah Shivaya",
+        "meaning": "I bow to Lord Shiva, the auspicious one",
+        "audio_file": "audio/mantras/om_namah_shivaya.aac",
+        "language": "sa",
+        "category": "religious",
+        "tags": [
+            "shiva",
+            "spiritual",
+            "hindu"
+        ],
+        "vibes": [
+            "spiritual",
+            "peaceful"
+        ],
+        "event_slug": "maha-shivratri-2026"
+    },
+    {
+        "slug": "mahamrityunjaya-mantra",
+        "text": "ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम् ।\nउर्वारुकमिव बन्धनान् मृत्योर्मुक्षीय मामृतात् ॥",
+        "transliteration": "Om Tryambakam Yajamahe Sugandhim Pushtivardhanam. Urvarukamiva Bandhanan Mrityor Mukshiya Mamritat.",
+        "meaning": "We worship the three-eyed Lord Shiva who nourishes and is fragrant. May He liberate us from death, as a ripened cucumber separates from its vine, and not from immortality.",
+        "audio_file": "audio/mantras/mahamrityunjaya.aac",
+        "language": "sa",
+        "category": "religious",
+        "tags": [
+            "shiva",
+            "healing",
+            "spiritual",
+            "powerful"
+        ],
+        "vibes": [
+            "spiritual",
+            "peaceful"
+        ],
+        "event_slug": "maha-shivratri-2026"
+    },
+    {
+        "slug": "ganesh-mantra-vakratunda",
+        "text": "वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ ।\nनिर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥",
+        "transliteration": "Vakratunda Mahakaya Suryakoti Samaprabha. Nirvighnam Kuru Me Deva Sarvakaryeshu Sarvada.",
+        "meaning": "O Lord Ganesha of curved trunk, with a massive body, and the radiance of million suns, please make all my works free of obstacles",
+        "audio_file": "audio/mantras/ganesh_vakratunda.aac",
+        "language": "sa",
+        "category": "religious",
+        "tags": [
+            "ganesha",
+            "festival",
+            "hindu",
+            "spiritual"
+        ],
+        "vibes": [
+            "spiritual",
+            "joyful"
+        ],
+        "event_slug": "ganesh-chaturthi-2026"
+    },
+    {
+        "slug": "om-gam-ganapataye",
+        "text": "ॐ गं गणपतये नमः",
+        "transliteration": "Om Gam Ganapataye Namah",
+        "meaning": "Salutations to Lord Ganesha, the remover of obstacles",
+        "audio_file": "audio/mantras/om_gam_ganapataye.aac",
+        "language": "sa",
+        "category": "religious",
+        "tags": [
+            "ganesha",
+            "chaturthi",
+            "hindu"
+        ],
+        "vibes": [
+            "spiritual",
+            "joyful"
+        ],
+        "event_slug": "ganesh-chaturthi-2026"
+    },
+    {
+        "slug": "hare-krishna-mahamantra",
+        "text": "हरे कृष्ण हरे कृष्ण\nकृष्ण कृष्ण हरे हरे\nहरे राम हरे राम\nराम राम हरे हरे",
+        "transliteration": "Hare Krishna Hare Krishna Krishna Krishna Hare Hare. Hare Rama Hare Rama Rama Rama Hare Hare.",
+        "meaning": "O Lord Krishna, O Energy of the Lord, please engage me in Your service",
+        "audio_file": "audio/mantras/hare_krishna_mahamantra.aac",
+        "language": "sa",
+        "category": "religious",
+        "tags": [
+            "krishna",
+            "kanha",
+            "vaishnav",
+            "devotional"
+        ],
+        "vibes": [
+            "spiritual",
+            "joyful",
+            "devotional"
+        ],
+        "event_slug": "krishna-janmashtami-2026"
+    },
+    {
+        "slug": "om-namo-bhagavate-vasudevaya",
+        "text": "ॐ नमो भगवते वासुदेवाय",
+        "transliteration": "Om Namo Bhagavate Vasudevaya",
+        "meaning": "Salutations to Lord Vasudeva (Krishna), the Supreme Being",
+        "audio_file": "audio/mantras/om_namo_bhagavate.aac",
+        "language": "sa",
+        "category": "religious",
+        "tags": [
+            "krishna",
+            "vishnu",
+            "vaishnav",
+            "spiritual"
+        ],
+        "vibes": [
+            "spiritual",
+            "peaceful"
+        ],
+        "event_slug": "krishna-janmashtami-2026"
+    },
+    {
+        "slug": "ram-naam-satya-hai",
+        "text": "श्री राम जय राम जय जय राम",
+        "transliteration": "Shri Ram Jai Ram Jai Jai Ram",
+        "meaning": "Glory to Lord Rama, victory to Lord Rama",
+        "audio_file": "audio/mantras/shri_ram_jai_ram.aac",
+        "language": "sa",
+        "category": "religious",
+        "tags": [
+            "rama",
+            "ayodhya",
+            "hindu",
+            "spiritual"
+        ],
+        "vibes": [
+            "spiritual",
+            "devotional"
+        ],
+        "event_slug": "ram-navami-2026"
+    },
+    {
+        "slug": "hanuman-chalisa-doha",
+        "text": "श्री गुरु चरण सरोज रज,\nनिज मनु मुकुरु सुधारि।\nबरनउँ रघुबर बिमल जसु,\nजो दायकु फल चारि।",
+        "transliteration": "Shri Guru Charan Saroj Raj, Nij Manu Mukuru Sudhari. Barnau Raghubar Bimal Jasu, Jo Dayaku Phal Chari.",
+        "meaning": "With the dust of Guru's lotus feet, I cleanse the mirror of my mind. I describe the pure fame of the best of Raghus, which bestows the four fruits of life.",
+        "audio_file": "audio/mantras/hanuman_chalisa_doha.aac",
+        "language": "hi",
+        "category": "religious",
+        "tags": [
+            "hanuman",
+            "bajrangbali",
+            "strength",
+            "devotional"
+        ],
+        "vibes": [
+            "spiritual",
+            "devotional"
+        ],
+        "event_slug": "hanuman-jayanti-2026"
+    },
+    {
+        "slug": "durga-mantra-ya-devi",
+        "text": "या देवी सर्वभूतेषु शक्तिरूपेण संस्थिता ।\nनमस्तस्यै नमस्तस्यै नमस्तस्यै नमो नमः ॥",
+        "transliteration": "Ya Devi Sarvabhutesu Shakti-rupena Samsthita. Namastasyai Namastasyai Namastasyai Namo Namah.",
+        "meaning": "Salutations to the Goddess who resides in all beings as power/shakti.",
+        "audio_file": "audio/mantras/ya_devi_sarvabhutesu.aac",
+        "language": "sa",
+        "category": "religious",
+        "tags": [
+            "durga",
+            "devi",
+            "navratri",
+            "shakti",
+            "spiritual"
+        ],
+        "vibes": [
+            "spiritual",
+            "powerful",
+            "devotional"
+        ],
+        "event_slug": "navratri-2026"
+    },
+    {
+        "slug": "lakshmi-mantra-om-shreem",
+        "text": "ॐ श्रीं ह्रीं श्रीं कमले कमलालये प्रसीद प्रसीद ।\nॐ श्रीं ह्रीं श्रीं महालक्ष्म्यै नमः ॥",
+        "transliteration": "Om Shreem Hreem Shreem Kamale Kamalalaye Praseed Praseed. Om Shreem Hreem Shreem Mahalakshmyai Namah.",
+        "meaning": "Salutations to Goddess Mahalakshmi who resides in the lotus, please grace us with your blessings",
+        "audio_file": "audio/mantras/lakshmi_mantra.aac",
+        "language": "sa",
+        "category": "religious",
+        "tags": [
+            "lakshmi",
+            "diwali",
+            "wealth",
+            "prosperity",
+            "spiritual"
+        ],
+        "vibes": [
+            "spiritual",
+            "devotional",
+            "festive"
+        ],
+        "event_slug": "diwali-2026"
+    },
+    {
+        "slug": "saraswati-vandana",
+        "text": "या कुन्देन्दु तुषारहारधवला या शुभ्रवस्त्रावृता ।\nया वीणावरदण्डमण्डितकरा या श्वेतपद्मासना ॥",
+        "transliteration": "Ya Kundendu Tushara Hara Dhavala Ya Shubhra Vastra Avrita. Ya Veena Vara Danda Manditakara Ya Shveta Padmasana.",
+        "meaning": "She who is as white as the jasmine flower, the moon, the frost, and the garland of pearls; who is adorned in pure white garments; whose hands are decorated with the veena; who is seated on a white lotus",
+        "audio_file": "audio/mantras/saraswati_vandana.aac",
+        "language": "sa",
+        "category": "religious",
+        "tags": [
+            "saraswati",
+            "knowledge",
+            "education",
+            "vasant"
+        ],
+        "vibes": [
+            "spiritual",
+            "peaceful"
+        ],
+        "event_slug": "vasant-panchami-2026"
+    },
+    {
+        "slug": "om-shanti-peace-mantra",
+        "text": "ॐ सर्वे भवन्तु सुखिनः\nसर्वे सन्तु निरामयाः ।\nसर्वे भद्राणि पश्यन्तु\nमा कश्चिद् दुःखभाग् भवेत् ॥\nॐ शान्तिः शान्तिः शान्तिः",
+        "transliteration": "Om Sarve Bhavantu Sukhinah. Sarve Santu Niramayah. Sarve Bhadrani Pashyantu. Ma Kashchid Duhkhabhag Bhavet. Om Shantih Shantih Shantih.",
+        "meaning": "May all be happy. May all be free from illness. May all see what is auspicious. May no one suffer. Om Peace Peace Peace.",
+        "audio_file": "audio/mantras/om_shanti.aac",
+        "language": "sa",
+        "category": "religious",
+        "tags": [
+            "peace",
+            "shanti",
+            "universal",
+            "spiritual"
+        ],
+        "vibes": [
+            "peaceful",
+            "spiritual"
+        ],
+        "event_slug": null
+    },
+    {
+        "slug": "gayatri-mantra",
+        "text": "ॐ भूर् भुवः स्वः\nतत् सवितुर् वरेण्यं\nभर्गो देवस्य धीमहि\nधियो यो नः प्रचोदयात् ॥",
+        "transliteration": "Om Bhur Bhuvah Svah. Tat Savitur Varenyam. Bhargo Devasya Dheemahi. Dhiyo Yo Nah Prachodayat.",
+        "meaning": "We meditate on the glory of that Divine Light who has produced this universe; may She illuminate our minds",
+        "audio_file": "audio/mantras/gayatri_mantra.aac",
+        "language": "sa",
+        "category": "religious",
+        "tags": [
+            "gayatri",
+            "surya",
+            "universal",
+            "vedic",
+            "spiritual"
+        ],
+        "vibes": [
+            "spiritual",
+            "peaceful"
+        ],
+        "event_slug": null
+    },
+    {
+        "slug": "waheguru-simran",
+        "text": "ਵਾਹਿਗੁਰੂ ਵਾਹਿਗੁਰੂ ਵਾਹਿਗੁਰੂ",
+        "transliteration": "Waheguru Waheguru Waheguru",
+        "meaning": "Wonderful Lord! Praise be to the Wondrous Enlightener",
+        "audio_file": "audio/mantras/waheguru_simran.aac",
+        "language": "neutral",
+        "category": "religious",
+        "tags": [
+            "sikh",
+            "guru",
+            "gurpurab",
+            "spiritual",
+            "peace"
+        ],
+        "vibes": [
+            "spiritual",
+            "peaceful"
+        ],
+        "event_slug": "guru-nanak-jayanti-2026"
+    },
+    {
+        "slug": "ek-onkar",
+        "text": "ੴ ਸਤਿ ਨਾਮੁ ਕਰਤਾ ਪੁਰਖੁ",
+        "transliteration": "Ik Onkar Sat Naam Karta Purakh",
+        "meaning": "There is One God, whose name is Truth, the Creator",
+        "audio_file": "audio/mantras/ek_onkar.aac",
+        "language": "neutral",
+        "category": "religious",
+        "tags": [
+            "sikh",
+            "onkar",
+            "waheguru",
+            "spiritual"
+        ],
+        "vibes": [
+            "spiritual",
+            "peaceful"
+        ],
+        "event_slug": "guru-nanak-jayanti-2026"
+    },
+    {
+        "slug": "buddham-sharanam",
+        "text": "बुद्धं शरणं गच्छामि\nधर्मं शरणं गच्छामि\nसंघं शरणं गच्छामि",
+        "transliteration": "Buddham Sharanam Gacchami. Dhammam Sharanam Gacchami. Sangham Sharanam Gacchami.",
+        "meaning": "I take refuge in the Buddha. I take refuge in the Dharma. I take refuge in the Sangha.",
+        "audio_file": "audio/mantras/buddham_sharanam.aac",
+        "language": "sa",
+        "category": "religious",
+        "tags": [
+            "buddha",
+            "buddhism",
+            "peace",
+            "refuge",
+            "spiritual"
+        ],
+        "vibes": [
+            "spiritual",
+            "peaceful",
+            "meditative"
+        ],
+        "event_slug": "buddha-purnima-2026"
+    },
+    {
+        "slug": "om-mani-padme-hum",
+        "text": "ॐ मणि पद्मे हूँ",
+        "transliteration": "Om Mani Padme Hum",
+        "meaning": "The jewel in the lotus — a call to compassion and enlightenment",
+        "audio_file": "audio/mantras/om_mani_padme_hum.aac",
+        "language": "sa",
+        "category": "devotional",
+        "tags": [
+            "buddhism",
+            "compassion",
+            "tibetan",
+            "meditation"
+        ],
+        "vibes": [
+            "peaceful",
+            "spiritual",
+            "meditative"
+        ],
+        "event_slug": "bodhi-day-2026"
+    },
+    {
+        "slug": "navakar-mantra",
+        "text": "णमो अरिहंताणं\nणमो सिद्धाणं\nणमो आयरियाणं\nणमो उवज्झायाणं\nणमो लोए सव्वसाहूणं",
+        "transliteration": "Namo Arihantanam. Namo Siddhanam. Namo Ayariyanam. Namo Uvajjhayanam. Namo Loe Savvasahunam.",
+        "meaning": "I bow to the Arihantas (perfected souls), I bow to the Siddhas (liberated souls), I bow to the Acharyas, I bow to the Upadhyayas, I bow to all the Sadhus",
+        "audio_file": "audio/mantras/navakar_mantra.aac",
+        "language": "neutral",
+        "category": "religious",
+        "tags": [
+            "jain",
+            "mahavir",
+            "ahimsa",
+            "spiritual",
+            "peace"
+        ],
+        "vibes": [
+            "spiritual",
+            "peaceful"
+        ],
+        "event_slug": "mahavir-jayanti-2026"
+    },
+    {
+        "slug": "mool-mantar",
+        "text": "ੴ ਸਤਿ ਨਾਮੁ ਕਰਤਾ ਪੁਰਖੁ ਨਿਰਭਉ ਨਿਰਵੈਰੁ ਅਕਾਲ ਮੂਰਤਿ ਅਜੂਨੀ ਸੈਭੰ ਗੁਰ ਪ੍ਰਸਾਦਿ",
+        "transliteration": "Ik Onkar Sat Naam Karta Purakh Nirbhao Nirvair Akal Murat Ajuni Saibhan Gurprasad",
+        "meaning": "One Creator God, Truth is His Name, Creative Being Personified, Without Fear, Without Hatred, Undying Form, Self-Existent, By Guru's Grace",
+        "audio_file": "audio/mantras/mool_mantar.aac",
+        "language": "neutral",
+        "category": "religious",
+        "tags": [
+            "sikh",
+            "guru nanak",
+            "gurpurab",
+            "spiritual"
+        ],
+        "vibes": [
+            "spiritual",
+            "peaceful"
+        ],
+        "event_slug": "guru-gobind-singh-jayanti-2026"
+    },
+    {
+        "slug": "om-shreem-mahalakshmiyei",
+        "text": "ॐ श्रीं महालक्ष्म्यै नमः",
+        "transliteration": "Om Shreem Mahalakshmyai Namah",
+        "meaning": "Salutations to the great Goddess Lakshmi, bringer of wealth and prosperity",
+        "audio_file": "audio/mantras/shreem_lakshmi.aac",
+        "language": "sa",
+        "category": "religious",
+        "tags": [
+            "lakshmi",
+            "dhanteras",
+            "prosperity",
+            "wealth"
+        ],
+        "vibes": [
+            "spiritual",
+            "festive"
+        ],
+        "event_slug": "dhanteras-2026"
+    },
+    {
+        "slug": "surya-mantra",
+        "text": "ॐ सूर्याय नमः\nॐ आदित्याय नमः\nॐ सप्तार्चिषे नमः",
+        "transliteration": "Om Suryaya Namah. Om Adityaya Namah. Om Saptarchishe Namah.",
+        "meaning": "Salutations to the Sun God, to Aditya, to the one with seven rays",
+        "audio_file": "audio/mantras/surya_mantra.aac",
+        "language": "sa",
+        "category": "religious",
+        "tags": [
+            "surya",
+            "sun",
+            "chhath",
+            "makar",
+            "harvest"
+        ],
+        "vibes": [
+            "spiritual",
+            "peaceful"
+        ],
+        "event_slug": "chhath-puja-2026"
+    },
+    {
+        "slug": "sarva-mangala-mangalye",
+        "text": "सर्वमंगल मांगल्ये\nशिवे सर्वार्थसाधिके ।\nशरण्ये त्र्यम्बके गौरि\nनारायणि नमोस्तुते ॥",
+        "transliteration": "Sarva Mangala Mangalye Shive Sarvardha Sadhike. Sharanye Tryambake Gauri Narayani Namostute.",
+        "meaning": "O Goddess Narayani, who is the most auspicious of all the auspicious, the Consort of Shiva who fulfills all desires, we bow to you",
+        "audio_file": "audio/mantras/sarva_mangala.aac",
+        "language": "sa",
+        "category": "religious",
+        "tags": [
+            "durga",
+            "devi",
+            "navratri",
+            "puja",
+            "spiritual"
+        ],
+        "vibes": [
+            "spiritual",
+            "devotional"
+        ],
+        "event_slug": "navratri-2026"
+    }
+]

@@ -9,6 +9,7 @@ class ProfileController extends GetxController {
   final karmaPoints = 0.obs;
   final currentStreak = 0.obs;
   final selectedAvatar = 'assets/icon/avatar_tier1_1.png'.obs;
+  final userName = ''.obs;
 
   // Added for v2 Profile Stats
   final festivalsExplored = 0.obs;
@@ -24,6 +25,7 @@ class ProfileController extends GetxController {
     selectedAvatar.value =
         _storage.read<String>('selected_avatar') ??
         'assets/icon/avatar_tier1_1.png';
+    userName.value = _storage.read<String>('user_name') ?? '';
 
     // Real values — default to 0, incremented from action sites
     festivalsExplored.value = _storage.read<int>('festivals_explored') ?? 0;

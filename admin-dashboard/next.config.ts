@@ -2,7 +2,6 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['@festival/models'],
   experimental: {
     externalDir: true,
   },
@@ -40,3 +39,4 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+

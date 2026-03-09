@@ -22,16 +22,33 @@ class HomeFeed {
   final String language;
   final List<FeedSection> sections;
 
+  /// Grouped greeting texts from the HomeGreeting backend model.
+  /// Keys: 'morning', 'afternoon', 'evening', 'night', 'festival', 'general'
+  final Map<String, List<String>> greetings;
+
   HomeFeed({
     required this.version,
     required this.language,
     required this.sections,
+    this.greetings = const {},
   });
 
   factory HomeFeed.fromJson(Map<String, dynamic> json) {
+    // Parse greetings map: { morning: ['Rise and shine ✨', ...], ... }
+    final Map<String, List<String>> greetingsMap = {};
+    final raw = json['greetings'];
+    if (raw is Map) {
+      raw.forEach((key, value) {
+        if (value is List) {
+          greetingsMap[key] = value.whereType<String>().toList();
+        }
+      });
+    }
+
     return HomeFeed(
       version: json['version'] ?? '1.0',
       language: json['language'] ?? 'en',
+      greetings: greetingsMap,
       sections:
           (json['sections'] as List?)
               ?.map((e) => FeedSection.fromJson(e))
@@ -44,6 +61,7 @@ class HomeFeed {
     return {
       'version': version,
       'language': language,
+      'greetings': greetings,
       'sections': sections.map((e) => e.toJson()).toList(),
     };
   }

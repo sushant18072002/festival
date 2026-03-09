@@ -293,6 +293,10 @@ class NotificationScheduler {
   // ─── Content Generators ───────────────────────────────────────────────────
 
   String _discoveryBody(EventModel e) {
+    if (e.notifications?.discovery.isNotEmpty == true) {
+      return e.notifications!.discovery;
+    }
+
     final templates = [
       'Did you know? {fact} Tap to discover more.',
       '{event} is coming next month. Explore its origins now.',
@@ -315,6 +319,10 @@ class NotificationScheduler {
   }
 
   String _countdownBody(EventModel e) {
+    if (e.notifications?.countdown.isNotEmpty == true) {
+      return e.notifications!.countdown;
+    }
+
     if (e.facts.isNotEmpty) {
       final templates = [
         'Fun fact: {fact} See the visual journey.',
@@ -343,6 +351,10 @@ class NotificationScheduler {
   }
 
   String _eveBody(EventModel e) {
+    if (e.notifications?.eve.isNotEmpty == true) {
+      return e.notifications!.eve;
+    }
+
     if (e.facts.length > 1) {
       final templates = [
         'Tonight\'s thought: {fact}',
@@ -373,6 +385,10 @@ class NotificationScheduler {
   }
 
   String _dayOfBody(EventModel e) {
+    if (e.notifications?.dayOf.isNotEmpty == true) {
+      return e.notifications!.dayOf;
+    }
+
     final templates = [
       'The celebration is here. Explore traditions, share wishes & dive into the gallery.',
       'Wishing you a wonderful ${e.title}. Tap to see beautiful visuals and history.',

@@ -4,7 +4,8 @@ import LanguageTabs from '../components/LanguageTabs';
 import {
     Plus, Edit2, Trash2, Search, X, ChevronLeft, ChevronRight,
     Calendar as CalendarIcon, Filter, MoreVertical, Save, AlertCircle, Settings,
-    Globe, List, Tag, Image as ImageIcon, Check, RefreshCw, AlertTriangle, Link as LinkIcon
+    Globe, List, Tag, Image as ImageIcon, Check, RefreshCw, AlertTriangle, Link as LinkIcon,
+    Music, Sparkles, Utensils
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
@@ -143,6 +144,7 @@ export default function Events() {
     const [tags, setTags] = useState<TaxonomyItem[]>([]);
     const [vibes, setVibes] = useState<TaxonomyItem[]>([]);
     const [lotties, setLotties] = useState<LottieOverlayItem[]>([]);
+    const [audios, setAudios] = useState<any[]>([]);
     const [relatedImages, setRelatedImages] = useState<ImageData[]>([]); // Images linked to THIS event
     const [availableImages, setAvailableImages] = useState<ImageData[]>([]); // All images for picker
 
@@ -205,20 +207,23 @@ export default function Events() {
 
     const fetchTaxonomy = async () => {
         try {
-            const [catRes, tagRes, vibeRes, lottieRes] = await Promise.all([
+            const [catRes, tagRes, vibeRes, lottieRes, audioRes] = await Promise.all([
                 fetch('/api/categories'),
                 fetch('/api/tags'),
                 fetch('/api/vibes'),
-                fetch('/api/lotties')
+                fetch('/api/lotties'),
+                fetch('/api/audio?limit=500')
             ]);
             const catData = await catRes.json();
             const tagData = await tagRes.json();
             const vibeData = await vibeRes.json();
             const lottieData = await lottieRes.json();
+            const audioData = await audioRes.json();
             if (catData.success) setCategories(catData.data);
             if (tagData.success) setTags(tagData.data);
             if (vibeData.success) setVibes(vibeData.data);
             if (lottieData.success) setLotties(lottieData.data);
+            if (audioData.items) setAudios(audioData.items);
         } catch (error) {
             console.error('Failed to load taxonomy');
         }
@@ -543,8 +548,13 @@ export default function Events() {
                 {/* Header Section */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                     <div>
-                        <h1 className="text-3xl font-bold text-white tracking-tight">Events</h1>
-                        <p className="text-slate-400 mt-1">Manage your festival calendar and content.</p>
+                        <h1 className="text-3xl font-bold text-white tracking-tight flex items-center gap-3">
+                            <div className="p-2.5 bg-purple-500/10 rounded-xl border border-purple-500/20">
+                                <CalendarIcon className="w-6 h-6 text-purple-400" />
+                            </div>
+                            Events
+                        </h1>
+                        <p className="text-slate-400 mt-2">Manage your festival calendar and content.</p>
                     </div>
                     <div className="flex items-center gap-3">
                         <button
@@ -651,6 +661,21 @@ export default function Events() {
                                                     <List className="w-3 h-3" />
                                                     <span>{evt.historical_significance?.length || 0}</span>
                                                 </div>
+                                                {evt.ambient_audio && (
+                                                    <div className="flex items-center gap-1 text-emerald-400" title="Has Ambient Audio">
+                                                        <Music className="w-3.5 h-3.5" />
+                                                    </div>
+                                                )}
+                                                {evt.recipes && evt.recipes.length > 0 && (
+                                                    <div className="flex items-center gap-1 text-amber-500" title={`${evt.recipes.length} Recipes`}>
+                                                        <Utensils className="w-3.5 h-3.5" />
+                                                    </div>
+                                                )}
+                                                {evt.ritual_steps && evt.ritual_steps.length > 0 && (
+                                                    <div className="flex items-center gap-1 text-purple-400" title={`${evt.ritual_steps.length} Ritual Steps`}>
+                                                        <Sparkles className="w-3.5 h-3.5" />
+                                                    </div>
+                                                )}
                                             </div>
                                         </td>
                                         <td className="p-5 text-right">

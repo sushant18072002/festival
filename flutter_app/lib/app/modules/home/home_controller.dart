@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../data/models/home_feed_model.dart';
@@ -25,12 +26,23 @@ class HomeController extends GetxController {
   final filteredImages = <ImageModel>[].obs;
   final isForYouView =
       true.obs; // Tracks if we are showing smart-sorted default feed
+  final isGridView = true.obs;
+
+  void toggleViewMode() => isGridView.value = !isGridView.value;
 
   // Daily Blessing
   final dailyBlessingGreeting = Rxn<String>();
   final dailyBlessingQuote = Rxn<String>();
 
-  String get timeGreeting {
+  // Dynamic Home Greeting — rotates on every page visit/feed refresh
+  final currentHomeGreeting = RxString('');
+
+  String get timeGreeting => currentHomeGreeting.value.isNotEmpty
+      ? currentHomeGreeting.value
+      : _staticFallbackGreeting;
+
+  /// Fallback when backend greetings are empty (no data yet)
+  String get _staticFallbackGreeting {
     final hour = DateTime.now().hour;
     if (hour >= 21) return 'starry_night'.tr;
     if (hour >= 17) return 'good_evening'.tr;
@@ -41,19 +53,24 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchFeed();
+    Future.delayed(const Duration(milliseconds: 300), () {
+      fetchFeed();
+    });
   }
 
   Future<void> fetchFeed() async {
-    isLoading.value = true;
+    if (homeFeed.value == null) {
+      isLoading.value = true;
+    }
     hasError.value = false;
     try {
       final feed = await _repository.getHomeFeed(currentLang.value);
       if (feed != null) {
         homeFeed.value = feed;
-        _checkHappeningNow(); // Inject context-aware active event
-        _generateDailyBlessing(); // Inject Daily Blessing
-        filterImages(); // Initial population
+        _checkHappeningNow();
+        _generateDailyBlessing();
+        _refreshHomeGreeting(); // Pick a fresh random greeting
+        filterImages();
       } else {
         hasError.value = true;
       }
@@ -69,19 +86,7 @@ class HomeController extends GetxController {
     if (_repository.currentLang.value == lang) return;
     isLoading.value = true;
 
-    // Update GetX UI Locale — map each language code to correct Locale
-    final localeMap = {
-      'en': const Locale('en', 'US'),
-      'hi': const Locale('hi', 'IN'),
-      'mr': const Locale('mr', 'IN'),
-      'gu': const Locale('gu', 'IN'),
-      'bn': const Locale('bn', 'BD'),
-      'ta': const Locale('ta', 'IN'),
-      'te': const Locale('te', 'IN'),
-      'kn': const Locale('kn', 'IN'),
-      'ml': const Locale('ml', 'IN'),
-    };
-    Get.updateLocale(localeMap[lang] ?? const Locale('en', 'US'));
+    Get.updateLocale(Locale(lang));
 
     // Update Data payload language
     await _repository.changeLanguage(lang);
@@ -109,6 +114,48 @@ class HomeController extends GetxController {
   bool get isFestivalDay => happeningNowEvent.value != null;
 
   void dismissTakeover() => showTakeover.value = false;
+
+  /// Picks a fresh random greeting from the backend-provided array.
+  /// On festival days, festival greetings are prioritized automatically.
+  void _refreshHomeGreeting() {
+    final feed = homeFeed.value;
+    if (feed == null || feed.greetings.isEmpty) return;
+
+    final rng = Random();
+    final hour = DateTime.now().hour;
+
+    // Determine the time-of-day bucket
+    String bucket;
+    if (hour >= 21) {
+      bucket = 'night';
+    } else if (hour >= 17) {
+      bucket = 'evening';
+    } else if (hour >= 12) {
+      bucket = 'afternoon';
+    } else {
+      bucket = 'morning';
+    }
+
+    // On a festival day, prioritize festival greetings (50% chance)
+    List<String> candidates = [];
+    if (isFestivalDay && feed.greetings['festival']?.isNotEmpty == true) {
+      final festivalList = feed.greetings['festival']!;
+      final timeList = feed.greetings[bucket] ?? [];
+      // Interleave: festival greetings appear twice as often
+      candidates = [...festivalList, ...festivalList, ...timeList];
+    } else {
+      candidates = feed.greetings[bucket] ?? feed.greetings['general'] ?? [];
+    }
+
+    // Fallback to general if the time bucket is empty
+    if (candidates.isEmpty) {
+      candidates = feed.greetings['general'] ?? [];
+    }
+
+    if (candidates.isNotEmpty) {
+      currentHomeGreeting.value = candidates[rng.nextInt(candidates.length)];
+    }
+  }
 
   void _generateDailyBlessing() {
     final greetings = _repository.allGreetings;
@@ -154,8 +201,8 @@ class HomeController extends GetxController {
       targetList = List<ImageModel>.from(allImages);
     } else {
       targetList = allImages.where((img) {
-        // Check if image vibes contain the selected vibe code
-        return img.vibes.contains(selectedVibe.value);
+        // Check if image tags contain the selected vibe code
+        return img.tags.contains(selectedVibe.value);
       }).toList();
     }
 
@@ -198,9 +245,9 @@ class HomeController extends GetxController {
     if (Get.isRegistered<FavoritesController>()) {
       final faves = Get.find<FavoritesController>();
       for (var img in faves.favoriteImages) {
-        for (var v in img.vibes) {
-          favoriteVibes[v.toLowerCase()] =
-              (favoriteVibes[v.toLowerCase()] ?? 0) + 1;
+        for (var t in img.tags) {
+          favoriteVibes[t.toLowerCase()] =
+              (favoriteVibes[t.toLowerCase()] ?? 0) + 1;
         }
       }
       for (var event in faves.favoriteEvents) {
@@ -219,12 +266,9 @@ class HomeController extends GetxController {
     images.sort((a, b) {
       int getScore(ImageModel img) {
         int score = 0;
-        for (var v in img.vibes) {
-          final vLower = v.toLowerCase();
-          // Huge priority for Time of Day
+        for (var t in img.tags) {
+          final vLower = t.toLowerCase();
           if (todVibes.contains(vLower)) score += 1000;
-
-          // Micro-boosts for every favorited occurrence
           score += (favoriteVibes[vLower] ?? 0) * 10;
         }
         return score;

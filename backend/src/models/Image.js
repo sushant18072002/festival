@@ -42,7 +42,6 @@ const ImageSchema = new Schema({
     // --- Metadata ---
     filename: { type: String, required: true, unique: true },
     s3_key: { type: String, required: true },
-    event_id: { type: Schema.Types.ObjectId, ref: 'Event' },
     tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }],
     categories: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
     media_type: {

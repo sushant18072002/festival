@@ -29,6 +29,7 @@ class _QuizViewState extends State<QuizView> {
   QuizResultNode? _result;
   late Future<QuizModel?> _quizFuture;
   QuizModel? _quiz;
+  bool _isDark = true; // set in build(), used by helper and sub-builders
 
   @override
   void initState() {
@@ -115,12 +116,14 @@ class _QuizViewState extends State<QuizView> {
 
   @override
   Widget build(BuildContext context) {
+    _isDark = Theme.of(context).brightness == Brightness.dark;
+    final onSurface = Theme.of(context).colorScheme.onSurface;
     return NeoScaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.close, color: Colors.white70),
+          icon: Icon(Icons.close, color: onSurface.withValues(alpha: 0.6)),
           onPressed: () => Get.back(),
         ),
         title: _isFinished
@@ -128,7 +131,7 @@ class _QuizViewState extends State<QuizView> {
             : Text(
                 _quiz?.title ?? 'Loading Quiz...',
                 style: AppTextStyles.titleMedium.copyWith(
-                  color: Colors.white70,
+                  color: onSurface.withValues(alpha: 0.7),
                 ),
               ),
       ),
@@ -146,7 +149,9 @@ class _QuizViewState extends State<QuizView> {
                 child: Text(
                   'Quiz unavailable at the moment.',
                   style: AppTextStyles.titleMedium.copyWith(
-                    color: Colors.white70,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
                 ),
               );
@@ -205,7 +210,9 @@ class _QuizViewState extends State<QuizView> {
                   Text(
                     '${((_currentIndex / _quiz!.questions.length) * 100).toInt()}%',
                     style: AppTextStyles.labelSmall.copyWith(
-                      color: Colors.white38,
+                      color: _isDark
+                          ? Colors.white38
+                          : const Color(0xFF7C3AED).withValues(alpha: 0.4),
                     ),
                   ),
                 ],
@@ -215,7 +222,7 @@ class _QuizViewState extends State<QuizView> {
                 borderRadius: BorderRadius.circular(4),
                 child: LinearProgressIndicator(
                   value: _currentIndex / _quiz!.questions.length,
-                  backgroundColor: Colors.white12,
+                  backgroundColor: _isDark ? Colors.white12 : Colors.black12,
                   valueColor: const AlwaysStoppedAnimation<Color>(
                     AppColors.primary,
                   ),
@@ -269,9 +276,14 @@ class _QuizViewState extends State<QuizView> {
                         horizontal: AppSpacing.lg,
                         vertical: AppSpacing.md,
                       ),
-                      color: Colors.white.withValues(alpha: 0.06),
+                      color: _isDark
+                          ? Colors.white.withValues(alpha: 0.06)
+                          : Colors.white,
+                      opacity: _isDark ? 1.0 : 0.9,
                       border: Border.all(
-                        color: Colors.white.withValues(alpha: 0.15),
+                        color: _isDark
+                            ? Colors.white.withValues(alpha: 0.15)
+                            : const Color(0xFF7C3AED).withValues(alpha: 0.15),
                       ),
                       child: Row(
                         children: [
@@ -414,7 +426,9 @@ class _QuizViewState extends State<QuizView> {
                     Text(
                       'Festival Match',
                       style: AppTextStyles.labelSmall.copyWith(
-                        color: Colors.white54,
+                        color: _isDark
+                            ? Colors.white54
+                            : const Color(0xFF3D1F5C),
                       ),
                     ),
                     Text(
@@ -431,7 +445,7 @@ class _QuizViewState extends State<QuizView> {
                   borderRadius: BorderRadius.circular(4),
                   child: LinearProgressIndicator(
                     value: matchPct / 100,
-                    backgroundColor: Colors.white12,
+                    backgroundColor: _isDark ? Colors.white12 : Colors.black12,
                     valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
                     minHeight: 6,
                   ),
@@ -446,7 +460,7 @@ class _QuizViewState extends State<QuizView> {
           Text(
             r.description,
             style: AppTextStyles.bodyLarge.copyWith(
-              color: Colors.white70,
+              color: _isDark ? Colors.white70 : const Color(0xFF251042),
               height: 1.6,
             ),
             textAlign: TextAlign.center,
@@ -498,10 +512,14 @@ class _QuizViewState extends State<QuizView> {
               Expanded(
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.white70,
+                    foregroundColor: _isDark
+                        ? Colors.white70
+                        : const Color(0xFF3D1F5C),
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     side: BorderSide(
-                      color: Colors.white.withValues(alpha: 0.2),
+                      color: _isDark
+                          ? Colors.white.withValues(alpha: 0.2)
+                          : const Color(0xFF7C3AED).withValues(alpha: 0.3),
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),

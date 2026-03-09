@@ -109,6 +109,48 @@ class SettingsView extends GetView<SettingsController> {
           AppSpacing.verticalLg,
 
           // ─────────────────────────────────────────────────────────────────
+          // Appearance Section
+          // ─────────────────────────────────────────────────────────────────
+          _buildSectionHeader('Appearance'),
+
+          _buildGlassSettingsTile(
+            icon: Icons.brightness_6_rounded,
+            iconColor: Colors.amberAccent,
+            child: Obx(
+              () => SwitchListTile(
+                title: Text(
+                  'Dark Mode',
+                  style: AppTextStyles.titleMedium.copyWith(
+                    color: Colors.white,
+                  ),
+                ),
+                subtitle: Text(
+                  controller.isDarkMode.value
+                      ? 'Using dark theme'
+                      : 'Using light theme',
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: Colors.white70,
+                  ),
+                ),
+                value: controller.isDarkMode.value,
+                activeTrackColor: Colors.amberAccent.withValues(alpha: 0.7),
+                thumbColor: WidgetStateProperty.resolveWith<Color>(
+                  (states) => states.contains(WidgetState.selected)
+                      ? Colors.white
+                      : Colors.white54,
+                ),
+                inactiveTrackColor: Colors.white10,
+                onChanged: (val) {
+                  HapticFeedback.selectionClick();
+                  controller.toggleTheme(val);
+                },
+              ),
+            ),
+          ),
+
+          AppSpacing.verticalLg,
+
+          // ─────────────────────────────────────────────────────────────────
           // General Section
           // ─────────────────────────────────────────────────────────────────
           _buildSectionHeader('General'),

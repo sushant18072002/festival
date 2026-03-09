@@ -7,9 +7,13 @@ class TaxonomyItem {
   TaxonomyItem({required this.code, required this.name, this.icon, this.color});
 
   factory TaxonomyItem.fromJson(Map<String, dynamic> json) {
+    final parsedName =
+        json['name'] ?? json['title'] ?? json['label'] ?? json['code'] ?? '';
     return TaxonomyItem(
       code: json['code'] ?? '',
-      name: json['name'] ?? '',
+      name: parsedName.toString().isNotEmpty
+          ? parsedName.toString()
+          : (json['code'] ?? ''),
       icon: json['icon'],
       color: json['color'],
     );

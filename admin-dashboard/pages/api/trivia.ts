@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import dbConnect from '../../lib/mongodb';
-import Trivia from '../../models/Trivia';
+import dbConnect from '../../lib/dbConnect';
+import { Trivia } from '../../lib/models';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { method, query } = req;
@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     if (!item) return res.status(404).json({ success: false, error: 'Trivia not found' });
                     return res.status(200).json({ success: true, data: item });
                 }
-                const items = await Trivia.find({}).sort({ _id: -1 });
+                const items = await Trivia.find({ is_deleted: false }).sort({ _id: -1 });
                 return res.status(200).json({ success: true, data: items });
 
             case 'POST':

@@ -3,14 +3,17 @@ import '../modules/home/home_binding.dart';
 import '../modules/home/home_view.dart';
 import '../modules/calendar/calendar_binding.dart';
 import '../modules/calendar/calendar_view.dart';
-import '../modules/gallery/gallery_binding.dart';
-import '../modules/gallery/gallery_view.dart';
+import '../modules/explore/explore_binding.dart';
+import '../modules/explore/explore_view.dart';
 import '../modules/dashboard/dashboard_view.dart';
 import '../modules/initial/initial_load_view.dart';
 import '../modules/event_details/event_details_view.dart';
 import '../modules/event_details/event_details_binding.dart';
 import '../modules/image_details/image_details_view.dart';
 import '../modules/favorites/favorites_view.dart';
+import '../modules/settings/settings_view.dart';
+import '../modules/settings/settings_binding.dart';
+import '../modules/search/search_binding.dart';
 import '../modules/search/search_view.dart';
 import '../modules/profile/profile_view.dart';
 import '../modules/profile/profile_binding.dart';
@@ -53,9 +56,9 @@ class AppPages {
       curve: _defaultCurve,
     ),
     GetPage(
-      name: _Paths.GALLERY,
-      page: () => const GalleryView(),
-      binding: GalleryBinding(),
+      name: _Paths.EXPLORE,
+      page: () => const ExploreView(),
+      binding: ExploreBinding(),
       transition: _defaultTransition,
       transitionDuration: _defaultDuration,
       curve: _defaultCurve,
@@ -112,6 +115,14 @@ class AppPages {
       binding: ProfileBinding(),
       transition: Transition.downToUp,
       transitionDuration: const Duration(milliseconds: 400),
+      curve: AppAnimations.smooth,
+    ),
+    GetPage(
+      name: _Paths.SETTINGS,
+      page: () => const SettingsView(),
+      binding: SettingsBinding(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(milliseconds: 300),
       curve: AppAnimations.smooth,
     ),
     GetPage(

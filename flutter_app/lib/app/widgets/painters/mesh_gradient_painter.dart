@@ -4,19 +4,22 @@ import '../../theme/app_colors.dart';
 
 class MeshGradientPainter extends CustomPainter {
   final double animationValue;
+  final bool isDark;
 
-  MeshGradientPainter(this.animationValue);
+  MeshGradientPainter(this.animationValue, {this.isDark = true});
 
   @override
   void paint(Canvas canvas, Size size) {
-    // 3 moving blobs of light
-    final Paint paint = Paint()..blendMode = BlendMode.screen;
+    // In dark mode: BlendMode.screen makes blobs glow on black.
+    // In light mode: BlendMode.multiply makes them appear as soft color washes on white.
+    final Paint paint = Paint()
+      ..blendMode = isDark ? BlendMode.screen : BlendMode.multiply;
 
     // Blob 1: Cyan (Top Left)
     _drawBlob(
       canvas,
       paint,
-      color: AppColors.primary.withValues(alpha: 0.15),
+      color: AppColors.primary.withValues(alpha: isDark ? 0.15 : 0.25),
       center: Offset(
         size.width * 0.2 + sin(animationValue * 0.5) * 50,
         size.height * 0.3 + cos(animationValue * 0.3) * 50,
@@ -28,7 +31,7 @@ class MeshGradientPainter extends CustomPainter {
     _drawBlob(
       canvas,
       paint,
-      color: AppColors.secondary.withValues(alpha: 0.12),
+      color: AppColors.secondary.withValues(alpha: isDark ? 0.12 : 0.20),
       center: Offset(
         size.width * 0.8 - cos(animationValue * 0.4) * 60,
         size.height * 0.7 - sin(animationValue * 0.6) * 60,
@@ -40,7 +43,7 @@ class MeshGradientPainter extends CustomPainter {
     _drawBlob(
       canvas,
       paint,
-      color: AppColors.accent.withValues(alpha: 0.08),
+      color: AppColors.accent.withValues(alpha: isDark ? 0.08 : 0.15),
       center: Offset(
         size.width * 0.5 + sin(animationValue * 0.8) * 30,
         size.height * 0.5 + cos(animationValue * 0.7) * 30,
@@ -66,6 +69,7 @@ class MeshGradientPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant MeshGradientPainter oldDelegate) {
-    return oldDelegate.animationValue != animationValue;
+    return oldDelegate.animationValue != animationValue ||
+        oldDelegate.isDark != isDark;
   }
 }

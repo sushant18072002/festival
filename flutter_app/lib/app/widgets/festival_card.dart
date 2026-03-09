@@ -78,7 +78,7 @@ class _FestivalCardState extends State<FestivalCard> {
               fit: StackFit.expand,
               children: [
                 // 1. Background Image
-                _buildImage(),
+                _buildImage(context),
 
                 // 2. Gradient Overlay (Bottom Up)
                 Container(
@@ -275,8 +275,10 @@ class _FestivalCardState extends State<FestivalCard> {
     );
   }
 
-  Widget _buildImage() {
+  Widget _buildImage(BuildContext context) {
     final imageUrl = widget.event.thumbnail ?? widget.event.image?.thumbnail;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     if (imageUrl != null) {
       return Hero(
         tag: 'festival_card_${widget.event.id}',
@@ -284,9 +286,15 @@ class _FestivalCardState extends State<FestivalCard> {
       );
     }
     return Container(
-      color: AppColors.surfaceGlass,
-      child: const Center(
-        child: Icon(Icons.temple_hindu, size: 48, color: Colors.white10),
+      color: isDark ? AppColors.surfaceGlass : const Color(0xFFF3EFFC),
+      child: Center(
+        child: Icon(
+          Icons.temple_hindu,
+          size: 48,
+          color: isDark
+              ? Colors.white10
+              : const Color(0xFF3D1F5C).withValues(alpha: 0.1),
+        ),
       ),
     );
   }

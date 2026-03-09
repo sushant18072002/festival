@@ -106,7 +106,9 @@ class _AutoRotatingCarouselState extends State<AutoRotatingCarousel> {
                 decoration: BoxDecoration(
                   color: _currentPage == index
                       ? AppColors.primary
-                      : Colors.white.withValues(alpha: 0.3),
+                      : Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white.withValues(alpha: 0.3)
+                      : Colors.black.withValues(alpha: 0.22),
                   borderRadius: BorderRadius.circular(4),
                 ),
               ),

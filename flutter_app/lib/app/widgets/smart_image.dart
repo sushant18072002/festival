@@ -1,17 +1,13 @@
-import 'dart:io';
-import 'dart:convert';
-import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:http/http.dart' as http;
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
 
-/// Smart image widget with offline-first caching and graceful Lottie error handling
-class SmartImage extends StatefulWidget {
+/// Smart image widget with cached_network_image
+class SmartImage extends StatelessWidget {
   final String url;
   final BoxFit? fit;
   final double? width;
@@ -32,159 +28,34 @@ class SmartImage extends StatefulWidget {
   });
 
   @override
-  State<SmartImage> createState() => _SmartImageState();
-}
-
-class _SmartImageState extends State<SmartImage> {
-  File? _localFile;
-  String? _fallbackAssetPath;
-  bool _isLoading = true;
-  bool _hasError = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _initImage();
-  }
-
-  @override
-  void didUpdateWidget(covariant SmartImage oldWidget) {
-    if (oldWidget.url != widget.url) {
-      _initImage();
-    }
-    super.didUpdateWidget(oldWidget);
-  }
-
-  Future<void> _initImage() async {
-    if (!mounted) return;
-    setState(() {
-      _isLoading = true;
-      _hasError = false;
-      _localFile = null;
-      _fallbackAssetPath = null;
-    });
-
-    if (widget.url.isEmpty) {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-          _hasError = true;
-        });
-      }
-      return;
-    }
-
-    // Remote mode + Offline Cache
-    try {
-      String resolvedUrl = widget.url;
-      final cdnBase = dotenv.env['CDN_BASE_URL'] ?? '';
-      if (!resolvedUrl.startsWith('http') && cdnBase.isNotEmpty) {
-        resolvedUrl = cdnBase.endsWith('/')
-            ? '$cdnBase${resolvedUrl.startsWith('/') ? resolvedUrl.substring(1) : resolvedUrl}'
-            : '$cdnBase/${resolvedUrl.startsWith('/') ? resolvedUrl.substring(1) : resolvedUrl}';
-      }
-      final uri = Uri.parse(resolvedUrl);
-
-      // Use MD5 hash of the FULL URL as cache key — prevents collision when
-      // different events share the same filename (e.g. multiple _1.webp files).
-      final cacheKey = md5.convert(utf8.encode(resolvedUrl)).toString();
-      final ext = uri.pathSegments.isNotEmpty
-          ? uri.pathSegments.last.split('.').last
-          : 'webp';
-
-      final docDir = await getApplicationDocumentsDirectory();
-      final imageDir = Directory('${docDir.path}/utsav_images');
-      if (!await imageDir.exists()) {
-        await imageDir.create(recursive: true);
-      }
-
-      final localPath = '${imageDir.path}/$cacheKey.$ext';
-      final file = File(localPath);
-
-      if (await file.exists()) {
-        // Cache Hit!
-        if (mounted) {
-          setState(() {
-            _localFile = file;
-            _isLoading = false;
-          });
-        }
-      } else {
-        // Fetch from network
-        final response = await http.get(uri);
-        if (response.statusCode == 200) {
-          await file.writeAsBytes(response.bodyBytes);
-          if (mounted) {
-            setState(() {
-              _localFile = file;
-              _isLoading = false;
-            });
-          }
-        } else {
-          // Fallback to error Lottie if 404/500
-          if (mounted) {
-            setState(() {
-              _hasError = true;
-              _isLoading = false;
-            });
-          }
-        }
-      }
-    } catch (e) {
-      // Network Exception -> Offline -> Show Lottie
-      if (mounted) {
-        setState(() {
-          _hasError = true;
-          _isLoading = false;
-        });
-      }
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
-      return _buildShimmer();
+    if (url.isEmpty) return _buildError();
+
+    String resolvedUrl = url;
+    final cdnBase = dotenv.env['CDN_BASE_URL'] ?? '';
+    if (!resolvedUrl.startsWith('http') && cdnBase.isNotEmpty) {
+      resolvedUrl = cdnBase.endsWith('/')
+          ? '$cdnBase${resolvedUrl.startsWith('/') ? resolvedUrl.substring(1) : resolvedUrl}'
+          : '$cdnBase/${resolvedUrl.startsWith('/') ? resolvedUrl.substring(1) : resolvedUrl}';
     }
 
-    if (_hasError) {
-      return _buildError();
-    }
-
-    if (_fallbackAssetPath != null) {
-      return Image.asset(
-        _fallbackAssetPath!,
-        fit: widget.fit,
-        width: widget.width,
-        height: widget.height,
-        cacheWidth: widget.memCacheWidth,
-        cacheHeight: widget.memCacheHeight,
-        semanticLabel: widget.semanticLabel ?? 'Image',
-        errorBuilder: (context, error, stackTrace) => _buildError(),
-      ).animate().fade(duration: 300.ms);
-    }
-
-    if (_localFile != null) {
-      return Image.file(
-        _localFile!,
-        fit: widget.fit,
-        width: widget.width,
-        height: widget.height,
-        cacheWidth: widget.memCacheWidth,
-        cacheHeight: widget.memCacheHeight,
-        semanticLabel: widget.semanticLabel ?? 'Image',
-        errorBuilder: (context, error, stackTrace) => _buildError(),
-      ).animate().fade(duration: 300.ms);
-    }
-
-    return _buildError();
+    return CachedNetworkImage(
+      imageUrl: resolvedUrl,
+      fit: fit ?? BoxFit.cover,
+      width: width,
+      height: height,
+      memCacheWidth: memCacheWidth,
+      memCacheHeight: memCacheHeight,
+      placeholder: (context, url) => _buildShimmer(),
+      errorWidget: (context, url, error) => _buildError(),
+      fadeInDuration: const Duration(milliseconds: 300),
+    );
   }
 
-  /// Shimmer loading placeholder with animated gradient
   Widget _buildShimmer() {
     return Container(
-      width: widget.width,
-      height: widget.height,
+      width: width,
+      height: height,
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
         borderRadius: AppRadius.cardRadius,
@@ -192,16 +63,12 @@ class _SmartImageState extends State<SmartImage> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          // Base color
           Container(color: AppColors.surfaceLight),
-          // Premium Background (Faint)
           Image.asset(
             'assets/images/utsav_placeholder.png',
             fit: BoxFit.cover,
             opacity: const AlwaysStoppedAnimation(0.1),
           ),
-
-          // Shimmer gradient animation
           Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -221,7 +88,6 @@ class _SmartImageState extends State<SmartImage> {
                 duration: const Duration(milliseconds: 1500),
                 color: Colors.white24,
               ),
-          // Centered icon
           Center(
             child: Icon(
               Icons.image_outlined,
@@ -234,11 +100,10 @@ class _SmartImageState extends State<SmartImage> {
     );
   }
 
-  /// Error state with Premium Placeholder
   Widget _buildError() {
     return Container(
-      width: widget.width,
-      height: widget.height,
+      width: width,
+      height: height,
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
         borderRadius: AppRadius.cardRadius,
@@ -246,14 +111,11 @@ class _SmartImageState extends State<SmartImage> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          // Premium Background
           Image.asset(
             'assets/images/utsav_placeholder.png',
             fit: BoxFit.cover,
             opacity: const AlwaysStoppedAnimation(0.4),
           ),
-
-          // Subtle Overlay Info
           Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,

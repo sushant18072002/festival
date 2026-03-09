@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import connectDB from '../../lib/db';
+import connectDB from '../../lib/dbConnect';
 import { AmbientAudio as AmbientAudioModel, AmbientAudioSchema } from '../../lib/models';
 import mongoose from 'mongoose';
 import formidable, { File } from 'formidable';

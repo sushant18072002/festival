@@ -7,7 +7,11 @@ import '../../../theme/app_text_styles.dart';
 import '../../../routes/app_pages.dart';
 import '../../home/home_controller.dart';
 import '../../profile/profile_controller.dart';
+import 'language_picker_sheet.dart';
 
+/// Home top app bar — matches the screenshot layout:
+///  LEFT:  ✦ UTSAV FESTIVAL (brand row)
+///  RIGHT: [A/अ HI ▼] [🔔] [avatar]
 class HomeTopAppBar extends StatelessWidget {
   final HomeController controller;
 
@@ -15,119 +19,305 @@ class HomeTopAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final onSurface = Theme.of(context).colorScheme.onSurface;
+
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Icon(Icons.auto_awesome, size: 12, color: AppColors.primary),
-        const SizedBox(width: 8),
-        Expanded(
-          child: Text('UTSAV FESTIVAL', style: AppTextStyles.labelSmall),
-        ),
-        // Language Dropdown
-        Obx(
-          () => Container(
-            height: 38,
-            padding: const EdgeInsets.only(left: 12, right: 6),
-            decoration: BoxDecoration(
-              color: AppColors.surfaceGlass,
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.white.withValues(alpha: 0.15)),
+        // ── LEFT: Brand ─────────────────────────────────────────────────────
+        _BrandMark(isDark: isDark, onSurface: onSurface),
+
+        const Spacer(),
+
+        // ── RIGHT: Language pill + Bell + Avatar ───────────────────────────
+        Row(
+          children: [
+            // Language pill
+            _LanguagePill(
+              controller: controller,
+              isDark: isDark,
+              onSurface: onSurface,
             ),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                value: controller.currentLang.value,
-                icon: const Icon(
-                  Icons.arrow_drop_down_rounded,
-                  color: Colors.white70,
-                  size: 20,
-                ),
-                dropdownColor: AppColors.surfaceDark,
-                style: AppTextStyles.labelSmall.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-                onChanged: (String? newValue) {
-                  if (newValue != null) {
-                    HapticFeedback.lightImpact();
-                    controller.changeLanguage(newValue);
-                  }
-                },
-                items: const [
-                  DropdownMenuItem(value: 'en', child: Text('A/अ EN')),
-                  DropdownMenuItem(value: 'hi', child: Text('A/अ HI')),
-                ],
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: 8),
-        // Notification Bell
-        GestureDetector(
-          onTap: () {
-            HapticFeedback.lightImpact();
-            Get.snackbar(
-              "No new alerts",
-              "You're all caught up!",
-              snackPosition: SnackPosition.TOP,
-              backgroundColor: Colors.black.withValues(alpha: 0.7),
-              colorText: Colors.white,
-              margin: const EdgeInsets.all(16),
-              borderRadius: 20,
-              barBlur: 10,
-              icon: const Icon(
+            const SizedBox(width: 8),
+
+            // Bell button
+            _IconCircle(
+              isDark: isDark,
+              onSurface: onSurface,
+              onTap: () {
+                HapticFeedback.lightImpact();
+                Get.snackbar(
+                  '🔔 Notifications',
+                  'Coming soon — stay tuned!',
+                  snackPosition: SnackPosition.TOP,
+                  duration: const Duration(seconds: 2),
+                  backgroundColor: isDark
+                      ? AppColors.surfaceGlass
+                      : Colors.white,
+                  colorText: onSurface,
+                  margin: const EdgeInsets.all(16),
+                  borderRadius: 16,
+                );
+              },
+              child: Icon(
                 Icons.notifications_none_rounded,
-                color: AppColors.accent,
+                size: 18,
+                color: isDark ? Colors.white : onSurface,
               ),
-            );
-          },
-          child: Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: AppColors.surfaceGlass,
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
             ),
-            child: const Icon(
-              Icons.notifications_outlined,
-              size: 18,
-              color: Colors.white,
-            ),
-          ),
-        ),
-        const SizedBox(width: 12),
-        // User Profile Avatar
-        GestureDetector(
-          onTap: () {
-            HapticFeedback.lightImpact();
-            Get.toNamed(Routes.PROFILE);
-          },
-          child: Obx(() {
-            if (!Get.isRegistered<ProfileController>()) {
-              return const SizedBox.shrink();
-            }
-            final profileController = Get.find<ProfileController>();
-            return Container(
-              width: 38,
-              height: 38,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: AppColors.primary, width: 1.5),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.3),
-                    blurRadius: 8,
-                  ),
-                ],
-              ),
-              child: ClipOval(
-                child: Image.asset(
-                  profileController.selectedAvatar.value,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            );
-          }),
+            const SizedBox(width: 8),
+
+            // Avatar
+            _AvatarButton(isDark: isDark),
+          ],
         ),
       ],
-    ).animate().fade(duration: 800.ms);
+    ).animate().fade(duration: 700.ms);
+  }
+}
+
+// ── Brand mark: ✦ UTSAV FESTIVAL ──────────────────────────────────────────
+class _BrandMark extends StatelessWidget {
+  final bool isDark;
+  final Color onSurface;
+
+  const _BrandMark({required this.isDark, required this.onSurface});
+
+  @override
+  Widget build(BuildContext context) {
+    final labelColor = isDark
+        ? Colors.white70
+        : onSurface.withValues(alpha: 0.55);
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Sparkle icon
+        ShaderMask(
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [AppColors.primary, AppColors.secondary],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ).createShader(bounds),
+          child: const Icon(
+            Icons.auto_awesome_rounded,
+            size: 14,
+            color: Colors.white, // required by ShaderMask
+          ),
+        ),
+        const SizedBox(width: 6),
+        Text(
+          'UTSAV FESTIVAL',
+          style: AppTextStyles.labelSmall.copyWith(
+            color: labelColor,
+            fontSize: 12,
+            letterSpacing: 1.8,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// ── Language pill: [A/अ HI ▼] ─────────────────────────────────────────────
+class _LanguagePill extends StatelessWidget {
+  final HomeController controller;
+  final bool isDark;
+  final Color onSurface;
+
+  const _LanguagePill({
+    required this.controller,
+    required this.isDark,
+    required this.onSurface,
+  });
+
+  /// Maps language code → display label shown in the pill
+  static const _langLabels = {
+    'en': 'EN',
+    'hi': 'HI',
+    'mr': 'MR',
+    'gu': 'GU',
+    'bn': 'BN',
+    'ta': 'TA',
+    'te': 'TE',
+    'kn': 'KN',
+    'ml': 'ML',
+  };
+
+  /// Maps language code → its native script initial shown in front of the slash
+  static const _langScripts = {
+    'en': 'A',
+    'hi': 'अ',
+    'mr': 'म',
+    'gu': 'ગ',
+    'bn': 'অ',
+    'ta': 'அ',
+    'te': 'అ',
+    'kn': 'ಅ',
+    'ml': 'അ',
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      final code = controller.currentLang.value;
+      final script = _langScripts[code] ?? 'A';
+      final label = _langLabels[code] ?? code.toUpperCase();
+
+      final pillBg = isDark
+          ? AppColors.surfaceGlass.withValues(alpha: 0.8)
+          : Colors.black.withValues(alpha: 0.07);
+      final pillBorder = isDark
+          ? Colors.white.withValues(alpha: 0.12)
+          : Colors.black.withValues(alpha: 0.10);
+      final textColor = isDark ? Colors.white : onSurface;
+
+      return GestureDetector(
+        onTap: () => showLanguagePickerSheet(context, controller),
+        child: Container(
+          height: 36,
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          decoration: BoxDecoration(
+            color: pillBg,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: pillBorder),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                '$script/A',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: textColor,
+                  fontFamily: 'Outfit',
+                  letterSpacing: 0.2,
+                ),
+              ),
+              const SizedBox(width: 4),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  color: textColor,
+                  letterSpacing: 0.5,
+                ),
+              ),
+              const SizedBox(width: 3),
+              Icon(
+                Icons.keyboard_arrow_down_rounded,
+                size: 16,
+                color: textColor.withValues(alpha: 0.7),
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+}
+
+// ── Generic icon circle button ─────────────────────────────────────────────
+class _IconCircle extends StatelessWidget {
+  final bool isDark;
+  final Color onSurface;
+  final VoidCallback onTap;
+  final Widget child;
+
+  const _IconCircle({
+    required this.isDark,
+    required this.onSurface,
+    required this.onTap,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 36,
+        height: 36,
+        decoration: BoxDecoration(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.10)
+              : Colors.black.withValues(alpha: 0.06),
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.12)
+                : Colors.black.withValues(alpha: 0.08),
+          ),
+        ),
+        child: Center(child: child),
+      ),
+    );
+  }
+}
+
+// ── Circular avatar with gradient glow ────────────────────────────────────
+class _AvatarButton extends StatelessWidget {
+  final bool isDark;
+
+  const _AvatarButton({required this.isDark});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        HapticFeedback.lightImpact();
+        Get.toNamed(Routes.PROFILE);
+      },
+      child: Obx(() {
+        if (!Get.isRegistered<ProfileController>()) {
+          // Placeholder circle while profile loads
+          return Container(
+            width: 36,
+            height: 36,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(
+                colors: [AppColors.primary, AppColors.secondary],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+          );
+        }
+        final profileController = Get.find<ProfileController>();
+        return Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            gradient: const LinearGradient(
+              colors: [AppColors.primary, AppColors.secondary],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primary.withValues(
+                  alpha: isDark ? 0.45 : 0.25,
+                ),
+                blurRadius: 12,
+                spreadRadius: -2,
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.all(2),
+          child: ClipOval(
+            child: Image.asset(
+              profileController.selectedAvatar.value,
+              fit: BoxFit.cover,
+            ),
+          ),
+        );
+      }),
+    );
   }
 }

@@ -318,8 +318,13 @@ export default function Home() {
       />
       <main className="flex-1 p-8 overflow-y-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight text-white">Dashboard</h1>
-          <p className="text-slate-400 mt-1">Overview of your festival content and system status.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-white flex items-center gap-3">
+            <div className="p-2.5 bg-blue-500/10 rounded-xl border border-blue-500/20">
+              <BarChart2 className="w-6 h-6 text-blue-400" />
+            </div>
+            Dashboard
+          </h1>
+          <p className="text-slate-400 mt-2">Overview of your festival content and system status.</p>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-4 gap-4 mb-8">
@@ -640,15 +645,18 @@ export default function Home() {
 
 function StatCard({ title, value, icon, color, subValue, action }: any) {
   return (
-    <div className="bg-slate-900 p-6 rounded-2xl shadow-md shadow-black/20 border border-slate-800">
-      <div className="flex justify-between items-start mb-4">
-        <div className={clsx("p-3 rounded-xl", color)}>{icon}</div>
-        {action}
+    <div className="group relative bg-slate-900/80 backdrop-blur-xl overflow-hidden p-6 rounded-3xl shadow-lg shadow-black/40 border border-slate-800 hover:border-slate-600 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+      {/* Background Animated Glow */}
+      <div className={clsx("absolute -right-8 -top-8 w-32 h-32 rounded-full blur-3xl opacity-30 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none", color.replace('950', '600'))} />
+
+      <div className="flex justify-between items-start mb-4 relative z-10">
+        <div className={clsx("p-3 rounded-2xl shadow-inner backdrop-blur-sm border border-slate-800", color)}>{icon}</div>
+        {action && <div className="relative z-20">{action}</div>}
       </div>
-      <div>
-        <p className="text-slate-400 text-sm font-medium mb-1">{title}</p>
-        <h3 className="text-2xl font-bold text-white">{value}</h3>
-        {subValue && <p className="text-xs text-slate-400 mt-1">{subValue}</p>}
+      <div className="relative z-10">
+        <p className="text-slate-400 text-sm font-semibold mb-1 tracking-wide uppercase">{title}</p>
+        <h3 className="text-3xl font-black text-white tracking-tight drop-shadow-md">{value}</h3>
+        {subValue && <p className="text-xs text-slate-500 mt-1.5 font-medium">{subValue}</p>}
       </div>
     </div>
   );

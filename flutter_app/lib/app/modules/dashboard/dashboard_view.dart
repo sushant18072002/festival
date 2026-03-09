@@ -1,20 +1,22 @@
-import 'package:flutter/material.dart';
+import 'dart:ui';
+import 'package:flutter/material.dart' hide SearchController;
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../home/home_view.dart';
 import '../calendar/calendar_view.dart';
-import '../gallery/gallery_view.dart';
-import '../settings/settings_view.dart';
+import '../explore/explore_view.dart';
+
+import '../profile/profile_view.dart';
 import '../home/home_controller.dart';
 import '../calendar/calendar_controller.dart';
-import '../gallery/gallery_controller.dart';
-import '../quotes/quotes_view.dart';
-import '../quotes/quotes_controller.dart';
+import '../explore/explore_controller.dart';
 import '../settings/settings_controller.dart';
+import '../profile/profile_controller.dart';
+import '../search/search_controller.dart';
 import 'dashboard_controller.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_text_styles.dart';
-import '../../theme/app_spacing.dart';
 
 class DashboardBinding extends Bindings {
   @override
@@ -22,88 +24,99 @@ class DashboardBinding extends Bindings {
     Get.lazyPut<DashboardController>(() => DashboardController());
     Get.lazyPut<HomeController>(() => HomeController());
     Get.lazyPut<CalendarController>(() => CalendarController());
-    Get.lazyPut<GalleryController>(() => GalleryController());
-    Get.lazyPut<QuotesController>(() => QuotesController());
+    Get.lazyPut<ExploreController>(() => ExploreController());
     Get.lazyPut<SettingsController>(() => SettingsController());
-    // Note: FavoritesController is registered as a permanent singleton in global.dart
+    Get.lazyPut<ProfileController>(() => ProfileController());
+    Get.lazyPut<SearchController>(() => SearchController());
+    // FavoritesController is registered as a permanent singleton in global.dart
   }
 }
+
+/// The 5 actual pages for the IndexedStack
+const _pages = [
+  HomeView(),
+  CalendarView(),
+  ExploreView(), // Renamed to "Explore" in UI, retaining full feature set
+  ProfileView(),
+];
 
 class DashboardView extends GetView<DashboardController> {
   const DashboardView({super.key});
 
-  static const _pages = [
-    HomeView(),
-    CalendarView(),
-    GalleryView(),
-    QuotesView(),
-    SettingsView(),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      extendBody: true, // Body goes behind bottom nav
       body: Obx(
         () => IndexedStack(
           index: controller.currentIndex.value,
           children: _pages,
         ),
       ),
-      bottomNavigationBar: Obx(() => _buildBottomNav()),
+      bottomNavigationBar: Obx(
+        () => _buildBottomNav(context, isDark, colorScheme),
+      ),
     );
   }
 
-  Widget _buildBottomNav() {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 16,
-            offset: const Offset(0, -4),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.md,
-            vertical: AppSpacing.xs,
+  Widget _buildBottomNav(
+    BuildContext context,
+    bool isDark,
+    ColorScheme colorScheme,
+  ) {
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
+    final navBgColor = isDark
+        ? AppColors.surfaceDark.withValues(alpha: 0.75)
+        : colorScheme.surface.withValues(alpha: 0.85);
+    final borderColor = isDark
+        ? Colors.white.withValues(alpha: 0.1)
+        : Colors.black.withValues(alpha: 0.08);
+
+    return ClipRRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+        child: Container(
+          padding: EdgeInsets.only(bottom: bottomPadding, top: 4),
+          decoration: BoxDecoration(
+            color: navBgColor,
+            border: Border(top: BorderSide(color: borderColor, width: 0.5)),
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildNavItem(
-                index: 0,
-                icon: Icons.home_outlined,
-                selectedIcon: Icons.home_rounded,
-                label: 'Home',
+              Expanded(
+                child: _buildNavItem(
+                  index: 0,
+                  icon: LucideIcons.house,
+                  label: 'home'.tr,
+                  isDark: isDark,
+                ),
               ),
-              _buildNavItem(
-                index: 1,
-                icon: Icons.calendar_month_outlined,
-                selectedIcon: Icons.calendar_month_rounded,
-                label: 'Calendar',
+              Expanded(
+                child: _buildNavItem(
+                  index: 1,
+                  icon: LucideIcons.calendar,
+                  label: 'events'.tr,
+                  isDark: isDark,
+                ),
               ),
-              _buildNavItem(
-                index: 2,
-                icon: Icons.explore_outlined,
-                selectedIcon: Icons.explore_rounded,
-                label: 'Explore',
+              Expanded(
+                child: _buildNavItem(
+                  index: 2,
+                  icon: LucideIcons.sparkles,
+                  label: 'explore'.tr,
+                  isDark: isDark,
+                ),
               ),
-              _buildNavItem(
-                index: 3,
-                icon: Icons.format_quote_outlined,
-                selectedIcon: Icons.format_quote_rounded,
-                label: 'Quotes',
-              ),
-              _buildNavItem(
-                index: 4,
-                icon: Icons.settings_outlined,
-                selectedIcon: Icons.settings_rounded,
-                label: 'Settings',
+              Expanded(
+                child: _buildNavItem(
+                  index: 3,
+                  icon: LucideIcons.user,
+                  label: 'profile'.tr,
+                  isDark: isDark,
+                ),
               ),
             ],
           ),
@@ -115,11 +128,11 @@ class DashboardView extends GetView<DashboardController> {
   Widget _buildNavItem({
     required int index,
     required IconData icon,
-    required IconData selectedIcon,
     required String label,
+    bool isDark = true,
   }) {
     final isSelected = controller.currentIndex.value == index;
-
+    final unselectedColor = isDark ? Colors.white38 : Colors.black38;
     return GestureDetector(
       onTap: () {
         HapticFeedback.lightImpact();
@@ -129,41 +142,32 @@ class DashboardView extends GetView<DashboardController> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeOutCubic,
-        padding: EdgeInsets.symmetric(
-          horizontal: isSelected ? AppSpacing.md : AppSpacing.sm,
-          vertical: AppSpacing.xs,
-        ),
+        margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColors.primary.withValues(alpha: 0.1)
+              ? AppColors.primary.withValues(alpha: 0.15)
               : Colors.transparent,
-          borderRadius: AppRadius.pillRadius,
+          borderRadius: BorderRadius.circular(16),
         ),
-        child: Row(
+        child: Column(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 200),
-              transitionBuilder: (child, animation) {
-                return ScaleTransition(scale: animation, child: child);
-              },
-              child: Icon(
-                isSelected ? selectedIcon : icon,
-                key: ValueKey(isSelected),
-                color: isSelected ? AppColors.primary : AppColors.textMuted,
-                size: 24,
+            Icon(
+              icon,
+              size: 24,
+              color: isSelected ? AppColors.primary : unselectedColor,
+            ),
+            const SizedBox(height: 3),
+            Text(
+              label,
+              style: AppTextStyles.labelSmall.copyWith(
+                color: isSelected ? AppColors.primary : unselectedColor,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                fontSize: 10,
               ),
             ),
-            if (isSelected) ...[
-              AppSpacing.horizontalXs,
-              Text(
-                label,
-                style: AppTextStyles.labelMedium.copyWith(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
           ],
         ),
       ),

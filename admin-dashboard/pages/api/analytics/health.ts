@@ -14,24 +14,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         // Run all health checks
         const [
-            orphanedImages,
             eventsMissingImages,
             eventsMissingTranslations,
             quotesMissingAuthor,
             imagesMissingCaption,
         ] = await Promise.all([
-            // Images with no linked event
-            Image.countDocuments({ event_id: { $in: [null, undefined] }, is_deleted: { $ne: true } }),
-
-            // Events that have no images linked via Image.event_id
-            (async () => {
-                const eventsWithImages = await Image.distinct('event_id', {
-                    event_id: { $ne: null },
-                    is_deleted: { $ne: true },
-                });
-                const eventsWithImagesSet = new Set((eventsWithImages as any[]).map((id) => id.toString()));
-                return allEventIds.filter((id) => !eventsWithImagesSet.has(id)).length;
-            })(),
+            // Events that have no images in their images array
+            Event.countDocuments({
+                $or: [{ images: { $exists: false } }, { images: { $size: 0 } }],
+                is_deleted: { $ne: true },
+            }),
 
             // Events missing Hindi translation title (coverage heuristic)
             Event.countDocuments({
@@ -53,7 +45,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(200).json({
             success: true,
             health: {
-                orphanedImages,
                 eventsMissingImages,
                 eventsMissingTranslations,
                 quotesMissingAuthor,

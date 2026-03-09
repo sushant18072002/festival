@@ -11,15 +11,21 @@ class GamificationConfigModel {
 
   factory GamificationConfigModel.fromJson(Map<String, dynamic> json) {
     return GamificationConfigModel(
-      version: json['version'] ?? 1,
+      version: json['version'] is int
+          ? json['version'] as int
+          : int.tryParse(json['version']?.toString() ?? '1') ?? 1,
       avatarTiers:
-          (json['avatarTiers'] as List?)
-              ?.map((t) => AvatarTier.fromJson(t))
+          ((json['avatarTiers'] ?? json['avatar_tiers']) as List?)
+              ?.map<AvatarTier>(
+                (t) => AvatarTier.fromJson(t as Map<String, dynamic>),
+              )
               .toList() ??
           [],
       trophies:
           (json['trophies'] as List?)
-              ?.map((t) => TrophyConfig.fromJson(t))
+              ?.map<TrophyConfig>(
+                (t) => TrophyConfig.fromJson(t as Map<String, dynamic>),
+              )
               .toList() ??
           [],
     );

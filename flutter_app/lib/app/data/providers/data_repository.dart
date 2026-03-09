@@ -18,12 +18,10 @@ import '../models/quiz_model.dart';
 import '../models/trivia_model.dart';
 import '../models/gamification_config_model.dart';
 import 'json_provider.dart';
-import 'asset_data_source.dart';
 import 'data_source.dart';
 
 class DataRepository extends GetxService {
   final DataSource _remoteProvider = JsonProvider();
-  final DataSource _assetProvider = AssetDataSource();
   final _storage = GetStorage();
   late Box _cacheBox;
 
@@ -48,35 +46,10 @@ class DataRepository extends GetxService {
   Future<DataRepository> init() async {
     await _remoteProvider.init();
     _cacheBox = await Hive.openBox('app_data');
-    useRemote.value = _storage.read('use_remote') ?? false;
     currentLang.value = _storage.read('language') ?? 'en';
 
-    // -- Deploy Health Check (Innovation: cache-bust on new deploy) --
-    // Fetches deploy_health.json (max-age=30s) and clears Hive if the deploy hash changed.
-    // This ensures stale Hive caches never survive a backend deploy.
+    // -- Deploy Health Check: clears Hive cache when a new backend deploy is detected --
     await _checkDeployHealth();
-
-    // -- Version checking & Cache Invalidation (A3) --
-    final localStoredVersion = _storage.read('data_version') ?? 0;
-    int latestVersion = await _assetProvider.getVersion();
-
-    if (useRemote.value) {
-      final remoteVersion = await _remoteProvider.getVersion();
-      if (remoteVersion > latestVersion) {
-        latestVersion = remoteVersion;
-      }
-    }
-
-    if (latestVersion > localStoredVersion) {
-      debugPrint(
-        'Data Version changed ($localStoredVersion -> $latestVersion). Clearing Hive cache...',
-      );
-      await _cacheBox.clear();
-      final remoteCache = await Hive.openBox('json_cache');
-      await remoteCache.clear();
-      await _storage.write('data_version', latestVersion);
-      _assetProvider.init();
-    }
 
     // Hydra-load data to populate in-memory lists (fire and forget)
     _loadAllData();
@@ -134,13 +107,13 @@ class DataRepository extends GetxService {
 
     final home = futures[0] as HomeFeed?;
     final catalog = futures[1] as Map<String, EventModel>? ?? {};
-    final imgCatalog = futures[2] as Map<String, List<ImageModel>>? ?? {};
+    final imgList = futures[2] as List<ImageModel>? ?? [];
 
     // Offload the heavy merging of lists to a background Isolate
     final mergedData = await compute(_mergeDataInIsolate, {
       'home': home,
       'catalog': catalog,
-      'imgCatalog': imgCatalog,
+      'imgList': imgList,
       'existingEvents': allEvents.toList(),
       'existingImages': allImages.toList(),
     });
@@ -153,7 +126,7 @@ class DataRepository extends GetxService {
   static Map<String, dynamic> _mergeDataInIsolate(Map<String, dynamic> args) {
     final home = args['home'] as HomeFeed?;
     final catalog = args['catalog'] as Map<String, EventModel>;
-    final imgCatalog = args['imgCatalog'] as Map<String, List<ImageModel>>;
+    final imgList = args['imgList'] as List<ImageModel>;
 
     final events = List<EventModel>.from(
       args['existingEvents'] as List<EventModel>,
@@ -185,27 +158,23 @@ class DataRepository extends GetxService {
       }
     }
 
-    // 3. Merge Image Catalog
-    for (final imageList in imgCatalog.values) {
-      for (final image in imageList) {
-        if (!images.any((i) => i.id == image.id)) {
-          images.add(image);
-        }
+    // 3. Merge flat Image list — deduplicate by id
+    for (final image in imgList) {
+      if (!images.any((i) => i.id == image.id)) {
+        images.add(image);
       }
     }
 
     return {'events': events, 'images': images};
   }
 
-  /// Get the global image catalog — List of images grouped by event slug.
-  Future<Map<String, List<ImageModel>>> getImageCatalog([
-    String lang = 'en',
-  ]) async {
+  /// Get all images as a flat list.
+  Future<List<ImageModel>?> getImageCatalog([String lang = 'en']) async {
     final remote = await _remoteProvider.getImageCatalog(lang);
     if (remote != null && remote.isNotEmpty) {
       return remote;
     }
-    return {};
+    return null;
   }
 
   void toggleRemote(bool value) {

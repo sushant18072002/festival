@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
+import '../../routes/app_pages.dart';
 import 'profile_controller.dart';
-// Removed unused routes import
 import '../../theme/app_colors.dart';
 import '../../theme/app_text_styles.dart';
 import '../../theme/app_spacing.dart';
@@ -28,6 +29,16 @@ class ProfileView extends GetView<ProfileController> {
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
           onPressed: () => Get.back(),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(LucideIcons.settings, color: Colors.white),
+            onPressed: () {
+              HapticFeedback.lightImpact();
+              Get.toNamed(Routes.SETTINGS);
+            },
+          ),
+          const SizedBox(width: AppSpacing.sm),
+        ],
       ),
       body: Obx(() {
         final selectedAvatar = controller.selectedAvatar.value;
