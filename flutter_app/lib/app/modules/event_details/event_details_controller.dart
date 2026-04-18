@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import '../../data/models/event_model.dart';
 import '../../data/providers/data_repository.dart';
+import '../../data/services/ambient_audio_service.dart';
 
 class EventDetailsController extends GetxController {
   final DataRepository _repo = Get.find<DataRepository>();
@@ -9,20 +10,42 @@ class EventDetailsController extends GetxController {
   final isLoading = false.obs;
   final errorMessage = ''.obs;
   final relatedEvents = <EventModel>[].obs;
+  final heroTagPrefix = ''.obs;
 
   @override
   void onInit() {
     super.onInit();
     ever(event, (EventModel? e) {
-      if (e != null) _calculateRelatedEvents(e);
+      if (e != null) {
+        _calculateRelatedEvents(e);
+        // Play ambient audio automatically when viewing details
+        // Wrapped in Future.microtask to avoid "setState() during build" collision
+        Future.microtask(() => AmbientAudioService.to.playForEvent(e));
+      }
     });
     _loadEvent();
+  }
+
+  @override
+  void onClose() {
+    // ── Audio Cleanup ────────────────────────────────────────────────────────
+    // Stop ambient audio if it was playing for this specific event
+    final audio = AmbientAudioService.to;
+    if (event.value != null && audio.isActiveFor(event.value!.slug)) {
+      audio.stop();
+    }
+    super.onClose();
   }
 
   void _loadEvent() {
     final args = Get.arguments;
 
-    if (args is EventModel) {
+    if (args is Map && args.containsKey('event')) {
+      event.value = args['event'] as EventModel;
+      if (args.containsKey('heroTagPrefix')) {
+        heroTagPrefix.value = args['heroTagPrefix'] as String;
+      }
+    } else if (args is EventModel) {
       event.value = args;
     } else if (args is Map && args.containsKey('slug')) {
       final slug = args['slug'];
@@ -62,8 +85,9 @@ class EventDetailsController extends GetxController {
   void _calculateRelatedEvents(EventModel current) {
     if (current.vibes.isEmpty &&
         current.tags.isEmpty &&
-        current.category == null)
+        current.category == null) {
       return;
+    }
 
     final all = _repo.allEvents.where((e) => e.id != current.id).toList();
     all.sort((a, b) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'dart:ui';
 import 'dart:typed_data';
 import '../theme/app_colors.dart';
@@ -85,7 +86,7 @@ class OfflineOverlay extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
-                              Icons.wifi_off_rounded,
+                              LucideIcons.wifiOff,
                               size: 64,
                               color: AppColors.error,
                             )
@@ -96,7 +97,7 @@ class OfflineOverlay extends StatelessWidget {
                         const SizedBox(height: 16),
                         Text(
                               "CONNECTION LOST",
-                              style: AppTextStyles.headlineMedium.copyWith(
+                              style: AppTextStyles.headlineMedium(context).copyWith(
                                 color: AppColors.error,
                               ),
                             )
@@ -113,7 +114,7 @@ class OfflineOverlay extends StatelessWidget {
                         const SizedBox(height: 8),
                         Text(
                           "The signal is fading...",
-                          style: AppTextStyles.bodyMedium.copyWith(
+                          style: AppTextStyles.bodyMedium(context).copyWith(
                             color: Colors.white54,
                           ),
                         ),

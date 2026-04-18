@@ -10,13 +10,36 @@ export default async function handler(
 
     if (req.method === 'GET') {
         try {
-            const { trash } = req.query;
-            const filter = trash === 'true' ? { is_deleted: true } : { is_deleted: { $ne: true } };
+            const { trash, search, limit = '50', page = '1' } = req.query;
+            const filter: Record<string, any> = trash === 'true' ? { is_deleted: true } : { is_deleted: { $ne: true } };
+            
+            if (search) {
+                filter.$or = [
+                    { text: { $regex: search, $options: 'i' } },
+                    { slug: { $regex: search, $options: 'i' } }
+                ];
+            }
+
+            const limitInt = parseInt(limit as string);
+            const pageInt = parseInt(page as string);
+            const skip = (pageInt - 1) * limitInt;
+
             const total = await Greeting.countDocuments(filter);
             const greetings = await Greeting.find(filter)
                 .populate('category', 'code translations')
-                .sort({ createdAt: -1 });
-            res.status(200).json({ success: true, data: greetings, pagination: { total, page: 1, pages: 1 } });
+                .sort({ createdAt: -1 })
+                .skip(skip)
+                .limit(limitInt);
+
+            res.status(200).json({ 
+                success: true, 
+                data: greetings, 
+                pagination: { 
+                    total, 
+                    page: pageInt, 
+                    pages: Math.ceil(total / limitInt) 
+                } 
+            });
         } catch (error) {
             res.status(400).json({ success: false, error: (error as Error).message });
         }

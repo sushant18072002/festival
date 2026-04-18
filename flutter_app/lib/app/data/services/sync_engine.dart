@@ -64,10 +64,7 @@ class SyncEngine {
   SyncEngine._();
 
   static Future<void> init() async {
-    await Workmanager().initialize(
-      callbackDispatcher,
-      isInDebugMode: kDebugMode,
-    );
+    await Workmanager().initialize(callbackDispatcher);
 
     // Schedule a daily sync at 6 AM
     // Using a flex interval to allow Android to optimize battery

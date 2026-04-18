@@ -29,4 +29,6 @@ abstract class DataSource {
   Future<List<QuizModel>?> getQuizzes(String lang);
   Future<List<TriviaModel>?> getTrivia(String lang);
   Future<GamificationConfigModel?> getGamificationConfig(String lang);
+  Future<List<dynamic>?> getAmbientAudioSeeds();
+  Future<List<dynamic>?> getMantraSeeds();
 }

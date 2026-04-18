@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:appinio_social_share/appinio_social_share.dart';
 import 'package:share_plus/share_plus.dart';
@@ -50,7 +51,7 @@ class _StoryDesignerSheetState extends State<StoryDesignerSheet> {
   String _senderName = '';
 
   // Content pools
-  List<String> _textOptions = [];
+  final List<String> _textOptions = [];
   int _selectedTextIndex = 0;
 
   @override
@@ -113,7 +114,7 @@ class _StoryDesignerSheetState extends State<StoryDesignerSheet> {
         } else if (platform == 'whatsapp') {
           await socialShare.android.shareToWhatsapp(msg, file.path);
         } else {
-          await Share.shareXFiles([XFile(file.path)], text: msg);
+          await SharePlus.instance.share(ShareParams(text: msg));
         }
       } else {
         if (platform == 'instagram') {
@@ -121,7 +122,7 @@ class _StoryDesignerSheetState extends State<StoryDesignerSheet> {
         } else if (platform == 'whatsapp') {
           await socialShare.iOS.shareImageToWhatsApp(file.path);
         } else {
-          await Share.shareXFiles([XFile(file.path)], text: msg);
+          await SharePlus.instance.share(ShareParams(text: msg));
         }
       }
     } catch (e) {
@@ -134,16 +135,16 @@ class _StoryDesignerSheetState extends State<StoryDesignerSheet> {
   TextStyle _getFontStyle() {
     switch (_selectedFont) {
       case 1:
-        return AppTextStyles.titleLarge.copyWith(
+        return AppTextStyles.titleLarge(context).copyWith(
           fontFamily: 'Playfair Display',
         );
       case 2:
-        return AppTextStyles.titleLarge.copyWith(
+        return AppTextStyles.titleLarge(context).copyWith(
           fontFamily: 'Caveat',
           fontSize: 28,
         );
       default:
-        return AppTextStyles.titleLarge;
+        return AppTextStyles.titleLarge(context);
     }
   }
 
@@ -171,7 +172,7 @@ class _StoryDesignerSheetState extends State<StoryDesignerSheet> {
                       end: Alignment.bottomCenter,
                       colors: [
                         Colors.transparent,
-                        Colors.black.withOpacity(0.9),
+                        Colors.black.withValues(alpha: 0.9),
                       ],
                     ),
                   ),
@@ -190,8 +191,8 @@ class _StoryDesignerSheetState extends State<StoryDesignerSheet> {
                         const SizedBox(height: 16),
                         Text(
                           "- $_senderName",
-                          style: AppTextStyles.bodyMedium.copyWith(
-                            color: AppColors.primary,
+                          style: AppTextStyles.bodyMedium(context).copyWith(
+                            color: AppColors.primaryAdaptive(context),
                           ),
                         ),
                       ],
@@ -223,8 +224,8 @@ class _StoryDesignerSheetState extends State<StoryDesignerSheet> {
                         const SizedBox(height: 16),
                         Text(
                           "From $_senderName",
-                          style: AppTextStyles.labelLarge.copyWith(
-                            color: AppColors.primary,
+                          style: AppTextStyles.labelLarge(context).copyWith(
+                            color: AppColors.primaryAdaptive(context),
                           ),
                         ),
                       ],
@@ -248,7 +249,7 @@ class _StoryDesignerSheetState extends State<StoryDesignerSheet> {
                       end: Alignment.topCenter,
                       colors: [
                         Colors.transparent,
-                        Colors.black.withOpacity(0.9),
+                        Colors.black.withValues(alpha: 0.9),
                       ],
                     ),
                   ),
@@ -267,8 +268,8 @@ class _StoryDesignerSheetState extends State<StoryDesignerSheet> {
                         const SizedBox(height: 16),
                         Text(
                           "- $_senderName",
-                          style: AppTextStyles.bodyMedium.copyWith(
-                            color: AppColors.primary,
+                          style: AppTextStyles.bodyMedium(context).copyWith(
+                            color: AppColors.primaryAdaptive(context),
                           ),
                         ),
                       ],
@@ -293,7 +294,7 @@ class _StoryDesignerSheetState extends State<StoryDesignerSheet> {
                   const SizedBox(width: 8),
                   Text(
                     'Made with Utsav',
-                    style: AppTextStyles.labelSmall.copyWith(
+                    style: AppTextStyles.labelSmall(context).copyWith(
                       color: Colors.white70,
                     ),
                   ),
@@ -319,9 +320,9 @@ class _StoryDesignerSheetState extends State<StoryDesignerSheet> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Card Builder', style: AppTextStyles.titleMedium),
+                  Text('Card Builder', style: AppTextStyles.titleMedium(context)),
                   IconButton(
-                    icon: const Icon(Icons.close, color: Colors.white),
+                    icon: const Icon(LucideIcons.x, color: Colors.white),
                     onPressed: () => Get.back(),
                   ),
                 ],
@@ -333,9 +334,9 @@ class _StoryDesignerSheetState extends State<StoryDesignerSheet> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: _isCapturing
-                    ? const Center(
+                    ? Center(
                         child: CircularProgressIndicator(
-                          color: AppColors.primary,
+                          color: AppColors.primaryAdaptive(context),
                         ),
                       )
                     : ClipRRect(
@@ -349,9 +350,9 @@ class _StoryDesignerSheetState extends State<StoryDesignerSheet> {
             Container(
               height: 320,
               padding: const EdgeInsets.all(24),
-              decoration: const BoxDecoration(
-                color: AppColors.surfaceDark,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+              decoration: BoxDecoration(
+                color: AppColors.surfaceGlass(context),
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -361,10 +362,10 @@ class _StoryDesignerSheetState extends State<StoryDesignerSheet> {
                     children: [
                       Expanded(
                         child: OutlinedButton.icon(
-                          icon: const Icon(Icons.shuffle, size: 16),
-                          label: const Text(
+                          icon: const Icon(LucideIcons.shuffle, size: 16),
+                          label: Text(
                             "Message",
-                            style: TextStyle(fontSize: 12),
+                            style: AppTextStyles.labelMedium(context).copyWith(fontSize: 12),
                           ),
                           onPressed: () {
                             setState(() {
@@ -399,20 +400,20 @@ class _StoryDesignerSheetState extends State<StoryDesignerSheet> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Layout", style: AppTextStyles.labelMedium),
+                      Text("Layout", style: AppTextStyles.labelMedium(context)),
                       SegmentedButton<int>(
                         segments: const [
                           ButtonSegment(
                             value: 0,
-                            icon: Icon(Icons.align_vertical_bottom),
+                            icon: Icon(LucideIcons.alignEndVertical),
                           ),
                           ButtonSegment(
                             value: 1,
-                            icon: Icon(Icons.center_focus_strong),
+                            icon: Icon(LucideIcons.alignCenterVertical),
                           ),
                           ButtonSegment(
                             value: 2,
-                            icon: Icon(Icons.align_vertical_top),
+                            icon: Icon(LucideIcons.alignStartVertical),
                           ),
                         ],
                         selected: {_selectedLayout},
@@ -425,7 +426,7 @@ class _StoryDesignerSheetState extends State<StoryDesignerSheet> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Style", style: AppTextStyles.labelMedium),
+                      Text("Style", style: AppTextStyles.labelMedium(context)),
                       SegmentedButton<int>(
                         segments: const [
                           ButtonSegment(value: 0, label: Text('Modern')),
@@ -446,19 +447,19 @@ class _StoryDesignerSheetState extends State<StoryDesignerSheet> {
                     children: [
                       _buildShareBtn(
                         'Instagram',
-                        Icons.camera_alt,
+                        LucideIcons.instagram,
                         'instagram',
                         Colors.purpleAccent,
                       ),
                       const SizedBox(width: 8),
                       _buildShareBtn(
                         'WhatsApp',
-                        Icons.chat,
+                        LucideIcons.messageCircle,
                         'whatsapp',
                         Colors.green,
                       ),
                       const SizedBox(width: 8),
-                      _buildShareBtn('More', Icons.share, 'more', Colors.white),
+                      _buildShareBtn('More', LucideIcons.share2, 'more', Colors.white),
                     ],
                   ),
                 ],
@@ -479,13 +480,13 @@ class _StoryDesignerSheetState extends State<StoryDesignerSheet> {
     return Expanded(
       child: ElevatedButton.icon(
         style: ElevatedButton.styleFrom(
-          backgroundColor: color.withOpacity(0.1),
+          backgroundColor: color.withValues(alpha: 0.1),
           foregroundColor: color,
           elevation: 0,
           padding: const EdgeInsets.symmetric(vertical: 12),
         ),
         icon: Icon(icon, size: 18),
-        label: Text(label, style: const TextStyle(fontSize: 12)),
+        label: Text(label, style: AppTextStyles.labelMedium(context).copyWith(fontSize: 12)),
         onPressed: _isCapturing ? null : () => _captureAndShare(platform),
       ),
     );

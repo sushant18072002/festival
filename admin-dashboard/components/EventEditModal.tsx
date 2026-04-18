@@ -25,6 +25,7 @@ interface EventEditModalProps {
     categories: any[];
     tags: any[];
     vibes: any[];
+    mantras: any[];
     lotties: any[];
     audios: any[];
     relatedImages: any[];
@@ -35,9 +36,7 @@ interface EventEditModalProps {
     updateFact: (index: number, field: string, value: any) => void;
     addFact: () => void;
     removeFact: (index: number) => void;
-    updateNotification: (index: number, value: string) => void;
-    addNotification: () => void;
-    removeNotification: (index: number) => void;
+    updateNotification: (key: string, value: string) => void;
     updateDate: (index: number, field: string, value: any) => void;
     addDate: () => void;
     removeDate: (index: number) => void;
@@ -94,10 +93,10 @@ function JsonTextarea({ label, value, onChange, placeholder }: any) {
 export default function EventEditModal({
     showForm, setShowForm, editingId, activeTab, setActiveTab,
     activeLang, setActiveLang, formData, setFormData, handleSubmit,
-    getFieldValue, updateField, categories, tags, vibes, lotties, audios,
+    getFieldValue, updateField, categories, tags, vibes, mantras, lotties, audios,
     relatedImages, handleUnlinkImage, setShowImagePicker,
     updateFact, addFact, removeFact,
-    updateNotification, addNotification, removeNotification,
+    updateNotification,
     updateDate, addDate, removeDate
 }: EventEditModalProps) {
     const [previewImage, setPreviewImage] = React.useState<any | null>(null);
@@ -366,7 +365,7 @@ export default function EventEditModal({
                                                         <label className="block text-xs font-medium text-slate-400 mb-1">Ambient Audio (Optional)</label>
                                                         <select
                                                             className="w-full border border-slate-800 p-2.5 rounded-lg bg-slate-900 text-sm text-white focus:outline-none focus:border-blue-500"
-                                                            value={formData.ambient_audio || ''}
+                                                            value={typeof formData.ambient_audio === 'object' && formData.ambient_audio !== null ? formData.ambient_audio._id : (formData.ambient_audio || '')}
                                                             onChange={(e) => setFormData({ ...formData, ambient_audio: e.target.value })}
                                                         >
                                                             <option value="">-- No Audio --</option>
@@ -427,6 +426,32 @@ export default function EventEditModal({
                                                                         )}
                                                                     >
                                                                         {tag.translations?.['en']?.name || tag.code}
+                                                                    </button>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    </div>
+
+                                                    <div>
+                                                        <label className="block text-xs font-medium text-slate-400 mb-2">Mantras (Multi-select)</label>
+                                                        <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto custom-scrollbar p-1">
+                                                            {mantras.map((mantra: any) => {
+                                                                const isSelected = formData.mantras?.includes(mantra._id);
+                                                                return (
+                                                                    <button
+                                                                        type="button"
+                                                                        key={mantra._id}
+                                                                        onClick={() => {
+                                                                            const current = formData.mantras || [];
+                                                                            const next = isSelected ? current.filter((id: string) => id !== mantra._id) : [...current, mantra._id];
+                                                                            setFormData({ ...formData, mantras: next });
+                                                                        }}
+                                                                        className={clsx(
+                                                                            "px-3 py-1.5 rounded-lg text-xs font-medium border transition-all",
+                                                                            isSelected ? "bg-purple-100 text-purple-700 border-purple-200" : "bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800"
+                                                                        )}
+                                                                    >
+                                                                        {mantra.translations?.['en']?.text || mantra.text}
                                                                     </button>
                                                                 );
                                                             })}
@@ -542,49 +567,178 @@ export default function EventEditModal({
                                                 </div>
 
 
-                                                {/* Advanced JSON Configuration (for esoteric properties) */}
-                                                <div className="col-span-full border border-slate-800 rounded-2xl p-6 bg-slate-950">
-                                                    <h3 className="text-sm font-bold text-white mb-4">Advanced Configuration & Rich Data (JSON)</h3>
-                                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                                        <JsonTextarea
-                                                            label="Countdown Config"
-                                                            value={formData.countdown_config}
-                                                            onChange={(val: any) => setFormData({ ...formData, countdown_config: val })}
-                                                            placeholder={`{\n  "bg_color": "#FF0000",\n  "text_color": "#FFFFFF"\n}`}
-                                                        />
-                                                        <JsonTextarea
-                                                            label="Muhurat & Timings"
-                                                            value={formData.muhurat}
-                                                            onChange={(val: any) => setFormData({ ...formData, muhurat: val })}
-                                                            placeholder={`{\n  "puja_time": "11:58 PM - 12:48 AM",\n  "type": "Nishita Kaal"\n}`}
-                                                        />
-                                                        <JsonTextarea
-                                                            label="Ritual Steps (Array)"
-                                                            value={formData.ritual_steps}
-                                                            onChange={(val: any) => setFormData({ ...formData, ritual_steps: val })}
-                                                            placeholder={`[\n  {\n    "order": 1,\n    "title": "Clean area",\n    "items_needed": ["Water"]\n  }\n]`}
-                                                        />
-                                                        <JsonTextarea
-                                                            label="Recipes (Array)"
-                                                            value={formData.recipes}
-                                                            onChange={(val: any) => setFormData({ ...formData, recipes: val })}
-                                                            placeholder={`[\n  {\n    "name": "Modak",\n    "ingredients": ["Rice flour"]\n  }\n]`}
-                                                        />
-                                                        <JsonTextarea
-                                                            label="Dress Guide & Playlist"
-                                                            value={{
-                                                                dress_guide: formData.dress_guide,
-                                                                playlist_links: formData.playlist_links
-                                                            }}
-                                                            onChange={(val: any) => {
-                                                                if (val) {
-                                                                    setFormData({ ...formData, dress_guide: val.dress_guide, playlist_links: val.playlist_links });
-                                                                } else {
-                                                                    setFormData({ ...formData, dress_guide: null, playlist_links: [] });
-                                                                }
-                                                            }}
-                                                            placeholder={`{\n  "dress_guide": { "colors": ["Red"] },\n  "playlist_links": []\n}`}
-                                                        />
+                                                {/* Advanced UI Forms */}
+                                                <div className="col-span-full border border-slate-800 rounded-2xl p-6 bg-slate-950 space-y-8">
+                                                    <h3 className="text-sm font-bold text-white mb-4">Event Mechanics & Rich Media Details</h3>
+
+                                                    {/* Countdown Config */}
+                                                    <div className="space-y-4">
+                                                        <h4 className="text-xs font-bold text-slate-400 border-b border-slate-800 pb-2">Countdown Settings</h4>
+                                                        <div className="grid grid-cols-2 gap-4">
+                                                            <label className="flex items-center gap-2 cursor-pointer">
+                                                                <input
+                                                                    type="checkbox"
+                                                                    checked={formData.countdown_config?.enabled ?? false}
+                                                                    onChange={e => setFormData({ ...formData, countdown_config: { ...(formData.countdown_config || {}), enabled: e.target.checked } })}
+                                                                    className="accent-blue-500 w-4 h-4"
+                                                                />
+                                                                <span className="text-sm text-slate-300">Enable Countdown</span>
+                                                            </label>
+                                                            <label className="flex items-center gap-2 cursor-pointer">
+                                                                <input
+                                                                    type="checkbox"
+                                                                    checked={formData.countdown_config?.show_hours ?? false}
+                                                                    onChange={e => setFormData({ ...formData, countdown_config: { ...(formData.countdown_config || {}), show_hours: e.target.checked } })}
+                                                                    className="accent-blue-500 w-4 h-4"
+                                                                />
+                                                                <span className="text-sm text-slate-300">Show Hours precision</span>
+                                                            </label>
+                                                            <div className="col-span-2 md:col-span-1">
+                                                                <label className="block text-xs text-slate-500 mb-1">Preparation Days (Trigger before Event)</label>
+                                                                <input
+                                                                    type="number"
+                                                                    value={formData.countdown_config?.prep_days ?? 3}
+                                                                    onChange={e => setFormData({ ...formData, countdown_config: { ...(formData.countdown_config || {}), prep_days: parseInt(e.target.value) || 0 } })}
+                                                                    className="w-full bg-slate-900 border border-slate-800 p-2 text-sm text-white rounded-lg focus:outline-none focus:border-blue-500"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Muhurat & Timings */}
+                                                    <div className="space-y-4">
+                                                        <h4 className="text-xs font-bold text-slate-400 border-b border-slate-800 pb-2">Muhurat (Auspicious Timings)</h4>
+                                                        <div className="grid grid-cols-2 gap-4">
+                                                            <div>
+                                                                <label className="block text-xs text-slate-500 mb-1">Puja Timing</label>
+                                                                <input
+                                                                    type="text"
+                                                                    value={formData.muhurat?.puja_time || ''}
+                                                                    onChange={e => setFormData({ ...formData, muhurat: { ...(formData.muhurat || {}), puja_time: e.target.value } })}
+                                                                    placeholder="e.g. 11:58 PM - 12:48 AM"
+                                                                    className="w-full bg-slate-900 border border-slate-800 p-2 text-sm text-white rounded-lg focus:outline-none focus:border-blue-500"
+                                                                />
+                                                            </div>
+                                                            <div>
+                                                                <label className="block text-xs text-slate-500 mb-1">Muhurat Type</label>
+                                                                <input
+                                                                    type="text"
+                                                                    value={formData.muhurat?.type || ''}
+                                                                    onChange={e => setFormData({ ...formData, muhurat: { ...(formData.muhurat || {}), type: e.target.value } })}
+                                                                    placeholder="e.g. Nishita Kaal"
+                                                                    className="w-full bg-slate-900 border border-slate-800 p-2 text-sm text-white rounded-lg focus:outline-none focus:border-blue-500"
+                                                                />
+                                                            </div>
+                                                            <div className="col-span-2">
+                                                                <label className="block text-xs text-slate-500 mb-1">Description</label>
+                                                                <input
+                                                                    type="text"
+                                                                    value={formData.muhurat?.description || ''}
+                                                                    onChange={e => setFormData({ ...formData, muhurat: { ...(formData.muhurat || {}), description: e.target.value } })}
+                                                                    placeholder="Brief description of the timing..."
+                                                                    className="w-full bg-slate-900 border border-slate-800 p-2 text-sm text-white rounded-lg focus:outline-none focus:border-blue-500"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Ritual Steps */}
+                                                    <div className="space-y-4">
+                                                        <div className="flex justify-between items-center border-b border-slate-800 pb-2">
+                                                            <h4 className="text-xs font-bold text-slate-400">Ritual Steps</h4>
+                                                            <button type="button" onClick={() => setFormData({ ...formData, ritual_steps: [...(formData.ritual_steps || []), { title: '', order: (formData.ritual_steps?.length || 0) + 1 }] })} className="text-[10px] bg-blue-600/20 text-blue-400 px-2 py-1 rounded hover:bg-blue-600/40 font-medium">
+                                                                + Add Step
+                                                            </button>
+                                                        </div>
+                                                        <div className="space-y-3">
+                                                            {formData.ritual_steps?.map((step: any, i: number) => (
+                                                                <div key={i} className="flex gap-3 bg-slate-900 border border-slate-800 p-3 rounded-xl relative group">
+                                                                    <div className="w-12 shrink-0">
+                                                                        <label className="block text-[10px] text-slate-500 mb-1 font-bold">Order</label>
+                                                                        <input type="number" value={step.order || i + 1} onChange={e => { const arr = [...formData.ritual_steps]; arr[i].order = parseInt(e.target.value) || 0; setFormData({ ...formData, ritual_steps: arr }); }} className="w-full bg-slate-950 border border-slate-800 p-1.5 text-xs text-center text-white rounded focus:outline-none focus:border-blue-500" />
+                                                                    </div>
+                                                                    <div className="flex-1 space-y-2">
+                                                                        <div className="grid grid-cols-2 gap-2">
+                                                                            <div>
+                                                                                <label className="block text-[10px] text-slate-500 mb-1 font-bold">Title</label>
+                                                                                <input type="text" value={step.title || ''} onChange={e => { const arr = [...formData.ritual_steps]; arr[i].title = e.target.value; setFormData({ ...formData, ritual_steps: arr }); }} className="w-full bg-slate-950 border border-slate-800 p-1.5 text-xs text-white rounded focus:outline-none focus:border-blue-500" placeholder="Step title" />
+                                                                            </div>
+                                                                            <div>
+                                                                                <label className="block text-[10px] text-slate-500 mb-1 font-bold">Timing / Context</label>
+                                                                                <input type="text" value={step.timing || ''} onChange={e => { const arr = [...formData.ritual_steps]; arr[i].timing = e.target.value; setFormData({ ...formData, ritual_steps: arr }); }} className="w-full bg-slate-950 border border-slate-800 p-1.5 text-xs text-white rounded focus:outline-none focus:border-blue-500" placeholder="e.g. Early Morning" />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div>
+                                                                            <label className="block text-[10px] text-slate-500 mb-1 font-bold">Description</label>
+                                                                            <input type="text" value={step.description || ''} onChange={e => { const arr = [...formData.ritual_steps]; arr[i].description = e.target.value; setFormData({ ...formData, ritual_steps: arr }); }} className="w-full bg-slate-950 border border-slate-800 p-1.5 text-xs text-white rounded focus:outline-none focus:border-blue-500" />
+                                                                        </div>
+                                                                        <div>
+                                                                            <label className="block text-[10px] text-slate-500 mb-1 font-bold">Items Needed (Comma separated)</label>
+                                                                            <input type="text" value={(step.items_needed || []).join(', ')} onChange={e => { const arr = [...formData.ritual_steps]; arr[i].items_needed = e.target.value.split(',').map((s: string) => s.trim()).filter(Boolean); setFormData({ ...formData, ritual_steps: arr }); }} className="w-full bg-slate-950 border border-slate-800 p-1.5 text-xs text-white rounded focus:outline-none focus:border-blue-500" placeholder="e.g. Water, Milk, Flowers" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <button type="button" onClick={() => { const arr = [...formData.ritual_steps]; arr.splice(i, 1); setFormData({ ...formData, ritual_steps: arr }); }} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 hover:opacity-100 transition-opacity shadow-lg z-10">
+                                                                        <X className="w-3 h-3" />
+                                                                    </button>
+                                                                </div>
+                                                            ))}
+                                                            {(!formData.ritual_steps || formData.ritual_steps.length === 0) && <p className="text-xs text-slate-500 text-center py-2">No ritual steps added.</p>}
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Recipes */}
+                                                    <div className="space-y-4">
+                                                        <div className="flex justify-between items-center border-b border-slate-800 pb-2">
+                                                            <h4 className="text-xs font-bold text-slate-400">Recipes</h4>
+                                                            <button type="button" onClick={() => setFormData({ ...formData, recipes: [...(formData.recipes || []), { name: '' }] })} className="text-[10px] bg-blue-600/20 text-blue-400 px-2 py-1 rounded hover:bg-blue-600/40 font-medium">
+                                                                + Add Recipe
+                                                            </button>
+                                                        </div>
+                                                        <div className="space-y-3">
+                                                            {formData.recipes?.map((recipe: any, i: number) => (
+                                                                <div key={i} className="bg-slate-900 border border-slate-800 p-3 rounded-xl relative group">
+                                                                    <div className="space-y-2">
+                                                                        <div className="grid grid-cols-2 gap-2">
+                                                                            <div>
+                                                                                <label className="block text-[10px] text-slate-500 mb-1 font-bold">Recipe Name</label>
+                                                                                <input type="text" value={recipe.name || ''} onChange={e => { const arr = [...formData.recipes]; arr[i].name = e.target.value; setFormData({ ...formData, recipes: arr }); }} className="w-full bg-slate-950 border border-slate-800 p-1.5 text-xs text-white rounded focus:outline-none focus:border-blue-500" />
+                                                                            </div>
+                                                                            <div>
+                                                                                <label className="block text-[10px] text-slate-500 mb-1 font-bold">Description</label>
+                                                                                <input type="text" value={recipe.description || ''} onChange={e => { const arr = [...formData.recipes]; arr[i].description = e.target.value; setFormData({ ...formData, recipes: arr }); }} className="w-full bg-slate-950 border border-slate-800 p-1.5 text-xs text-white rounded focus:outline-none focus:border-blue-500" />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div>
+                                                                            <label className="block text-[10px] text-slate-500 mb-1 font-bold">Ingredients (Comma separated)</label>
+                                                                            <input type="text" value={(recipe.ingredients || []).join(', ')} onChange={e => { const arr = [...formData.recipes]; arr[i].ingredients = e.target.value.split(',').map((s: string) => s.trim()).filter(Boolean); setFormData({ ...formData, recipes: arr }); }} className="w-full bg-slate-950 border border-slate-800 p-1.5 text-xs text-white rounded focus:outline-none focus:border-amber-500" placeholder="e.g. Flour, Sugar, Ghee" />
+                                                                        </div>
+                                                                        <div>
+                                                                            <label className="block text-[10px] text-slate-500 mb-1 font-bold">Steps (Semicolon separated)</label>
+                                                                            <input type="text" value={(recipe.steps || []).join('; ')} onChange={e => { const arr = [...formData.recipes]; arr[i].steps = e.target.value.split(';').map((s: string) => s.trim()).filter(Boolean); setFormData({ ...formData, recipes: arr }); }} className="w-full bg-slate-950 border border-slate-800 p-1.5 text-xs text-white rounded focus:outline-none focus:border-emerald-500" placeholder="e.g. Boil water; Add sugar; Serve hot" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <button type="button" onClick={() => { const arr = [...formData.recipes]; arr.splice(i, 1); setFormData({ ...formData, recipes: arr }); }} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 hover:opacity-100 transition-opacity shadow-lg z-10">
+                                                                        <X className="w-3 h-3" />
+                                                                    </button>
+                                                                </div>
+                                                            ))}
+                                                            {(!formData.recipes || formData.recipes.length === 0) && <p className="text-xs text-slate-500 text-center py-2">No recipes added.</p>}
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Dress Guide */}
+                                                    <div className="space-y-4">
+                                                        <h4 className="text-xs font-bold text-slate-400 border-b border-slate-800 pb-2">Dress Guide</h4>
+                                                        <div className="grid grid-cols-2 gap-4">
+                                                            <div>
+                                                                <label className="block text-[10px] text-slate-500 mb-1 font-bold">Description</label>
+                                                                <input type="text" value={formData.dress_guide?.description || ''} onChange={e => setFormData({ ...formData, dress_guide: { ...(formData.dress_guide || {}), description: e.target.value } })} className="w-full bg-slate-900 border border-slate-800 p-2 text-sm text-white rounded-lg focus:outline-none focus:border-blue-500" placeholder="e.g. Traditional attire recommended..." />
+                                                            </div>
+                                                            <div>
+                                                                <label className="block text-[10px] text-slate-500 mb-1 font-bold">Auspicious Colors (Comma separated)</label>
+                                                                <input type="text" value={(formData.dress_guide?.colors || []).join(', ')} onChange={e => setFormData({ ...formData, dress_guide: { ...(formData.dress_guide || {}), colors: e.target.value.split(',').map((s: string) => s.trim()).filter(Boolean) } })} className="w-full bg-slate-900 border border-slate-800 p-2 text-sm text-white rounded-lg focus:outline-none focus:border-blue-500" placeholder="e.g. Red, Yellow, Orange" />
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

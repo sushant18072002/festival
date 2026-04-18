@@ -25,6 +25,7 @@ class ImageModel {
   final OverlayConfig? quoteConfig;
   final bool isS3Uploaded;
   final bool isPremium; // Local-only flag for rewarded-ad gating
+  final bool showWatermark;
 
   ImageModel({
     required this.id,
@@ -48,6 +49,7 @@ class ImageModel {
     this.quoteConfig,
     this.isS3Uploaded = false,
     this.isPremium = false,
+    this.showWatermark = true, // Default to true for safety
     this.downloadsCount = 0,
     this.likesCount = 0,
     this.sharesCount = 0,
@@ -83,6 +85,7 @@ class ImageModel {
           : null,
       isS3Uploaded: json['is_s3_uploaded'] ?? false,
       isPremium: json['is_premium'] ?? false,
+      showWatermark: json['show_watermark'] ?? true, // maps from backend
       downloadsCount: json['downloads_count'] ?? 0,
       likesCount: json['likes_count'] ?? 0,
       sharesCount: json['shares_count'] ?? 0,
@@ -111,6 +114,7 @@ class ImageModel {
       'quote_id': quoteId,
       'quote_config': quoteConfig?.toJson(),
       'is_s3_uploaded': isS3Uploaded,
+      'show_watermark': showWatermark,
       'downloads_count': downloadsCount,
       'likes_count': likesCount,
       'shares_count': sharesCount,

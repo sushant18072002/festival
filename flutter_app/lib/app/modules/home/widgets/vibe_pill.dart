@@ -36,18 +36,12 @@ class VibePill extends StatelessWidget {
         ? AppColors.getVibeGradient(vibeCode!)
         : null;
 
-    // Unselected pill style — adapts to light/dark
-    final unselectedBg = isDark
-        ? AppColors.surfaceGlass
-        : const Color(0xFFEDE9F6); // soft lavender in light mode
-
-    final unselectedBorder = isDark
-        ? Colors.white.withValues(alpha: 0.1)
-        : const Color(0xFF7C3AED).withValues(alpha: 0.18);
-
-    final unselectedTextColor = isDark
-        ? Colors.white
-        : const Color(0xFF3D1F5C); // deep purple on light bg
+    // Unselected pill style — adapts to light/dark via AppColors
+    final unselectedBg = AppColors.surfaceGlass(context);
+    final unselectedBorder = isDark 
+        ? AppColors.primary.withValues(alpha: 0.15)
+        : AppColors.primaryAdaptive(context).withValues(alpha: 0.25);
+    final unselectedTextColor = AppColors.textAdaptiveSecondary(context);
 
     return GestureDetector(
       onTap: () {
@@ -80,15 +74,7 @@ class VibePill extends StatelessWidget {
                     offset: const Offset(0, 4),
                   ),
                 ]
-              : isDark
-              ? []
-              : [
-                  BoxShadow(
-                    color: const Color(0xFF7C3AED).withValues(alpha: 0.08),
-                    blurRadius: 6,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
+              : [],
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(30),
@@ -110,7 +96,7 @@ class VibePill extends StatelessWidget {
                 label.isNotEmpty
                     ? label
                     : (vibeCode ?? 'Vibe'), // fallback if missing
-                style: AppTextStyles.labelMedium.copyWith(
+                style: AppTextStyles.labelMedium(context).copyWith(
                   color: isSelected
                       ? Colors
                             .black // Dark text on bright neon gradient

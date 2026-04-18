@@ -2,6 +2,7 @@ import 'taxonomy_model.dart';
 
 class MantraModel {
   final String id;
+  final String slug;
   final String text;
   final String transliteration;
   final String meaning;
@@ -13,6 +14,7 @@ class MantraModel {
 
   MantraModel({
     required this.id,
+    this.slug = '',
     required this.text,
     this.transliteration = '',
     this.meaning = '',
@@ -25,7 +27,8 @@ class MantraModel {
 
   factory MantraModel.fromJson(Map<String, dynamic> json) {
     return MantraModel(
-      id: json['id'] ?? '',
+      id: json['id'] ?? json['slug'] ?? '',
+      slug: json['slug'] ?? json['id'] ?? '',
       text: json['text'] ?? '',
       transliteration: json['transliteration'] ?? '',
       meaning: json['meaning'] ?? '',
@@ -60,6 +63,7 @@ class MantraModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'slug': slug,
       'text': text,
       'transliteration': transliteration,
       'meaning': meaning,

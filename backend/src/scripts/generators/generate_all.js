@@ -1,23 +1,16 @@
 /**
  * generate_all.js — Unified Manifest Export Pipeline
- * 
- * Replaces:
- * - generate_greetings.js
- * - generate_quotes.js
- * - generate_mantras.js
- * - generate_calendar.js
- * - generate_feed.js
- * - generate_search_index.js
- * - generate_event_detail.js
- * - generate_version.js
- * - generate_manifest.js
+ *
+ * Builds ALL static JSON files served to the Flutter app:
+ * feed, calendar, search, event detail, greetings, quotes,
+ * mantras, images, version, manifest, quiz, trivia, gamification,
+ * and home greetings — in one concurrent pipeline run.
  */
 
 const fs = require('fs-extra');
 const path = require('path');
 const connectDB = require('../../config/db');
 
-// Import all memory-based generators
 const { generateFeedMemory } = require('./generate_feed');
 const { generateCalendarMemory } = require('./generate_calendar');
 const { generateSearchIndexMemory } = require('./generate_search_index');
@@ -28,8 +21,13 @@ const { generateMantrasMemory } = require('./generate_mantras');
 const { generateImagesMemory } = require('./generate_images');
 const { generateVersionMemory } = require('./generate_version');
 const { generateManifestMemory } = require('./generate_manifest');
+const { generateHomeGreetingsMemory } = require('./generate_home_greetings');
+const generateQuizzes = require('./generate_quiz');
+const generateTrivia = require('./generate_trivia');
+const generateGamification = require('./generate_gamification');
 
 const DATA_DIR = path.join(__dirname, '../../../data/json');
+const LANGUAGES = ['en', 'hi', 'mr', 'gu', 'bn', 'ta', 'te', 'kn', 'ml'];
 
 async function compileAllJSON() {
     try {
@@ -37,14 +35,10 @@ async function compileAllJSON() {
         console.log('🔌 MongoDB Connected');
         console.log('🚀 Starting Concurrent JSON Compilation Pipeline...\n');
 
-        // Ensure clean slate
         await fs.emptyDir(DATA_DIR);
-
         const startTime = Date.now();
 
-        const LANGUAGES = ['en', 'hi', 'mr', 'gu', 'bn', 'ta', 'te', 'kn', 'ml'];
-
-        // Run all memory builders concurrently
+        // Run all language-agnostic memory builders concurrently
         const results = await Promise.all([
             ...LANGUAGES.map(lang => generateFeedMemory(lang)),
             generateCalendarMemory(),
@@ -55,13 +49,21 @@ async function compileAllJSON() {
             generateMantrasMemory(),
             generateImagesMemory(),
             generateVersionMemory(),
-            generateManifestMemory()
+            generateManifestMemory(),
+            generateHomeGreetingsMemory()
         ]);
 
-        // Combine all outputs into one massive disk write map
+        // Combine all static outputs into one unified disk-write map
         const unifiedOutputs = {};
         for (const moduleOutputs of results) {
             Object.assign(unifiedOutputs, moduleOutputs);
+        }
+
+        // Per-language generators: quiz, trivia, gamification
+        for (const lang of LANGUAGES) {
+            unifiedOutputs[`quizzes/quiz_${lang}.json`] = JSON.stringify(await generateQuizzes(lang));
+            unifiedOutputs[`trivia/trivia_${lang}.json`] = JSON.stringify(await generateTrivia(lang));
+            unifiedOutputs[`gamification/gamification_${lang}.json`] = JSON.stringify(await generateGamification(lang));
         }
 
         console.log(`\n💾 Writing ${Object.keys(unifiedOutputs).length} JSON files to disk...`);
@@ -76,7 +78,7 @@ async function compileAllJSON() {
 
         const duration = ((Date.now() - startTime) / 1000).toFixed(2);
         console.log(`\n✅ PIPELINE COMPLETE in ${duration}s!`);
-        console.log(`🎉 Successfully built ${filesWritten} static JSON manifests locally to data/json`);
+        console.log(`🎉 Successfully built ${filesWritten} static JSON manifests to data/json`);
 
         process.exit(0);
     } catch (err) {

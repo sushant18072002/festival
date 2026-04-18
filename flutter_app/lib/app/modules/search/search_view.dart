@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide SearchController;
 import 'package:get/get.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'dart:ui';
 import '../../theme/app_colors.dart';
 import '../../theme/app_text_styles.dart';
@@ -16,15 +17,20 @@ class SearchOracleView extends GetView<SearchController> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: Colors.transparent, // Important for overlay effect
+      backgroundColor: Colors.transparent,
       body: Stack(
         fit: StackFit.expand,
         children: [
           // 1. Blur Background (The Veil)
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-            child: Container(color: Colors.black.withValues(alpha: 0.8)),
+            child: Container(
+              color: isDark
+                  ? Colors.black.withValues(alpha: 0.82)
+                  : Colors.white.withValues(alpha: 0.55),
+            ),
           ),
 
           // 2. Content
@@ -38,9 +44,9 @@ class SearchOracleView extends GetView<SearchController> {
                     alignment: Alignment.topRight,
                     child: IconButton(
                       onPressed: () => Get.back(),
-                      icon: const Icon(
-                        Icons.close,
-                        color: Colors.white70,
+                      icon: Icon(
+                        LucideIcons.x,
+                        color: AppColors.textAdaptiveSecondary(context),
                         size: 32,
                       ),
                     ),
@@ -63,15 +69,19 @@ class SearchOracleView extends GetView<SearchController> {
                               controller: controller.textController,
                               onChanged: controller.onSearchChanged,
                               autofocus: true,
-                              style: AppTextStyles.headlineMedium.copyWith(
-                                color: AppColors.primary,
+                              style: AppTextStyles.headlineMedium(context).copyWith(
+                                color: AppColors.primaryAdaptive(context),
                               ),
                               textAlign: TextAlign.center,
-                              cursorColor: AppColors.primary,
+                              cursorColor: AppColors.primaryAdaptive(context),
                               decoration: InputDecoration(
                                 hintText: 'Ask the Oracle...',
-                                hintStyle: AppTextStyles.headlineMedium
-                                    .copyWith(color: Colors.white24),
+                                hintStyle: AppTextStyles.headlineMedium(context)
+                                    .copyWith(
+                                      color: isDark
+                                          ? Colors.white24
+                                          : Colors.black26,
+                                    ),
                                 border: InputBorder.none,
                                 enabledBorder: InputBorder.none,
                                 focusedBorder: InputBorder.none,
@@ -105,14 +115,13 @@ class SearchOracleView extends GetView<SearchController> {
                                     ]
                                   : null,
                             ),
-                            child:
-                                Icon(
+                            child: Icon(
                                       controller.isListening.value
-                                          ? Icons.mic
-                                          : Icons.mic_none,
+                                          ? LucideIcons.mic
+                                          : LucideIcons.micOff,
                                       color: controller.isListening.value
                                           ? AppColors.error
-                                          : AppColors.primary,
+                                          : AppColors.primaryAdaptive(context),
                                       size: 28,
                                     )
                                     .animate(
@@ -135,7 +144,7 @@ class SearchOracleView extends GetView<SearchController> {
                       ? Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: CircularProgressIndicator(
-                            color: AppColors.primary,
+                            color: AppColors.primaryAdaptive(context),
                           ),
                         )
                       : const SizedBox(height: 16),
@@ -162,7 +171,7 @@ class SearchOracleView extends GetView<SearchController> {
                         final item = results[index];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 16),
-                          child: _buildResultItem(item, index),
+                          child: _buildResultItem(item, index, context),
                         );
                       },
                     );
@@ -176,17 +185,17 @@ class SearchOracleView extends GetView<SearchController> {
     );
   }
 
-  Widget _buildResultItem(dynamic item, int index) {
+  Widget _buildResultItem(dynamic item, int index, BuildContext context) {
     // Determine type
     final isEvent = item is EventModel;
     final title = isEvent ? item.title : (item as ImageModel).displayLabel;
     final sub = isEvent ? item.location : 'Gallery Image';
     final image = isEvent
-        ? (item.thumbnail ?? item.image?.url ?? '')
-        : (item as ImageModel).thumbnail;
+        ? (item.displayThumbnailUrl ?? '')
+        : item.thumbnail;
 
     return GlassContainer(
-          color: Colors.white.withValues(alpha: 0.05),
+          color: AppColors.surfaceGlass(context),
           child: ListTile(
             contentPadding: const EdgeInsets.all(8),
             leading: ClipRRect(
@@ -198,21 +207,23 @@ class SearchOracleView extends GetView<SearchController> {
                 fit: BoxFit.cover,
               ),
             ),
-            title: Text(title, style: AppTextStyles.titleMedium),
+            title: Text(title, style: AppTextStyles.titleMedium(context).copyWith(color: AppColors.textAdaptive(context))),
             subtitle: Text(
               sub,
-              style: AppTextStyles.bodySmall.copyWith(color: Colors.white54),
+              style: AppTextStyles.bodySmall(context).copyWith(
+                color: AppColors.textAdaptiveSecondary(context),
+              ),
             ),
             trailing: Icon(
-              Icons.arrow_forward_ios,
-              color: AppColors.primary.withValues(alpha: 0.5),
+              LucideIcons.chevronRight,
+              color: AppColors.primaryAdaptive(context).withValues(alpha: 0.5),
               size: 16,
             ),
             onTap: () {
               if (isEvent) {
-                Get.toNamed(Routes.EVENT_DETAILS, arguments: item);
+                Get.toNamed(Routes.eventDetails, arguments: item);
               } else {
-                Get.toNamed(Routes.IMAGE_DETAILS, arguments: item);
+                Get.toNamed(Routes.imageDetails, arguments: item);
               }
             },
           ),

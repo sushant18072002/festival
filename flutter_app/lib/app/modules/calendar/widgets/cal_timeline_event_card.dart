@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
@@ -20,7 +21,16 @@ Color _resolveAccentColor(EventModel event, bool isDark) {
     }
     final intVal = int.tryParse(hexCode, radix: 16);
     if (intVal != null) {
-      return Color(intVal);
+      final rawColor = Color(intVal);
+      if (!isDark) {
+        // In Light Mode, neon/bright colors from the API will be invisible on white backgrounds.
+        // We clamp the lightness to a maximum of 0.4 (darker) to ensure WCAG contrast.
+        final hsl = HSLColor.fromColor(rawColor);
+        if (hsl.lightness > 0.4) {
+          return hsl.withLightness(0.4).toColor();
+        }
+      }
+      return rawColor;
     }
   }
   return isDark
@@ -77,10 +87,17 @@ class CalTimelineEventCard extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: isDark ? 0.4 : 0.1),
+                    color: (isDark ? accentColor : Colors.black).withValues(alpha: isDark ? 0.25 : 0.1),
                     blurRadius: 18,
+                    spreadRadius: -2,
                     offset: const Offset(0, 10),
                   ),
+                  if (isDark)
+                    BoxShadow(
+                      color: accentColor.withValues(alpha: 0.1),
+                      blurRadius: 10,
+                      spreadRadius: 2,
+                    ),
                 ],
               ),
               child: ClipRRect(
@@ -126,7 +143,7 @@ class CalTimelineEventCard extends StatelessWidget {
                               Expanded(
                                 child: Text(
                                   dateLabel.toUpperCase(),
-                                  style: AppTextStyles.labelSmall.copyWith(
+                                  style: AppTextStyles.labelSmall(context).copyWith(
                                     color: hasImage
                                         ? Colors.white
                                         : accentColor,
@@ -163,7 +180,7 @@ class CalTimelineEventCard extends StatelessWidget {
                                   ),
                                   child: Text(
                                     daysLabel,
-                                    style: AppTextStyles.labelSmall.copyWith(
+                                    style: AppTextStyles.labelSmall(context).copyWith(
                                       color: hasImage
                                           ? Colors.white
                                           : accentColor,
@@ -181,12 +198,10 @@ class CalTimelineEventCard extends StatelessWidget {
                               // Title
                               Text(
                                 event.title,
-                                style: AppTextStyles.titleMedium.copyWith(
+                                style: AppTextStyles.titleMedium(context).copyWith(
                                   color: hasImage
                                       ? Colors.white
-                                      : (isDark
-                                            ? Colors.white
-                                            : Colors.black87),
+                                      : AppColors.textAdaptive(context),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
                                   shadows: hasImage
@@ -210,26 +225,25 @@ class CalTimelineEventCard extends StatelessWidget {
                                 Row(
                                   children: [
                                     Icon(
-                                      Icons.location_on_rounded,
+                                      LucideIcons.mapPin,
                                       size: 14,
                                       color: hasImage
                                           ? Colors.white70
-                                          : (isDark
-                                                ? Colors.white60
-                                                : Colors.black54),
+                                          : AppColors.textAdaptiveSecondary(
+                                              context,
+                                            ),
                                     ),
                                     const SizedBox(width: 4),
                                     Expanded(
                                       child: Text(
                                         event.location,
-                                        style: AppTextStyles.labelSmall
-                                            .copyWith(
-                                              color: hasImage
-                                                  ? Colors.white70
-                                                  : (isDark
-                                                        ? Colors.white60
-                                                        : Colors.black54),
-                                            ),
+                                        style: AppTextStyles.labelSmall(context).copyWith(
+                                          color: hasImage
+                                              ? Colors.white70
+                                              : AppColors.textAdaptiveSecondary(
+                                                  context,
+                                                ),
+                                        ),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -251,6 +265,7 @@ class CalTimelineEventCard extends StatelessWidget {
                                       children: [
                                         if (event.category != null)
                                           _buildTag(
+                                            context,
                                             event.category!.name,
                                             accentColor,
                                             isDark,
@@ -258,6 +273,7 @@ class CalTimelineEventCard extends StatelessWidget {
                                           ),
                                         for (final tag in event.tags.take(2))
                                           _buildTag(
+                                            context,
                                             tag.name,
                                             accentColor,
                                             isDark,
@@ -266,6 +282,7 @@ class CalTimelineEventCard extends StatelessWidget {
                                           ),
                                         if (event.gallery.length > 1)
                                           _buildGalleryTag(
+                                            context,
                                             event.gallery.length,
                                             isDark,
                                           ),
@@ -301,7 +318,7 @@ class CalTimelineEventCard extends StatelessWidget {
                                           ),
                                         ),
                                         child: Icon(
-                                          Icons.share_rounded,
+                                          LucideIcons.share2,
                                           color: hasImage
                                               ? Colors.white
                                               : accentColor,
@@ -329,6 +346,7 @@ class CalTimelineEventCard extends StatelessWidget {
   }
 
   Widget _buildTag(
+    BuildContext context,
     String label,
     Color color,
     bool isDark, {
@@ -346,7 +364,7 @@ class CalTimelineEventCard extends StatelessWidget {
       ),
       child: Text(
         label.toUpperCase(),
-        style: AppTextStyles.labelSmall.copyWith(
+        style: AppTextStyles.labelSmall(context).copyWith(
           color: hasImage
               ? (dim ? Colors.white70 : Colors.white)
               : (dim ? (isDark ? Colors.white54 : Colors.black54) : color),
@@ -358,7 +376,7 @@ class CalTimelineEventCard extends StatelessWidget {
     );
   }
 
-  Widget _buildGalleryTag(int count, bool isDark) {
+  Widget _buildGalleryTag(BuildContext context, int count, bool isDark) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
@@ -370,14 +388,14 @@ class CalTimelineEventCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(
-            Icons.photo_library_rounded,
+            LucideIcons.images,
             color: Colors.white,
             size: 10,
           ),
           const SizedBox(width: 4),
           Text(
             '+$count',
-            style: AppTextStyles.labelSmall.copyWith(
+            style: AppTextStyles.labelSmall(context).copyWith(
               color: Colors.white,
               fontSize: 9,
               fontWeight: FontWeight.bold,

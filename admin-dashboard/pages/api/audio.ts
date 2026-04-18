@@ -1,11 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import connectDB from '../../lib/dbConnect';
-import { AmbientAudio as AmbientAudioModel, AmbientAudioSchema } from '../../lib/models';
-import mongoose from 'mongoose';
+import { AmbientAudio as AmbientAudioModel } from '../../lib/models';
 import formidable, { File } from 'formidable';
 import fs from 'fs';
 import path from 'path';
-import AWS from 'aws-sdk';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
 export const config = {
     api: {
@@ -13,12 +12,12 @@ export const config = {
     },
 };
 
-const AmbientAudio = AmbientAudioModel;
-
-const s3 = new AWS.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+const s3Client = new S3Client({
     region: process.env.AWS_REGION,
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+    },
 });
 
 const BUCKET_NAME = process.env.AWS_BUCKET_NAME!;
@@ -49,11 +48,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // ── GET: List all audio ────────────────────────────────────────────────────
     if (req.method === 'GET') {
         try {
-            const { category, mood, is_uploaded, limit = '50', page = '0' } = req.query;
-            const filter: Record<string, unknown> = { is_deleted: { $ne: true } };
+            const { category, mood, is_uploaded, limit = '50', page = '0', search } = req.query;
+            const filter: Record<string, any> = { is_deleted: { $ne: true } };
             if (category) filter.category = category;
             if (mood) filter.mood = mood;
             if (is_uploaded !== undefined) filter.is_s3_uploaded = is_uploaded === 'true';
+
+            if (search) {
+                filter.$or = [
+                    { title: { $regex: search, $options: 'i' } },
+                    { slug: { $regex: search, $options: 'i' } },
+                    { tags: { $in: [new RegExp(search as string, 'i')] } }
+                ];
+            }
 
             const skip = parseInt(page as string) * parseInt(limit as string);
             const [items, total] = await Promise.all([
@@ -106,7 +113,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 return res.status(400).json({ error: 'slug and title are required' });
             }
 
-            // Check for duplicate slug
             const existing = await AmbientAudio.findOne({ slug });
             if (existing) {
                 return res.status(409).json({ error: `Audio with slug "${slug}" already exists` });
@@ -118,14 +124,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             let mimeType = 'audio/aac';
             let isUploaded = false;
 
-            // ── Handle file upload ─────────────────────────────────────────────────
             const audioFile = files.audio_file as File | File[] | undefined;
             const uploadedFile = Array.isArray(audioFile) ? audioFile[0] : audioFile;
 
             if (uploadedFile) {
                 const ext = path.extname(uploadedFile.originalFilename || '').toLowerCase();
                 if (!SUPPORTED_TYPES[ext]) {
-                    return res.status(400).json({ error: `Unsupported audio format: ${ext}. Use .aac, .mp3, .ogg, .wav, or .m4a` });
+                    return res.status(400).json({ error: `Unsupported audio format: ${ext}` });
                 }
 
                 filename = `${slug}${ext}`;
@@ -135,19 +140,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
                 const fileContent = fs.readFileSync(uploadedFile.filepath);
 
-                await s3.putObject({
+                await s3Client.send(new PutObjectCommand({
                     Bucket: BUCKET_NAME,
                     Key: s3Key,
                     Body: fileContent,
                     ContentType: mimeType,
                     CacheControl: 'max-age=31536000',
                     Metadata: { 'audio-slug': slug, 'audio-title': title },
-                }).promise();
+                }));
 
                 isUploaded = true;
-                fs.unlinkSync(uploadedFile.filepath); // Clean up temp file
+                fs.unlinkSync(uploadedFile.filepath); 
             } else {
-                // No file – store metadata only, upload later via upload_audio.js
                 filename = getValue(fields.filename as string | string[]) || `${slug}.aac`;
                 s3Key = getValue(fields.s3_key as string | string[]) || `audio/originals/${filename}`;
             }
@@ -178,11 +182,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
     }
 
-    // ── PATCH: Update audio metadata or link to event ─────────────────────────
+    // ── PATCH: Update audio metadata ──────────────────────────────────────────
     if (req.method === 'PATCH') {
         try {
             const { id } = req.query;
-            const body = JSON.parse(req.body || '{}');
+            const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
             const updated = await AmbientAudio.findByIdAndUpdate(id, { $set: body }, { new: true });
             return res.status(200).json(updated);
         } catch (err: unknown) {

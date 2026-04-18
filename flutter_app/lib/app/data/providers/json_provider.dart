@@ -358,8 +358,34 @@ class JsonProvider implements DataSource {
       debugPrint('Network Error: $e');
     }
     final cached = _cacheBox.get('gamification_$lang');
-    if (cached != null) {
-      return await compute(parseGamificationConfig, cached as String);
+    if (cached != null) return parseGamificationConfig(cached.toString());
+    return null;
+  }
+
+  @override
+  Future<List<dynamic>?> getAmbientAudioSeeds() async {
+    const endpoint = '/ambient_audio_seed.json';
+    try {
+      final response = await _dio.get(endpoint);
+      if (response.statusCode == 200) {
+        return jsonDecode(response.data.toString()) as List<dynamic>;
+      }
+    } catch (e) {
+      debugPrint('Error fetching Audio Seeds: $e');
+    }
+    return null;
+  }
+
+  @override
+  Future<List<dynamic>?> getMantraSeeds() async {
+    const endpoint = '/mantras_seed.json';
+    try {
+      final response = await _dio.get(endpoint);
+      if (response.statusCode == 200) {
+        return jsonDecode(response.data.toString()) as List<dynamic>;
+      }
+    } catch (e) {
+      debugPrint('Error fetching Mantra Seeds: $e');
     }
     return null;
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../routes/app_pages.dart';
+import '../../data/services/notification_service.dart';
 import '../profile/profile_controller.dart';
 
 class OnboardingController extends GetxController {
@@ -41,9 +42,12 @@ class OnboardingController extends GetxController {
 
     // Grant initial karma for starting the app journey
     if (Get.isRegistered<ProfileController>()) {
-      Get.find<ProfileController>().karmaPoints.value += 50;
+      Get.find<ProfileController>().addKarma(50, 'Welcome to Utsav');
     }
 
-    Get.offAllNamed(Routes.HOME);
+    // Request notification permission after onboarding — this is the right UX moment
+    NotificationService.instance.requestPermission();
+
+    Get.offAllNamed(Routes.dashboard);
   }
 }

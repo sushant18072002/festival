@@ -6,6 +6,8 @@ const LottieOverlaySchema = new Schema({
     title: { type: String, required: true }, // E.g., "Holi Color Burst"
     filename: { type: String, required: true, unique: true }, // E.g., "holi.json"
     s3_key: { type: String, required: true }, // E.g., "lotties/holi.json"
+    is_s3_uploaded: { type: Boolean, default: false },
+    file_size_bytes: { type: Number, default: 0 },
     is_active: { type: Boolean, default: true },
     tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }],
     // Soft Delete

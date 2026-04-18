@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../data/providers/data_repository.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_styles.dart';
@@ -31,14 +32,12 @@ class GlassVibeBarDelegate extends SliverPersistentHeaderDelegate {
         : AppColors.backgroundLight.withValues(alpha: opacity == 0 ? 0 : 0.92);
 
     // Theme-aware border
-    final borderColor = isDark
-        ? AppColors.border.withValues(alpha: shrinkOffset > 0 ? 0.4 : 0.0)
-        : const Color(
-            0x1A1A0B2E,
-          ).withValues(alpha: shrinkOffset > 0 ? 0.6 : 0.0);
+    final baseBorder = isDark ? Colors.white : Colors.black;
+    final borderColor = baseBorder
+        .withValues(alpha: shrinkOffset > 0 ? (isDark ? 0.15 : 0.08) : 0.0);
 
     // Title text color
-    final titleColor = isDark ? Colors.white : const Color(0xFF1A0B2E);
+    final titleColor = Theme.of(context).colorScheme.onSurface;
 
     return ClipRRect(
       child: BackdropFilter(
@@ -64,7 +63,7 @@ class GlassVibeBarDelegate extends SliverPersistentHeaderDelegate {
                   children: [
                     Text(
                       'choose_your_vibe'.tr,
-                      style: AppTextStyles.titleMedium.copyWith(
+                      style: AppTextStyles.titleMedium(context).copyWith(
                         fontWeight: FontWeight.bold,
                         color: titleColor,
                       ),
@@ -77,10 +76,10 @@ class GlassVibeBarDelegate extends SliverPersistentHeaderDelegate {
                         },
                         icon: Icon(
                           controller.isGridView.value
-                              ? Icons.view_list_rounded
-                              : Icons.grid_view_rounded,
-                          color: AppColors.primary,
-                          size: 24,
+                              ? LucideIcons.list
+                              : LucideIcons.layoutGrid,
+                          color: AppColors.primaryAdaptive(context),
+                          size: 20,
                         ),
                         constraints: const BoxConstraints(),
                         padding: EdgeInsets.zero,

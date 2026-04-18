@@ -4,8 +4,11 @@ import 'package:get/get.dart';
 import '../../data/models/home_feed_model.dart';
 import '../../data/models/image_model.dart';
 import '../../data/models/event_model.dart';
+import '../../widgets/smart_lottie.dart';
 import '../../data/providers/data_repository.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../modules/favorites/favorites_controller.dart';
+import '../../data/services/ambient_audio_service.dart';
 
 class HomeController extends GetxController {
   final DataRepository _repository = Get.find<DataRepository>();
@@ -27,6 +30,10 @@ class HomeController extends GetxController {
   final isForYouView =
       true.obs; // Tracks if we are showing smart-sorted default feed
   final isGridView = true.obs;
+
+  // Context-Aware Engagement Card Logic
+  final showEngagementCards = false.obs;
+  final primaryCard = 'quiz'.obs;
 
   void toggleViewMode() => isGridView.value = !isGridView.value;
 
@@ -53,9 +60,72 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    _computePrimaryCard();
     Future.delayed(const Duration(milliseconds: 300), () {
       fetchFeed();
     });
+  }
+
+  void _computePrimaryCard() {
+    final box = GetStorage();
+    
+    // 0. Global sessions for onboarding (wait 2 sessions before showing engagement cards)
+    int globalSessions = box.read<int>('homeCtx_globalSessions') ?? 0;
+    globalSessions++;
+    box.write('homeCtx_globalSessions', globalSessions);
+    
+    if (globalSessions <= 2) {
+      showEngagementCards.value = false;
+      return; // Cards are hidden, no need to compute order yet
+    } else {
+      showEngagementCards.value = true;
+    }
+
+    final lastActivity = box.read<String>('homeCtx_lastActivity') ?? '';
+    final sessionsToday = box.read<int>('homeCtx_sessionsToday') ?? 0;
+    final lastDate = box.read<String>('homeCtx_lastDate') ?? '';
+
+    final now = DateTime.now();
+    final todayStr = '${now.year}-${now.month}-${now.day}';
+
+    int sessions = sessionsToday;
+    if (lastDate != todayStr) {
+      sessions = 0;
+      box.write('homeCtx_lastDate', todayStr);
+    }
+    
+    sessions++;
+    box.write('homeCtx_sessionsToday', sessions);
+
+    // 1. Alternate based on last activity
+    if (lastActivity == 'quiz') {
+      primaryCard.value = 'trivia';
+      return;
+    } else if (lastActivity == 'trivia') {
+      primaryCard.value = 'quiz';
+      return;
+    }
+
+    // 2. Time of day
+    final hour = now.hour;
+    if (hour >= 6 && hour < 12) {
+      primaryCard.value = 'quiz';
+      return;
+    } else if (hour >= 19 && hour <= 23) {
+      primaryCard.value = 'trivia';
+      return;
+    }
+
+    // 3. Frequency
+    if (sessions <= 1) {
+      primaryCard.value = 'quiz';
+    } else {
+      primaryCard.value = 'trivia';
+    }
+  }
+
+  void recordActivity(String mode) {
+    GetStorage().write('homeCtx_lastActivity', mode);
   }
 
   Future<void> fetchFeed() async {
@@ -71,6 +141,7 @@ class HomeController extends GetxController {
         _generateDailyBlessing();
         _refreshHomeGreeting(); // Pick a fresh random greeting
         filterImages();
+        _prewarmUpcomingAssets();
       } else {
         hasError.value = true;
       }
@@ -79,6 +150,29 @@ class HomeController extends GetxController {
       hasError.value = true;
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  /// Silently pre-caches Lottie assets for the next few upcoming festivals.
+  void _prewarmUpcomingAssets() {
+    final feed = homeFeed.value;
+    if (feed == null) return;
+
+    final upcomingSection = feed.sections.firstWhereOrNull((s) => s.code == 'upcoming');
+    if (upcomingSection == null) return;
+
+    final lottieUrls = upcomingSection.items
+        .whereType<EventModel>()
+        .where((e) => e.lottieOverlay != null)
+        .map((e) => e.lottieOverlay!.s3Key.isNotEmpty 
+            ? e.lottieOverlay!.s3Key 
+            : e.lottieOverlay!.filename)
+        .take(3)
+        .toList();
+
+    if (lottieUrls.isNotEmpty) {
+      debugPrint('[HomeController] Pre-warming ${lottieUrls.length} Lottie assets...');
+      SmartLottie.preCache(lottieUrls);
     }
   }
 
@@ -108,7 +202,12 @@ class HomeController extends GetxController {
           e.date!.day == now.day;
     });
     happeningNowEvent.value = todayEvent;
-    if (todayEvent != null) showTakeover.value = true;
+    if (todayEvent != null) {
+      showTakeover.value = true;
+      // Auto-play ambient audio for the festival day
+      // Wrapped in Future.microtask to avoid build-cycle collisions
+      Future.microtask(() => AmbientAudioService.to.playForEvent(todayEvent));
+    }
   }
 
   bool get isFestivalDay => happeningNowEvent.value != null;

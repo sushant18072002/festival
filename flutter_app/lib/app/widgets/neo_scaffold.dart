@@ -59,23 +59,27 @@ class _NeoScaffoldState extends State<NeoScaffold>
 
     return Scaffold(
       extendBodyBehindAppBar: true,
+      extendBody: true, // Allow background to flow behind bottom nav
       backgroundColor: bgColor,
+      appBar: widget.appBar,
       body: Stack(
         fit: StackFit.expand,
         children: [
           // 1. Kinetic Gradient Background (theme-aware)
           if (!widget.hideGradient)
-            AnimatedBuilder(
-              animation: _controller,
-              builder: (context, child) {
-                return CustomPaint(
-                  painter: MeshGradientPainter(
-                    _controller.value,
-                    isDark: isDark,
-                  ),
-                  size: Size.infinite,
-                );
-              },
+            Positioned.fill(
+              child: AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) {
+                  return CustomPaint(
+                    painter: MeshGradientPainter(
+                      _controller.value,
+                      isDark: isDark,
+                    ),
+                    size: Size.infinite,
+                  );
+                },
+              ),
             ),
 
           // 2. Static Noise Overlay
@@ -90,18 +94,10 @@ class _NeoScaffoldState extends State<NeoScaffold>
           // 3. Main Content
           SafeArea(
             top: widget.appBar == null,
-            bottom: widget.bottomNavigationBar == null,
+            bottom: false, // Background mesh handles the bottom overflow
             child: widget.body,
           ),
 
-          // 4. App Bar (Fixed on top)
-          if (widget.appBar != null)
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: SafeArea(bottom: false, child: widget.appBar!),
-            ),
         ],
       ),
       bottomNavigationBar: widget.bottomNavigationBar,

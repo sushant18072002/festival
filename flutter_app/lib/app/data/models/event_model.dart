@@ -19,12 +19,13 @@ TaxonomyItem? _resolveTaxonomy(dynamic e, String type) {
     final tax = Get.find<DataRepository>().currentTaxonomy;
     if (tax != null) {
       List<TaxonomyItem> list = [];
-      if (type == 'category')
+      if (type == 'category') {
         list = tax.categories;
-      else if (type == 'tag')
+      } else if (type == 'tag') {
         list = tax.tags;
-      else if (type == 'vibe')
+      } else if (type == 'vibe') {
         list = tax.vibes;
+      }
 
       final match = list.firstWhereOrNull((t) => t.code == item.code);
       if (match != null) {
@@ -75,6 +76,26 @@ class EventModel {
   final List<String> quotes;
   final List<String> greetings;
   final List<String> images;
+  final List<String> dominantColors;
+  final CountdownConfig? countdownConfig;
+  final String? ambientAudioSlug;
+
+  /// Securely resolves a hi-res image URL, bypassing empty strings.
+  String? get displayImageUrl {
+    if (image?.url.isNotEmpty == true) return image!.url;
+    if (thumbnail?.isNotEmpty == true) return thumbnail;
+    if (gallery.isNotEmpty == true) return gallery.first.url;
+    return null;
+  }
+
+  /// Securely resolves a thumbnail image URL, bypassing empty strings.
+  String? get displayThumbnailUrl {
+    if (thumbnail?.isNotEmpty == true) return thumbnail;
+    if (image?.thumbnail.isNotEmpty == true) return image!.thumbnail;
+    if (image?.url.isNotEmpty == true) return image!.url;
+    if (gallery.isNotEmpty == true) return gallery.first.url;
+    return null;
+  }
 
   /// Nearest upcoming occurrence: uses pre-computed nextDate or searches dates list.
   DateTime? get nextOccurrence {
@@ -119,7 +140,50 @@ class EventModel {
     this.quotes = const [],
     this.greetings = const [],
     this.images = const [],
+    this.dominantColors = const [],
+    this.countdownConfig,
+    this.ambientAudioSlug,
   });
+
+  EventModel copyWith({
+    AmbientAudio? ambientAudio,
+    List<MantraModel>? mantras,
+  }) {
+    return EventModel(
+      id: id,
+      slug: slug,
+      title: title,
+      location: location,
+      description: description,
+      date: date,
+      nextDate: nextDate,
+      vibes: vibes,
+      category: category,
+      image: image,
+      thumbnail: thumbnail,
+      wikiLink: wikiLink,
+      lottieOverlay: lottieOverlay,
+      gallery: gallery,
+      priority: priority,
+      tags: tags,
+      facts: facts,
+      dates: dates,
+      muhurat: muhurat,
+      ritualSteps: ritualSteps,
+      ambientAudio: ambientAudio ?? this.ambientAudio,
+      recipes: recipes,
+      dressGuide: dressGuide,
+      notifications: notifications,
+      playlistLinks: playlistLinks,
+      mantras: mantras ?? this.mantras,
+      quotes: quotes,
+      greetings: greetings,
+      images: images,
+      dominantColors: dominantColors,
+      countdownConfig: countdownConfig,
+      ambientAudioSlug: ambientAudioSlug,
+    );
+  }
 
   factory EventModel.fromJson(Map<String, dynamic> json) {
     return EventModel(
@@ -205,6 +269,12 @@ class EventModel {
           (json['greetings'] as List?)?.map((e) => e.toString()).toList() ?? [],
       images:
           (json['images'] as List?)?.map((e) => e.toString()).toList() ?? [],
+      dominantColors:
+          (json['dominant_colors'] as List?)?.map((e) => e.toString()).toList() ?? [],
+      countdownConfig: json['countdown_config'] != null
+          ? CountdownConfig.fromJson(json['countdown_config'])
+          : null,
+      ambientAudioSlug: json['ambient_audio_slug'],
     );
   }
 
@@ -239,6 +309,9 @@ class EventModel {
       'quotes': quotes,
       'greetings': greetings,
       'images': images,
+      'dominant_colors': dominantColors,
+      if (countdownConfig != null) 'countdown_config': countdownConfig!.toJson(),
+      'ambient_audio_slug': ambientAudioSlug,
     };
   }
 }
@@ -347,23 +420,31 @@ class LottieOverlayModel {
 // ── Rich Event Sub-Models ─────────────────────────────────────────────────────
 
 class EventMuhurat {
+  final String title;
   final String pujaTime;
   final String type;
   final String description;
 
-  EventMuhurat({this.pujaTime = '', this.type = '', this.description = ''});
+  EventMuhurat({
+    this.title = '',
+    this.pujaTime = '',
+    this.type = '',
+    this.description = '',
+  });
 
   factory EventMuhurat.fromJson(Map<String, dynamic> json) => EventMuhurat(
-    pujaTime: json['puja_time'] ?? '',
-    type: json['type'] ?? '',
-    description: json['description'] ?? '',
-  );
+        title: json['title'] ?? '',
+        pujaTime: json['puja_time'] ?? '',
+        type: json['type'] ?? '',
+        description: json['description'] ?? '',
+      );
 
   Map<String, dynamic> toJson() => {
-    'puja_time': pujaTime,
-    'type': type,
-    'description': description,
-  };
+        'title': title,
+        'puja_time': pujaTime,
+        'type': type,
+        'description': description,
+      };
 }
 
 class RitualStep {
@@ -551,6 +632,34 @@ class NotificationTemplates {
       'countdown': countdown,
       'eve': eve,
       'day_of': dayOf,
+    };
+  }
+}
+
+class CountdownConfig {
+  final bool showMilestones;
+  final bool enforceLock;
+  final String earlyAccessCode;
+
+  CountdownConfig({
+    this.showMilestones = false,
+    this.enforceLock = false,
+    this.earlyAccessCode = '',
+  });
+
+  factory CountdownConfig.fromJson(Map<String, dynamic> json) {
+    return CountdownConfig(
+      showMilestones: json['show_milestones'] ?? false,
+      enforceLock: json['enforce_lock'] ?? false,
+      earlyAccessCode: json['early_access_code'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'show_milestones': showMilestones,
+      'enforce_lock': enforceLock,
+      'early_access_code': earlyAccessCode,
     };
   }
 }

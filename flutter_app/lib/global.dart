@@ -11,6 +11,7 @@ import 'app/data/services/analytics_service.dart';
 import 'app/modules/favorites/favorites_controller.dart';
 import 'app/modules/profile/profile_controller.dart';
 import 'app/data/services/ambient_audio_service.dart';
+import 'app/data/services/asset_service.dart';
 
 class Global {
   static Future<void> init() async {
@@ -24,6 +25,7 @@ class Global {
     Get.lazyPut<FavoritesController>(() => FavoritesController(), fenix: true);
     Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
     Get.lazyPut<AmbientAudioService>(() => AmbientAudioService(), fenix: true);
+    Get.lazyPut<AssetService>(() => AssetService(), fenix: true);
     Get.lazyPut(() => NotificationSettingsModel(), fenix: true);
 
     // Notification service

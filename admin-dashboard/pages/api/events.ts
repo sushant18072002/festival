@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import dbConnect from '../../lib/dbConnect';
-import { Event, Image, Category, Tag, Vibe } from '../../lib/models';
+import { Event, Image, Category, Tag, Vibe, Mantra } from '../../lib/models';
 
 // Helper to generate slug
 const slugify = (text: string) => {
@@ -24,9 +24,16 @@ export default async function handler(
             const page = parseInt(req.query.page as string) || 1;
             const limit = parseInt(req.query.limit as string) || 10;
             const skip = (page - 1) * limit;
-            const { trash } = req.query;
+            const { trash, search } = req.query;
 
-            const filter = trash === 'true' ? { is_deleted: true } : { is_deleted: { $ne: true } };
+            const filter: any = trash === 'true' ? { is_deleted: true } : { is_deleted: { $ne: true } };
+
+            if (search) {
+                filter.$or = [
+                    { title: { $regex: search, $options: 'i' } },
+                    { slug: { $regex: search, $options: 'i' } }
+                ];
+            }
 
             const events = await Event.find(filter)
                 .sort({ date: 1 })
@@ -114,6 +121,34 @@ export default async function handler(
                     }
                     data.vibes = resolvedVibes;
                 }
+
+                // Handle Mantras
+                if (Array.isArray(data.mantras)) {
+                    const resolvedMantras = [];
+                    for (const mantraInput of data.mantras) {
+                        if (typeof mantraInput === 'string' && mantraInput.length > 20) {
+                            resolvedMantras.push(mantraInput);
+                        } else if (typeof mantraInput === 'string') {
+                            const slug = mantraInput.toLowerCase().trim();
+                            let mantra = await Mantra.findOne({ slug });
+                            if (!mantra) {
+                                mantra = await Mantra.create({
+                                    text: mantraInput,
+                                    slug,
+                                    translations: { en: { text: mantraInput } }
+                                });
+                            }
+                            resolvedMantras.push(mantra._id);
+                        }
+                    }
+                    data.mantras = resolvedMantras;
+                }
+
+                // Cleanup empty ObjectIds before passing to MongoDB
+                if (data.lottie_overlay === '') delete data.lottie_overlay;
+                if (data.ambient_audio === '') delete data.ambient_audio;
+                if (data.category === '') delete data.category;
+
                 return data;
             };
 
@@ -123,7 +158,7 @@ export default async function handler(
                 const event = await Event.create(processedBody);
                 res.status(201).json({ success: true, data: event });
             } else {
-                const { _id, ...updateData } = processedBody;
+                const { _id, images, ...updateData } = processedBody; // Exclude images to prevent overwriting linked images
                 const event = await Event.findByIdAndUpdate(_id, updateData, { new: true });
                 res.status(200).json({ success: true, data: event });
             }

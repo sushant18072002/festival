@@ -14,14 +14,18 @@ import '../../../widgets/smart_image.dart';
 
 class ExploreEventCard extends StatelessWidget {
   final EventModel event;
+  final String heroTagPrefix;
 
-  const ExploreEventCard({super.key, required this.event});
+  const ExploreEventCard({
+    super.key,
+    required this.event,
+    required this.heroTagPrefix,
+  });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    // Resolve Category Color
+    final bgColor = AppColors.surfaceGlass(context);
     Color categoryColor = Theme.of(context).colorScheme.primary;
     if (event.category != null && event.category!.color != null) {
       categoryColor = TaxonomyIconResolver.resolveColor(
@@ -33,24 +37,17 @@ class ExploreEventCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         HapticFeedback.selectionClick();
-        Get.toNamed(Routes.EVENT_DETAILS, arguments: event);
+        Get.toNamed(
+          Routes.eventDetails,
+          arguments: {'event': event, 'heroTagPrefix': heroTagPrefix},
+        );
       },
       child: Container(
         height: 220,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24),
-          color: isDark ? AppColors.surfaceDark : Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: isDark
-                  ? Colors.black.withValues(alpha: 0.6)
-                  : categoryColor.withValues(
-                      alpha: 0.15,
-                    ), // Colored shadow in light mode
-              blurRadius: 20,
-              offset: const Offset(0, 10),
-            ),
-          ],
+          color: bgColor,
+          boxShadow: AppColors.glassShadow(context),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(24),
@@ -58,9 +55,15 @@ class ExploreEventCard extends StatelessWidget {
             fit: StackFit.expand,
             children: [
               // 1. Background Image
-              SmartImage(
-                event.image?.url ?? event.thumbnail ?? '',
-                fit: BoxFit.cover,
+              Hero(
+                tag: '${heroTagPrefix}_festival_card_${event.id}',
+                child: SmartImage(
+                  event.displayImageUrl ?? '',
+                  fit: BoxFit.cover,
+                  dominantColor: event.dominantColors.isNotEmpty
+                      ? _parseColor(event.dominantColors.first)
+                      : null,
+                ),
               ),
 
               // 2. Gradient Overlay for Text Readability
@@ -117,7 +120,7 @@ class ExploreEventCard extends StatelessWidget {
                         ],
                         Text(
                           event.category!.name.toUpperCase(),
-                          style: AppTextStyles.labelSmall.copyWith(
+                          style: AppTextStyles.labelSmall(context).copyWith(
                             color: Colors.white,
                             letterSpacing: 1.2,
                             fontWeight: FontWeight.w700,
@@ -156,7 +159,7 @@ class ExploreEventCard extends StatelessWidget {
                     ),
                     child: Text(
                       _getRelativeTimeText(event.nextDate ?? event.date),
-                      style: AppTextStyles.labelSmall.copyWith(
+                      style: AppTextStyles.labelSmall(context).copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
                       ),
@@ -174,7 +177,7 @@ class ExploreEventCard extends StatelessWidget {
                   children: [
                     Text(
                       event.title,
-                      style: AppTextStyles.headlineSmall.copyWith(
+                      style: AppTextStyles.headlineSmall(context).copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w800,
                         shadows: [
@@ -199,7 +202,7 @@ class ExploreEventCard extends StatelessWidget {
                           const SizedBox(width: 4),
                           Text(
                             DateFormat('MMMM d').format(event.nextDate!),
-                            style: AppTextStyles.labelMedium.copyWith(
+                            style: AppTextStyles.labelMedium(context).copyWith(
                               color: Colors.white70,
                             ),
                           ),
@@ -214,7 +217,7 @@ class ExploreEventCard extends StatelessWidget {
                         Expanded(
                           child: Text(
                             event.location,
-                            style: AppTextStyles.labelMedium.copyWith(
+                            style: AppTextStyles.labelMedium(context).copyWith(
                               color: Colors.white70,
                             ),
                             maxLines: 1,
@@ -241,29 +244,54 @@ class ExploreEventCard extends StatelessWidget {
 
     final diff = target.difference(today).inDays;
 
-    if (diff == 0) return 'Today'.tr;
-    if (diff == 1) return 'Tomorrow'.tr;
-    if (diff > 1 && diff <= 7) return 'This Week'.tr;
-    if (diff > 7 && target.month == now.month && target.year == now.year)
+    if (diff == 0) {
+      return 'Today'.tr;
+    }
+    if (diff == 1) {
+      return 'Tomorrow'.tr;
+    }
+    if (diff > 1 && diff <= 7) {
+      return 'This Week'.tr;
+    }
+    if (diff > 7 && target.month == now.month && target.year == now.year) {
       return 'This Month'.tr;
+    }
 
     if (target.isBefore(today)) {
-      if (diff == -1) return 'Yesterday'.tr;
-      if (target.month == now.month && target.year == now.year)
+      if (diff == -1) {
+        return 'Yesterday'.tr;
+      }
+      if (target.month == now.month && target.year == now.year) {
         return 'Earlier this month'.tr;
+      }
 
       int monthDiff = (now.year - target.year) * 12 + now.month - target.month;
-      if (monthDiff == 1) return 'Last Month'.tr;
-      if (monthDiff > 1)
-        return '$monthDiff Months Ago'
-            .tr; // Requires dynamic pluralization handling in locale files
+      if (monthDiff == 1) {
+        return 'Last Month'.tr;
+      }
+      if (monthDiff > 1) {
+        return '$monthDiff Months Ago'.tr;
+      }
     } else {
       int monthDiff = (target.year - now.year) * 12 + target.month - now.month;
-      if (monthDiff == 1 && diff > 7) return 'Next Month'.tr;
-      if (monthDiff > 1)
-        return 'In $monthDiff Months'
-            .tr; // Requires dynamic pluralization handling in locale files
+      if (monthDiff == 1 && diff > 7) {
+        return 'Next Month'.tr;
+      }
+      if (monthDiff > 1) {
+        return 'In $monthDiff Months'.tr;
+      }
     }
     return '';
+  }
+
+  Color? _parseColor(String hex) {
+    hex = hex.replaceAll('#', '');
+    if (hex.length == 6) {
+      hex = 'FF$hex'; // Add 100% opacity
+    }
+    if (hex.length == 8) {
+      return Color(int.parse('0x$hex'));
+    }
+    return null;
   }
 }

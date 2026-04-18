@@ -1,0 +1,3887 @@
+[
+  {
+    "id": 1,
+    "type": "morning",
+    "text": "Rise and shine ✨",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "उठो और चमको ✨"
+      },
+      "mr": {
+        "text": "Rise and shine ✨"
+      },
+      "gu": {
+        "text": "Rise and shine ✨"
+      },
+      "bn": {
+        "text": "Rise and shine ✨"
+      },
+      "ta": {
+        "text": "Rise and shine ✨"
+      },
+      "te": {
+        "text": "Rise and shine ✨"
+      },
+      "kn": {
+        "text": "Rise and shine ✨"
+      },
+      "ml": {
+        "text": "Rise and shine ✨"
+      }
+    }
+  },
+  {
+    "id": 2,
+    "type": "morning",
+    "text": "A beautiful new day awaits 🌅",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "एक खूबसूरत नया दिन आपका इंतजार कर रहा है 🌅"
+      },
+      "mr": {
+        "text": "A beautiful new day awaits 🌅"
+      },
+      "gu": {
+        "text": "A beautiful new day awaits 🌅"
+      },
+      "bn": {
+        "text": "A beautiful new day awaits 🌅"
+      },
+      "ta": {
+        "text": "A beautiful new day awaits 🌅"
+      },
+      "te": {
+        "text": "A beautiful new day awaits 🌅"
+      },
+      "kn": {
+        "text": "A beautiful new day awaits 🌅"
+      },
+      "ml": {
+        "text": "A beautiful new day awaits 🌅"
+      }
+    }
+  },
+  {
+    "id": 3,
+    "type": "morning",
+    "text": "Take a deep breath. You're ready. 🌿",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "गहरी सांस लें। आप तैयार हैं। 🌿"
+      },
+      "mr": {
+        "text": "Take a deep breath. You're ready. 🌿"
+      },
+      "gu": {
+        "text": "Take a deep breath. You're ready. 🌿"
+      },
+      "bn": {
+        "text": "Take a deep breath. You're ready. 🌿"
+      },
+      "ta": {
+        "text": "Take a deep breath. You're ready. 🌿"
+      },
+      "te": {
+        "text": "Take a deep breath. You're ready. 🌿"
+      },
+      "kn": {
+        "text": "Take a deep breath. You're ready. 🌿"
+      },
+      "ml": {
+        "text": "Take a deep breath. You're ready. 🌿"
+      }
+    }
+  },
+  {
+    "id": 4,
+    "type": "morning",
+    "text": "Good morning, bright soul ☀️",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "सुप्रभात, उज्ज्वल आत्मा ☀️"
+      },
+      "mr": {
+        "text": "Good morning, bright soul ☀️"
+      },
+      "gu": {
+        "text": "Good morning, bright soul ☀️"
+      },
+      "bn": {
+        "text": "Good morning, bright soul ☀️"
+      },
+      "ta": {
+        "text": "Good morning, bright soul ☀️"
+      },
+      "te": {
+        "text": "Good morning, bright soul ☀️"
+      },
+      "kn": {
+        "text": "Good morning, bright soul ☀️"
+      },
+      "ml": {
+        "text": "Good morning, bright soul ☀️"
+      }
+    }
+  },
+  {
+    "id": 5,
+    "type": "morning",
+    "text": "Start today with a smile 😊",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आज की शुरुआत मुस्कान के साथ करें 😊"
+      },
+      "mr": {
+        "text": "Start today with a smile 😊"
+      },
+      "gu": {
+        "text": "Start today with a smile 😊"
+      },
+      "bn": {
+        "text": "Start today with a smile 😊"
+      },
+      "ta": {
+        "text": "Start today with a smile 😊"
+      },
+      "te": {
+        "text": "Start today with a smile 😊"
+      },
+      "kn": {
+        "text": "Start today with a smile 😊"
+      },
+      "ml": {
+        "text": "Start today with a smile 😊"
+      }
+    }
+  },
+  {
+    "id": 6,
+    "type": "morning",
+    "text": "Coffee in hand, peace in mind ☕",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "हाथ में कॉफी, मन में शांति ☕"
+      },
+      "mr": {
+        "text": "Coffee in hand, peace in mind ☕"
+      },
+      "gu": {
+        "text": "Coffee in hand, peace in mind ☕"
+      },
+      "bn": {
+        "text": "Coffee in hand, peace in mind ☕"
+      },
+      "ta": {
+        "text": "Coffee in hand, peace in mind ☕"
+      },
+      "te": {
+        "text": "Coffee in hand, peace in mind ☕"
+      },
+      "kn": {
+        "text": "Coffee in hand, peace in mind ☕"
+      },
+      "ml": {
+        "text": "Coffee in hand, peace in mind ☕"
+      }
+    }
+  },
+  {
+    "id": 7,
+    "type": "morning",
+    "text": "Today is full of possibilities 🌟",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आज संभावनाओं से भरा है 🌟"
+      },
+      "mr": {
+        "text": "Today is full of possibilities 🌟"
+      },
+      "gu": {
+        "text": "Today is full of possibilities 🌟"
+      },
+      "bn": {
+        "text": "Today is full of possibilities 🌟"
+      },
+      "ta": {
+        "text": "Today is full of possibilities 🌟"
+      },
+      "te": {
+        "text": "Today is full of possibilities 🌟"
+      },
+      "kn": {
+        "text": "Today is full of possibilities 🌟"
+      },
+      "ml": {
+        "text": "Today is full of possibilities 🌟"
+      }
+    }
+  },
+  {
+    "id": 8,
+    "type": "morning",
+    "text": "Wake up and be awesome 💥",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "उठो और कमाल कर दो 💥"
+      },
+      "mr": {
+        "text": "Wake up and be awesome 💥"
+      },
+      "gu": {
+        "text": "Wake up and be awesome 💥"
+      },
+      "bn": {
+        "text": "Wake up and be awesome 💥"
+      },
+      "ta": {
+        "text": "Wake up and be awesome 💥"
+      },
+      "te": {
+        "text": "Wake up and be awesome 💥"
+      },
+      "kn": {
+        "text": "Wake up and be awesome 💥"
+      },
+      "ml": {
+        "text": "Wake up and be awesome 💥"
+      }
+    }
+  },
+  {
+    "id": 9,
+    "type": "morning",
+    "text": "Sending calm morning vibes 🕊️",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "सुबह की शांत प्रार्थनाएं 🕊️"
+      },
+      "mr": {
+        "text": "Sending calm morning vibes 🕊️"
+      },
+      "gu": {
+        "text": "Sending calm morning vibes 🕊️"
+      },
+      "bn": {
+        "text": "Sending calm morning vibes 🕊️"
+      },
+      "ta": {
+        "text": "Sending calm morning vibes 🕊️"
+      },
+      "te": {
+        "text": "Sending calm morning vibes 🕊️"
+      },
+      "kn": {
+        "text": "Sending calm morning vibes 🕊️"
+      },
+      "ml": {
+        "text": "Sending calm morning vibes 🕊️"
+      }
+    }
+  },
+  {
+    "id": 10,
+    "type": "morning",
+    "text": "Embrace the morning light 🌞",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "सुबह की रोशनी को गले लगाओ 🌞"
+      },
+      "mr": {
+        "text": "Embrace the morning light 🌞"
+      },
+      "gu": {
+        "text": "Embrace the morning light 🌞"
+      },
+      "bn": {
+        "text": "Embrace the morning light 🌞"
+      },
+      "ta": {
+        "text": "Embrace the morning light 🌞"
+      },
+      "te": {
+        "text": "Embrace the morning light 🌞"
+      },
+      "kn": {
+        "text": "Embrace the morning light 🌞"
+      },
+      "ml": {
+        "text": "Embrace the morning light 🌞"
+      }
+    }
+  },
+  {
+    "id": 11,
+    "type": "morning",
+    "text": "Make today uniquely yours 🎨",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आज के दिन को अपना बनाओ 🎨"
+      },
+      "mr": {
+        "text": "Make today uniquely yours 🎨"
+      },
+      "gu": {
+        "text": "Make today uniquely yours 🎨"
+      },
+      "bn": {
+        "text": "Make today uniquely yours 🎨"
+      },
+      "ta": {
+        "text": "Make today uniquely yours 🎨"
+      },
+      "te": {
+        "text": "Make today uniquely yours 🎨"
+      },
+      "kn": {
+        "text": "Make today uniquely yours 🎨"
+      },
+      "ml": {
+        "text": "Make today uniquely yours 🎨"
+      }
+    }
+  },
+  {
+    "id": 12,
+    "type": "morning",
+    "text": "Breathe in the new day 🍃",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "नए दिन में सांस लें 🍃"
+      },
+      "mr": {
+        "text": "Breathe in the new day 🍃"
+      },
+      "gu": {
+        "text": "Breathe in the new day 🍃"
+      },
+      "bn": {
+        "text": "Breathe in the new day 🍃"
+      },
+      "ta": {
+        "text": "Breathe in the new day 🍃"
+      },
+      "te": {
+        "text": "Breathe in the new day 🍃"
+      },
+      "kn": {
+        "text": "Breathe in the new day 🍃"
+      },
+      "ml": {
+        "text": "Breathe in the new day 🍃"
+      }
+    }
+  },
+  {
+    "id": 13,
+    "type": "morning",
+    "text": "Step into today with confidence 🦁",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आज आत्मविश्वास के साथ कदम रखें 🦁"
+      },
+      "mr": {
+        "text": "Step into today with confidence 🦁"
+      },
+      "gu": {
+        "text": "Step into today with confidence 🦁"
+      },
+      "bn": {
+        "text": "Step into today with confidence 🦁"
+      },
+      "ta": {
+        "text": "Step into today with confidence 🦁"
+      },
+      "te": {
+        "text": "Step into today with confidence 🦁"
+      },
+      "kn": {
+        "text": "Step into today with confidence 🦁"
+      },
+      "ml": {
+        "text": "Step into today with confidence 🦁"
+      }
+    }
+  },
+  {
+    "id": 14,
+    "type": "morning",
+    "text": "Morning blessings to you 🙏",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आपको सुबह का आशीर्वाद 🙏"
+      },
+      "mr": {
+        "text": "Morning blessings to you 🙏"
+      },
+      "gu": {
+        "text": "Morning blessings to you 🙏"
+      },
+      "bn": {
+        "text": "Morning blessings to you 🙏"
+      },
+      "ta": {
+        "text": "Morning blessings to you 🙏"
+      },
+      "te": {
+        "text": "Morning blessings to you 🙏"
+      },
+      "kn": {
+        "text": "Morning blessings to you 🙏"
+      },
+      "ml": {
+        "text": "Morning blessings to you 🙏"
+      }
+    }
+  },
+  {
+    "id": 15,
+    "type": "morning",
+    "text": "Your journey begins anew today 🛤️",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आपकी यात्रा आज फिर से शुरू होती है 🛤️"
+      },
+      "mr": {
+        "text": "Your journey begins anew today 🛤️"
+      },
+      "gu": {
+        "text": "Your journey begins anew today 🛤️"
+      },
+      "bn": {
+        "text": "Your journey begins anew today 🛤️"
+      },
+      "ta": {
+        "text": "Your journey begins anew today 🛤️"
+      },
+      "te": {
+        "text": "Your journey begins anew today 🛤️"
+      },
+      "kn": {
+        "text": "Your journey begins anew today 🛤️"
+      },
+      "ml": {
+        "text": "Your journey begins anew today 🛤️"
+      }
+    }
+  },
+  {
+    "id": 16,
+    "type": "morning",
+    "text": "Let joy find you today 🎈",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आज खुशी आपको ढूंढ़ ले 🎈"
+      },
+      "mr": {
+        "text": "Let joy find you today 🎈"
+      },
+      "gu": {
+        "text": "Let joy find you today 🎈"
+      },
+      "bn": {
+        "text": "Let joy find you today 🎈"
+      },
+      "ta": {
+        "text": "Let joy find you today 🎈"
+      },
+      "te": {
+        "text": "Let joy find you today 🎈"
+      },
+      "kn": {
+        "text": "Let joy find you today 🎈"
+      },
+      "ml": {
+        "text": "Let joy find you today 🎈"
+      }
+    }
+  },
+  {
+    "id": 17,
+    "type": "morning",
+    "text": "A fresh start, a clear mind 🧠",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "एक नई शुरुआत, एक साफ मन 🧠"
+      },
+      "mr": {
+        "text": "A fresh start, a clear mind 🧠"
+      },
+      "gu": {
+        "text": "A fresh start, a clear mind 🧠"
+      },
+      "bn": {
+        "text": "A fresh start, a clear mind 🧠"
+      },
+      "ta": {
+        "text": "A fresh start, a clear mind 🧠"
+      },
+      "te": {
+        "text": "A fresh start, a clear mind 🧠"
+      },
+      "kn": {
+        "text": "A fresh start, a clear mind 🧠"
+      },
+      "ml": {
+        "text": "A fresh start, a clear mind 🧠"
+      }
+    }
+  },
+  {
+    "id": 18,
+    "type": "morning",
+    "text": "Good morning! Spread the light 🕯️",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "सुप्रभात! प्रकाश फैलाओ 🕯️"
+      },
+      "mr": {
+        "text": "Good morning! Spread the light 🕯️"
+      },
+      "gu": {
+        "text": "Good morning! Spread the light 🕯️"
+      },
+      "bn": {
+        "text": "Good morning! Spread the light 🕯️"
+      },
+      "ta": {
+        "text": "Good morning! Spread the light 🕯️"
+      },
+      "te": {
+        "text": "Good morning! Spread the light 🕯️"
+      },
+      "kn": {
+        "text": "Good morning! Spread the light 🕯️"
+      },
+      "ml": {
+        "text": "Good morning! Spread the light 🕯️"
+      }
+    }
+  },
+  {
+    "id": 19,
+    "type": "morning",
+    "text": "Awaken your spirit 🧘",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "अपनी आत्मा को जगाओ 🧘"
+      },
+      "mr": {
+        "text": "Awaken your spirit 🧘"
+      },
+      "gu": {
+        "text": "Awaken your spirit 🧘"
+      },
+      "bn": {
+        "text": "Awaken your spirit 🧘"
+      },
+      "ta": {
+        "text": "Awaken your spirit 🧘"
+      },
+      "te": {
+        "text": "Awaken your spirit 🧘"
+      },
+      "kn": {
+        "text": "Awaken your spirit 🧘"
+      },
+      "ml": {
+        "text": "Awaken your spirit 🧘"
+      }
+    }
+  },
+  {
+    "id": 20,
+    "type": "morning",
+    "text": "Today is a gift 🎁",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आज एक उपहार है 🎁"
+      },
+      "mr": {
+        "text": "Today is a gift 🎁"
+      },
+      "gu": {
+        "text": "Today is a gift 🎁"
+      },
+      "bn": {
+        "text": "Today is a gift 🎁"
+      },
+      "ta": {
+        "text": "Today is a gift 🎁"
+      },
+      "te": {
+        "text": "Today is a gift 🎁"
+      },
+      "kn": {
+        "text": "Today is a gift 🎁"
+      },
+      "ml": {
+        "text": "Today is a gift 🎁"
+      }
+    }
+  },
+  {
+    "id": 21,
+    "type": "morning",
+    "text": "Sunrise brings new hope 🌄",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "सूर्योदय नई उम्मीद लाता है 🌄"
+      },
+      "mr": {
+        "text": "Sunrise brings new hope 🌄"
+      },
+      "gu": {
+        "text": "Sunrise brings new hope 🌄"
+      },
+      "bn": {
+        "text": "Sunrise brings new hope 🌄"
+      },
+      "ta": {
+        "text": "Sunrise brings new hope 🌄"
+      },
+      "te": {
+        "text": "Sunrise brings new hope 🌄"
+      },
+      "kn": {
+        "text": "Sunrise brings new hope 🌄"
+      },
+      "ml": {
+        "text": "Sunrise brings new hope 🌄"
+      }
+    }
+  },
+  {
+    "id": 22,
+    "type": "morning",
+    "text": "Grateful for another morning 🌻",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "एक और सुबह के लिए आभारी 🌻"
+      },
+      "mr": {
+        "text": "Grateful for another morning 🌻"
+      },
+      "gu": {
+        "text": "Grateful for another morning 🌻"
+      },
+      "bn": {
+        "text": "Grateful for another morning 🌻"
+      },
+      "ta": {
+        "text": "Grateful for another morning 🌻"
+      },
+      "te": {
+        "text": "Grateful for another morning 🌻"
+      },
+      "kn": {
+        "text": "Grateful for another morning 🌻"
+      },
+      "ml": {
+        "text": "Grateful for another morning 🌻"
+      }
+    }
+  },
+  {
+    "id": 23,
+    "type": "morning",
+    "text": "Morning! Let's create magic 🪄",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "सुप्रभात! चलो जादू बनाएं 🪄"
+      },
+      "mr": {
+        "text": "Morning! Let's create magic 🪄"
+      },
+      "gu": {
+        "text": "Morning! Let's create magic 🪄"
+      },
+      "bn": {
+        "text": "Morning! Let's create magic 🪄"
+      },
+      "ta": {
+        "text": "Morning! Let's create magic 🪄"
+      },
+      "te": {
+        "text": "Morning! Let's create magic 🪄"
+      },
+      "kn": {
+        "text": "Morning! Let's create magic 🪄"
+      },
+      "ml": {
+        "text": "Morning! Let's create magic 🪄"
+      }
+    }
+  },
+  {
+    "id": 24,
+    "type": "morning",
+    "text": "Stay grounded today 🌳",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आज जमीन से जुड़े रहें 🌳"
+      },
+      "mr": {
+        "text": "Stay grounded today 🌳"
+      },
+      "gu": {
+        "text": "Stay grounded today 🌳"
+      },
+      "bn": {
+        "text": "Stay grounded today 🌳"
+      },
+      "ta": {
+        "text": "Stay grounded today 🌳"
+      },
+      "te": {
+        "text": "Stay grounded today 🌳"
+      },
+      "kn": {
+        "text": "Stay grounded today 🌳"
+      },
+      "ml": {
+        "text": "Stay grounded today 🌳"
+      }
+    }
+  },
+  {
+    "id": 25,
+    "type": "morning",
+    "text": "Nourish your soul this morning 🥣",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "इस सुबह अपनी आत्मा को पोषण दें 🥣"
+      },
+      "mr": {
+        "text": "Nourish your soul this morning 🥣"
+      },
+      "gu": {
+        "text": "Nourish your soul this morning 🥣"
+      },
+      "bn": {
+        "text": "Nourish your soul this morning 🥣"
+      },
+      "ta": {
+        "text": "Nourish your soul this morning 🥣"
+      },
+      "te": {
+        "text": "Nourish your soul this morning 🥣"
+      },
+      "kn": {
+        "text": "Nourish your soul this morning 🥣"
+      },
+      "ml": {
+        "text": "Nourish your soul this morning 🥣"
+      }
+    }
+  },
+  {
+    "id": 26,
+    "type": "morning",
+    "text": "A peaceful morning to you 🍵",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आपको एक शांतिपूर्ण सुबह 🍵"
+      },
+      "mr": {
+        "text": "A peaceful morning to you 🍵"
+      },
+      "gu": {
+        "text": "A peaceful morning to you 🍵"
+      },
+      "bn": {
+        "text": "A peaceful morning to you 🍵"
+      },
+      "ta": {
+        "text": "A peaceful morning to you 🍵"
+      },
+      "te": {
+        "text": "A peaceful morning to you 🍵"
+      },
+      "kn": {
+        "text": "A peaceful morning to you 🍵"
+      },
+      "ml": {
+        "text": "A peaceful morning to you 🍵"
+      }
+    }
+  },
+  {
+    "id": 27,
+    "type": "morning",
+    "text": "Good morning, stay positive ➕",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "सुप्रभात, सकारात्मक रहें ➕"
+      },
+      "mr": {
+        "text": "Good morning, stay positive ➕"
+      },
+      "gu": {
+        "text": "Good morning, stay positive ➕"
+      },
+      "bn": {
+        "text": "Good morning, stay positive ➕"
+      },
+      "ta": {
+        "text": "Good morning, stay positive ➕"
+      },
+      "te": {
+        "text": "Good morning, stay positive ➕"
+      },
+      "kn": {
+        "text": "Good morning, stay positive ➕"
+      },
+      "ml": {
+        "text": "Good morning, stay positive ➕"
+      }
+    }
+  },
+  {
+    "id": 28,
+    "type": "morning",
+    "text": "The sun is up, and so are you ☀️",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "सूरज निकल गया है, और आप भी ☀️"
+      },
+      "mr": {
+        "text": "The sun is up, and so are you ☀️"
+      },
+      "gu": {
+        "text": "The sun is up, and so are you ☀️"
+      },
+      "bn": {
+        "text": "The sun is up, and so are you ☀️"
+      },
+      "ta": {
+        "text": "The sun is up, and so are you ☀️"
+      },
+      "te": {
+        "text": "The sun is up, and so are you ☀️"
+      },
+      "kn": {
+        "text": "The sun is up, and so are you ☀️"
+      },
+      "ml": {
+        "text": "The sun is up, and so are you ☀️"
+      }
+    }
+  },
+  {
+    "id": 29,
+    "type": "morning",
+    "text": "Morning focus: Inner peace 🕊️",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "सुबह का ध्यान: आंतरिक शांति 🕊️"
+      },
+      "mr": {
+        "text": "Morning focus: Inner peace 🕊️"
+      },
+      "gu": {
+        "text": "Morning focus: Inner peace 🕊️"
+      },
+      "bn": {
+        "text": "Morning focus: Inner peace 🕊️"
+      },
+      "ta": {
+        "text": "Morning focus: Inner peace 🕊️"
+      },
+      "te": {
+        "text": "Morning focus: Inner peace 🕊️"
+      },
+      "kn": {
+        "text": "Morning focus: Inner peace 🕊️"
+      },
+      "ml": {
+        "text": "Morning focus: Inner peace 🕊️"
+      }
+    }
+  },
+  {
+    "id": 30,
+    "type": "morning",
+    "text": "Begin today with gratitude 🙏",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आज की शुरुआत कृतज्ञता के साथ करें 🙏"
+      },
+      "mr": {
+        "text": "Begin today with gratitude 🙏"
+      },
+      "gu": {
+        "text": "Begin today with gratitude 🙏"
+      },
+      "bn": {
+        "text": "Begin today with gratitude 🙏"
+      },
+      "ta": {
+        "text": "Begin today with gratitude 🙏"
+      },
+      "te": {
+        "text": "Begin today with gratitude 🙏"
+      },
+      "kn": {
+        "text": "Begin today with gratitude 🙏"
+      },
+      "ml": {
+        "text": "Begin today with gratitude 🙏"
+      }
+    }
+  },
+  {
+    "id": 31,
+    "type": "afternoon",
+    "text": "Keep the momentum going 🚀",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "गति बनाए रखें 🚀"
+      },
+      "mr": {
+        "text": "Keep the momentum going 🚀"
+      },
+      "gu": {
+        "text": "Keep the momentum going 🚀"
+      },
+      "bn": {
+        "text": "Keep the momentum going 🚀"
+      },
+      "ta": {
+        "text": "Keep the momentum going 🚀"
+      },
+      "te": {
+        "text": "Keep the momentum going 🚀"
+      },
+      "kn": {
+        "text": "Keep the momentum going 🚀"
+      },
+      "ml": {
+        "text": "Keep the momentum going 🚀"
+      }
+    }
+  },
+  {
+    "id": 32,
+    "type": "afternoon",
+    "text": "Hope your day is flowing well 🌊",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आशा है आपका दिन अच्छा चल रहा होगा 🌊"
+      },
+      "mr": {
+        "text": "Hope your day is flowing well 🌊"
+      },
+      "gu": {
+        "text": "Hope your day is flowing well 🌊"
+      },
+      "bn": {
+        "text": "Hope your day is flowing well 🌊"
+      },
+      "ta": {
+        "text": "Hope your day is flowing well 🌊"
+      },
+      "te": {
+        "text": "Hope your day is flowing well 🌊"
+      },
+      "kn": {
+        "text": "Hope your day is flowing well 🌊"
+      },
+      "ml": {
+        "text": "Hope your day is flowing well 🌊"
+      }
+    }
+  },
+  {
+    "id": 33,
+    "type": "afternoon",
+    "text": "Take a quick mid-day pause ⏸️",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "दोपहर का छोटा सा ब्रेक लें ⏸️"
+      },
+      "mr": {
+        "text": "Take a quick mid-day pause ⏸️"
+      },
+      "gu": {
+        "text": "Take a quick mid-day pause ⏸️"
+      },
+      "bn": {
+        "text": "Take a quick mid-day pause ⏸️"
+      },
+      "ta": {
+        "text": "Take a quick mid-day pause ⏸️"
+      },
+      "te": {
+        "text": "Take a quick mid-day pause ⏸️"
+      },
+      "kn": {
+        "text": "Take a quick mid-day pause ⏸️"
+      },
+      "ml": {
+        "text": "Take a quick mid-day pause ⏸️"
+      }
+    }
+  },
+  {
+    "id": 34,
+    "type": "afternoon",
+    "text": "Afternoon check-in: hydrate 💧",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "दोपहर की याद: पानी पिएं 💧"
+      },
+      "mr": {
+        "text": "Afternoon check-in: hydrate 💧"
+      },
+      "gu": {
+        "text": "Afternoon check-in: hydrate 💧"
+      },
+      "bn": {
+        "text": "Afternoon check-in: hydrate 💧"
+      },
+      "ta": {
+        "text": "Afternoon check-in: hydrate 💧"
+      },
+      "te": {
+        "text": "Afternoon check-in: hydrate 💧"
+      },
+      "kn": {
+        "text": "Afternoon check-in: hydrate 💧"
+      },
+      "ml": {
+        "text": "Afternoon check-in: hydrate 💧"
+      }
+    }
+  },
+  {
+    "id": 35,
+    "type": "afternoon",
+    "text": "You're doing great today 👍",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आप आज बहुत अच्छा कर रहे हैं 👍"
+      },
+      "mr": {
+        "text": "You're doing great today 👍"
+      },
+      "gu": {
+        "text": "You're doing great today 👍"
+      },
+      "bn": {
+        "text": "You're doing great today 👍"
+      },
+      "ta": {
+        "text": "You're doing great today 👍"
+      },
+      "te": {
+        "text": "You're doing great today 👍"
+      },
+      "kn": {
+        "text": "You're doing great today 👍"
+      },
+      "ml": {
+        "text": "You're doing great today 👍"
+      }
+    }
+  },
+  {
+    "id": 36,
+    "type": "afternoon",
+    "text": "Good afternoon! Stay focused 🎯",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "शुभ दोपहर! ध्यान केंद्रित रखें 🎯"
+      },
+      "mr": {
+        "text": "Good afternoon! Stay focused 🎯"
+      },
+      "gu": {
+        "text": "Good afternoon! Stay focused 🎯"
+      },
+      "bn": {
+        "text": "Good afternoon! Stay focused 🎯"
+      },
+      "ta": {
+        "text": "Good afternoon! Stay focused 🎯"
+      },
+      "te": {
+        "text": "Good afternoon! Stay focused 🎯"
+      },
+      "kn": {
+        "text": "Good afternoon! Stay focused 🎯"
+      },
+      "ml": {
+        "text": "Good afternoon! Stay focused 🎯"
+      }
+    }
+  },
+  {
+    "id": 37,
+    "type": "afternoon",
+    "text": "Halfway there! Keep smiling 😊",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आधा दिन बीत गया! मुस्कुराते रहें 😊"
+      },
+      "mr": {
+        "text": "Halfway there! Keep smiling 😊"
+      },
+      "gu": {
+        "text": "Halfway there! Keep smiling 😊"
+      },
+      "bn": {
+        "text": "Halfway there! Keep smiling 😊"
+      },
+      "ta": {
+        "text": "Halfway there! Keep smiling 😊"
+      },
+      "te": {
+        "text": "Halfway there! Keep smiling 😊"
+      },
+      "kn": {
+        "text": "Halfway there! Keep smiling 😊"
+      },
+      "ml": {
+        "text": "Halfway there! Keep smiling 😊"
+      }
+    }
+  },
+  {
+    "id": 38,
+    "type": "afternoon",
+    "text": "Fuel your afternoon with positivity ⛽",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "दोपहर को सकारात्मकता से भरें ⛽"
+      },
+      "mr": {
+        "text": "Fuel your afternoon with positivity ⛽"
+      },
+      "gu": {
+        "text": "Fuel your afternoon with positivity ⛽"
+      },
+      "bn": {
+        "text": "Fuel your afternoon with positivity ⛽"
+      },
+      "ta": {
+        "text": "Fuel your afternoon with positivity ⛽"
+      },
+      "te": {
+        "text": "Fuel your afternoon with positivity ⛽"
+      },
+      "kn": {
+        "text": "Fuel your afternoon with positivity ⛽"
+      },
+      "ml": {
+        "text": "Fuel your afternoon with positivity ⛽"
+      }
+    }
+  },
+  {
+    "id": 39,
+    "type": "afternoon",
+    "text": "Afternoon sunshine for you ☀️",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आपके लिए दोपहर की धूप ☀️"
+      },
+      "mr": {
+        "text": "Afternoon sunshine for you ☀️"
+      },
+      "gu": {
+        "text": "Afternoon sunshine for you ☀️"
+      },
+      "bn": {
+        "text": "Afternoon sunshine for you ☀️"
+      },
+      "ta": {
+        "text": "Afternoon sunshine for you ☀️"
+      },
+      "te": {
+        "text": "Afternoon sunshine for you ☀️"
+      },
+      "kn": {
+        "text": "Afternoon sunshine for you ☀️"
+      },
+      "ml": {
+        "text": "Afternoon sunshine for you ☀️"
+      }
+    }
+  },
+  {
+    "id": 40,
+    "type": "afternoon",
+    "text": "A gentle afternoon reminder: breathe 🌬️",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "दोपहर की एक सौम्य याद: सांस लें 🌬️"
+      },
+      "mr": {
+        "text": "A gentle afternoon reminder: breathe 🌬️"
+      },
+      "gu": {
+        "text": "A gentle afternoon reminder: breathe 🌬️"
+      },
+      "bn": {
+        "text": "A gentle afternoon reminder: breathe 🌬️"
+      },
+      "ta": {
+        "text": "A gentle afternoon reminder: breathe 🌬️"
+      },
+      "te": {
+        "text": "A gentle afternoon reminder: breathe 🌬️"
+      },
+      "kn": {
+        "text": "A gentle afternoon reminder: breathe 🌬️"
+      },
+      "ml": {
+        "text": "A gentle afternoon reminder: breathe 🌬️"
+      }
+    }
+  },
+  {
+    "id": 41,
+    "type": "afternoon",
+    "text": "Push through, you're strong 💪",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आगे बढ़ें, आप मजबूत हैं 💪"
+      },
+      "mr": {
+        "text": "Push through, you're strong 💪"
+      },
+      "gu": {
+        "text": "Push through, you're strong 💪"
+      },
+      "bn": {
+        "text": "Push through, you're strong 💪"
+      },
+      "ta": {
+        "text": "Push through, you're strong 💪"
+      },
+      "te": {
+        "text": "Push through, you're strong 💪"
+      },
+      "kn": {
+        "text": "Push through, you're strong 💪"
+      },
+      "ml": {
+        "text": "Push through, you're strong 💪"
+      }
+    }
+  },
+  {
+    "id": 42,
+    "type": "afternoon",
+    "text": "Good afternoon, bright mind 🧠",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "शुभ दोपहर, तेज दिमाग 🧠"
+      },
+      "mr": {
+        "text": "Good afternoon, bright mind 🧠"
+      },
+      "gu": {
+        "text": "Good afternoon, bright mind 🧠"
+      },
+      "bn": {
+        "text": "Good afternoon, bright mind 🧠"
+      },
+      "ta": {
+        "text": "Good afternoon, bright mind 🧠"
+      },
+      "te": {
+        "text": "Good afternoon, bright mind 🧠"
+      },
+      "kn": {
+        "text": "Good afternoon, bright mind 🧠"
+      },
+      "ml": {
+        "text": "Good afternoon, bright mind 🧠"
+      }
+    }
+  },
+  {
+    "id": 43,
+    "type": "afternoon",
+    "text": "Stay centered this afternoon 🧘",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "इस दोपहर शांत रहें 🧘"
+      },
+      "mr": {
+        "text": "Stay centered this afternoon 🧘"
+      },
+      "gu": {
+        "text": "Stay centered this afternoon 🧘"
+      },
+      "bn": {
+        "text": "Stay centered this afternoon 🧘"
+      },
+      "ta": {
+        "text": "Stay centered this afternoon 🧘"
+      },
+      "te": {
+        "text": "Stay centered this afternoon 🧘"
+      },
+      "kn": {
+        "text": "Stay centered this afternoon 🧘"
+      },
+      "ml": {
+        "text": "Stay centered this afternoon 🧘"
+      }
+    }
+  },
+  {
+    "id": 44,
+    "type": "afternoon",
+    "text": "Sending mid-day good vibes 🌈",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "दोपहर की अच्छी भावनाएं भेज रहे हैं 🌈"
+      },
+      "mr": {
+        "text": "Sending mid-day good vibes 🌈"
+      },
+      "gu": {
+        "text": "Sending mid-day good vibes 🌈"
+      },
+      "bn": {
+        "text": "Sending mid-day good vibes 🌈"
+      },
+      "ta": {
+        "text": "Sending mid-day good vibes 🌈"
+      },
+      "te": {
+        "text": "Sending mid-day good vibes 🌈"
+      },
+      "kn": {
+        "text": "Sending mid-day good vibes 🌈"
+      },
+      "ml": {
+        "text": "Sending mid-day good vibes 🌈"
+      }
+    }
+  },
+  {
+    "id": 45,
+    "type": "afternoon",
+    "text": "Hope lunch was delicious 🍱",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आशा है दोपहर का भोजन स्वादिष्ट था 🍱"
+      },
+      "mr": {
+        "text": "Hope lunch was delicious 🍱"
+      },
+      "gu": {
+        "text": "Hope lunch was delicious 🍱"
+      },
+      "bn": {
+        "text": "Hope lunch was delicious 🍱"
+      },
+      "ta": {
+        "text": "Hope lunch was delicious 🍱"
+      },
+      "te": {
+        "text": "Hope lunch was delicious 🍱"
+      },
+      "kn": {
+        "text": "Hope lunch was delicious 🍱"
+      },
+      "ml": {
+        "text": "Hope lunch was delicious 🍱"
+      }
+    }
+  },
+  {
+    "id": 46,
+    "type": "afternoon",
+    "text": "A calm afternoon to you 🍃",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आपको एक शांत दोपहर 🍃"
+      },
+      "mr": {
+        "text": "A calm afternoon to you 🍃"
+      },
+      "gu": {
+        "text": "A calm afternoon to you 🍃"
+      },
+      "bn": {
+        "text": "A calm afternoon to you 🍃"
+      },
+      "ta": {
+        "text": "A calm afternoon to you 🍃"
+      },
+      "te": {
+        "text": "A calm afternoon to you 🍃"
+      },
+      "kn": {
+        "text": "A calm afternoon to you 🍃"
+      },
+      "ml": {
+        "text": "A calm afternoon to you 🍃"
+      }
+    }
+  },
+  {
+    "id": 47,
+    "type": "afternoon",
+    "text": "Stay productive, stay happy 🐝",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "उत्पादक रहें, खुश रहें 🐝"
+      },
+      "mr": {
+        "text": "Stay productive, stay happy 🐝"
+      },
+      "gu": {
+        "text": "Stay productive, stay happy 🐝"
+      },
+      "bn": {
+        "text": "Stay productive, stay happy 🐝"
+      },
+      "ta": {
+        "text": "Stay productive, stay happy 🐝"
+      },
+      "te": {
+        "text": "Stay productive, stay happy 🐝"
+      },
+      "kn": {
+        "text": "Stay productive, stay happy 🐝"
+      },
+      "ml": {
+        "text": "Stay productive, stay happy 🐝"
+      }
+    }
+  },
+  {
+    "id": 48,
+    "type": "afternoon",
+    "text": "Afternoon energy boost ✨",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "दोपहर की ऊर्जा वृद्धि ✨"
+      },
+      "mr": {
+        "text": "Afternoon energy boost ✨"
+      },
+      "gu": {
+        "text": "Afternoon energy boost ✨"
+      },
+      "bn": {
+        "text": "Afternoon energy boost ✨"
+      },
+      "ta": {
+        "text": "Afternoon energy boost ✨"
+      },
+      "te": {
+        "text": "Afternoon energy boost ✨"
+      },
+      "kn": {
+        "text": "Afternoon energy boost ✨"
+      },
+      "ml": {
+        "text": "Afternoon energy boost ✨"
+      }
+    }
+  },
+  {
+    "id": 49,
+    "type": "afternoon",
+    "text": "Good afternoon! Keep shining 🌟",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "शुभ दोपहर! चमकते रहें 🌟"
+      },
+      "mr": {
+        "text": "Good afternoon! Keep shining 🌟"
+      },
+      "gu": {
+        "text": "Good afternoon! Keep shining 🌟"
+      },
+      "bn": {
+        "text": "Good afternoon! Keep shining 🌟"
+      },
+      "ta": {
+        "text": "Good afternoon! Keep shining 🌟"
+      },
+      "te": {
+        "text": "Good afternoon! Keep shining 🌟"
+      },
+      "kn": {
+        "text": "Good afternoon! Keep shining 🌟"
+      },
+      "ml": {
+        "text": "Good afternoon! Keep shining 🌟"
+      }
+    }
+  },
+  {
+    "id": 50,
+    "type": "afternoon",
+    "text": "You've got this afternoon 🤝",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "यह दोपहर आपकी है 🤝"
+      },
+      "mr": {
+        "text": "You've got this afternoon 🤝"
+      },
+      "gu": {
+        "text": "You've got this afternoon 🤝"
+      },
+      "bn": {
+        "text": "You've got this afternoon 🤝"
+      },
+      "ta": {
+        "text": "You've got this afternoon 🤝"
+      },
+      "te": {
+        "text": "You've got this afternoon 🤝"
+      },
+      "kn": {
+        "text": "You've got this afternoon 🤝"
+      },
+      "ml": {
+        "text": "You've got this afternoon 🤝"
+      }
+    }
+  },
+  {
+    "id": 51,
+    "type": "evening",
+    "text": "Wind down and relax 🛋️",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "शांत हो जाएं और आराम करें 🛋️"
+      },
+      "mr": {
+        "text": "Wind down and relax 🛋️"
+      },
+      "gu": {
+        "text": "Wind down and relax 🛋️"
+      },
+      "bn": {
+        "text": "Wind down and relax 🛋️"
+      },
+      "ta": {
+        "text": "Wind down and relax 🛋️"
+      },
+      "te": {
+        "text": "Wind down and relax 🛋️"
+      },
+      "kn": {
+        "text": "Wind down and relax 🛋️"
+      },
+      "ml": {
+        "text": "Wind down and relax 🛋️"
+      }
+    }
+  },
+  {
+    "id": 52,
+    "type": "evening",
+    "text": "Good evening, take it easy 🌇",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "शुभ संध्या, आराम लें 🌇"
+      },
+      "mr": {
+        "text": "Good evening, take it easy 🌇"
+      },
+      "gu": {
+        "text": "Good evening, take it easy 🌇"
+      },
+      "bn": {
+        "text": "Good evening, take it easy 🌇"
+      },
+      "ta": {
+        "text": "Good evening, take it easy 🌇"
+      },
+      "te": {
+        "text": "Good evening, take it easy 🌇"
+      },
+      "kn": {
+        "text": "Good evening, take it easy 🌇"
+      },
+      "ml": {
+        "text": "Good evening, take it easy 🌇"
+      }
+    }
+  },
+  {
+    "id": 53,
+    "type": "evening",
+    "text": "The day is done, breathe out 💨",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "दिन पूरा हुआ, सांस छोड़ें 💨"
+      },
+      "mr": {
+        "text": "The day is done, breathe out 💨"
+      },
+      "gu": {
+        "text": "The day is done, breathe out 💨"
+      },
+      "bn": {
+        "text": "The day is done, breathe out 💨"
+      },
+      "ta": {
+        "text": "The day is done, breathe out 💨"
+      },
+      "te": {
+        "text": "The day is done, breathe out 💨"
+      },
+      "kn": {
+        "text": "The day is done, breathe out 💨"
+      },
+      "ml": {
+        "text": "The day is done, breathe out 💨"
+      }
+    }
+  },
+  {
+    "id": 54,
+    "type": "evening",
+    "text": "Evening peace to you 🕊️",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आपको शाम की शांति 🕊️"
+      },
+      "mr": {
+        "text": "Evening peace to you 🕊️"
+      },
+      "gu": {
+        "text": "Evening peace to you 🕊️"
+      },
+      "bn": {
+        "text": "Evening peace to you 🕊️"
+      },
+      "ta": {
+        "text": "Evening peace to you 🕊️"
+      },
+      "te": {
+        "text": "Evening peace to you 🕊️"
+      },
+      "kn": {
+        "text": "Evening peace to you 🕊️"
+      },
+      "ml": {
+        "text": "Evening peace to you 🕊️"
+      }
+    }
+  },
+  {
+    "id": 55,
+    "type": "evening",
+    "text": "Time to switch off 📴",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "बंद करने का समय आ गया है 📴"
+      },
+      "mr": {
+        "text": "Time to switch off 📴"
+      },
+      "gu": {
+        "text": "Time to switch off 📴"
+      },
+      "bn": {
+        "text": "Time to switch off 📴"
+      },
+      "ta": {
+        "text": "Time to switch off 📴"
+      },
+      "te": {
+        "text": "Time to switch off 📴"
+      },
+      "kn": {
+        "text": "Time to switch off 📴"
+      },
+      "ml": {
+        "text": "Time to switch off 📴"
+      }
+    }
+  },
+  {
+    "id": 56,
+    "type": "evening",
+    "text": "Reflect on today's little wins 🏆",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आज की छोटी जीत पर विचार करें 🏆"
+      },
+      "mr": {
+        "text": "Reflect on today's little wins 🏆"
+      },
+      "gu": {
+        "text": "Reflect on today's little wins 🏆"
+      },
+      "bn": {
+        "text": "Reflect on today's little wins 🏆"
+      },
+      "ta": {
+        "text": "Reflect on today's little wins 🏆"
+      },
+      "te": {
+        "text": "Reflect on today's little wins 🏆"
+      },
+      "kn": {
+        "text": "Reflect on today's little wins 🏆"
+      },
+      "ml": {
+        "text": "Reflect on today's little wins 🏆"
+      }
+    }
+  },
+  {
+    "id": 57,
+    "type": "evening",
+    "text": "Evening skies, quiet mind 🌌",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "शाम का आसमान, शांत मन 🌌"
+      },
+      "mr": {
+        "text": "Evening skies, quiet mind 🌌"
+      },
+      "gu": {
+        "text": "Evening skies, quiet mind 🌌"
+      },
+      "bn": {
+        "text": "Evening skies, quiet mind 🌌"
+      },
+      "ta": {
+        "text": "Evening skies, quiet mind 🌌"
+      },
+      "te": {
+        "text": "Evening skies, quiet mind 🌌"
+      },
+      "kn": {
+        "text": "Evening skies, quiet mind 🌌"
+      },
+      "ml": {
+        "text": "Evening skies, quiet mind 🌌"
+      }
+    }
+  },
+  {
+    "id": 58,
+    "type": "evening",
+    "text": "A cozy evening awaits ☕",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "एक आरामदायक शाम का इंतजार है ☕"
+      },
+      "mr": {
+        "text": "A cozy evening awaits ☕"
+      },
+      "gu": {
+        "text": "A cozy evening awaits ☕"
+      },
+      "bn": {
+        "text": "A cozy evening awaits ☕"
+      },
+      "ta": {
+        "text": "A cozy evening awaits ☕"
+      },
+      "te": {
+        "text": "A cozy evening awaits ☕"
+      },
+      "kn": {
+        "text": "A cozy evening awaits ☕"
+      },
+      "ml": {
+        "text": "A cozy evening awaits ☕"
+      }
+    }
+  },
+  {
+    "id": 59,
+    "type": "evening",
+    "text": "Good evening! Enjoy your time 🕰️",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "शुभ संध्या! अपने समय का आनंद लें 🕰️"
+      },
+      "mr": {
+        "text": "Good evening! Enjoy your time 🕰️"
+      },
+      "gu": {
+        "text": "Good evening! Enjoy your time 🕰️"
+      },
+      "bn": {
+        "text": "Good evening! Enjoy your time 🕰️"
+      },
+      "ta": {
+        "text": "Good evening! Enjoy your time 🕰️"
+      },
+      "te": {
+        "text": "Good evening! Enjoy your time 🕰️"
+      },
+      "kn": {
+        "text": "Good evening! Enjoy your time 🕰️"
+      },
+      "ml": {
+        "text": "Good evening! Enjoy your time 🕰️"
+      }
+    }
+  },
+  {
+    "id": 60,
+    "type": "evening",
+    "text": "Leave work at the door 🚪",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "काम को दरवाजे पर छोड़ दें 🚪"
+      },
+      "mr": {
+        "text": "Leave work at the door 🚪"
+      },
+      "gu": {
+        "text": "Leave work at the door 🚪"
+      },
+      "bn": {
+        "text": "Leave work at the door 🚪"
+      },
+      "ta": {
+        "text": "Leave work at the door 🚪"
+      },
+      "te": {
+        "text": "Leave work at the door 🚪"
+      },
+      "kn": {
+        "text": "Leave work at the door 🚪"
+      },
+      "ml": {
+        "text": "Leave work at the door 🚪"
+      }
+    }
+  },
+  {
+    "id": 61,
+    "type": "evening",
+    "text": "Evening tranquility 🍃",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "शाम की शांति 🍃"
+      },
+      "mr": {
+        "text": "Evening tranquility 🍃"
+      },
+      "gu": {
+        "text": "Evening tranquility 🍃"
+      },
+      "bn": {
+        "text": "Evening tranquility 🍃"
+      },
+      "ta": {
+        "text": "Evening tranquility 🍃"
+      },
+      "te": {
+        "text": "Evening tranquility 🍃"
+      },
+      "kn": {
+        "text": "Evening tranquility 🍃"
+      },
+      "ml": {
+        "text": "Evening tranquility 🍃"
+      }
+    }
+  },
+  {
+    "id": 62,
+    "type": "evening",
+    "text": "Time for family and self 👨‍👩‍👧‍👦",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "परिवार और खुद के लिए समय 👨‍👩‍👧‍👦"
+      },
+      "mr": {
+        "text": "Time for family and self 👨‍👩‍👧‍👦"
+      },
+      "gu": {
+        "text": "Time for family and self 👨‍👩‍👧‍👦"
+      },
+      "bn": {
+        "text": "Time for family and self 👨‍👩‍👧‍👦"
+      },
+      "ta": {
+        "text": "Time for family and self 👨‍👩‍👧‍👦"
+      },
+      "te": {
+        "text": "Time for family and self 👨‍👩‍👧‍👦"
+      },
+      "kn": {
+        "text": "Time for family and self 👨‍👩‍👧‍👦"
+      },
+      "ml": {
+        "text": "Time for family and self 👨‍👩‍👧‍👦"
+      }
+    }
+  },
+  {
+    "id": 63,
+    "type": "evening",
+    "text": "Good evening, beautiful soul ✨",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "शुभ संध्या, सुंदर आत्मा ✨"
+      },
+      "mr": {
+        "text": "Good evening, beautiful soul ✨"
+      },
+      "gu": {
+        "text": "Good evening, beautiful soul ✨"
+      },
+      "bn": {
+        "text": "Good evening, beautiful soul ✨"
+      },
+      "ta": {
+        "text": "Good evening, beautiful soul ✨"
+      },
+      "te": {
+        "text": "Good evening, beautiful soul ✨"
+      },
+      "kn": {
+        "text": "Good evening, beautiful soul ✨"
+      },
+      "ml": {
+        "text": "Good evening, beautiful soul ✨"
+      }
+    }
+  },
+  {
+    "id": 64,
+    "type": "evening",
+    "text": "Sunset vibes for you 🌅",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आपके लिए सूर्यास्त की शुभकामनाएं 🌅"
+      },
+      "mr": {
+        "text": "Sunset vibes for you 🌅"
+      },
+      "gu": {
+        "text": "Sunset vibes for you 🌅"
+      },
+      "bn": {
+        "text": "Sunset vibes for you 🌅"
+      },
+      "ta": {
+        "text": "Sunset vibes for you 🌅"
+      },
+      "te": {
+        "text": "Sunset vibes for you 🌅"
+      },
+      "kn": {
+        "text": "Sunset vibes for you 🌅"
+      },
+      "ml": {
+        "text": "Sunset vibes for you 🌅"
+      }
+    }
+  },
+  {
+    "id": 65,
+    "type": "evening",
+    "text": "Unwind with a grateful heart ❤️",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आभारी हृदय के साथ आराम करें ❤️"
+      },
+      "mr": {
+        "text": "Unwind with a grateful heart ❤️"
+      },
+      "gu": {
+        "text": "Unwind with a grateful heart ❤️"
+      },
+      "bn": {
+        "text": "Unwind with a grateful heart ❤️"
+      },
+      "ta": {
+        "text": "Unwind with a grateful heart ❤️"
+      },
+      "te": {
+        "text": "Unwind with a grateful heart ❤️"
+      },
+      "kn": {
+        "text": "Unwind with a grateful heart ❤️"
+      },
+      "ml": {
+        "text": "Unwind with a grateful heart ❤️"
+      }
+    }
+  },
+  {
+    "id": 66,
+    "type": "evening",
+    "text": "The evening is yours to enjoy 🍷",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "यह शाम आपके आनंद के लिए है 🍷"
+      },
+      "mr": {
+        "text": "The evening is yours to enjoy 🍷"
+      },
+      "gu": {
+        "text": "The evening is yours to enjoy 🍷"
+      },
+      "bn": {
+        "text": "The evening is yours to enjoy 🍷"
+      },
+      "ta": {
+        "text": "The evening is yours to enjoy 🍷"
+      },
+      "te": {
+        "text": "The evening is yours to enjoy 🍷"
+      },
+      "kn": {
+        "text": "The evening is yours to enjoy 🍷"
+      },
+      "ml": {
+        "text": "The evening is yours to enjoy 🍷"
+      }
+    }
+  },
+  {
+    "id": 67,
+    "type": "evening",
+    "text": "Evening calm replaces day's rush 🧘",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "शाम की शांति दिन की भीड़ की जगह लेती है 🧘"
+      },
+      "mr": {
+        "text": "Evening calm replaces day's rush 🧘"
+      },
+      "gu": {
+        "text": "Evening calm replaces day's rush 🧘"
+      },
+      "bn": {
+        "text": "Evening calm replaces day's rush 🧘"
+      },
+      "ta": {
+        "text": "Evening calm replaces day's rush 🧘"
+      },
+      "te": {
+        "text": "Evening calm replaces day's rush 🧘"
+      },
+      "kn": {
+        "text": "Evening calm replaces day's rush 🧘"
+      },
+      "ml": {
+        "text": "Evening calm replaces day's rush 🧘"
+      }
+    }
+  },
+  {
+    "id": 68,
+    "type": "evening",
+    "text": "Hope today treated you well 🌸",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आशा है आज का दिन आपके लिए अच्छा रहा 🌸"
+      },
+      "mr": {
+        "text": "Hope today treated you well 🌸"
+      },
+      "gu": {
+        "text": "Hope today treated you well 🌸"
+      },
+      "bn": {
+        "text": "Hope today treated you well 🌸"
+      },
+      "ta": {
+        "text": "Hope today treated you well 🌸"
+      },
+      "te": {
+        "text": "Hope today treated you well 🌸"
+      },
+      "kn": {
+        "text": "Hope today treated you well 🌸"
+      },
+      "ml": {
+        "text": "Hope today treated you well 🌸"
+      }
+    }
+  },
+  {
+    "id": 69,
+    "type": "evening",
+    "text": "Relax, you survived the day 🪴",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आराम करें, आपने दिन गुजार लिया 🪴"
+      },
+      "mr": {
+        "text": "Relax, you survived the day 🪴"
+      },
+      "gu": {
+        "text": "Relax, you survived the day 🪴"
+      },
+      "bn": {
+        "text": "Relax, you survived the day 🪴"
+      },
+      "ta": {
+        "text": "Relax, you survived the day 🪴"
+      },
+      "te": {
+        "text": "Relax, you survived the day 🪴"
+      },
+      "kn": {
+        "text": "Relax, you survived the day 🪴"
+      },
+      "ml": {
+        "text": "Relax, you survived the day 🪴"
+      }
+    }
+  },
+  {
+    "id": 70,
+    "type": "evening",
+    "text": "Good evening, stay safe 🛡️",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "शुभ संध्या, सुरक्षित रहें 🛡️"
+      },
+      "mr": {
+        "text": "Good evening, stay safe 🛡️"
+      },
+      "gu": {
+        "text": "Good evening, stay safe 🛡️"
+      },
+      "bn": {
+        "text": "Good evening, stay safe 🛡️"
+      },
+      "ta": {
+        "text": "Good evening, stay safe 🛡️"
+      },
+      "te": {
+        "text": "Good evening, stay safe 🛡️"
+      },
+      "kn": {
+        "text": "Good evening, stay safe 🛡️"
+      },
+      "ml": {
+        "text": "Good evening, stay safe 🛡️"
+      }
+    }
+  },
+  {
+    "id": 71,
+    "type": "evening",
+    "text": "A quiet evening is a blessing 🙏",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "एक शांत शाम एक आशीर्वाद है 🙏"
+      },
+      "mr": {
+        "text": "A quiet evening is a blessing 🙏"
+      },
+      "gu": {
+        "text": "A quiet evening is a blessing 🙏"
+      },
+      "bn": {
+        "text": "A quiet evening is a blessing 🙏"
+      },
+      "ta": {
+        "text": "A quiet evening is a blessing 🙏"
+      },
+      "te": {
+        "text": "A quiet evening is a blessing 🙏"
+      },
+      "kn": {
+        "text": "A quiet evening is a blessing 🙏"
+      },
+      "ml": {
+        "text": "A quiet evening is a blessing 🙏"
+      }
+    }
+  },
+  {
+    "id": 72,
+    "type": "evening",
+    "text": "Watch the stars appear ⭐",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "सितारों को निकलते हुए देखें ⭐"
+      },
+      "mr": {
+        "text": "Watch the stars appear ⭐"
+      },
+      "gu": {
+        "text": "Watch the stars appear ⭐"
+      },
+      "bn": {
+        "text": "Watch the stars appear ⭐"
+      },
+      "ta": {
+        "text": "Watch the stars appear ⭐"
+      },
+      "te": {
+        "text": "Watch the stars appear ⭐"
+      },
+      "kn": {
+        "text": "Watch the stars appear ⭐"
+      },
+      "ml": {
+        "text": "Watch the stars appear ⭐"
+      }
+    }
+  },
+  {
+    "id": 73,
+    "type": "evening",
+    "text": "Evening shadows bring peace 🌒",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "शाम की छायाएं शांति लाती हैं 🌒"
+      },
+      "mr": {
+        "text": "Evening shadows bring peace 🌒"
+      },
+      "gu": {
+        "text": "Evening shadows bring peace 🌒"
+      },
+      "bn": {
+        "text": "Evening shadows bring peace 🌒"
+      },
+      "ta": {
+        "text": "Evening shadows bring peace 🌒"
+      },
+      "te": {
+        "text": "Evening shadows bring peace 🌒"
+      },
+      "kn": {
+        "text": "Evening shadows bring peace 🌒"
+      },
+      "ml": {
+        "text": "Evening shadows bring peace 🌒"
+      }
+    }
+  },
+  {
+    "id": 74,
+    "type": "evening",
+    "text": "Good evening! Let go of stress 🍂",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "शुभ संध्या! तनाव छोड़ें 🍂"
+      },
+      "mr": {
+        "text": "Good evening! Let go of stress 🍂"
+      },
+      "gu": {
+        "text": "Good evening! Let go of stress 🍂"
+      },
+      "bn": {
+        "text": "Good evening! Let go of stress 🍂"
+      },
+      "ta": {
+        "text": "Good evening! Let go of stress 🍂"
+      },
+      "te": {
+        "text": "Good evening! Let go of stress 🍂"
+      },
+      "kn": {
+        "text": "Good evening! Let go of stress 🍂"
+      },
+      "ml": {
+        "text": "Good evening! Let go of stress 🍂"
+      }
+    }
+  },
+  {
+    "id": 75,
+    "type": "evening",
+    "text": "Soft evening light to you 🕯️",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आपको नरम शाम की रोशनी 🕯️"
+      },
+      "mr": {
+        "text": "Soft evening light to you 🕯️"
+      },
+      "gu": {
+        "text": "Soft evening light to you 🕯️"
+      },
+      "bn": {
+        "text": "Soft evening light to you 🕯️"
+      },
+      "ta": {
+        "text": "Soft evening light to you 🕯️"
+      },
+      "te": {
+        "text": "Soft evening light to you 🕯️"
+      },
+      "kn": {
+        "text": "Soft evening light to you 🕯️"
+      },
+      "ml": {
+        "text": "Soft evening light to you 🕯️"
+      }
+    }
+  },
+  {
+    "id": 76,
+    "type": "night",
+    "text": "Rest well, you've earned it 🌙",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "अच्छी तरह आराम करें, आपने इसे कमाया है 🌙"
+      },
+      "mr": {
+        "text": "Rest well, you've earned it 🌙"
+      },
+      "gu": {
+        "text": "Rest well, you've earned it 🌙"
+      },
+      "bn": {
+        "text": "Rest well, you've earned it 🌙"
+      },
+      "ta": {
+        "text": "Rest well, you've earned it 🌙"
+      },
+      "te": {
+        "text": "Rest well, you've earned it 🌙"
+      },
+      "kn": {
+        "text": "Rest well, you've earned it 🌙"
+      },
+      "ml": {
+        "text": "Rest well, you've earned it 🌙"
+      }
+    }
+  },
+  {
+    "id": 77,
+    "type": "night",
+    "text": "Peaceful night to you ✨",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आपके लिए शांतिपूर्ण रात ✨"
+      },
+      "mr": {
+        "text": "Peaceful night to you ✨"
+      },
+      "gu": {
+        "text": "Peaceful night to you ✨"
+      },
+      "bn": {
+        "text": "Peaceful night to you ✨"
+      },
+      "ta": {
+        "text": "Peaceful night to you ✨"
+      },
+      "te": {
+        "text": "Peaceful night to you ✨"
+      },
+      "kn": {
+        "text": "Peaceful night to you ✨"
+      },
+      "ml": {
+        "text": "Peaceful night to you ✨"
+      }
+    }
+  },
+  {
+    "id": 78,
+    "type": "night",
+    "text": "Time to recharge 🔋",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "रिचार्ज करने का समय 🔋"
+      },
+      "mr": {
+        "text": "Time to recharge 🔋"
+      },
+      "gu": {
+        "text": "Time to recharge 🔋"
+      },
+      "bn": {
+        "text": "Time to recharge 🔋"
+      },
+      "ta": {
+        "text": "Time to recharge 🔋"
+      },
+      "te": {
+        "text": "Time to recharge 🔋"
+      },
+      "kn": {
+        "text": "Time to recharge 🔋"
+      },
+      "ml": {
+        "text": "Time to recharge 🔋"
+      }
+    }
+  },
+  {
+    "id": 79,
+    "type": "night",
+    "text": "Good night, sleep tight 🛏️",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "शुभ रात्रि, मीठे सपने 🛏️"
+      },
+      "mr": {
+        "text": "Good night, sleep tight 🛏️"
+      },
+      "gu": {
+        "text": "Good night, sleep tight 🛏️"
+      },
+      "bn": {
+        "text": "Good night, sleep tight 🛏️"
+      },
+      "ta": {
+        "text": "Good night, sleep tight 🛏️"
+      },
+      "te": {
+        "text": "Good night, sleep tight 🛏️"
+      },
+      "kn": {
+        "text": "Good night, sleep tight 🛏️"
+      },
+      "ml": {
+        "text": "Good night, sleep tight 🛏️"
+      }
+    }
+  },
+  {
+    "id": 80,
+    "type": "night",
+    "text": "Let the stars sing you a lullaby 🎶",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "सितारों को आपको लोरी गाने दें 🎶"
+      },
+      "mr": {
+        "text": "Let the stars sing you a lullaby 🎶"
+      },
+      "gu": {
+        "text": "Let the stars sing you a lullaby 🎶"
+      },
+      "bn": {
+        "text": "Let the stars sing you a lullaby 🎶"
+      },
+      "ta": {
+        "text": "Let the stars sing you a lullaby 🎶"
+      },
+      "te": {
+        "text": "Let the stars sing you a lullaby 🎶"
+      },
+      "kn": {
+        "text": "Let the stars sing you a lullaby 🎶"
+      },
+      "ml": {
+        "text": "Let the stars sing you a lullaby 🎶"
+      }
+    }
+  },
+  {
+    "id": 81,
+    "type": "night",
+    "text": "Night brings quiet healing 🩹",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "रात शांत उपचार लाती है 🩹"
+      },
+      "mr": {
+        "text": "Night brings quiet healing 🩹"
+      },
+      "gu": {
+        "text": "Night brings quiet healing 🩹"
+      },
+      "bn": {
+        "text": "Night brings quiet healing 🩹"
+      },
+      "ta": {
+        "text": "Night brings quiet healing 🩹"
+      },
+      "te": {
+        "text": "Night brings quiet healing 🩹"
+      },
+      "kn": {
+        "text": "Night brings quiet healing 🩹"
+      },
+      "ml": {
+        "text": "Night brings quiet healing 🩹"
+      }
+    }
+  },
+  {
+    "id": 82,
+    "type": "night",
+    "text": "Dream big tonight 💭",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आज रात बड़े सपने देखें 💭"
+      },
+      "mr": {
+        "text": "Dream big tonight 💭"
+      },
+      "gu": {
+        "text": "Dream big tonight 💭"
+      },
+      "bn": {
+        "text": "Dream big tonight 💭"
+      },
+      "ta": {
+        "text": "Dream big tonight 💭"
+      },
+      "te": {
+        "text": "Dream big tonight 💭"
+      },
+      "kn": {
+        "text": "Dream big tonight 💭"
+      },
+      "ml": {
+        "text": "Dream big tonight 💭"
+      }
+    }
+  },
+  {
+    "id": 83,
+    "type": "night",
+    "text": "Good night, tomorrow is new 🌅",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "शुभ रात्रि, कल नया है 🌅"
+      },
+      "mr": {
+        "text": "Good night, tomorrow is new 🌅"
+      },
+      "gu": {
+        "text": "Good night, tomorrow is new 🌅"
+      },
+      "bn": {
+        "text": "Good night, tomorrow is new 🌅"
+      },
+      "ta": {
+        "text": "Good night, tomorrow is new 🌅"
+      },
+      "te": {
+        "text": "Good night, tomorrow is new 🌅"
+      },
+      "kn": {
+        "text": "Good night, tomorrow is new 🌅"
+      },
+      "ml": {
+        "text": "Good night, tomorrow is new 🌅"
+      }
+    }
+  },
+  {
+    "id": 84,
+    "type": "night",
+    "text": "A deeply restful night to you 🧘",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आपको एक गहरी शांतिपूर्ण रात 🧘"
+      },
+      "mr": {
+        "text": "A deeply restful night to you 🧘"
+      },
+      "gu": {
+        "text": "A deeply restful night to you 🧘"
+      },
+      "bn": {
+        "text": "A deeply restful night to you 🧘"
+      },
+      "ta": {
+        "text": "A deeply restful night to you 🧘"
+      },
+      "te": {
+        "text": "A deeply restful night to you 🧘"
+      },
+      "kn": {
+        "text": "A deeply restful night to you 🧘"
+      },
+      "ml": {
+        "text": "A deeply restful night to you 🧘"
+      }
+    }
+  },
+  {
+    "id": 85,
+    "type": "night",
+    "text": "Close your eyes, find peace 😌",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "अपनी आंखें बंद करें, शांति पाएं 😌"
+      },
+      "mr": {
+        "text": "Close your eyes, find peace 😌"
+      },
+      "gu": {
+        "text": "Close your eyes, find peace 😌"
+      },
+      "bn": {
+        "text": "Close your eyes, find peace 😌"
+      },
+      "ta": {
+        "text": "Close your eyes, find peace 😌"
+      },
+      "te": {
+        "text": "Close your eyes, find peace 😌"
+      },
+      "kn": {
+        "text": "Close your eyes, find peace 😌"
+      },
+      "ml": {
+        "text": "Close your eyes, find peace 😌"
+      }
+    }
+  },
+  {
+    "id": 86,
+    "type": "night",
+    "text": "The world sleeps, so should you 🌍",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "दुनिया सोती है, आपको भी सोना चाहिए 🌍"
+      },
+      "mr": {
+        "text": "The world sleeps, so should you 🌍"
+      },
+      "gu": {
+        "text": "The world sleeps, so should you 🌍"
+      },
+      "bn": {
+        "text": "The world sleeps, so should you 🌍"
+      },
+      "ta": {
+        "text": "The world sleeps, so should you 🌍"
+      },
+      "te": {
+        "text": "The world sleeps, so should you 🌍"
+      },
+      "kn": {
+        "text": "The world sleeps, so should you 🌍"
+      },
+      "ml": {
+        "text": "The world sleeps, so should you 🌍"
+      }
+    }
+  },
+  {
+    "id": 87,
+    "type": "night",
+    "text": "Good night, starry soul 🌌",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "शुभ रात्रि, तारों वाली आत्मा 🌌"
+      },
+      "mr": {
+        "text": "Good night, starry soul 🌌"
+      },
+      "gu": {
+        "text": "Good night, starry soul 🌌"
+      },
+      "bn": {
+        "text": "Good night, starry soul 🌌"
+      },
+      "ta": {
+        "text": "Good night, starry soul 🌌"
+      },
+      "te": {
+        "text": "Good night, starry soul 🌌"
+      },
+      "kn": {
+        "text": "Good night, starry soul 🌌"
+      },
+      "ml": {
+        "text": "Good night, starry soul 🌌"
+      }
+    }
+  },
+  {
+    "id": 88,
+    "type": "night",
+    "text": "Let go of today completely 🎈",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आज को पूरी तरह से जाने दो 🎈"
+      },
+      "mr": {
+        "text": "Let go of today completely 🎈"
+      },
+      "gu": {
+        "text": "Let go of today completely 🎈"
+      },
+      "bn": {
+        "text": "Let go of today completely 🎈"
+      },
+      "ta": {
+        "text": "Let go of today completely 🎈"
+      },
+      "te": {
+        "text": "Let go of today completely 🎈"
+      },
+      "kn": {
+        "text": "Let go of today completely 🎈"
+      },
+      "ml": {
+        "text": "Let go of today completely 🎈"
+      }
+    }
+  },
+  {
+    "id": 89,
+    "type": "night",
+    "text": "Nighttime serenity 🦢",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "रात की शांति 🦢"
+      },
+      "mr": {
+        "text": "Nighttime serenity 🦢"
+      },
+      "gu": {
+        "text": "Nighttime serenity 🦢"
+      },
+      "bn": {
+        "text": "Nighttime serenity 🦢"
+      },
+      "ta": {
+        "text": "Nighttime serenity 🦢"
+      },
+      "te": {
+        "text": "Nighttime serenity 🦢"
+      },
+      "kn": {
+        "text": "Nighttime serenity 🦢"
+      },
+      "ml": {
+        "text": "Nighttime serenity 🦢"
+      }
+    }
+  },
+  {
+    "id": 90,
+    "type": "night",
+    "text": "Sleep well, guardian of dreams 🧚",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "अच्छी तरह सोएं, सपनों के रक्षक 🧚"
+      },
+      "mr": {
+        "text": "Sleep well, guardian of dreams 🧚"
+      },
+      "gu": {
+        "text": "Sleep well, guardian of dreams 🧚"
+      },
+      "bn": {
+        "text": "Sleep well, guardian of dreams 🧚"
+      },
+      "ta": {
+        "text": "Sleep well, guardian of dreams 🧚"
+      },
+      "te": {
+        "text": "Sleep well, guardian of dreams 🧚"
+      },
+      "kn": {
+        "text": "Sleep well, guardian of dreams 🧚"
+      },
+      "ml": {
+        "text": "Sleep well, guardian of dreams 🧚"
+      }
+    }
+  },
+  {
+    "id": 91,
+    "type": "festival",
+    "text": "Shubh Deepawali! 🪔",
+    "tags": [
+      "diwali"
+    ],
+    "translations": {
+      "hi": {
+        "text": "शुभ दीपावली! 🪔"
+      },
+      "mr": {
+        "text": "Shubh Deepawali! 🪔"
+      },
+      "gu": {
+        "text": "Shubh Deepawali! 🪔"
+      },
+      "bn": {
+        "text": "Shubh Deepawali! 🪔"
+      },
+      "ta": {
+        "text": "Shubh Deepawali! 🪔"
+      },
+      "te": {
+        "text": "Shubh Deepawali! 🪔"
+      },
+      "kn": {
+        "text": "Shubh Deepawali! 🪔"
+      },
+      "ml": {
+        "text": "Shubh Deepawali! 🪔"
+      }
+    }
+  },
+  {
+    "id": 92,
+    "type": "festival",
+    "text": "May your life be as bright as the diyas ✨",
+    "tags": [
+      "diwali"
+    ],
+    "translations": {
+      "hi": {
+        "text": "आपका जीवन दीयों जितना उज्ज्वल हो ✨"
+      },
+      "mr": {
+        "text": "May your life be as bright as the diyas ✨"
+      },
+      "gu": {
+        "text": "May your life be as bright as the diyas ✨"
+      },
+      "bn": {
+        "text": "May your life be as bright as the diyas ✨"
+      },
+      "ta": {
+        "text": "May your life be as bright as the diyas ✨"
+      },
+      "te": {
+        "text": "May your life be as bright as the diyas ✨"
+      },
+      "kn": {
+        "text": "May your life be as bright as the diyas ✨"
+      },
+      "ml": {
+        "text": "May your life be as bright as the diyas ✨"
+      }
+    }
+  },
+  {
+    "id": 93,
+    "type": "festival",
+    "text": "Let light conquer darkness 🎇",
+    "tags": [
+      "diwali"
+    ],
+    "translations": {
+      "hi": {
+        "text": "प्रकाश को अंधकार पर विजय प्राप्त करने दें 🎇"
+      },
+      "mr": {
+        "text": "Let light conquer darkness 🎇"
+      },
+      "gu": {
+        "text": "Let light conquer darkness 🎇"
+      },
+      "bn": {
+        "text": "Let light conquer darkness 🎇"
+      },
+      "ta": {
+        "text": "Let light conquer darkness 🎇"
+      },
+      "te": {
+        "text": "Let light conquer darkness 🎇"
+      },
+      "kn": {
+        "text": "Let light conquer darkness 🎇"
+      },
+      "ml": {
+        "text": "Let light conquer darkness 🎇"
+      }
+    }
+  },
+  {
+    "id": 94,
+    "type": "festival",
+    "text": "Happy Holi! Paint your life with joy 🎨",
+    "tags": [
+      "holi"
+    ],
+    "translations": {
+      "hi": {
+        "text": "होली की शुभकामनाएं! अपने जीवन को खुशियों से रंगें 🎨"
+      },
+      "mr": {
+        "text": "Happy Holi! Paint your life with joy 🎨"
+      },
+      "gu": {
+        "text": "Happy Holi! Paint your life with joy 🎨"
+      },
+      "bn": {
+        "text": "Happy Holi! Paint your life with joy 🎨"
+      },
+      "ta": {
+        "text": "Happy Holi! Paint your life with joy 🎨"
+      },
+      "te": {
+        "text": "Happy Holi! Paint your life with joy 🎨"
+      },
+      "kn": {
+        "text": "Happy Holi! Paint your life with joy 🎨"
+      },
+      "ml": {
+        "text": "Happy Holi! Paint your life with joy 🎨"
+      }
+    }
+  },
+  {
+    "id": 95,
+    "type": "festival",
+    "text": "Splash the colors of love today ❤️💙",
+    "tags": [
+      "holi"
+    ],
+    "translations": {
+      "hi": {
+        "text": "आज प्यार के रंग बिखेरें ❤️💙"
+      },
+      "mr": {
+        "text": "Splash the colors of love today ❤️💙"
+      },
+      "gu": {
+        "text": "Splash the colors of love today ❤️💙"
+      },
+      "bn": {
+        "text": "Splash the colors of love today ❤️💙"
+      },
+      "ta": {
+        "text": "Splash the colors of love today ❤️💙"
+      },
+      "te": {
+        "text": "Splash the colors of love today ❤️💙"
+      },
+      "kn": {
+        "text": "Splash the colors of love today ❤️💙"
+      },
+      "ml": {
+        "text": "Splash the colors of love today ❤️💙"
+      }
+    }
+  },
+  {
+    "id": 96,
+    "type": "festival",
+    "text": "Happy Dussehra! Good always wins 🏹",
+    "tags": [
+      "dussehra",
+      "navratri"
+    ],
+    "translations": {
+      "hi": {
+        "text": "शुभ दशहरा! अच्छाई की हमेशा जीत होती है 🏹"
+      },
+      "mr": {
+        "text": "Happy Dussehra! Good always wins 🏹"
+      },
+      "gu": {
+        "text": "Happy Dussehra! Good always wins 🏹"
+      },
+      "bn": {
+        "text": "Happy Dussehra! Good always wins 🏹"
+      },
+      "ta": {
+        "text": "Happy Dussehra! Good always wins 🏹"
+      },
+      "te": {
+        "text": "Happy Dussehra! Good always wins 🏹"
+      },
+      "kn": {
+        "text": "Happy Dussehra! Good always wins 🏹"
+      },
+      "ml": {
+        "text": "Happy Dussehra! Good always wins 🏹"
+      }
+    }
+  },
+  {
+    "id": 97,
+    "type": "festival",
+    "text": "May all your worries burn away today 🔥",
+    "tags": [
+      "dussehra",
+      "holika"
+    ],
+    "translations": {
+      "hi": {
+        "text": "आपकी सारी चिंताएं आज दूर हो जाएं 🔥"
+      },
+      "mr": {
+        "text": "May all your worries burn away today 🔥"
+      },
+      "gu": {
+        "text": "May all your worries burn away today 🔥"
+      },
+      "bn": {
+        "text": "May all your worries burn away today 🔥"
+      },
+      "ta": {
+        "text": "May all your worries burn away today 🔥"
+      },
+      "te": {
+        "text": "May all your worries burn away today 🔥"
+      },
+      "kn": {
+        "text": "May all your worries burn away today 🔥"
+      },
+      "ml": {
+        "text": "May all your worries burn away today 🔥"
+      }
+    }
+  },
+  {
+    "id": 98,
+    "type": "festival",
+    "text": "Eid Mubarak! Peace and joy to you 🌙",
+    "tags": [
+      "eid"
+    ],
+    "translations": {
+      "hi": {
+        "text": "ईद मुबारक! आपको शांति और खुशी मिले 🌙"
+      },
+      "mr": {
+        "text": "Eid Mubarak! Peace and joy to you 🌙"
+      },
+      "gu": {
+        "text": "Eid Mubarak! Peace and joy to you 🌙"
+      },
+      "bn": {
+        "text": "Eid Mubarak! Peace and joy to you 🌙"
+      },
+      "ta": {
+        "text": "Eid Mubarak! Peace and joy to you 🌙"
+      },
+      "te": {
+        "text": "Eid Mubarak! Peace and joy to you 🌙"
+      },
+      "kn": {
+        "text": "Eid Mubarak! Peace and joy to you 🌙"
+      },
+      "ml": {
+        "text": "Eid Mubarak! Peace and joy to you 🌙"
+      }
+    }
+  },
+  {
+    "id": 99,
+    "type": "festival",
+    "text": "May this Eid bring countless blessings 🤲",
+    "tags": [
+      "eid"
+    ],
+    "translations": {
+      "hi": {
+        "text": "यह ईद अनगिनत आशीर्वाद लाए 🤲"
+      },
+      "mr": {
+        "text": "May this Eid bring countless blessings 🤲"
+      },
+      "gu": {
+        "text": "May this Eid bring countless blessings 🤲"
+      },
+      "bn": {
+        "text": "May this Eid bring countless blessings 🤲"
+      },
+      "ta": {
+        "text": "May this Eid bring countless blessings 🤲"
+      },
+      "te": {
+        "text": "May this Eid bring countless blessings 🤲"
+      },
+      "kn": {
+        "text": "May this Eid bring countless blessings 🤲"
+      },
+      "ml": {
+        "text": "May this Eid bring countless blessings 🤲"
+      }
+    }
+  },
+  {
+    "id": 100,
+    "type": "festival",
+    "text": "Merry Christmas! 🎄",
+    "tags": [
+      "christmas"
+    ],
+    "translations": {
+      "hi": {
+        "text": "क्रिसमस की बधाई! 🎄"
+      },
+      "mr": {
+        "text": "Merry Christmas! 🎄"
+      },
+      "gu": {
+        "text": "Merry Christmas! 🎄"
+      },
+      "bn": {
+        "text": "Merry Christmas! 🎄"
+      },
+      "ta": {
+        "text": "Merry Christmas! 🎄"
+      },
+      "te": {
+        "text": "Merry Christmas! 🎄"
+      },
+      "kn": {
+        "text": "Merry Christmas! 🎄"
+      },
+      "ml": {
+        "text": "Merry Christmas! 🎄"
+      }
+    }
+  },
+  {
+    "id": 101,
+    "type": "festival",
+    "text": "Joy to the world and to you 🎅",
+    "tags": [
+      "christmas"
+    ],
+    "translations": {
+      "hi": {
+        "text": "दुनिया और आपको खुशी 🎅"
+      },
+      "mr": {
+        "text": "Joy to the world and to you 🎅"
+      },
+      "gu": {
+        "text": "Joy to the world and to you 🎅"
+      },
+      "bn": {
+        "text": "Joy to the world and to you 🎅"
+      },
+      "ta": {
+        "text": "Joy to the world and to you 🎅"
+      },
+      "te": {
+        "text": "Joy to the world and to you 🎅"
+      },
+      "kn": {
+        "text": "Joy to the world and to you 🎅"
+      },
+      "ml": {
+        "text": "Joy to the world and to you 🎅"
+      }
+    }
+  },
+  {
+    "id": 102,
+    "type": "festival",
+    "text": "Wishing you boundless festive joy 🎊",
+    "tags": [
+      "general_festival"
+    ],
+    "translations": {
+      "hi": {
+        "text": "असीम उत्सव की खुशी की शुभकामनाएं 🎊"
+      },
+      "mr": {
+        "text": "Wishing you boundless festive joy 🎊"
+      },
+      "gu": {
+        "text": "Wishing you boundless festive joy 🎊"
+      },
+      "bn": {
+        "text": "Wishing you boundless festive joy 🎊"
+      },
+      "ta": {
+        "text": "Wishing you boundless festive joy 🎊"
+      },
+      "te": {
+        "text": "Wishing you boundless festive joy 🎊"
+      },
+      "kn": {
+        "text": "Wishing you boundless festive joy 🎊"
+      },
+      "ml": {
+        "text": "Wishing you boundless festive joy 🎊"
+      }
+    }
+  },
+  {
+    "id": 103,
+    "type": "festival",
+    "text": "Celebrate today with all your heart 💖",
+    "tags": [
+      "general_festival"
+    ],
+    "translations": {
+      "hi": {
+        "text": "आज पूरे दिल से जश्न मनाएं 💖"
+      },
+      "mr": {
+        "text": "Celebrate today with all your heart 💖"
+      },
+      "gu": {
+        "text": "Celebrate today with all your heart 💖"
+      },
+      "bn": {
+        "text": "Celebrate today with all your heart 💖"
+      },
+      "ta": {
+        "text": "Celebrate today with all your heart 💖"
+      },
+      "te": {
+        "text": "Celebrate today with all your heart 💖"
+      },
+      "kn": {
+        "text": "Celebrate today with all your heart 💖"
+      },
+      "ml": {
+        "text": "Celebrate today with all your heart 💖"
+      }
+    }
+  },
+  {
+    "id": 104,
+    "type": "festival",
+    "text": "Har Har Mahadev! 🔱",
+    "tags": [
+      "shivratri"
+    ],
+    "translations": {
+      "hi": {
+        "text": "हर हर महादेव! 🔱"
+      },
+      "mr": {
+        "text": "Har Har Mahadev! 🔱"
+      },
+      "gu": {
+        "text": "Har Har Mahadev! 🔱"
+      },
+      "bn": {
+        "text": "Har Har Mahadev! 🔱"
+      },
+      "ta": {
+        "text": "Har Har Mahadev! 🔱"
+      },
+      "te": {
+        "text": "Har Har Mahadev! 🔱"
+      },
+      "kn": {
+        "text": "Har Har Mahadev! 🔱"
+      },
+      "ml": {
+        "text": "Har Har Mahadev! 🔱"
+      }
+    }
+  },
+  {
+    "id": 105,
+    "type": "festival",
+    "text": "May Lord Shiva bless you with strength 💪",
+    "tags": [
+      "shivratri"
+    ],
+    "translations": {
+      "hi": {
+        "text": "भगवान शिव आपको शक्ति प्रदान करें 💪"
+      },
+      "mr": {
+        "text": "May Lord Shiva bless you with strength 💪"
+      },
+      "gu": {
+        "text": "May Lord Shiva bless you with strength 💪"
+      },
+      "bn": {
+        "text": "May Lord Shiva bless you with strength 💪"
+      },
+      "ta": {
+        "text": "May Lord Shiva bless you with strength 💪"
+      },
+      "te": {
+        "text": "May Lord Shiva bless you with strength 💪"
+      },
+      "kn": {
+        "text": "May Lord Shiva bless you with strength 💪"
+      },
+      "ml": {
+        "text": "May Lord Shiva bless you with strength 💪"
+      }
+    }
+  },
+  {
+    "id": 106,
+    "type": "festival",
+    "text": "Ganpati Bappa Morya! 🙏",
+    "tags": [
+      "ganesh_chaturthi"
+    ],
+    "translations": {
+      "hi": {
+        "text": "गणपति बप्पा मोरिया! 🙏"
+      },
+      "mr": {
+        "text": "Ganpati Bappa Morya! 🙏"
+      },
+      "gu": {
+        "text": "Ganpati Bappa Morya! 🙏"
+      },
+      "bn": {
+        "text": "Ganpati Bappa Morya! 🙏"
+      },
+      "ta": {
+        "text": "Ganpati Bappa Morya! 🙏"
+      },
+      "te": {
+        "text": "Ganpati Bappa Morya! 🙏"
+      },
+      "kn": {
+        "text": "Ganpati Bappa Morya! 🙏"
+      },
+      "ml": {
+        "text": "Ganpati Bappa Morya! 🙏"
+      }
+    }
+  },
+  {
+    "id": 107,
+    "type": "festival",
+    "text": "May Bappa remove all your obstacles 🐘",
+    "tags": [
+      "ganesh_chaturthi"
+    ],
+    "translations": {
+      "hi": {
+        "text": "बप्पा आपकी सारी बाधाएं दूर करें 🐘"
+      },
+      "mr": {
+        "text": "May Bappa remove all your obstacles 🐘"
+      },
+      "gu": {
+        "text": "May Bappa remove all your obstacles 🐘"
+      },
+      "bn": {
+        "text": "May Bappa remove all your obstacles 🐘"
+      },
+      "ta": {
+        "text": "May Bappa remove all your obstacles 🐘"
+      },
+      "te": {
+        "text": "May Bappa remove all your obstacles 🐘"
+      },
+      "kn": {
+        "text": "May Bappa remove all your obstacles 🐘"
+      },
+      "ml": {
+        "text": "May Bappa remove all your obstacles 🐘"
+      }
+    }
+  },
+  {
+    "id": 108,
+    "type": "festival",
+    "text": "Happy Independence Day! 🇮🇳",
+    "tags": [
+      "independence_day",
+      "republic_day"
+    ],
+    "translations": {
+      "hi": {
+        "text": "स्वतंत्रता दिवस की शुभकामनाएं! 🇮🇳"
+      },
+      "mr": {
+        "text": "Happy Independence Day! 🇮🇳"
+      },
+      "gu": {
+        "text": "Happy Independence Day! 🇮🇳"
+      },
+      "bn": {
+        "text": "Happy Independence Day! 🇮🇳"
+      },
+      "ta": {
+        "text": "Happy Independence Day! 🇮🇳"
+      },
+      "te": {
+        "text": "Happy Independence Day! 🇮🇳"
+      },
+      "kn": {
+        "text": "Happy Independence Day! 🇮🇳"
+      },
+      "ml": {
+        "text": "Happy Independence Day! 🇮🇳"
+      }
+    }
+  },
+  {
+    "id": 109,
+    "type": "festival",
+    "text": "Proud to be Indian today and always 🪷",
+    "tags": [
+      "independence_day",
+      "republic_day"
+    ],
+    "translations": {
+      "hi": {
+        "text": "आज और हमेशा भारतीय होने पर गर्व है 🪷"
+      },
+      "mr": {
+        "text": "Proud to be Indian today and always 🪷"
+      },
+      "gu": {
+        "text": "Proud to be Indian today and always 🪷"
+      },
+      "bn": {
+        "text": "Proud to be Indian today and always 🪷"
+      },
+      "ta": {
+        "text": "Proud to be Indian today and always 🪷"
+      },
+      "te": {
+        "text": "Proud to be Indian today and always 🪷"
+      },
+      "kn": {
+        "text": "Proud to be Indian today and always 🪷"
+      },
+      "ml": {
+        "text": "Proud to be Indian today and always 🪷"
+      }
+    }
+  },
+  {
+    "id": 110,
+    "type": "festival",
+    "text": "Happy Makar Sankranti! See you in the skies 🪁",
+    "tags": [
+      "sankranti",
+      "lohri"
+    ],
+    "translations": {
+      "hi": {
+        "text": "मकर संक्रांति की शुभकामनाएं! आसमान में मिलते हैं 🪁"
+      },
+      "mr": {
+        "text": "Happy Makar Sankranti! See you in the skies 🪁"
+      },
+      "gu": {
+        "text": "Happy Makar Sankranti! See you in the skies 🪁"
+      },
+      "bn": {
+        "text": "Happy Makar Sankranti! See you in the skies 🪁"
+      },
+      "ta": {
+        "text": "Happy Makar Sankranti! See you in the skies 🪁"
+      },
+      "te": {
+        "text": "Happy Makar Sankranti! See you in the skies 🪁"
+      },
+      "kn": {
+        "text": "Happy Makar Sankranti! See you in the skies 🪁"
+      },
+      "ml": {
+        "text": "Happy Makar Sankranti! See you in the skies 🪁"
+      }
+    }
+  },
+  {
+    "id": 111,
+    "type": "general",
+    "text": "Welcome back! 🌟",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "वापसी पर स्वागत है! 🌟"
+      },
+      "mr": {
+        "text": "Welcome back! 🌟"
+      },
+      "gu": {
+        "text": "Welcome back! 🌟"
+      },
+      "bn": {
+        "text": "Welcome back! 🌟"
+      },
+      "ta": {
+        "text": "Welcome back! 🌟"
+      },
+      "te": {
+        "text": "Welcome back! 🌟"
+      },
+      "kn": {
+        "text": "Welcome back! 🌟"
+      },
+      "ml": {
+        "text": "Welcome back! 🌟"
+      }
+    }
+  },
+  {
+    "id": 112,
+    "type": "general",
+    "text": "Happy to see you here ✨",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आपको यहां देखकर खुशी हुई ✨"
+      },
+      "mr": {
+        "text": "Happy to see you here ✨"
+      },
+      "gu": {
+        "text": "Happy to see you here ✨"
+      },
+      "bn": {
+        "text": "Happy to see you here ✨"
+      },
+      "ta": {
+        "text": "Happy to see you here ✨"
+      },
+      "te": {
+        "text": "Happy to see you here ✨"
+      },
+      "kn": {
+        "text": "Happy to see you here ✨"
+      },
+      "ml": {
+        "text": "Happy to see you here ✨"
+      }
+    }
+  },
+  {
+    "id": 113,
+    "type": "general",
+    "text": "Let's explore spirituality today 🪷",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आइए आज आध्यात्मिकता का अन्वेषण करें 🪷"
+      },
+      "mr": {
+        "text": "Let's explore spirituality today 🪷"
+      },
+      "gu": {
+        "text": "Let's explore spirituality today 🪷"
+      },
+      "bn": {
+        "text": "Let's explore spirituality today 🪷"
+      },
+      "ta": {
+        "text": "Let's explore spirituality today 🪷"
+      },
+      "te": {
+        "text": "Let's explore spirituality today 🪷"
+      },
+      "kn": {
+        "text": "Let's explore spirituality today 🪷"
+      },
+      "ml": {
+        "text": "Let's explore spirituality today 🪷"
+      }
+    }
+  },
+  {
+    "id": 114,
+    "type": "general",
+    "text": "Discover your inner strength 💪",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "अपनी आंतरिक शक्ति की खोज करें 💪"
+      },
+      "mr": {
+        "text": "Discover your inner strength 💪"
+      },
+      "gu": {
+        "text": "Discover your inner strength 💪"
+      },
+      "bn": {
+        "text": "Discover your inner strength 💪"
+      },
+      "ta": {
+        "text": "Discover your inner strength 💪"
+      },
+      "te": {
+        "text": "Discover your inner strength 💪"
+      },
+      "kn": {
+        "text": "Discover your inner strength 💪"
+      },
+      "ml": {
+        "text": "Discover your inner strength 💪"
+      }
+    }
+  },
+  {
+    "id": 115,
+    "type": "general",
+    "text": "You're a beacon of light 🕯️",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आप प्रकाश की एक किरण हैं 🕯️"
+      },
+      "mr": {
+        "text": "You're a beacon of light 🕯️"
+      },
+      "gu": {
+        "text": "You're a beacon of light 🕯️"
+      },
+      "bn": {
+        "text": "You're a beacon of light 🕯️"
+      },
+      "ta": {
+        "text": "You're a beacon of light 🕯️"
+      },
+      "te": {
+        "text": "You're a beacon of light 🕯️"
+      },
+      "kn": {
+        "text": "You're a beacon of light 🕯️"
+      },
+      "ml": {
+        "text": "You're a beacon of light 🕯️"
+      }
+    }
+  },
+  {
+    "id": 116,
+    "type": "general",
+    "text": "Celebrate life every day 🎉",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "हर दिन जीवन का जश्न मनाएं 🎉"
+      },
+      "mr": {
+        "text": "Celebrate life every day 🎉"
+      },
+      "gu": {
+        "text": "Celebrate life every day 🎉"
+      },
+      "bn": {
+        "text": "Celebrate life every day 🎉"
+      },
+      "ta": {
+        "text": "Celebrate life every day 🎉"
+      },
+      "te": {
+        "text": "Celebrate life every day 🎉"
+      },
+      "kn": {
+        "text": "Celebrate life every day 🎉"
+      },
+      "ml": {
+        "text": "Celebrate life every day 🎉"
+      }
+    }
+  },
+  {
+    "id": 117,
+    "type": "general",
+    "text": "Breathe in positivity, breathe out doubt 🍃",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "सकारात्मकता में सांस लें, संदेह छोड़ें 🍃"
+      },
+      "mr": {
+        "text": "Breathe in positivity, breathe out doubt 🍃"
+      },
+      "gu": {
+        "text": "Breathe in positivity, breathe out doubt 🍃"
+      },
+      "bn": {
+        "text": "Breathe in positivity, breathe out doubt 🍃"
+      },
+      "ta": {
+        "text": "Breathe in positivity, breathe out doubt 🍃"
+      },
+      "te": {
+        "text": "Breathe in positivity, breathe out doubt 🍃"
+      },
+      "kn": {
+        "text": "Breathe in positivity, breathe out doubt 🍃"
+      },
+      "ml": {
+        "text": "Breathe in positivity, breathe out doubt 🍃"
+      }
+    }
+  },
+  {
+    "id": 118,
+    "type": "general",
+    "text": "Your presence brings joy 🌺",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आपकी उपस्थिति खुशी लाती है 🌺"
+      },
+      "mr": {
+        "text": "Your presence brings joy 🌺"
+      },
+      "gu": {
+        "text": "Your presence brings joy 🌺"
+      },
+      "bn": {
+        "text": "Your presence brings joy 🌺"
+      },
+      "ta": {
+        "text": "Your presence brings joy 🌺"
+      },
+      "te": {
+        "text": "Your presence brings joy 🌺"
+      },
+      "kn": {
+        "text": "Your presence brings joy 🌺"
+      },
+      "ml": {
+        "text": "Your presence brings joy 🌺"
+      }
+    }
+  },
+  {
+    "id": 119,
+    "type": "general",
+    "text": "Keep your spirit high 🪁",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आत्मा को उच्च रखें 🪁"
+      },
+      "mr": {
+        "text": "Keep your spirit high 🪁"
+      },
+      "gu": {
+        "text": "Keep your spirit high 🪁"
+      },
+      "bn": {
+        "text": "Keep your spirit high 🪁"
+      },
+      "ta": {
+        "text": "Keep your spirit high 🪁"
+      },
+      "te": {
+        "text": "Keep your spirit high 🪁"
+      },
+      "kn": {
+        "text": "Keep your spirit high 🪁"
+      },
+      "ml": {
+        "text": "Keep your spirit high 🪁"
+      }
+    }
+  },
+  {
+    "id": 120,
+    "type": "general",
+    "text": "Today is another chance to shine ✨",
+    "tags": [],
+    "translations": {
+      "hi": {
+        "text": "आज चमकने का एक और मौका है ✨"
+      },
+      "mr": {
+        "text": "Today is another chance to shine ✨"
+      },
+      "gu": {
+        "text": "Today is another chance to shine ✨"
+      },
+      "bn": {
+        "text": "Today is another chance to shine ✨"
+      },
+      "ta": {
+        "text": "Today is another chance to shine ✨"
+      },
+      "te": {
+        "text": "Today is another chance to shine ✨"
+      },
+      "kn": {
+        "text": "Today is another chance to shine ✨"
+      },
+      "ml": {
+        "text": "Today is another chance to shine ✨"
+      }
+    }
+  }
+]

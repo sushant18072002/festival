@@ -3,31 +3,66 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
+
 import 'settings_controller.dart';
 import '../../data/providers/data_repository.dart';
 import '../../widgets/neo_scaffold.dart';
-import '../../widgets/glass_container.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_text_styles.dart';
 import '../../theme/app_spacing.dart';
+import '../../routes/app_pages.dart';
+
+import 'widgets/settings_section_header.dart';
+import 'widgets/settings_glass_tile.dart';
+import 'widgets/settings_notification_panel.dart';
+import 'widgets/settings_dialogs.dart';
 
 class SettingsView extends GetView<SettingsController> {
   const SettingsView({super.key});
 
+  String _getLanguageName(String code) {
+    final map = {
+      'en': 'English',
+      'hi': 'Hindi',
+      'mr': 'Marathi',
+      'gu': 'Gujarati',
+      'bn': 'Bengali',
+      'ta': 'Tamil',
+      'te': 'Telugu',
+      'kn': 'Kannada',
+      'ml': 'Malayalam',
+    };
+    return map[code] ?? 'English';
+  }
+
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
     return NeoScaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          icon: const Icon(LucideIcons.chevronLeft),
+          onPressed: () => Get.back(),
+        ),
+        backgroundColor: isDark
+            ? AppColors.backgroundDark.withValues(alpha: 0.95)
+            : AppColors.backgroundLight.withValues(alpha: 0.97),
         surfaceTintColor: Colors.transparent,
         automaticallyImplyLeading: false,
-        title: Text('Settings', style: AppTextStyles.headlineMedium),
+        title: Text(
+          'settings'.tr,
+          style: AppTextStyles.headlineMedium(context).copyWith(
+            color: AppColors.textAdaptive(context),
+          ),
+        ),
         centerTitle: true,
       ),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(
+        padding: EdgeInsets.fromLTRB(
           AppSpacing.md,
-          AppSpacing.md,
+          MediaQuery.of(context).padding.top + kToolbarHeight + AppSpacing.md,
           AppSpacing.md,
           100,
         ),
@@ -35,69 +70,67 @@ class SettingsView extends GetView<SettingsController> {
           // ─────────────────────────────────────────────────────────────────
           // Preferences Section
           // ─────────────────────────────────────────────────────────────────
-          _buildSectionHeader('Preferences'),
+          SettingsSectionHeader(title: 'settings_preferences'.tr),
 
-          _buildNotificationPanel(),
+          const SettingsNotificationPanel(),
 
           AppSpacing.verticalSm,
 
-          _buildGlassSettingsTile(
-            icon: Icons.filter_list_rounded,
-            iconColor: AppColors.accent,
+          SettingsGlassTile(
+            icon: LucideIcons.listFilter,
+            iconColor: AppColors.accentAdaptive(context),
             child: ListTile(
               title: Text(
                 'My Festivals',
-                style: AppTextStyles.titleMedium.copyWith(color: Colors.white),
+                style: AppTextStyles.titleMedium(context).copyWith(
+                  color: AppColors.textAdaptive(context),
+                ),
               ),
               subtitle: Obx(
                 () => Text(
                   '${controller.myFestivals.length} selected for priority alerts',
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: Colors.white70,
+                  style: AppTextStyles.bodySmall(context).copyWith(
+                    color: AppColors.textAdaptiveSecondary(context),
                   ),
                 ),
               ),
-              trailing: const Icon(
-                Icons.chevron_right_rounded,
-                color: Colors.white54,
+              trailing: Icon(
+                LucideIcons.chevronRight,
+                color: AppColors.textAdaptiveSecondary(context),
               ),
               onTap: () {
                 HapticFeedback.lightImpact();
-                _showFestivalsDialog();
+                SettingsDialogs.showFestivalsDialog(context, controller);
               },
             ),
           ),
 
           AppSpacing.verticalSm,
 
-          _buildGlassSettingsTile(
-            icon: Icons.cloud_sync_rounded,
+          SettingsGlassTile(
+            icon: LucideIcons.cloudCog,
             iconColor: AppColors.info,
             child: Obx(() {
               final repo = Get.find<DataRepository>();
               return SwitchListTile(
                 title: Text(
                   'Use Remote Data',
-                  style: AppTextStyles.titleMedium.copyWith(
-                    color: Colors.white,
+                  style: AppTextStyles.titleMedium(context).copyWith(
+                    color: AppColors.textAdaptive(context),
                   ),
                 ),
                 subtitle: Text(
                   repo.useRemote.value
                       ? 'Fetching from API'
                       : 'Using local assets',
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: Colors.white70,
+                  style: AppTextStyles.bodySmall(context).copyWith(
+                    color: AppColors.textAdaptiveSecondary(context),
                   ),
                 ),
                 value: repo.useRemote.value,
-                activeTrackColor: AppColors.secondary,
-                thumbColor: WidgetStateProperty.resolveWith<Color>(
-                  (states) => states.contains(WidgetState.selected)
-                      ? Colors.white
-                      : Colors.white54,
-                ),
-                inactiveTrackColor: Colors.white10,
+                activeTrackColor: AppColors.secondaryAdaptive(context),
+                thumbColor: AppColors.switchThumbColor(context),
+                inactiveTrackColor: AppColors.switchInactiveTrackColor(context),
                 onChanged: (val) {
                   HapticFeedback.selectionClick();
                   controller.toggleRemote(val);
@@ -111,35 +144,31 @@ class SettingsView extends GetView<SettingsController> {
           // ─────────────────────────────────────────────────────────────────
           // Appearance Section
           // ─────────────────────────────────────────────────────────────────
-          _buildSectionHeader('Appearance'),
+          SettingsSectionHeader(title: 'settings_appearance'.tr),
 
-          _buildGlassSettingsTile(
-            icon: Icons.brightness_6_rounded,
-            iconColor: Colors.amberAccent,
+          SettingsGlassTile(
+            icon: LucideIcons.moonStar,
+            iconColor: AppColors.accentAdaptive(context),
             child: Obx(
               () => SwitchListTile(
                 title: Text(
                   'Dark Mode',
-                  style: AppTextStyles.titleMedium.copyWith(
-                    color: Colors.white,
+                  style: AppTextStyles.titleMedium(context).copyWith(
+                    color: AppColors.textAdaptive(context),
                   ),
                 ),
                 subtitle: Text(
                   controller.isDarkMode.value
                       ? 'Using dark theme'
                       : 'Using light theme',
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: Colors.white70,
+                  style: AppTextStyles.bodySmall(context).copyWith(
+                    color: AppColors.textAdaptiveSecondary(context),
                   ),
                 ),
                 value: controller.isDarkMode.value,
-                activeTrackColor: Colors.amberAccent.withValues(alpha: 0.7),
-                thumbColor: WidgetStateProperty.resolveWith<Color>(
-                  (states) => states.contains(WidgetState.selected)
-                      ? Colors.white
-                      : Colors.white54,
-                ),
-                inactiveTrackColor: Colors.white10,
+                activeTrackColor: AppColors.accentAdaptive(context).withValues(alpha: 0.7),
+                thumbColor: AppColors.switchThumbColor(context),
+                inactiveTrackColor: AppColors.switchInactiveTrackColor(context),
                 onChanged: (val) {
                   HapticFeedback.selectionClick();
                   controller.toggleTheme(val);
@@ -153,53 +182,81 @@ class SettingsView extends GetView<SettingsController> {
           // ─────────────────────────────────────────────────────────────────
           // General Section
           // ─────────────────────────────────────────────────────────────────
-          _buildSectionHeader('General'),
+          SettingsSectionHeader(title: 'settings_general'.tr),
 
-          _buildGlassSettingsTile(
-            icon: Icons.language_rounded,
-            iconColor: AppColors.primary,
+          SettingsGlassTile(
+            icon: LucideIcons.globe,
+            iconColor: AppColors.primaryAdaptive(context),
             child: ListTile(
               title: Text(
                 'Language',
-                style: AppTextStyles.titleMedium.copyWith(color: Colors.white),
+                style: AppTextStyles.titleMedium(context).copyWith(
+                  color: AppColors.textAdaptive(context),
+                ),
               ),
               subtitle: Obx(
                 () => Text(
                   _getLanguageName(controller.currentLang.value),
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: Colors.white70,
+                  style: AppTextStyles.bodySmall(context).copyWith(
+                    color: AppColors.textAdaptiveSecondary(context),
                   ),
                 ),
               ),
-              trailing: const Icon(
-                Icons.chevron_right_rounded,
-                color: Colors.white54,
+              trailing: Icon(
+                LucideIcons.chevronRight,
+                color: AppColors.textAdaptiveSecondary(context),
               ),
               onTap: () {
                 HapticFeedback.lightImpact();
-                _showLanguageDialog();
+                SettingsDialogs.showLanguageDialog(context, controller);
               },
             ),
           ),
 
           AppSpacing.verticalSm,
 
-          _buildGlassSettingsTile(
-            icon: Icons.privacy_tip_rounded,
+          SettingsGlassTile(
+            icon: LucideIcons.shieldCheck,
             iconColor: AppColors.success,
             child: ListTile(
               title: Text(
                 'Privacy Policy',
-                style: AppTextStyles.titleMedium.copyWith(color: Colors.white),
+                style: AppTextStyles.titleMedium(context).copyWith(
+                  color: AppColors.textAdaptive(context),
+                ),
               ),
-              trailing: const Icon(
-                Icons.open_in_new_rounded,
-                size: 18,
-                color: Colors.white54,
+              trailing: Icon(
+                LucideIcons.chevronRight,
+                size: 20,
+                color: AppColors.textAdaptiveSecondary(context),
               ),
               onTap: () {
                 HapticFeedback.lightImpact();
-                launchUrl(Uri.parse('https://utsav.app/privacy-policy'));
+                Get.toNamed(Routes.privacyPolicy);
+              },
+            ),
+          ),
+
+          AppSpacing.verticalSm,
+
+          SettingsGlassTile(
+            icon: LucideIcons.scale,
+            iconColor: AppColors.accentAdaptive(context),
+            child: ListTile(
+              title: Text(
+                'Terms of Service',
+                style: AppTextStyles.titleMedium(context).copyWith(
+                  color: AppColors.textAdaptive(context),
+                ),
+              ),
+              trailing: Icon(
+                LucideIcons.chevronRight,
+                size: 20,
+                color: AppColors.textAdaptiveSecondary(context),
+              ),
+              onTap: () {
+                HapticFeedback.lightImpact();
+                Get.toNamed(Routes.termsOfService);
               },
             ),
           ),
@@ -209,24 +266,38 @@ class SettingsView extends GetView<SettingsController> {
           // ─────────────────────────────────────────────────────────────────
           // Accessibility Section
           // ─────────────────────────────────────────────────────────────────
-          _buildSectionHeader('Accessibility'),
+          SettingsSectionHeader(title: 'settings_accessibility'.tr),
 
-          _buildGlassSettingsTile(
-            icon: Icons.accessibility_new_rounded,
-            iconColor: Colors.tealAccent,
+          SettingsGlassTile(
+            icon: LucideIcons.accessibility,
+            iconColor: AppColors.accessibilityAccent(context),
             child: Column(
               children: [
                 Obx(
                   () => SwitchListTile(
+                    secondary: Icon(
+                      LucideIcons.contrast,
+                      color: controller.highContrast.value
+                          ? AppColors.accessibilityAccent(context)
+                          : AppColors.textAdaptiveSecondary(context),
+                      size: 20,
+                    ),
                     title: Text(
                       'High Contrast',
-                      style: AppTextStyles.titleMedium.copyWith(
-                        color: Colors.white,
+                      style: AppTextStyles.titleMedium(context).copyWith(
+                        color: AppColors.textAdaptive(context),
+                      ),
+                    ),
+                    subtitle: Text(
+                      'Increases color contrast for readability',
+                      style: AppTextStyles.bodySmall(context).copyWith(
+                        color: AppColors.textAdaptiveSecondary(context),
                       ),
                     ),
                     value: controller.highContrast.value,
-                    activeTrackColor: Colors.tealAccent.withValues(alpha: 0.7),
-                    inactiveTrackColor: Colors.white10,
+                    activeTrackColor: AppColors.accessibilityAccent(context).withValues(alpha: 0.7),
+                    inactiveTrackColor: AppColors.switchInactiveTrackColor(context),
+                    thumbColor: AppColors.switchThumbColor(context),
                     onChanged: (val) {
                       HapticFeedback.selectionClick();
                       controller.toggleHighContrast(val);
@@ -234,22 +305,36 @@ class SettingsView extends GetView<SettingsController> {
                   ),
                 ),
                 Divider(
-                  color: Colors.white.withValues(alpha: 0.05),
+                  color: AppColors.glassBorder(context),
                   height: 1,
                   indent: 16,
                   endIndent: 16,
                 ),
                 Obx(
                   () => SwitchListTile(
+                    secondary: Icon(
+                      LucideIcons.type,
+                      color: controller.largeText.value
+                          ? AppColors.accessibilityAccent(context)
+                          : AppColors.textAdaptiveSecondary(context),
+                      size: 20,
+                    ),
                     title: Text(
                       'Large Text',
-                      style: AppTextStyles.titleMedium.copyWith(
-                        color: Colors.white,
+                      style: AppTextStyles.titleMedium(context).copyWith(
+                        color: AppColors.textAdaptive(context),
+                      ),
+                    ),
+                    subtitle: Text(
+                      'Increases font sizes across the app',
+                      style: AppTextStyles.bodySmall(context).copyWith(
+                        color: AppColors.textAdaptiveSecondary(context),
                       ),
                     ),
                     value: controller.largeText.value,
-                    activeTrackColor: Colors.tealAccent.withValues(alpha: 0.7),
-                    inactiveTrackColor: Colors.white10,
+                    activeTrackColor: AppColors.accessibilityAccent(context).withValues(alpha: 0.7),
+                    inactiveTrackColor: AppColors.switchInactiveTrackColor(context),
+                    thumbColor: AppColors.switchThumbColor(context),
                     onChanged: (val) {
                       HapticFeedback.selectionClick();
                       controller.toggleLargeText(val);
@@ -257,22 +342,36 @@ class SettingsView extends GetView<SettingsController> {
                   ),
                 ),
                 Divider(
-                  color: Colors.white.withValues(alpha: 0.05),
+                  color: AppColors.glassBorder(context),
                   height: 1,
                   indent: 16,
                   endIndent: 16,
                 ),
                 Obx(
                   () => SwitchListTile(
+                    secondary: Icon(
+                      LucideIcons.film,
+                      color: controller.reduceAnimations.value
+                          ? AppColors.accessibilityAccent(context)
+                          : AppColors.textAdaptiveSecondary(context),
+                      size: 20,
+                    ),
                     title: Text(
                       'Reduce Animations',
-                      style: AppTextStyles.titleMedium.copyWith(
-                        color: Colors.white,
+                      style: AppTextStyles.titleMedium(context).copyWith(
+                        color: AppColors.textAdaptive(context),
+                      ),
+                    ),
+                    subtitle: Text(
+                      'Minimizes motion for comfort',
+                      style: AppTextStyles.bodySmall(context).copyWith(
+                        color: AppColors.textAdaptiveSecondary(context),
                       ),
                     ),
                     value: controller.reduceAnimations.value,
-                    activeTrackColor: Colors.tealAccent.withValues(alpha: 0.7),
-                    inactiveTrackColor: Colors.white10,
+                    activeTrackColor: AppColors.accessibilityAccent(context).withValues(alpha: 0.7),
+                    inactiveTrackColor: AppColors.switchInactiveTrackColor(context),
+                    thumbColor: AppColors.switchThumbColor(context),
                     onChanged: (val) {
                       HapticFeedback.selectionClick();
                       controller.toggleReduceAnimations(val);
@@ -288,21 +387,23 @@ class SettingsView extends GetView<SettingsController> {
           // ─────────────────────────────────────────────────────────────────
           // Data Management Section
           // ─────────────────────────────────────────────────────────────────
-          _buildSectionHeader('Data Management'),
+          SettingsSectionHeader(title: 'settings_data'.tr),
 
-          _buildGlassSettingsTile(
-            icon: Icons.delete_outline_rounded,
-            iconColor: Colors.redAccent,
+          SettingsGlassTile(
+            icon: LucideIcons.trash2,
+            iconColor: AppColors.errorAdaptive(context),
             child: ListTile(
               title: Text(
                 'Clear Downloads Cache',
-                style: AppTextStyles.titleMedium.copyWith(color: Colors.white),
+                style: AppTextStyles.titleMedium(context).copyWith(
+                  color: AppColors.textAdaptive(context),
+                ),
               ),
               subtitle: Obx(
                 () => Text(
                   '${controller.cacheSize.value} used',
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: Colors.white70,
+                  style: AppTextStyles.bodySmall(context).copyWith(
+                    color: AppColors.textAdaptiveSecondary(context),
                   ),
                 ),
               ),
@@ -315,21 +416,50 @@ class SettingsView extends GetView<SettingsController> {
 
           AppSpacing.verticalSm,
 
-          _buildGlassSettingsTile(
-            icon: Icons.calendar_month_rounded,
-            iconColor: Colors.blueAccent,
+          SettingsGlassTile(
+            icon: LucideIcons.folderX,
+            iconColor: AppColors.error,
+            child: ListTile(
+              title: Text(
+                'Clear All Data',
+                style: AppTextStyles.titleMedium(context).copyWith(
+                  color: AppColors.textAdaptive(context),
+                ),
+              ),
+              subtitle: Text(
+                'Reset your streaks, karma, and settings',
+                style: AppTextStyles.bodySmall(context).copyWith(
+                  color: AppColors.textAdaptiveSecondary(context),
+                ),
+              ),
+              onTap: () {
+                HapticFeedback.heavyImpact();
+                SettingsDialogs.showClearDataDialog(context, controller);
+              },
+            ),
+          ),
+
+          AppSpacing.verticalSm,
+
+          SettingsGlassTile(
+            icon: LucideIcons.calendarDays,
+            iconColor: AppColors.info,
             child: ListTile(
               title: Text(
                 'Export My Calendar',
-                style: AppTextStyles.titleMedium.copyWith(color: Colors.white),
+                style: AppTextStyles.titleMedium(context).copyWith(
+                  color: AppColors.textAdaptive(context),
+                ),
               ),
               subtitle: Text(
                 'Export selected festivals to device calendar',
-                style: AppTextStyles.bodySmall.copyWith(color: Colors.white70),
+                style: AppTextStyles.bodySmall(context).copyWith(
+                  color: AppColors.textAdaptiveSecondary(context),
+                ),
               ),
-              trailing: const Icon(
-                Icons.system_update_alt_rounded,
-                color: Colors.white54,
+              trailing: Icon(
+                LucideIcons.download,
+                color: AppColors.textAdaptiveSecondary(context),
                 size: 20,
               ),
               onTap: () {
@@ -344,23 +474,97 @@ class SettingsView extends GetView<SettingsController> {
           // ─────────────────────────────────────────────────────────────────
           // About Section
           // ─────────────────────────────────────────────────────────────────
-          _buildSectionHeader('About'),
+          SettingsSectionHeader(title: 'settings_about'.tr),
 
-          _buildGlassSettingsTile(
-            icon: Icons.celebration_rounded,
-            iconColor: AppColors.accent,
+          SettingsGlassTile(
+            icon: LucideIcons.headset,
+            iconColor: AppColors.info,
+            child: ListTile(
+              title: Text(
+                'Contact Support',
+                style: AppTextStyles.titleMedium(context).copyWith(
+                  color: AppColors.textAdaptive(context),
+                ),
+              ),
+              subtitle: Text(
+                'Report bugs or suggest features',
+                style: AppTextStyles.bodySmall(context).copyWith(
+                  color: AppColors.textAdaptiveSecondary(context),
+                ),
+              ),
+              trailing: Icon(
+                LucideIcons.mail,
+                color: AppColors.textAdaptiveSecondary(context),
+                size: 20,
+              ),
+              onTap: () {
+                HapticFeedback.lightImpact();
+                launchUrl(
+                  Uri.parse('mailto:support@utsav.app?subject=Utsav Support'),
+                );
+              },
+            ),
+          ),
+
+          AppSpacing.verticalSm,
+
+          SettingsGlassTile(
+            icon: LucideIcons.star,
+            iconColor: AppColors.accentAdaptive(context),
+            child: ListTile(
+              title: Text(
+                'Rate Utsav',
+                style: AppTextStyles.titleMedium(context).copyWith(
+                  color: AppColors.textAdaptive(context),
+                ),
+              ),
+              subtitle: Text(
+                'Love the app? Let us know!',
+                style: AppTextStyles.bodySmall(context).copyWith(
+                  color: AppColors.textAdaptiveSecondary(context),
+                ),
+              ),
+              trailing: Icon(
+                LucideIcons.heart,
+                color: AppColors.error.withValues(alpha: 0.8),
+                size: 20,
+              ),
+              onTap: () {
+                HapticFeedback.mediumImpact();
+                Get.snackbar(
+                  'Thank You!',
+                  'We appreciate your support ❤️',
+                  snackPosition: SnackPosition.BOTTOM,
+                  backgroundColor: AppColors.accentAdaptive(context).withValues(alpha: 0.2),
+                  colorText: AppColors.textAdaptive(context),
+                );
+              },
+            ),
+          ),
+
+          AppSpacing.verticalSm,
+
+          SettingsGlassTile(
+            icon: LucideIcons.partyPopper,
+            iconColor: AppColors.accentAdaptive(context),
             child: ListTile(
               title: Text(
                 'Utsav',
-                style: AppTextStyles.titleMedium.copyWith(color: Colors.white),
+                style: AppTextStyles.titleMedium(context).copyWith(
+                  color: AppColors.textAdaptive(context),
+                ),
               ),
               subtitle: Text(
                 'Version 1.0.0',
-                style: AppTextStyles.bodySmall.copyWith(color: Colors.white70),
+                style: AppTextStyles.bodySmall(context).copyWith(
+                  color: AppColors.textAdaptiveSecondary(context),
+                ),
               ),
               trailing: Text(
                 '© 2024',
-                style: AppTextStyles.labelSmall.copyWith(color: Colors.white38),
+                style: AppTextStyles.labelSmall(context).copyWith(
+                  color: AppColors.glassBorder(context),
+                ),
               ),
             ),
           ),
@@ -373,16 +577,16 @@ class SettingsView extends GetView<SettingsController> {
               children: [
                 Text(
                   'Utsav',
-                  style: AppTextStyles.festive.copyWith(
+                  style: AppTextStyles.festive(context).copyWith(
                     fontSize: 40,
-                    color: AppColors.primary,
+                    color: AppColors.primaryAdaptive(context),
                   ),
                 ),
                 AppSpacing.verticalXs,
                 Text(
                   'Celebrate Indian Festivals',
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: Colors.white54,
+                  style: AppTextStyles.bodySmall(context).copyWith(
+                    color: AppColors.textAdaptiveSecondary(context),
                   ),
                 ),
               ],
@@ -391,395 +595,7 @@ class SettingsView extends GetView<SettingsController> {
 
           // Bottom Padding
           const SizedBox(height: 100),
-        ].animate(interval: 50.ms).fade().slideY(begin: 0.05),
-      ),
-    );
-  }
-
-  Widget _buildNotificationPanel() {
-    return Obx(() {
-      final masterOn = controller.notificationsEnabled.value;
-      return GlassContainer(
-        borderRadius: BorderRadius.circular(20),
-        color: AppColors.surfaceGlass,
-        opacity: 0.1,
-        border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
-        child: Column(
-          children: [
-            // ── Master Toggle ──────────────────────────────────────────────
-            SwitchListTile(
-              secondary: Container(
-                padding: const EdgeInsets.all(AppSpacing.sm),
-                decoration: BoxDecoration(
-                  color: AppColors.secondary.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Icon(
-                  Icons.notifications_active_rounded,
-                  color: masterOn ? AppColors.secondary : Colors.white38,
-                  size: 22,
-                ),
-              ),
-              title: Text(
-                'Festival Alerts',
-                style: AppTextStyles.titleMedium.copyWith(color: Colors.white),
-              ),
-              subtitle: Text(
-                masterOn
-                    ? 'Keeping you in the festive spirit'
-                    : 'All alerts disabled',
-                style: AppTextStyles.bodySmall.copyWith(color: Colors.white54),
-              ),
-              value: masterOn,
-              activeTrackColor: AppColors.secondary,
-              thumbColor: WidgetStateProperty.resolveWith<Color>(
-                (states) => states.contains(WidgetState.selected)
-                    ? Colors.white
-                    : Colors.white54,
-              ),
-              inactiveTrackColor: Colors.white10,
-              onChanged: (val) {
-                HapticFeedback.selectionClick();
-                controller.toggleNotifications(val);
-              },
-            ),
-
-            // ── Sub-Toggles (visible only when master is ON) ───────────────
-            AnimatedSize(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              child: masterOn
-                  ? Column(
-                      children: [
-                        Divider(
-                          color: Colors.white.withValues(alpha: 0.07),
-                          height: 1,
-                          indent: AppSpacing.md,
-                          endIndent: AppSpacing.md,
-                        ),
-                        _buildNotifSubToggle(
-                          icon: Icons.celebration_rounded,
-                          iconColor: const Color(0xFF8B5CF6),
-                          title: 'Day-of Celebrations',
-                          subtitle:
-                              'Morning alerts on the festival day + eve reminder',
-                          value: controller.festivalEventNotifs.value,
-                          onChanged: controller.toggleFestivalEvents,
-                        ),
-                        _buildNotifSubToggle(
-                          icon: Icons.hourglass_top_rounded,
-                          iconColor: const Color(0xFFF59E0B),
-                          title: 'Countdown Reminders',
-                          subtitle: '30 days and 7 days before each festival',
-                          value: controller.countdownNotifs.value,
-                          onChanged: controller.toggleCountdown,
-                        ),
-                        _buildNotifSubToggle(
-                          icon: Icons.view_week_rounded,
-                          iconColor: const Color(0xFF06B6D4),
-                          title: 'Weekly Digest',
-                          subtitle: 'Every Sunday — what\'s coming this week',
-                          value: controller.weeklyDigestNotifs.value,
-                          onChanged: controller.toggleWeeklyDigest,
-                        ),
-                        _buildNotifSubToggle(
-                          icon: Icons.calendar_month_rounded,
-                          iconColor: const Color(0xFF10B981),
-                          title: 'Monthly Opener',
-                          subtitle: '1st of each month — festivals ahead',
-                          value: controller.monthlyDigestNotifs.value,
-                          onChanged: controller.toggleMonthlyDigest,
-                          isLast: true,
-                        ),
-                      ],
-                    )
-                  : const SizedBox.shrink(),
-            ),
-          ],
-        ),
-      );
-    });
-  }
-
-  Widget _buildNotifSubToggle({
-    required IconData icon,
-    required Color iconColor,
-    required String title,
-    required String subtitle,
-    required bool value,
-    required ValueChanged<bool> onChanged,
-    bool isLast = false,
-  }) {
-    return Column(
-      children: [
-        SwitchListTile(
-          secondary: Icon(icon, color: iconColor, size: 20),
-          title: Text(
-            title,
-            style: AppTextStyles.bodyMedium.copyWith(color: Colors.white),
-          ),
-          subtitle: Text(
-            subtitle,
-            style: AppTextStyles.bodySmall.copyWith(color: Colors.white54),
-          ),
-          value: value,
-          activeTrackColor: iconColor.withValues(alpha: 0.7),
-          thumbColor: WidgetStateProperty.resolveWith<Color>(
-            (states) => states.contains(WidgetState.selected)
-                ? Colors.white
-                : Colors.white54,
-          ),
-          inactiveTrackColor: Colors.white10,
-          dense: true,
-          onChanged: (val) {
-            HapticFeedback.selectionClick();
-            onChanged(val);
-          },
-        ),
-        if (!isLast)
-          Divider(
-            color: Colors.white.withValues(alpha: 0.05),
-            height: 1,
-            indent: AppSpacing.xl,
-            endIndent: AppSpacing.md,
-          ),
-      ],
-    );
-  }
-
-  Widget _buildSectionHeader(String title) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: AppSpacing.xs,
-        bottom: AppSpacing.xs,
-        top: AppSpacing.xs,
-      ),
-      child: Text(
-        title.toUpperCase(),
-        style: AppTextStyles.labelMedium.copyWith(
-          color: AppColors.primary,
-          letterSpacing: 1.2,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildGlassSettingsTile({
-    required IconData icon,
-    required Color iconColor,
-    required Widget child,
-  }) {
-    return GlassContainer(
-      borderRadius: BorderRadius.circular(20),
-      color: AppColors.surfaceGlass,
-      opacity: 0.1,
-      border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
-      child: Row(
-        children: [
-          // Icon Container
-          Container(
-            margin: const EdgeInsets.all(AppSpacing.sm),
-            padding: const EdgeInsets.all(AppSpacing.sm),
-            decoration: BoxDecoration(
-              color: iconColor.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Icon(icon, color: iconColor, size: 22),
-          ),
-          // Content
-          Expanded(child: child),
         ],
-      ),
-    );
-  }
-
-  void _showLanguageDialog() {
-    final languages = {
-      'en': 'English',
-      'hi': 'हिंदी (Hindi)',
-      'mr': 'मराठी (Marathi)',
-      'gu': 'ગુજરાતી (Gujarati)',
-      'bn': 'বাংলা (Bengali)',
-      'ta': 'தமிழ் (Tamil)',
-      'te': 'తెలుగు (Telugu)',
-      'kn': 'ಕನ್ನಡ (Kannada)',
-      'ml': 'മലയാളം (Malayalam)',
-    };
-
-    Get.bottomSheet(
-      Container(
-        decoration: BoxDecoration(
-          color: AppColors.backgroundDark,
-          borderRadius: const BorderRadius.vertical(
-            top: Radius.circular(AppRadius.xl),
-          ),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Drag Handle
-            Container(
-              margin: const EdgeInsets.only(top: AppSpacing.sm),
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(
-                color: Colors.white24,
-                borderRadius: AppRadius.pillRadius,
-              ),
-            ),
-
-            // Header
-            Padding(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              child: Text(
-                'Select Language',
-                style: AppTextStyles.headlineSmall.copyWith(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-
-            // Language List
-            Flexible(
-              child: ListView(
-                shrinkWrap: true,
-                children: languages.entries.map((entry) {
-                  return Obx(() {
-                    final isSelected =
-                        controller.currentLang.value == entry.key;
-                    return ListTile(
-                      leading: isSelected
-                          ? const Icon(
-                              Icons.check_circle,
-                              color: AppColors.primary,
-                            )
-                          : const Icon(Icons.language, color: Colors.white38),
-                      title: Text(
-                        entry.value,
-                        style: AppTextStyles.bodyLarge.copyWith(
-                          fontWeight: isSelected
-                              ? FontWeight.w600
-                              : FontWeight.normal,
-                          color: isSelected
-                              ? AppColors.primary
-                              : Colors.white70,
-                        ),
-                      ),
-                      onTap: () {
-                        HapticFeedback.selectionClick();
-                        controller.changeLanguage(entry.key);
-                        Get.back();
-                      },
-                    );
-                  });
-                }).toList(),
-              ),
-            ),
-
-            const SizedBox(height: AppSpacing.lg),
-          ],
-        ),
-      ),
-      isScrollControlled: true,
-    );
-  }
-
-  String _getLanguageName(String code) {
-    const names = {
-      'en': 'English',
-      'hi': 'हिंदी',
-      'mr': 'मराठी',
-      'gu': 'ગુજરાતી',
-      'bn': 'বাংলা',
-      'ta': 'தமிழ்',
-      'te': 'తెలుగు',
-      'kn': 'ಕನ್ನಡ',
-      'ml': 'മലയാളം',
-    };
-    return names[code] ?? code.toUpperCase();
-  }
-
-  void _showFestivalsDialog() {
-    Get.bottomSheet(
-      Container(
-        decoration: BoxDecoration(
-          color: AppColors.backgroundDark,
-          borderRadius: const BorderRadius.vertical(
-            top: Radius.circular(AppRadius.xl),
-          ),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
-        ),
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: 12),
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(
-                color: Colors.white24,
-                borderRadius: AppRadius.pillRadius,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              child: Text(
-                'My Festivals',
-                style: AppTextStyles.headlineSmall.copyWith(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-              child: Text(
-                'Select the festivals you care about most. We\'ll prioritize them in your feed and notifications.',
-                textAlign: TextAlign.center,
-                style: AppTextStyles.bodySmall.copyWith(color: Colors.white70),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: Obx(() {
-                final repo = Get.find<DataRepository>();
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: repo.allEvents.length,
-                  itemBuilder: (context, index) {
-                    final event = repo.allEvents[index];
-                    final isSelected = controller.myFestivals.contains(
-                      event.id,
-                    );
-                    return CheckboxListTile(
-                      title: Text(
-                        event.title,
-                        style: AppTextStyles.titleMedium.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                      subtitle: Text(
-                        event.date != null
-                            ? '${event.date!.day}/${event.date!.month}/${event.date!.year}'
-                            : '',
-                        style: AppTextStyles.bodySmall.copyWith(
-                          color: Colors.white54,
-                        ),
-                      ),
-                      value: isSelected,
-                      activeColor: AppColors.primary,
-                      checkColor: Colors.black,
-                      onChanged: (_) {
-                        HapticFeedback.selectionClick();
-                        controller.toggleFestivalSelection(event.id);
-                      },
-                    );
-                  },
-                );
-              }),
-            ),
-          ],
-        ),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'app/routes/app_pages.dart';
 import 'app/theme/app_theme.dart';
@@ -21,8 +22,13 @@ void main() async {
     await dotenv.load(fileName: '.env.dev');
     debugPrint('[Env] Loaded .env.dev');
   } else {
-    // In prod, env vars come from --dart-define / CI, not a file
-    debugPrint('[Env] Production mode — no .env file loaded');
+    // Attempt to load .env.prod if it exists, otherwise fall back to --dart-define
+    try {
+      await dotenv.load(fileName: '.env.prod');
+      debugPrint('[Env] Loaded .env.prod');
+    } catch (_) {
+      debugPrint('[Env] Production mode — no .env.prod file found, using platform env');
+    }
   }
 
   await Global.init();
@@ -37,7 +43,7 @@ void main() async {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Icon(
-              Icons.error_outline_rounded,
+              LucideIcons.circleAlert,
               color: Colors.white54,
               size: 64,
             ),

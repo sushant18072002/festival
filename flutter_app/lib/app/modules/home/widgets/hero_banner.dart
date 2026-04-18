@@ -16,8 +16,13 @@ import '../../../widgets/smart_image.dart';
 /// large serif title and an "Explore" CTA button.
 class HeroBanner extends StatelessWidget {
   final EventModel event;
+  final String heroTagPrefix;
 
-  const HeroBanner({super.key, required this.event});
+  const HeroBanner({
+    super.key,
+    required this.event,
+    required this.heroTagPrefix,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +33,10 @@ class HeroBanner extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           HapticFeedback.mediumImpact();
-          Get.toNamed(Routes.EVENT_DETAILS, arguments: event);
+          Get.toNamed(
+            Routes.eventDetails,
+            arguments: {'event': event, 'heroTagPrefix': heroTagPrefix},
+          );
         },
         child: Container(
           // 4:3 ratio for the banner
@@ -40,13 +48,7 @@ class HeroBanner extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(28),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.primary.withValues(alpha: 0.12),
-                blurRadius: 24,
-                offset: const Offset(0, 12),
-              ),
-            ],
+            boxShadow: AppColors.glassShadow(context),
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(28),
@@ -54,7 +56,7 @@ class HeroBanner extends StatelessWidget {
               fit: StackFit.expand,
               children: [
                 // 1. Background image
-                _buildBackground(),
+                _buildBackground(context),
 
                 // 2. Gradient scrim
                 _buildGradientOverlay(),
@@ -64,7 +66,7 @@ class HeroBanner extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(28),
                     border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.1),
+                      color: AppColors.glassBorder(context),
                       width: 1.5,
                     ),
                   ),
@@ -81,12 +83,13 @@ class HeroBanner extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _buildPill(
+                            context,
                             label: 'featured'.tr,
-                            color: AppColors.secondary,
+                            color: AppColors.secondaryAdaptive(context),
                           ),
                           const Spacer(),
                           if (event.date != null)
-                            _buildCountdownPill(event.date!),
+                            _buildCountdownPill(context, event.date!),
                         ],
                       ),
 
@@ -95,8 +98,8 @@ class HeroBanner extends StatelessWidget {
                       // "Upcoming Festival" category label
                       Text(
                         'upcoming_festival'.tr,
-                        style: AppTextStyles.labelMedium.copyWith(
-                          color: AppColors.primary,
+                        style: AppTextStyles.labelMedium(context).copyWith(
+                          color: AppColors.primaryAdaptive(context),
                           letterSpacing: 1.2,
                         ),
                       ).animate().fade(delay: 50.ms),
@@ -106,7 +109,7 @@ class HeroBanner extends StatelessWidget {
                       // Main title (DM Serif Display)
                       Text(
                         event.title,
-                        style: AppTextStyles.displayMedium.copyWith(
+                        style: AppTextStyles.displayMedium(context).copyWith(
                           color: Colors.white,
                           height: 1.1,
                         ),
@@ -129,7 +132,7 @@ class HeroBanner extends StatelessWidget {
                             Expanded(
                               child: Text(
                                 event.location,
-                                style: AppTextStyles.bodySmall.copyWith(
+                                style: AppTextStyles.bodySmall(context).copyWith(
                                   color: Colors.white60,
                                 ),
                                 maxLines: 1,
@@ -143,8 +146,11 @@ class HeroBanner extends StatelessWidget {
                             onTap: () {
                               HapticFeedback.mediumImpact();
                               Get.toNamed(
-                                Routes.EVENT_DETAILS,
-                                arguments: event,
+                                Routes.eventDetails,
+                                arguments: {
+                                  'event': event,
+                                  'heroTagPrefix': heroTagPrefix,
+                                },
                               );
                             },
                             child: Container(
@@ -153,12 +159,12 @@ class HeroBanner extends StatelessWidget {
                                 vertical: 8,
                               ),
                               decoration: BoxDecoration(
-                                color: AppColors.primary.withValues(
-                                  alpha: 0.15,
+                                color: AppColors.primaryAdaptive(context).withValues(
+                                  alpha: 0.2,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                                 border: Border.all(
-                                  color: AppColors.primary.withValues(
+                                  color: AppColors.primaryAdaptive(context).withValues(
                                     alpha: 0.5,
                                   ),
                                 ),
@@ -168,15 +174,15 @@ class HeroBanner extends StatelessWidget {
                                 children: [
                                   Text(
                                     'explore'.tr,
-                                    style: AppTextStyles.labelMedium.copyWith(
-                                      color: AppColors.primary,
+                                    style: AppTextStyles.labelMedium(context).copyWith(
+                                      color: AppColors.primaryAdaptive(context),
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   const SizedBox(width: 6),
-                                  const Icon(
+                                  Icon(
                                     LucideIcons.arrowRight,
-                                    color: AppColors.primary,
+                                    color: AppColors.primaryAdaptive(context),
                                     size: 14,
                                   ),
                                 ],
@@ -196,24 +202,27 @@ class HeroBanner extends StatelessWidget {
     );
   }
 
-  Widget _buildBackground() {
-    final imageUrl = event.thumbnail ?? event.image?.url;
+  Widget _buildBackground(BuildContext context) {
+    final imageUrl = event.displayImageUrl;
     if (imageUrl != null) {
       return Hero(
-        tag: 'hero_banner_${event.id}',
+        tag: '${heroTagPrefix}_festival_card_${event.id}',
         child: SmartImage(
           imageUrl,
           fit: BoxFit.cover,
           width: double.infinity,
           height: double.infinity,
           memCacheWidth: 900,
+          dominantColor: event.dominantColors.isNotEmpty
+              ? _parseColor(event.dominantColors.first)
+              : null,
         ),
       );
     }
     return Container(
-      color: AppColors.surfaceGlass,
+      color: AppColors.surfaceGlass(context),
       child: const Center(
-        child: Icon(Icons.temple_hindu, size: 60, color: Colors.white10),
+        child: Icon(LucideIcons.landmark, size: 60, color: Colors.white10),
       ),
     );
   }
@@ -236,7 +245,7 @@ class HeroBanner extends StatelessWidget {
   }
 
   /// "FEATURED" pill on the top-left
-  Widget _buildPill({required String label, required Color color}) {
+  Widget _buildPill(BuildContext context, {required String label, required Color color}) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: BackdropFilter(
@@ -250,7 +259,7 @@ class HeroBanner extends StatelessWidget {
           ),
           child: Text(
             label,
-            style: AppTextStyles.labelSmall.copyWith(
+            style: AppTextStyles.labelSmall(context).copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
               letterSpacing: 0.8,
@@ -262,15 +271,15 @@ class HeroBanner extends StatelessWidget {
   }
 
   /// Top-right countdown pill with a timer icon
-  Widget _buildCountdownPill(DateTime date) {
+  Widget _buildCountdownPill(BuildContext context, DateTime date) {
     final daysLeft = date.difference(DateTime.now()).inDays;
     if (daysLeft < 0) return const SizedBox.shrink();
 
     final color = daysLeft <= 7
-        ? AppColors.error
+        ? AppColors.errorAdaptive(context)
         : daysLeft <= 30
-        ? AppColors.accent
-        : AppColors.primary;
+        ? AppColors.accentAdaptive(context)
+        : AppColors.primaryAdaptive(context);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
@@ -293,7 +302,7 @@ class HeroBanner extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 daysLeft == 0 ? 'today'.tr : '$daysLeft ${'days_left'.tr}',
-                style: AppTextStyles.labelSmall.copyWith(
+                style: AppTextStyles.labelSmall(context).copyWith(
                   color: color,
                   fontWeight: FontWeight.bold,
                 ),
@@ -303,5 +312,16 @@ class HeroBanner extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color? _parseColor(String hex) {
+    hex = hex.replaceAll('#', '');
+    if (hex.length == 6) {
+      hex = 'FF$hex'; // Add 100% opacity
+    }
+    if (hex.length == 8) {
+      return Color(int.parse('0x$hex'));
+    }
+    return null;
   }
 }

@@ -13,9 +13,9 @@ class TaxonomyIconResolver {
   /// Falls back to [Icons.label_outline] for unrecognised names.
   static IconData resolve(String? lucideName, {IconData? fallback}) {
     if (lucideName == null || lucideName.isEmpty) {
-      return fallback ?? Icons.label_outline;
+      return fallback ?? LucideIcons.tag;
     }
-    return _iconMap[lucideName] ?? fallback ?? Icons.label_outline;
+    return _iconMap[lucideName] ?? fallback ?? LucideIcons.tag;
   }
 
   /// Resolve a CSS hex color string → Flutter Color.

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../routes/app_pages.dart';
@@ -53,7 +54,7 @@ class HomeTopAppBar extends StatelessWidget {
                   snackPosition: SnackPosition.TOP,
                   duration: const Duration(seconds: 2),
                   backgroundColor: isDark
-                      ? AppColors.surfaceGlass
+                      ? AppColors.surfaceGlass(context)
                       : Colors.white,
                   colorText: onSurface,
                   margin: const EdgeInsets.all(16),
@@ -61,7 +62,7 @@ class HomeTopAppBar extends StatelessWidget {
                 );
               },
               child: Icon(
-                Icons.notifications_none_rounded,
+                LucideIcons.bell,
                 size: 18,
                 color: isDark ? Colors.white : onSurface,
               ),
@@ -95,13 +96,16 @@ class _BrandMark extends StatelessWidget {
       children: [
         // Sparkle icon
         ShaderMask(
-          shaderCallback: (bounds) => const LinearGradient(
-            colors: [AppColors.primary, AppColors.secondary],
+          shaderCallback: (bounds) => LinearGradient(
+            colors: [
+              AppColors.primaryAdaptive(context),
+              AppColors.secondaryAdaptive(context),
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ).createShader(bounds),
           child: const Icon(
-            Icons.auto_awesome_rounded,
+            LucideIcons.sparkles,
             size: 14,
             color: Colors.white, // required by ShaderMask
           ),
@@ -109,7 +113,7 @@ class _BrandMark extends StatelessWidget {
         const SizedBox(width: 6),
         Text(
           'UTSAV FESTIVAL',
-          style: AppTextStyles.labelSmall.copyWith(
+          style: AppTextStyles.labelSmall(context).copyWith(
             color: labelColor,
             fontSize: 12,
             letterSpacing: 1.8,
@@ -167,11 +171,9 @@ class _LanguagePill extends StatelessWidget {
       final label = _langLabels[code] ?? code.toUpperCase();
 
       final pillBg = isDark
-          ? AppColors.surfaceGlass.withValues(alpha: 0.8)
+          ? AppColors.surfaceGlass(context).withValues(alpha: 0.8)
           : Colors.black.withValues(alpha: 0.07);
-      final pillBorder = isDark
-          ? Colors.white.withValues(alpha: 0.12)
-          : Colors.black.withValues(alpha: 0.10);
+      final pillBorder = AppColors.glassBorder(context);
       final textColor = isDark ? Colors.white : onSurface;
 
       return GestureDetector(
@@ -189,7 +191,7 @@ class _LanguagePill extends StatelessWidget {
             children: [
               Text(
                 '$script/A',
-                style: TextStyle(
+                style: AppTextStyles.labelMedium(context).copyWith(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                   color: textColor,
@@ -200,7 +202,7 @@ class _LanguagePill extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 label,
-                style: TextStyle(
+                style: AppTextStyles.labelMedium(context).copyWith(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
                   color: textColor,
@@ -209,7 +211,7 @@ class _LanguagePill extends StatelessWidget {
               ),
               const SizedBox(width: 3),
               Icon(
-                Icons.keyboard_arrow_down_rounded,
+                LucideIcons.chevronDown,
                 size: 16,
                 color: textColor.withValues(alpha: 0.7),
               ),
@@ -247,11 +249,7 @@ class _IconCircle extends StatelessWidget {
               ? Colors.white.withValues(alpha: 0.10)
               : Colors.black.withValues(alpha: 0.06),
           shape: BoxShape.circle,
-          border: Border.all(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.12)
-                : Colors.black.withValues(alpha: 0.08),
-          ),
+          border: Border.all(color: AppColors.glassBorder(context)),
         ),
         child: Center(child: child),
       ),
@@ -270,18 +268,21 @@ class _AvatarButton extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         HapticFeedback.lightImpact();
-        Get.toNamed(Routes.PROFILE);
+        Get.toNamed(Routes.profile);
       },
       child: Obx(() {
         if (!Get.isRegistered<ProfileController>()) {
           // Placeholder circle while profile loads
           return Container(
-            width: 36,
-            height: 36,
-            decoration: const BoxDecoration(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: LinearGradient(
-                colors: [AppColors.primary, AppColors.secondary],
+                colors: [
+                  AppColors.primaryAdaptive(context),
+                  AppColors.secondaryAdaptive(context),
+                ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -294,16 +295,19 @@ class _AvatarButton extends StatelessWidget {
           height: 40,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            gradient: const LinearGradient(
-              colors: [AppColors.primary, AppColors.secondary],
+            gradient: LinearGradient(
+              colors: [
+                AppColors.primaryAdaptive(context),
+                AppColors.secondaryAdaptive(context),
+              ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primary.withValues(
-                  alpha: isDark ? 0.45 : 0.25,
-                ),
+                color: AppColors.primaryAdaptive(
+                  context,
+                ).withValues(alpha: isDark ? 0.45 : 0.25),
                 blurRadius: 12,
                 spreadRadius: -2,
               ),

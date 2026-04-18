@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_styles.dart';
 import '../home_controller.dart';
@@ -38,9 +39,7 @@ class LanguagePickerSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor = isDark ? const Color(0xFF1A0B2E) : Colors.white;
-    final borderColor = isDark
-        ? Colors.white.withValues(alpha: 0.12)
-        : Colors.black.withValues(alpha: 0.08);
+    final borderColor = AppColors.glassBorder(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -75,7 +74,7 @@ class LanguagePickerSheet extends StatelessWidget {
             children: [
               Text(
                 'Select Language',
-                style: AppTextStyles.titleMedium.copyWith(
+                style: AppTextStyles.titleMedium(context).copyWith(
                   color: Theme.of(context).colorScheme.onSurface,
                   fontWeight: FontWeight.bold,
                 ),
@@ -94,7 +93,7 @@ class LanguagePickerSheet extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
-                    Icons.close_rounded,
+                    LucideIcons.x,
                     size: 16,
                     color: Theme.of(
                       context,

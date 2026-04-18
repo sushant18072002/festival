@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 
@@ -83,10 +84,10 @@ class _AnimatedCountdownChipState extends State<AnimatedCountdownChip> {
       _timeString,
       style:
           (widget.isLarge
-                  ? AppTextStyles.labelMedium
-                  : AppTextStyles.labelSmall)
+                  ? AppTextStyles.labelMedium(context)
+                  : AppTextStyles.labelSmall(context))
               .copyWith(
-                color: _isToday ? AppColors.primary : AppColors.accent,
+                color: _isToday ? AppColors.primaryAdaptive(context) : AppColors.accentAdaptive(context),
                 letterSpacing: 2.0,
                 fontWeight: FontWeight.bold,
               ),
@@ -105,19 +106,19 @@ class _AnimatedCountdownChipState extends State<AnimatedCountdownChip> {
         vertical: widget.isLarge ? 6 : 4,
       ),
       decoration: BoxDecoration(
-        color: (_isToday ? AppColors.primary : AppColors.accent).withValues(
+        color: (_isToday ? AppColors.primaryAdaptive(context) : AppColors.accentAdaptive(context)).withValues(
           alpha: 0.1,
         ),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: (_isToday ? AppColors.primary : AppColors.accent).withValues(
+          color: (_isToday ? AppColors.primaryAdaptive(context) : AppColors.accentAdaptive(context)).withValues(
             alpha: 0.3,
           ),
         ),
         boxShadow: _isToday
             ? [
                 BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.2),
+                  color: AppColors.primaryAdaptive(context).withValues(alpha: 0.2),
                   blurRadius: 8,
                   spreadRadius: 1,
                 ),
@@ -128,9 +129,9 @@ class _AnimatedCountdownChipState extends State<AnimatedCountdownChip> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
-            _isToday ? Icons.celebration_rounded : Icons.schedule_rounded,
+            _isToday ? LucideIcons.partyPopper : LucideIcons.calendarClock,
             size: widget.isLarge ? 16 : 12,
-            color: _isToday ? AppColors.primary : AppColors.accent,
+            color: _isToday ? AppColors.primaryAdaptive(context) : AppColors.accentAdaptive(context),
           ),
           const SizedBox(width: 6),
           textWidget,

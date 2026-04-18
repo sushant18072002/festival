@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:lottie/lottie.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
@@ -13,6 +13,8 @@ import '../../../widgets/glass_container.dart';
 import '../../profile/profile_controller.dart';
 import '../../../../app/data/providers/data_repository.dart';
 import '../../../../app/data/models/quiz_model.dart';
+import '../../../../app/data/services/asset_service.dart';
+import '../../../../app/widgets/smart_lottie.dart';
 
 class QuizView extends StatefulWidget {
   const QuizView({super.key});
@@ -29,16 +31,21 @@ class _QuizViewState extends State<QuizView> {
   QuizResultNode? _result;
   late Future<QuizModel?> _quizFuture;
   QuizModel? _quiz;
-  bool _isDark = true; // set in build(), used by helper and sub-builders
 
   @override
   void initState() {
     super.initState();
     final repo = Get.find<DataRepository>();
-    _quizFuture = repo.getQuizzes(repo.currentLang.value).then((quizzes) {
-      if (quizzes == null || quizzes.isEmpty) return null;
-      return quizzes.firstWhere((q) => q.isActive, orElse: () => quizzes.first);
-    });
+    
+    // Preference: Passed argument -> Remote fetch -> first active
+    if (Get.arguments is QuizModel) {
+      _quizFuture = Future.value(Get.arguments);
+    } else {
+      _quizFuture = repo.getQuizzes(repo.currentLang.value).then((quizzes) {
+        if (quizzes == null || quizzes.isEmpty) return null;
+        return quizzes.firstWhere((q) => q.isActive, orElse: () => quizzes.first);
+      });
+    }
   }
 
   void _handleOptionTap(QuizOption option) {
@@ -87,17 +94,21 @@ class _QuizViewState extends State<QuizView> {
       final profile = Get.find<ProfileController>();
       profile.addKarma(reward, '${_quiz!.title} Completed');
       _storage.write('quiz_karma_${_quiz!.id}', true);
-      HapticFeedback.heavyImpact();
+      
+      // Play system success feedback
+      AssetService.to.playSFX(GlobalAsset.success);
     }
   }
 
   void _shareResult() {
     if (_result == null || _quiz == null) return;
-    Share.share(
-      'I just discovered my festival personality on Utsav! '
-      'I am ${_result!.emoji} ${_result!.name} — "${_result!.personality}"! '
-      'Which festival are you? Take the "${_quiz!.title}" quiz now! 🎊',
-      subject: 'My Festival Personality — Utsav App',
+    SharePlus.instance.share(
+      ShareParams(
+        text: 'I just discovered my festival personality on Utsav! '
+            'I am ${_result!.emoji} ${_result!.name} — "${_result!.personality}"! '
+            'Which festival are you? Take the "${_quiz!.title}" quiz now! 🎊',
+        subject: 'My Festival Personality — Utsav App',
+      ),
     );
   }
 
@@ -116,21 +127,20 @@ class _QuizViewState extends State<QuizView> {
 
   @override
   Widget build(BuildContext context) {
-    _isDark = Theme.of(context).brightness == Brightness.dark;
     final onSurface = Theme.of(context).colorScheme.onSurface;
     return NeoScaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.close, color: onSurface.withValues(alpha: 0.6)),
+          icon: Icon(LucideIcons.x, color: onSurface.withValues(alpha: 0.6)),
           onPressed: () => Get.back(),
         ),
         title: _isFinished
             ? null
             : Text(
                 _quiz?.title ?? 'Loading Quiz...',
-                style: AppTextStyles.titleMedium.copyWith(
+                style: AppTextStyles.titleMedium(context).copyWith(
                   color: onSurface.withValues(alpha: 0.7),
                 ),
               ),
@@ -148,7 +158,7 @@ class _QuizViewState extends State<QuizView> {
               return Center(
                 child: Text(
                   'Quiz unavailable at the moment.',
-                  style: AppTextStyles.titleMedium.copyWith(
+                  style: AppTextStyles.titleMedium(context).copyWith(
                     color: Theme.of(
                       context,
                     ).colorScheme.onSurface.withValues(alpha: 0.6),
@@ -203,16 +213,14 @@ class _QuizViewState extends State<QuizView> {
                 children: [
                   Text(
                     'Question ${_currentIndex + 1} of ${_quiz!.questions.length}',
-                    style: AppTextStyles.labelSmall.copyWith(
+                    style: AppTextStyles.labelSmall(context).copyWith(
                       color: AppColors.accent,
                     ),
                   ),
                   Text(
                     '${((_currentIndex / _quiz!.questions.length) * 100).toInt()}%',
-                    style: AppTextStyles.labelSmall.copyWith(
-                      color: _isDark
-                          ? Colors.white38
-                          : const Color(0xFF7C3AED).withValues(alpha: 0.4),
+                    style: AppTextStyles.labelSmall(context).copyWith(
+                      color: AppColors.textAdaptiveSecondary(context),
                     ),
                   ),
                 ],
@@ -222,9 +230,9 @@ class _QuizViewState extends State<QuizView> {
                 borderRadius: BorderRadius.circular(4),
                 child: LinearProgressIndicator(
                   value: _currentIndex / _quiz!.questions.length,
-                  backgroundColor: _isDark ? Colors.white12 : Colors.black12,
-                  valueColor: const AlwaysStoppedAnimation<Color>(
-                    AppColors.primary,
+                  backgroundColor: AppColors.glassBorder(context).withValues(alpha: 0.15),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    AppColors.primaryAdaptive(context),
                   ),
                   minHeight: 4,
                 ),
@@ -247,7 +255,10 @@ class _QuizViewState extends State<QuizView> {
               const SizedBox(height: AppSpacing.md),
               Text(
                     q.question,
-                    style: AppTextStyles.headlineMedium.copyWith(height: 1.3),
+                    style: AppTextStyles.headlineMedium(context).copyWith(
+                      color: AppColors.textAdaptive(context),
+                      height: 1.3,
+                    ),
                     textAlign: TextAlign.center,
                   )
                   .animate(key: ValueKey('q$_currentIndex'))
@@ -276,14 +287,10 @@ class _QuizViewState extends State<QuizView> {
                         horizontal: AppSpacing.lg,
                         vertical: AppSpacing.md,
                       ),
-                      color: _isDark
-                          ? Colors.white.withValues(alpha: 0.06)
-                          : Colors.white,
-                      opacity: _isDark ? 1.0 : 0.9,
+                      color: AppColors.surfaceGlass(context),
+                      opacity: Theme.of(context).brightness == Brightness.dark ? 1.0 : 0.9,
                       border: Border.all(
-                        color: _isDark
-                            ? Colors.white.withValues(alpha: 0.15)
-                            : const Color(0xFF7C3AED).withValues(alpha: 0.15),
+                        color: AppColors.glassBorder(context),
                       ),
                       child: Row(
                         children: [
@@ -299,8 +306,8 @@ class _QuizViewState extends State<QuizView> {
                             ),
                             child: Center(
                               child: Text(
-                                '${String.fromCharCode(65 + index)}',
-                                style: AppTextStyles.labelSmall.copyWith(
+                                String.fromCharCode(65 + index),
+                                style: AppTextStyles.labelSmall(context).copyWith(
                                   color: AppColors.primary,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -311,7 +318,8 @@ class _QuizViewState extends State<QuizView> {
                           Expanded(
                             child: Text(
                               option.label.replaceAll('&amp;', '&'),
-                              style: AppTextStyles.bodyLarge.copyWith(
+                              style: AppTextStyles.bodyLarge(context).copyWith(
+                                color: AppColors.textAdaptive(context),
                                 height: 1.3,
                               ),
                             ),
@@ -363,8 +371,9 @@ class _QuizViewState extends State<QuizView> {
           Stack(
             alignment: Alignment.center,
             children: [
-              Lottie.asset(
-                'assets/lottie/celebration_confetti.json',
+              SmartLottie(
+                url: AssetService.to.getLottie(GlobalAsset.success),
+                fallbackAsset: 'assets/lottie/celebration_confetti.json',
                 width: 300,
                 height: 300,
                 repeat: false,
@@ -389,7 +398,7 @@ class _QuizViewState extends State<QuizView> {
               ),
               child: Text(
                 r.personality.toUpperCase(),
-                style: AppTextStyles.labelSmall.copyWith(
+                style: AppTextStyles.labelSmall(context).copyWith(
                   color: primaryColor,
                   letterSpacing: 1.5,
                   fontWeight: FontWeight.bold,
@@ -402,7 +411,7 @@ class _QuizViewState extends State<QuizView> {
           // Festival name
           Text(
             'You are ${r.name}!',
-            style: AppTextStyles.displayLarge.copyWith(
+            style: AppTextStyles.displayLarge(context).copyWith(
               color: primaryColor,
               height: 1.1,
             ),
@@ -416,8 +425,8 @@ class _QuizViewState extends State<QuizView> {
           GlassContainer(
             borderRadius: BorderRadius.circular(16),
             padding: const EdgeInsets.all(AppSpacing.md),
-            color: Colors.white.withValues(alpha: 0.04),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
+            color: AppColors.surfaceGlass(context),
+            border: Border.all(color: AppColors.glassBorder(context)),
             child: Column(
               children: [
                 Row(
@@ -425,15 +434,13 @@ class _QuizViewState extends State<QuizView> {
                   children: [
                     Text(
                       'Festival Match',
-                      style: AppTextStyles.labelSmall.copyWith(
-                        color: _isDark
-                            ? Colors.white54
-                            : const Color(0xFF3D1F5C),
+                      style: AppTextStyles.labelSmall(context).copyWith(
+                        color: AppColors.textAdaptiveSecondary(context),
                       ),
                     ),
                     Text(
                       '$matchPct%',
-                      style: AppTextStyles.titleMedium.copyWith(
+                      style: AppTextStyles.titleMedium(context).copyWith(
                         color: primaryColor,
                         fontWeight: FontWeight.bold,
                       ),
@@ -445,7 +452,7 @@ class _QuizViewState extends State<QuizView> {
                   borderRadius: BorderRadius.circular(4),
                   child: LinearProgressIndicator(
                     value: matchPct / 100,
-                    backgroundColor: _isDark ? Colors.white12 : Colors.black12,
+                    backgroundColor: AppColors.glassBorder(context),
                     valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
                     minHeight: 6,
                   ),
@@ -459,8 +466,8 @@ class _QuizViewState extends State<QuizView> {
           // Description
           Text(
             r.description,
-            style: AppTextStyles.bodyLarge.copyWith(
-              color: _isDark ? Colors.white70 : const Color(0xFF251042),
+            style: AppTextStyles.bodyLarge(context).copyWith(
+              color: AppColors.textAdaptiveSecondary(context),
               height: 1.6,
             ),
             textAlign: TextAlign.center,
@@ -478,7 +485,7 @@ class _QuizViewState extends State<QuizView> {
             ),
             child: Text(
               alreadyEarned ? '✓ Quiz Completed' : '+$reward Karma Earned! ✨',
-              style: AppTextStyles.labelLarge.copyWith(
+              style: AppTextStyles.labelLarge(context).copyWith(
                 color: Colors.green,
                 fontWeight: FontWeight.bold,
               ),
@@ -502,7 +509,7 @@ class _QuizViewState extends State<QuizView> {
                     ),
                     elevation: 0,
                   ),
-                  icon: const Icon(Icons.share_rounded, size: 18),
+                  icon: const Icon(LucideIcons.share2, size: 18),
                   label: const Text('Share Result'),
                   onPressed: _shareResult,
                 ),
@@ -512,15 +519,9 @@ class _QuizViewState extends State<QuizView> {
               Expanded(
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: _isDark
-                        ? Colors.white70
-                        : const Color(0xFF3D1F5C),
+                    foregroundColor: AppColors.textAdaptiveSecondary(context),
                     padding: const EdgeInsets.symmetric(vertical: 14),
-                    side: BorderSide(
-                      color: _isDark
-                          ? Colors.white.withValues(alpha: 0.2)
-                          : const Color(0xFF7C3AED).withValues(alpha: 0.3),
-                    ),
+                    side: BorderSide(color: AppColors.glassBorder(context)),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),

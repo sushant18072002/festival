@@ -20,21 +20,32 @@ class ProfileView extends GetView<ProfileController> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return NeoScaffold(
       appBar: AppBar(
-        title: const Text('My Journey'),
-        backgroundColor: Colors.transparent,
+        title: Text(
+          'my_journey'.tr,
+          style: AppTextStyles.headlineMedium(
+            context,
+          ).copyWith(color: AppColors.textAdaptive(context)),
+        ),
+        backgroundColor: isDark
+            ? AppColors.backgroundDark.withValues(alpha: 0.95)
+            : AppColors.backgroundLight.withValues(alpha: 0.97),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+          icon: const Icon(LucideIcons.chevronLeft),
           onPressed: () => Get.back(),
         ),
         actions: [
           IconButton(
-            icon: const Icon(LucideIcons.settings, color: Colors.white),
+            icon: Icon(
+              LucideIcons.settings,
+              color: AppColors.textAdaptive(context),
+            ),
             onPressed: () {
               HapticFeedback.lightImpact();
-              Get.toNamed(Routes.SETTINGS);
+              Get.toNamed(Routes.settings);
             },
           ),
           const SizedBox(width: AppSpacing.sm),
@@ -45,143 +56,170 @@ class ProfileView extends GetView<ProfileController> {
 
         return SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              AppSpacing.verticalXl,
-              // 1. Avatar Section
+              const SizedBox(height: 90),
+
+              // 1. ZEN HERO SECTION (Compact)
               Center(
-                child: GestureDetector(
-                  onTap: () {
-                    HapticFeedback.lightImpact();
-                    _showAvatarSelector(context);
-                  },
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Container(
-                        width: 120,
-                        height: 120,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.surfaceLight,
-                          border: Border.all(
-                            color: AppColors.primary,
-                            width: 3,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.primary.withValues(alpha: 0.6),
-                              blurRadius: 30,
-                              spreadRadius: 2,
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        HapticFeedback.lightImpact();
+                        _showAvatarSelector(context);
+                      },
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.surfaceGlass(context),
+                              border: Border.all(
+                                color: AppColors.primaryAdaptive(context),
+                                width: 3,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColors.primaryAdaptive(
+                                    context,
+                                  ).withValues(alpha: 0.25),
+                                  blurRadius: 30,
+                                  spreadRadius: -5,
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        child: ClipOval(
-                          child: Image.asset(selectedAvatar, fit: BoxFit.cover),
-                        ),
-                      ).animate().scale(
-                        curve: Curves.easeOutBack,
-                        duration: 600.ms,
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: const BoxDecoration(
-                            color: AppColors.accent,
-                            shape: BoxShape.circle,
+                            child: ClipOval(
+                              child: Image.asset(
+                                selectedAvatar,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ).animate().scale(
+                            curve: Curves.easeOutBack,
+                            duration: 600.ms,
                           ),
-                          child: const Icon(
-                            Icons.edit,
-                            color: Colors.black,
-                            size: 16,
+                          Positioned(
+                            bottom: 2,
+                            right: 2,
+                            child: Container(
+                              padding: const EdgeInsets.all(6),
+                              decoration: BoxDecoration(
+                                color: AppColors.accentAdaptive(context),
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.2),
+                                    blurRadius: 10,
+                                  ),
+                                ],
+                              ),
+                              child: Icon(
+                                LucideIcons.pencil,
+                                color: Colors.white,
+                                size: 12,
+                              ),
+                            ),
                           ),
-                        ).animate(delay: 400.ms).fade().scale(),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
 
-              AppSpacing.verticalXl,
+              const SizedBox(height: 16),
 
-              // 2. Rank & Progress Bar
+              // 2. PROGRESSION HERO
               KarmaProgressSection(controller: controller),
 
-              AppSpacing.verticalXl,
+              const SizedBox(height: 20),
 
-              // 3. Stats Grid
+              // 3. STATS BENTO GRID (High Density)
               Row(
                 children: [
                   Expanded(
                     child: ProfileStatCard(
-                      icon: Icons.local_fire_department_rounded,
-                      title: 'Streak',
+                      icon: LucideIcons.flame,
+                      title: 'streak'.tr,
                       value: '${controller.currentStreak.value}',
+                      accentColor: const Color(0xFFF59E0B),
                       delay: 400,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.md),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: ProfileStatCard(
-                      icon: Icons.emoji_events_rounded,
-                      title: 'Karma',
+                      icon: LucideIcons.trophy,
+                      title: 'karma'.tr,
                       value: '${controller.karmaPoints.value}',
+                      accentColor: AppColors.primaryAdaptive(context),
                       delay: 500,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.md),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: ProfileStatCard(
-                      icon: Icons.celebration_rounded,
-                      title: 'Festivals',
+                      icon: LucideIcons.partyPopper,
+                      title: 'explored'.tr,
                       value: '${controller.festivalsExplored.value}',
+                      accentColor: const Color(0xFF8B5CF6),
                       delay: 600,
                     ),
                   ),
                 ],
               ),
 
-              AppSpacing.verticalXl,
+              const SizedBox(height: 16),
 
-              // 4. Streak Tracker
-              GlassContainer(
-                borderRadius: BorderRadius.circular(20),
-                padding: const EdgeInsets.all(20),
-                color: AppColors.surfaceGlass,
+              // 4. LANDSCAPE BENTO: STREAK TRACKER (Compact)
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColors.surfaceGlass(context),
+                  borderRadius: BorderRadius.circular(24),
+                  border: AppColors.adaptiveBorder(context),
+                  boxShadow: AppColors.glassShadow(context),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 16,
+                ),
                 child: Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.orangeAccent.withValues(alpha: 0.1),
+                        color: const Color(0xFFF59E0B).withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
                       child: const Icon(
-                        Icons.local_fire_department_rounded,
-                        color: Colors.orangeAccent,
-                        size: 32,
+                        LucideIcons.flame,
+                        color: Color(0xFFF59E0B),
+                        size: 24,
                       ),
                     ),
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 16),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${controller.currentStreak.value} Day Streak',
-                            style: AppTextStyles.headlineMedium.copyWith(
-                              color: Colors.white,
+                            '${controller.currentStreak.value} ${'day_streak'.tr}',
+                            style: AppTextStyles.titleMedium(context).copyWith(
+                              color: AppColors.textAdaptive(context),
+                              fontWeight: FontWeight.w900,
                             ),
                           ),
-                          const SizedBox(height: 4),
+                          const SizedBox(height: 2),
                           Text(
-                            'Come back tomorrow to keep it alive!',
-                            style: AppTextStyles.bodySmall.copyWith(
-                              color: Colors.white70,
+                            'come_back_tomorrow'.tr,
+                            style: AppTextStyles.labelSmall(context).copyWith(
+                              color: AppColors.textAdaptiveSecondary(context),
                             ),
                           ),
                         ],
@@ -191,27 +229,12 @@ class ProfileView extends GetView<ProfileController> {
                 ),
               ).animate(delay: 700.ms).fade().slideY(begin: 0.1),
 
-              AppSpacing.verticalXl,
+              const SizedBox(height: 24),
 
-              // 5. Trophy Case
-              Row(
-                children: [
-                  const Icon(Icons.emoji_events_rounded, color: Colors.amber),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Trophy Case',
-                    style: AppTextStyles.headlineMedium.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ).animate(delay: 800.ms).fade(),
-
-              const SizedBox(height: 16),
-
+              // 5. TROPHY CASE
               TrophyGrid(controller: controller),
 
-              AppSpacing.verticalXl,
+              const SizedBox(height: 100),
             ],
           ),
         );
@@ -224,6 +247,8 @@ class ProfileView extends GetView<ProfileController> {
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
+      elevation: 0,
+      barrierColor: Colors.black.withValues(alpha: 0.1), // Subtle shadow mask
       builder: (context) {
         return AvatarSelectorSheet(controller: controller);
       },

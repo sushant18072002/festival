@@ -4,9 +4,9 @@ import 'package:lottie/lottie.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../data/providers/data_repository.dart';
-import '../theme/app_colors.dart';
 
 class SmartLottie extends StatefulWidget {
   final String url; // Could be full CDN url or filename
@@ -19,12 +19,51 @@ class SmartLottie extends StatefulWidget {
   const SmartLottie({
     super.key,
     required this.url,
-    this.fallbackAsset = 'assets/lottie/holi_splash.json',
+    this.fallbackAsset = 'assets/lottie/loading_mandala.json',
     this.width,
     this.height,
     this.fit = BoxFit.contain,
     this.repeat = true,
   });
+
+  /// Pre-fetches and caches a list of Lottie URLs/keys to the local device.
+  static Future<void> preCache(List<String> urls) async {
+    final baseUrl = dotenv.env['CDN_BASE_URL'] ?? '';
+    final docDir = await getApplicationDocumentsDirectory();
+    final lottieDir = Directory('${docDir.path}/utsav_lotties');
+    if (!await lottieDir.exists()) await lottieDir.create(recursive: true);
+
+    for (final url in urls) {
+      if (url.isEmpty || url.startsWith('assets/')) continue;
+
+      // Smart URL Resolution
+      String finalKey = url;
+      if (!finalKey.startsWith('http') && !finalKey.contains('/')) {
+        finalKey = 'lotties/$finalKey';
+      }
+
+      final finalUrl = (finalKey.startsWith('http') || baseUrl.isEmpty)
+          ? finalKey
+          : '$baseUrl/${finalKey.startsWith('/') ? finalKey.substring(1) : finalKey}';
+
+      try {
+        final uri = Uri.parse(finalUrl);
+        final filename = uri.pathSegments.isNotEmpty
+            ? uri.pathSegments.last
+            : 'lottie_${url.hashCode}.json';
+
+        final file = File('${lottieDir.path}/$filename');
+        if (!await file.exists()) {
+          final resp = await http.get(uri);
+          if (resp.statusCode == 200) {
+            await file.writeAsBytes(resp.bodyBytes);
+          }
+        }
+      } catch (e) {
+        debugPrint('[SmartLottie] Pre-cache failed for $url: $e');
+      }
+    }
+  }
 
   @override
   State<SmartLottie> createState() => _SmartLottieState();
@@ -86,10 +125,37 @@ class _SmartLottieState extends State<SmartLottie> {
 
     // 3. Remote mode + Offline Cache
     try {
-      final uri = Uri.parse(widget.url);
+      final String baseUrl = dotenv.env['CDN_BASE_URL'] ?? '';
+      
+      // Smart URL Resolution
+      String finalKey = widget.url;
+      if (!finalKey.startsWith('http') && !finalKey.contains('/')) {
+        finalKey = 'lotties/$finalKey';
+      }
+
+      String cleanKey = finalKey.startsWith('/') ? finalKey.substring(1) : finalKey;
+      
+      // Resilient Check: Avoid double-root segments (e.g., Utsav/stage/Utsav/stage/...)
+      final Uri baseUri = Uri.parse(baseUrl);
+      String basePath = baseUri.path;
+      if (basePath.startsWith('/')) basePath = basePath.substring(1);
+      if (basePath.endsWith('/')) basePath = basePath.substring(0, basePath.length - 1);
+
+      if (basePath.isNotEmpty && cleanKey.startsWith(basePath)) {
+        cleanKey = cleanKey.substring(basePath.length);
+        if (cleanKey.startsWith('/')) cleanKey = cleanKey.substring(1);
+      }
+
+      final String finalUrl = (cleanKey.startsWith('http') || baseUrl.isEmpty)
+          ? cleanKey
+          : (baseUrl.endsWith('/') ? '$baseUrl$cleanKey' : '$baseUrl/$cleanKey');
+      
+      debugPrint('[SmartLottie] Attempting Load: $finalUrl');
+      
+      final uri = Uri.parse(finalUrl);
       final filename = uri.pathSegments.isNotEmpty
           ? uri.pathSegments.last
-          : 'lottie_${widget.url.hashCode}.json'; // Ensure json extension if possible
+          : 'lottie_${widget.url.hashCode}.json';
 
       final docDir = await getApplicationDocumentsDirectory();
       final lottieDir = Directory('${docDir.path}/utsav_lotties');
@@ -148,26 +214,15 @@ class _SmartLottieState extends State<SmartLottie> {
         height: widget.height,
         child: const Center(
           child: CircularProgressIndicator(
-            strokeWidth: 2,
-            color: Colors.white38,
+            strokeWidth: 1, // Thinner for subtler look
+            color: Colors.white10, // Nearly invisible background loader
           ),
         ),
       );
     }
 
     if (_hasError) {
-      return Lottie.asset(
-        widget.fallbackAsset,
-        width: widget.width,
-        height: widget.height,
-        fit: widget.fit,
-        repeat: widget.repeat,
-        errorBuilder: (context, error, stack) => Icon(
-          Icons.broken_image_rounded,
-          size: 32,
-          color: AppColors.error.withValues(alpha: 0.5),
-        ),
-      );
+      return const SizedBox.shrink(); // Hide the error icon as requested
     }
 
     if (_useAssetMode && _assetPath != null) {
@@ -177,13 +232,7 @@ class _SmartLottieState extends State<SmartLottie> {
         height: widget.height,
         fit: widget.fit,
         repeat: widget.repeat,
-        errorBuilder: (context, error, stack) {
-          return Lottie.asset(
-            widget.fallbackAsset,
-            width: widget.width,
-            height: widget.height,
-          );
-        },
+        errorBuilder: (context, error, stack) => const SizedBox.shrink(),
       );
     }
 
@@ -194,13 +243,7 @@ class _SmartLottieState extends State<SmartLottie> {
         height: widget.height,
         fit: widget.fit,
         repeat: widget.repeat,
-        errorBuilder: (context, error, stack) {
-          return Lottie.asset(
-            widget.fallbackAsset,
-            width: widget.width,
-            height: widget.height,
-          );
-        },
+        errorBuilder: (context, error, stack) => const SizedBox.shrink(),
       );
     }
 

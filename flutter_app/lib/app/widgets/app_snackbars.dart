@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 
@@ -19,11 +20,11 @@ class AppSnackbars {
       message,
       titleText: Text(
         title,
-        style: AppTextStyles.labelLarge.copyWith(color: Colors.white),
+        style: AppTextStyles.labelLarge(Get.context!).copyWith(color: Colors.white),
       ),
       messageText: Text(
         message,
-        style: AppTextStyles.bodySmall.copyWith(color: Colors.white70),
+        style: AppTextStyles.bodySmall(Get.context!).copyWith(color: Colors.white70),
       ),
       snackPosition: SnackPosition.TOP,
       margin: const EdgeInsets.all(16),
@@ -55,7 +56,7 @@ class AppSnackbars {
       colorText: Colors.white,
       mainButton: TextButton(
         onPressed: () => Get.back(),
-        child: const Icon(Icons.close, size: 16, color: Colors.white38),
+        child: const Icon(LucideIcons.x, size: 16, color: Colors.white38),
       ),
       boxShadows: [
         BoxShadow(
@@ -84,13 +85,13 @@ class AppSnackbars {
   static IconData _getIcon(ToastType type) {
     switch (type) {
       case ToastType.success:
-        return Icons.check_circle_rounded;
+        return LucideIcons.circleCheck;
       case ToastType.error:
-        return Icons.error_rounded;
+        return LucideIcons.circleAlert;
       case ToastType.warning:
-        return Icons.warning_rounded;
+        return LucideIcons.triangleAlert;
       case ToastType.info:
-        return Icons.info_rounded;
+        return LucideIcons.info;
     }
   }
 }

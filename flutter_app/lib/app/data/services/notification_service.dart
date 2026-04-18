@@ -228,11 +228,11 @@ class NotificationService {
 
     if (payload.startsWith('event:')) {
       final slug = payload.replaceFirst('event:', '');
-      Get.toNamed(Routes.EVENT_DETAILS, arguments: {'slug': slug});
+      Get.toNamed(Routes.eventDetails, arguments: {'slug': slug});
     } else if (payload == 'calendar') {
-      Get.offAllNamed(Routes.DASHBOARD);
+      Get.offAllNamed(Routes.dashboard);
     } else {
-      Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.home);
     }
   }
 

@@ -6,7 +6,6 @@ import {
     Upload,
     Play,
     Pause,
-    Square,
     Trash2,
     Link2,
     Plus,
@@ -17,9 +16,17 @@ import {
     XCircle,
     Clock,
     Tag,
-    Smile,
+    X,
+    ChevronLeft,
+    ChevronRight,
+    Activity
 } from 'lucide-react';
 import Sidebar from '../components/Sidebar';
+import ConfirmationModal from '../components/ConfirmationModal';
+import { getAudioUrl } from '../lib/getImageUrl';
+import { motion, AnimatePresence } from 'framer-motion';
+import toast from 'react-hot-toast';
+import clsx from 'clsx';
 
 interface AudioRecord {
     _id: string;
@@ -80,10 +87,10 @@ function formatFileSize(bytes: number): string {
 
 export default function AudioPage() {
     const [audioList, setAudioList] = useState<AudioRecord[]>([]);
-    const [total, setTotal] = useState(0);
+    const [pagination, setPagination] = useState({ total: 0, page: 1, pages: 1 });
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
     const [search, setSearch] = useState('');
+    const [debouncedSearch, setDebouncedSearch] = useState('');
     const [filterCategory, setFilterCategory] = useState('');
     const [filterMood, setFilterMood] = useState('');
     const [filterUploaded, setFilterUploaded] = useState('');
@@ -91,6 +98,10 @@ export default function AudioPage() {
     const [playingId, setPlayingId] = useState<string | null>(null);
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    // Modal State
+    const [modalOpen, setModalOpen] = useState(false);
+    const [deleteId, setDeleteId] = useState<string | null>(null);
 
     // Upload form state
     const [uploadForm, setUploadForm] = useState({
@@ -108,63 +119,93 @@ export default function AudioPage() {
     });
     const [uploadFile, setUploadFile] = useState<File | null>(null);
     const [uploading, setUploading] = useState(false);
-    const [uploadSuccess, setUploadSuccess] = useState('');
-    const [uploadError, setUploadError] = useState('');
+
+    // Debounce search
+    useEffect(() => {
+        const timer = setTimeout(() => setDebouncedSearch(search), 500);
+        return () => clearTimeout(timer);
+    }, [search]);
 
     useEffect(() => {
         fetchAudio();
-    }, [filterCategory, filterMood, filterUploaded]);
+    }, [filterCategory, filterMood, filterUploaded, debouncedSearch, pagination.page]);
 
     const fetchAudio = async () => {
         setLoading(true);
         try {
-            const params = new URLSearchParams({ limit: '50' });
+            const params = new URLSearchParams({ 
+                limit: '20',
+                page: (pagination.page - 1).toString() 
+            });
             if (filterCategory) params.set('category', filterCategory);
             if (filterMood) params.set('mood', filterMood);
             if (filterUploaded) params.set('is_uploaded', filterUploaded);
+            if (debouncedSearch) params.set('search', debouncedSearch);
 
             const res = await fetch(`/api/audio?${params}`);
             const data = await res.json();
             setAudioList(data.items || []);
-            setTotal(data.total || 0);
+            setPagination({ 
+                total: data.total || 0, 
+                page: (data.page || 0) + 1, 
+                pages: Math.ceil((data.total || 0) / 20) 
+            });
         } catch (e) {
-            setError('Failed to load audio library');
+            toast.error('Failed to load audio library');
         } finally {
             setLoading(false);
         }
     };
 
     const handlePlay = (audio: AudioRecord) => {
-        if (!audio.is_s3_uploaded) return;
+        if (!audio.is_s3_uploaded && !audio.filename) return;
 
         if (playingId === audio._id) {
             audioRef.current?.pause();
             setPlayingId(null);
         } else {
             if (audioRef.current) audioRef.current.pause();
-            audioRef.current = new Audio(audio.s3_key);
-            audioRef.current.volume = audio.default_volume;
+            const audioSrc = getAudioUrl(audio.s3_key || `audio/originals/${audio.filename}`);
+            audioRef.current = new Audio(audioSrc);
+            audioRef.current.volume = Number(audio.default_volume);
             audioRef.current.play();
             audioRef.current.onended = () => setPlayingId(null);
             setPlayingId(audio._id);
         }
     };
 
-    const handleDelete = async (id: string) => {
-        if (!confirm('Soft-delete this audio? It can be restored later.')) return;
-        await fetch(`/api/audio?id=${id}`, { method: 'DELETE' });
-        fetchAudio();
+    const confirmDelete = (id: string) => {
+        setDeleteId(id);
+        setModalOpen(true);
+    };
+
+    const handleDelete = async () => {
+        if (!deleteId) return;
+        const tid = toast.loading('Deleting audio...');
+        try {
+            const res = await fetch(`/api/audio?id=${deleteId}`, { method: 'DELETE' });
+            if (res.ok) {
+                toast.success('Audio moved to trash', { id: tid });
+                fetchAudio();
+            } else {
+                toast.error('Failed to delete', { id: tid });
+            }
+        } catch (e) {
+            toast.error('Network error', { id: tid });
+        } finally {
+            setModalOpen(false);
+            setDeleteId(null);
+        }
     };
 
     const handleUpload = async (e: React.FormEvent) => {
         e.preventDefault();
         setUploading(true);
-        setUploadError('');
-        setUploadSuccess('');
+        const tid = toast.loading('Uploading audio...');
 
         const formData = new FormData();
         Object.entries(uploadForm).forEach(([k, v]) => formData.append(k, String(v)));
-        if (uploadFile) formData.append('audio_file', uploadFile);
+        if (uploadFile) formData.append('audio_file', uploadFile as any);
 
         try {
             const res = await fetch('/api/audio', { method: 'POST', body: formData });
@@ -172,251 +213,313 @@ export default function AudioPage() {
                 const data = await res.json();
                 throw new Error(data.error || 'Upload failed');
             }
-            setUploadSuccess(`✅ "${uploadForm.title}" created${uploadFile ? ' and uploaded to S3' : ''} successfully!`);
+            toast.success('Audio created successfully!', { id: tid });
             setShowUpload(false);
             fetchAudio();
-        } catch (err: unknown) {
-            setUploadError(err instanceof Error ? err.message : 'Upload failed');
+        } catch (err: any) {
+            toast.error(err.message || 'Upload failed', { id: tid });
         } finally {
             setUploading(false);
         }
     };
 
-    const filteredList = audioList.filter(a =>
-        !search ||
-        a.title.toLowerCase().includes(search.toLowerCase()) ||
-        a.slug.toLowerCase().includes(search.toLowerCase()) ||
-        a.tags.some(t => t.toLowerCase().includes(search.toLowerCase()))
-    );
-
     return (
         <>
             <Head>
-                <title>Ambient Audio Library | Admin</title>
+                <title>Ambient Audio | Mission Control</title>
             </Head>
 
-            <div className="flex h-screen bg-slate-950 text-white">
+            <div className="flex h-screen bg-slate-950 font-sans text-white overflow-hidden">
                 <Sidebar />
-                <main className="flex-1 overflow-y-auto p-6">
-                    {/* Header */}
-                    <div className="flex items-center justify-between mb-8">
-                        <div>
-                            <div className="flex items-center gap-3 mb-1">
-                                <div className="p-2 bg-purple-500/20 rounded-xl border border-purple-500/30">
-                                    <Music className="text-purple-400" size={22} />
+                <ConfirmationModal
+                    isOpen={modalOpen}
+                    onCancel={() => setModalOpen(false)}
+                    onConfirm={handleDelete}
+                    title="Delete Audio"
+                    message="Are you sure you want to soft-delete this audio track? It can be restored later from the database."
+                    isDestructive
+                />
+
+                <main className="flex-1 flex flex-col overflow-hidden">
+                    {/* Header Section */}
+                    <div className="bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/50 p-8 z-10">
+                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                            <div className="flex items-center gap-5">
+                                <div className="p-4 bg-purple-500/10 rounded-2xl border border-purple-500/20 shadow-inner group">
+                                    <Music className="w-8 h-8 text-purple-400 group-hover:scale-110 transition-transform" />
                                 </div>
-                                <h1 className="text-2xl font-bold text-white">Ambient Audio Library</h1>
+                                <div>
+                                    <h1 className="text-3xl font-black tracking-tight text-white">Audio Library</h1>
+                                    <p className="text-slate-500 mt-1 uppercase tracking-widest text-[10px] font-bold">
+                                        {pagination.total} Tracks · Mission Control Ready
+                                    </p>
+                                </div>
                             </div>
-                            <p className="text-gray-400 text-sm ml-12">
-                                {total} audio tracks · Stream directly to festival events
-                            </p>
-                        </div>
-                        <div className="flex gap-3">
-                            <button
-                                onClick={fetchAudio}
-                                className="flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-xl text-sm transition-colors"
-                            >
-                                <RefreshCw size={14} /> Refresh
-                            </button>
-                            <button
-                                onClick={() => setShowUpload(true)}
-                                className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-500 rounded-xl text-sm font-medium transition-colors"
-                            >
-                                <Plus size={14} /> Add Audio
-                            </button>
-                        </div>
-                    </div>
 
-                    {/* Success message */}
-                    {uploadSuccess && (
-                        <div className="mb-4 p-3 bg-green-900/30 border border-green-700/50 rounded-xl text-green-300 text-sm flex items-center gap-2">
-                            <CheckCircle size={16} /> {uploadSuccess}
-                            <button onClick={() => setUploadSuccess('')} className="ml-auto text-green-500 hover:text-green-300">✕</button>
-                        </div>
-                    )}
-
-                    {/* Filters */}
-                    <div className="flex flex-wrap gap-3 mb-6">
-                        <div className="relative flex-1 min-w-48">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
-                            <input
-                                value={search}
-                                onChange={e => setSearch(e.target.value)}
-                                placeholder="Search by title, slug, tag..."
-                                className="w-full pl-9 pr-4 py-2 bg-gray-900 border border-gray-700 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500"
-                            />
-                        </div>
-                        <select
-                            value={filterCategory}
-                            onChange={e => setFilterCategory(e.target.value)}
-                            className="px-3 py-2 bg-gray-900 border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500"
-                        >
-                            <option value="">All Categories</option>
-                            {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
-                        </select>
-                        <select
-                            value={filterMood}
-                            onChange={e => setFilterMood(e.target.value)}
-                            className="px-3 py-2 bg-gray-900 border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500"
-                        >
-                            <option value="">All Moods</option>
-                            {MOODS.map(m => <option key={m} value={m}>{MOOD_ICONS[m]} {m}</option>)}
-                        </select>
-                        <select
-                            value={filterUploaded}
-                            onChange={e => setFilterUploaded(e.target.value)}
-                            className="px-3 py-2 bg-gray-900 border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500"
-                        >
-                            <option value="">All Status</option>
-                            <option value="true">✅ On S3</option>
-                            <option value="false">⏳ Pending</option>
-                        </select>
-                    </div>
-
-                    {/* Audio Grid */}
-                    {loading ? (
-                        <div className="flex items-center justify-center h-64">
-                            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-purple-500" />
-                        </div>
-                    ) : filteredList.length === 0 ? (
-                        <div className="text-center py-20 text-gray-500">
-                            <Music size={48} className="mx-auto mb-3 opacity-30" />
-                            <p>No audio found.</p>
-                            <p className="text-sm mt-1">Run <code className="bg-gray-800 px-2 py-0.5 rounded">npm run seed:audio</code> to populate the library.</p>
-                        </div>
-                    ) : (
-                        <div className="grid gap-4">
-                            {filteredList.map(audio => (
-                                <div
-                                    key={audio._id}
-                                    className={`flex items-center gap-4 p-4 bg-gray-900 border rounded-2xl transition-all ${playingId === audio._id
-                                        ? 'border-purple-500/60 bg-purple-950/30'
-                                        : 'border-gray-800 hover:border-gray-700'
-                                        }`}
+                            <div className="flex items-center gap-3">
+                                <button
+                                    onClick={() => fetchAudio()}
+                                    className="p-3 bg-slate-900 border border-slate-800 rounded-xl hover:bg-slate-800 transition-all text-slate-400 hover:text-white"
                                 >
-                                    {/* Play Button */}
-                                    <button
-                                        onClick={() => handlePlay(audio)}
-                                        disabled={!audio.is_s3_uploaded}
-                                        className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center transition-all ${audio.is_s3_uploaded
-                                            ? 'bg-purple-600 hover:bg-purple-500 cursor-pointer'
-                                            : 'bg-gray-800 cursor-not-allowed opacity-50'
-                                            }`}
-                                        title={audio.is_s3_uploaded ? 'Preview audio' : 'Not uploaded to S3 yet'}
-                                    >
-                                        {playingId === audio._id ? (
-                                            <Pause size={20} className="text-white" />
-                                        ) : (
-                                            <Play size={20} className="text-white ml-0.5" />
-                                        )}
-                                    </button>
-
-                                    {/* Info */}
-                                    <div className="flex-1 min-w-0">
-                                        <div className="flex items-center gap-2 mb-1">
-                                            <span className="font-semibold text-white truncate">{audio.title}</span>
-                                            <span
-                                                className="flex-shrink-0 text-xs px-2 py-0.5 rounded-full font-medium"
-                                                style={{
-                                                    background: `${CATEGORY_COLORS[audio.category]}22`,
-                                                    color: CATEGORY_COLORS[audio.category],
-                                                    border: `1px solid ${CATEGORY_COLORS[audio.category]}44`,
-                                                }}
-                                            >
-                                                {audio.category}
-                                            </span>
-                                            <span className="flex-shrink-0 text-xs text-gray-400">
-                                                {MOOD_ICONS[audio.mood]} {audio.mood}
-                                            </span>
-                                        </div>
-                                        <div className="flex items-center gap-4 text-xs text-gray-500">
-                                            <span className="font-mono text-gray-600">{audio.slug}</span>
-                                            {audio.duration_seconds > 0 && (
-                                                <span className="flex items-center gap-1">
-                                                    <Clock size={11} /> {formatDuration(audio.duration_seconds)}
-                                                </span>
-                                            )}
-                                            {audio.file_size_bytes > 0 && (
-                                                <span>{formatFileSize(audio.file_size_bytes)}</span>
-                                            )}
-                                            {audio.linked_events.length > 0 && (
-                                                <span className="flex items-center gap-1 text-blue-400">
-                                                    <Link2 size={11} /> {audio.linked_events.length} event{audio.linked_events.length !== 1 ? 's' : ''}
-                                                </span>
-                                            )}
-                                            {audio.plays_count > 0 && (
-                                                <span className="flex items-center gap-1">
-                                                    <Volume2 size={11} /> {audio.plays_count} plays
-                                                </span>
-                                            )}
-                                        </div>
-                                        {audio.tags.length > 0 && (
-                                            <div className="flex gap-1 mt-1.5 flex-wrap">
-                                                {audio.tags.slice(0, 6).map(tag => (
-                                                    <span key={tag} className="text-xs px-1.5 py-0.5 bg-gray-800 text-gray-400 rounded-md">
-                                                        #{tag}
-                                                    </span>
-                                                ))}
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    {/* Status & Actions */}
-                                    <div className="flex items-center gap-2 flex-shrink-0">
-                                        {audio.is_s3_uploaded ? (
-                                            <span className="flex items-center gap-1 text-xs text-green-400 bg-green-900/30 px-2 py-1 rounded-lg border border-green-700/30">
-                                                <CheckCircle size={11} /> S3
-                                            </span>
-                                        ) : (
-                                            <span className="flex items-center gap-1 text-xs text-yellow-400 bg-yellow-900/20 px-2 py-1 rounded-lg border border-yellow-700/30">
-                                                <XCircle size={11} /> Pending
-                                            </span>
-                                        )}
-                                        <button
-                                            onClick={() => handleDelete(audio._id)}
-                                            className="p-2 text-gray-600 hover:text-red-400 hover:bg-red-900/20 rounded-lg transition-colors"
-                                            title="Delete"
-                                        >
-                                            <Trash2 size={15} />
-                                        </button>
-                                    </div>
-                                </div>
-                            ))}
+                                    <RefreshCw size={20} className={clsx(loading && "animate-spin")} />
+                                </button>
+                                <button
+                                    onClick={() => setShowUpload(true)}
+                                    className="px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl text-sm font-black text-white shadow-lg shadow-purple-600/20 hover:shadow-purple-600/40 transition-all hover:scale-[1.02] flex items-center gap-2"
+                                >
+                                    <Plus size={18} /> ADD AUDIO
+                                </button>
+                            </div>
                         </div>
-                    )}
 
-                    {/* Upload Modal */}
+                        {/* Search & Filter Bar */}
+                        <div className="mt-8 flex flex-wrap gap-4">
+                            <div className="relative flex-1 min-w-[300px] group">
+                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-purple-400 transition-colors" size={20} />
+                                <input
+                                    value={search}
+                                    onChange={e => setSearch(e.target.value)}
+                                    placeholder="Search tracks by title, slug, or tags..."
+                                    className="w-full pl-12 pr-4 py-4 bg-slate-900 border border-slate-800 rounded-2xl text-sm text-white placeholder-slate-600 focus:outline-none focus:border-purple-500/50 transition-all"
+                                />
+                                {search && (
+                                    <button onClick={() => setSearch('')} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 hover:text-white">
+                                        <X size={18} />
+                                    </button>
+                                )}
+                            </div>
+
+                            <div className="flex gap-3">
+                                <select
+                                    value={filterCategory}
+                                    onChange={e => setFilterCategory(e.target.value)}
+                                    className="px-4 py-4 bg-slate-900 border border-slate-800 rounded-2xl text-sm text-slate-400 focus:outline-none focus:border-purple-500/50 transition-all appearance-none cursor-pointer min-w-[150px]"
+                                >
+                                    <option value="">Categories</option>
+                                    {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                                </select>
+                                <select
+                                    value={filterMood}
+                                    onChange={e => setFilterMood(e.target.value)}
+                                    className="px-4 py-4 bg-slate-900 border border-slate-800 rounded-2xl text-sm text-slate-400 focus:outline-none focus:border-purple-500/50 transition-all appearance-none cursor-pointer min-w-[140px]"
+                                >
+                                    <option value="">Moods</option>
+                                    {MOODS.map(m => <option key={m} value={m}>{MOOD_ICONS[m]} {m}</option>)}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Content Section */}
+                    <div className="flex-1 overflow-y-auto p-8 custom-scrollbar bg-slate-950 pb-32">
+                        {loading && audioList.length === 0 ? (
+                            <div className="flex flex-col items-center justify-center h-64 gap-4">
+                                <Activity className="w-12 h-12 text-purple-500 animate-pulse" />
+                                <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">Scanning Audio Archives...</p>
+                            </div>
+                        ) : audioList.length === 0 ? (
+                            <div className="text-center py-32 bg-slate-900/40 rounded-3xl border border-dashed border-slate-800">
+                                <Music size={64} className="mx-auto mb-6 text-slate-700 opacity-20" />
+                                <h3 className="text-xl font-black text-slate-400">No Audio Tracks Found</h3>
+                                <p className="text-slate-600 text-sm mt-2 font-medium">Try adjusting your filters or search query</p>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                                <AnimatePresence mode="popLayout">
+                                    {audioList.map((audio) => (
+                                        <motion.div
+                                            key={audio._id}
+                                            layout
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, scale: 0.95 }}
+                                            className={clsx(
+                                                "group relative bg-slate-900 border rounded-[2rem] p-6 transition-all duration-300",
+                                                playingId === audio._id
+                                                    ? "border-purple-500/50 bg-slate-900 ring-4 ring-purple-500/10 shadow-2xl"
+                                                    : "border-slate-800 hover:border-slate-700 hover:bg-slate-900/80"
+                                            )}
+                                        >
+                                            <div className="flex gap-6 items-start">
+                                                {/* Play Button Stage */}
+                                                <button
+                                                    onClick={() => handlePlay(audio)}
+                                                    disabled={!audio.is_s3_uploaded}
+                                                    className={clsx(
+                                                        "w-16 h-16 rounded-2xl flex items-center justify-center transition-all shadow-xl active:scale-90",
+                                                        audio.is_s3_uploaded
+                                                            ? playingId === audio._id
+                                                                ? "bg-purple-600 text-white"
+                                                                : "bg-slate-950 text-purple-400 hover:bg-purple-500 hover:text-white"
+                                                            : "bg-slate-950 text-slate-700 cursor-not-allowed opacity-50"
+                                                    )}
+                                                >
+                                                    {playingId === audio._id ? (
+                                                        <Pause size={28} />
+                                                    ) : (
+                                                        <Play size={28} className="translate-x-0.5" />
+                                                    )}
+                                                </button>
+
+                                                {/* Info Block */}
+                                                <div className="flex-1 min-w-0">
+                                                    <div className="flex items-center gap-3 mb-2">
+                                                        <h3 className="text-lg font-black text-white truncate group-hover:text-purple-400 transition-colors uppercase tracking-tight">{audio.title}</h3>
+                                                        <span
+                                                            className="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border"
+                                                            style={{
+                                                                backgroundColor: `${CATEGORY_COLORS[audio.category]}10`,
+                                                                color: CATEGORY_COLORS[audio.category],
+                                                                borderColor: `${CATEGORY_COLORS[audio.category]}30`,
+                                                            }}
+                                                        >
+                                                            {audio.category}
+                                                        </span>
+                                                    </div>
+
+                                                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-4">
+                                                        <div className="flex items-center gap-1.5 text-slate-500 text-[10px] font-bold uppercase tracking-widest">
+                                                            <Clock size={12} className="text-purple-500" /> {formatDuration(audio.duration_seconds)}
+                                                        </div>
+                                                        <div className="flex items-center gap-1.5 text-slate-500 text-[10px] font-bold uppercase tracking-widest">
+                                                            <Volume2 size={12} className="text-indigo-500" /> {audio.plays_count} Plays
+                                                        </div>
+                                                        <div className="flex items-center gap-1.5 text-slate-500 text-[10px] font-bold uppercase tracking-widest">
+                                                            <span>{MOOD_ICONS[audio.mood]} {audio.mood}</span>
+                                                        </div>
+                                                        {audio.linked_events.length > 0 && (
+                                                            <div className="flex items-center gap-1.5 text-blue-400 text-[10px] font-bold uppercase tracking-widest">
+                                                                <Link2 size={12} /> {audio.linked_events.length} Events
+                                                            </div>
+                                                        )}
+                                                    </div>
+
+                                                    <p className="text-slate-500 text-xs font-mono mb-4 truncate italic">/{audio.slug}</p>
+
+                                                    {audio.tags.length > 0 && (
+                                                        <div className="flex flex-wrap gap-2">
+                                                            {audio.tags.map(tag => (
+                                                                <span key={tag} className="px-2 py-0.5 bg-slate-950 border border-slate-800 text-[9px] font-bold text-slate-500 rounded-md uppercase tracking-tighter">
+                                                                    #{tag}
+                                                                </span>
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                </div>
+
+                                                {/* Actions Area */}
+                                                <div className="flex flex-col items-end gap-3 self-stretch">
+                                                    {audio.is_s3_uploaded ? (
+                                                        <div className="flex items-center gap-1 px-2 py-1 bg-emerald-500/10 text-emerald-500 rounded-lg border border-emerald-500/20 text-[9px] font-black uppercase tracking-widest">
+                                                            <CheckCircle size={10} /> S3 LIVE
+                                                        </div>
+                                                    ) : (
+                                                        <div className="flex items-center gap-1 px-2 py-1 bg-amber-500/10 text-amber-500 rounded-lg border border-amber-500/20 text-[9px] font-black uppercase tracking-widest">
+                                                            <Activity size={10} className="animate-pulse" /> PENDING
+                                                        </div>
+                                                    )}
+                                                    <div className="flex-1" />
+                                                    <button
+                                                        onClick={() => confirmDelete(audio._id)}
+                                                        className="p-3 text-slate-700 hover:text-rose-500 hover:bg-rose-500/10 rounded-2xl transition-all"
+                                                    >
+                                                        <Trash2 size={20} />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </motion.div>
+                                    ))}
+                                </AnimatePresence>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Pagination Footer */}
+                    <div className="absolute bottom-0 left-0 right-0 bg-slate-950/80 backdrop-blur-xl border-t border-slate-800/50 px-8 py-6 flex items-center justify-between z-20">
+                        <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">
+                            Page <span className="text-white">{pagination.page}</span> of <span className="text-white">{pagination.pages}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <button
+                                onClick={() => setPagination(prev => ({ ...prev, page: Math.max(1, prev.page - 1) }))}
+                                disabled={pagination.page === 1}
+                                className="p-2 bg-slate-900 border border-slate-800 rounded-xl text-slate-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                            >
+                                <ChevronLeft size={20} />
+                            </button>
+                            <div className="flex gap-1">
+                                {[...Array(Math.min(5, pagination.pages))].map((_, i) => {
+                                    const pageNum = i + 1; // Simplistic view, usually need smarter logic
+                                    return (
+                                        <button
+                                            key={pageNum}
+                                            onClick={() => setPagination(prev => ({ ...prev, page: pageNum }))}
+                                            className={clsx(
+                                                "w-10 h-10 rounded-xl text-xs font-black transition-all",
+                                                pagination.page === pageNum
+                                                    ? "bg-purple-600 text-white"
+                                                    : "bg-slate-900 text-slate-500 hover:text-white hover:border-slate-700 border border-slate-800"
+                                            )}
+                                        >
+                                            {pageNum}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                            <button
+                                onClick={() => setPagination(prev => ({ ...prev, page: Math.min(prev.pages, prev.page + 1) }))}
+                                disabled={pagination.page === pagination.pages}
+                                className="p-2 bg-slate-900 border border-slate-800 rounded-xl text-slate-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                            >
+                                <ChevronRight size={20} />
+                            </button>
+                        </div>
+                    </div>
+                </main>
+
+                {/* Upload Modal */}
+                <AnimatePresence>
                     {showUpload && (
-                        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
-                            <div className="bg-gray-900 border border-gray-700 rounded-2xl w-full max-w-xl overflow-y-auto max-h-[90vh]">
-                                <div className="flex items-center justify-between p-5 border-b border-gray-800">
-                                    <h2 className="font-semibold text-white flex items-center gap-2">
-                                        <Upload size={16} className="text-purple-400" /> Add Audio
-                                    </h2>
-                                    <button onClick={() => setShowUpload(false)} className="text-gray-500 hover:text-white">✕</button>
+                        <motion.div 
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 bg-slate-950/60 backdrop-blur-md flex items-center justify-center z-50 p-4"
+                        >
+                            <motion.div 
+                                initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                                animate={{ scale: 1, opacity: 1, y: 0 }}
+                                exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                                className="bg-slate-900 border border-slate-800 rounded-[2.5rem] w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]"
+                            >
+                                <div className="flex items-center justify-between p-8 border-b border-slate-800">
+                                    <div className="flex items-center gap-4">
+                                        <div className="p-3 bg-purple-500/10 rounded-2xl">
+                                            <Upload size={24} className="text-purple-400" />
+                                        </div>
+                                        <h2 className="text-2xl font-black text-white uppercase tracking-tight">Post Audio Asset</h2>
+                                    </div>
+                                    <button onClick={() => setShowUpload(false)} className="p-2 hover:bg-slate-800 rounded-full text-slate-500 transition-colors">
+                                        <X size={24} />
+                                    </button>
                                 </div>
 
-                                <form onSubmit={handleUpload} className="p-5 space-y-4">
-                                    {uploadError && (
-                                        <div className="p-3 bg-red-900/30 border border-red-700/50 rounded-xl text-red-300 text-sm">{uploadError}</div>
-                                    )}
-
+                                <form onSubmit={handleUpload} className="p-8 space-y-6 overflow-y-auto custom-scrollbar flex-1">
                                     {/* Audio file drop zone */}
                                     <div
                                         onClick={() => fileInputRef.current?.click()}
-                                        className="border-2 border-dashed border-gray-700 hover:border-purple-500 rounded-xl p-6 text-center cursor-pointer transition-colors"
+                                        className="border-2 border-dashed border-slate-800 hover:border-purple-500/50 rounded-3xl p-10 text-center cursor-pointer transition-all bg-slate-950/50 group"
                                     >
-                                        <Music className="mx-auto mb-2 text-gray-500" size={28} />
+                                        <Music className="mx-auto mb-4 text-slate-700 group-hover:text-purple-400 transition-colors" size={48} />
                                         {uploadFile ? (
-                                            <div>
-                                                <p className="text-purple-300 font-medium">{uploadFile.name}</p>
-                                                <p className="text-gray-500 text-sm">{formatFileSize(uploadFile.size)}</p>
+                                            <div className="space-y-1">
+                                                <p className="text-purple-400 font-black uppercase tracking-tight text-sm">{uploadFile.name}</p>
+                                                <p className="text-slate-600 text-[10px] font-bold">{formatFileSize(uploadFile.size)}</p>
                                             </div>
                                         ) : (
-                                            <div>
-                                                <p className="text-gray-400 text-sm">Drop audio file here or click to browse</p>
-                                                <p className="text-gray-600 text-xs mt-1">AAC, MP3, OGG, WAV · Max 50MB</p>
-                                                <p className="text-gray-600 text-xs">Or leave empty to register metadata only (upload later via CLI)</p>
+                                            <div className="space-y-1">
+                                                <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">Drop audio file or click to browse</p>
+                                                <p className="text-slate-600 text-[10px]">AAC, MP3, OGG, WAV · Max 50MB</p>
                                             </div>
                                         )}
                                         <input
@@ -427,7 +530,7 @@ export default function AudioPage() {
                                             onChange={e => {
                                                 const f = e.target.files?.[0];
                                                 if (!f) return;
-                                                setUploadFile(f);
+                                                setUploadFile(f as any);
                                                 if (!uploadForm.slug) {
                                                     const name = f.name.replace(/\.[^.]+$/, '').replace(/[^a-z0-9]+/gi, '-').toLowerCase();
                                                     setUploadForm(u => ({ ...u, slug: name }));
@@ -436,154 +539,103 @@ export default function AudioPage() {
                                         />
                                     </div>
 
-                                    <div className="grid grid-cols-2 gap-3">
-                                        <div>
-                                            <label className="text-xs text-gray-400 block mb-1">Slug *</label>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Asset Slug</label>
                                             <input
                                                 required value={uploadForm.slug}
                                                 onChange={e => setUploadForm(u => ({ ...u, slug: e.target.value }))}
-                                                placeholder="diwali-lakshmi-aarti"
-                                                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500"
+                                                placeholder="diwali-aarti"
+                                                className="w-full px-5 py-4 bg-slate-950 border border-slate-800 rounded-2xl text-sm text-white focus:outline-none focus:border-purple-500/50 transition-all outline-none"
                                             />
                                         </div>
-                                        <div>
-                                            <label className="text-xs text-gray-400 block mb-1">Title *</label>
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Asset Title</label>
                                             <input
                                                 required value={uploadForm.title}
                                                 onChange={e => setUploadForm(u => ({ ...u, title: e.target.value }))}
-                                                placeholder="Lakshmi Aarti – Diwali"
-                                                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500"
+                                                placeholder="Lakshmi Aarti"
+                                                className="w-full px-5 py-4 bg-slate-950 border border-slate-800 rounded-2xl text-sm text-white focus:outline-none focus:border-purple-500/50 transition-all outline-none"
                                             />
                                         </div>
                                     </div>
 
-                                    <div>
-                                        <label className="text-xs text-gray-400 block mb-1">Description</label>
-                                        <input
-                                            value={uploadForm.description}
-                                            onChange={e => setUploadForm(u => ({ ...u, description: e.target.value }))}
-                                            placeholder="Brief description of this audio"
-                                            className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500"
-                                        />
-                                    </div>
-
-                                    <div className="grid grid-cols-3 gap-3">
-                                        <div>
-                                            <label className="text-xs text-gray-400 block mb-1">Category</label>
+                                    <div className="grid grid-cols-3 gap-4">
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Category</label>
                                             <select
                                                 value={uploadForm.category}
                                                 onChange={e => setUploadForm(u => ({ ...u, category: e.target.value }))}
-                                                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500"
+                                                className="w-full px-5 py-4 bg-slate-950 border border-slate-800 rounded-2xl text-sm text-white focus:outline-none focus:border-purple-500/50 transition-all outline-none appearance-none"
                                             >
                                                 {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
                                             </select>
                                         </div>
-                                        <div>
-                                            <label className="text-xs text-gray-400 block mb-1">Mood</label>
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Mood</label>
                                             <select
                                                 value={uploadForm.mood}
                                                 onChange={e => setUploadForm(u => ({ ...u, mood: e.target.value }))}
-                                                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500"
+                                                className="w-full px-5 py-4 bg-slate-950 border border-slate-800 rounded-2xl text-sm text-white focus:outline-none focus:border-purple-500/50 transition-all outline-none appearance-none"
                                             >
-                                                {MOODS.map(m => <option key={m} value={m}>{MOOD_ICONS[m]} {m}</option>)}
+                                                {MOODS.map(m => <option key={m} value={m}>{m}</option>)}
                                             </select>
                                         </div>
-                                        <div>
-                                            <label className="text-xs text-gray-400 block mb-1">Language</label>
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Language</label>
                                             <select
                                                 value={uploadForm.language}
                                                 onChange={e => setUploadForm(u => ({ ...u, language: e.target.value }))}
-                                                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500"
+                                                className="w-full px-5 py-4 bg-slate-950 border border-slate-800 rounded-2xl text-sm text-white focus:outline-none focus:border-purple-500/50 transition-all outline-none appearance-none"
                                             >
                                                 {LANGUAGES.map(l => <option key={l} value={l}>{l}</option>)}
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div className="grid grid-cols-2 gap-3">
-                                        <div>
-                                            <label className="text-xs text-gray-400 block mb-1">Duration (seconds)</label>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Tags (Comma Sep)</label>
                                             <input
-                                                type="number" value={uploadForm.duration_seconds}
-                                                onChange={e => setUploadForm(u => ({ ...u, duration_seconds: e.target.value }))}
-                                                placeholder="180"
-                                                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500"
+                                                value={uploadForm.tags}
+                                                onChange={e => setUploadForm(u => ({ ...u, tags: e.target.value }))}
+                                                placeholder="diwali, aarti, bells"
+                                                className="w-full px-5 py-4 bg-slate-950 border border-slate-800 rounded-2xl text-sm text-white focus:outline-none focus:border-purple-500/50 transition-all outline-none"
                                             />
                                         </div>
-                                        <div>
-                                            <label className="text-xs text-gray-400 block mb-1">Default Volume (0–1)</label>
+                                        <div className="flex items-center gap-3 bg-slate-950 border border-slate-800 rounded-2xl px-5 h-full self-end">
                                             <input
-                                                type="number" step="0.1" min="0" max="1" value={uploadForm.default_volume}
-                                                onChange={e => setUploadForm(u => ({ ...u, default_volume: e.target.value }))}
-                                                placeholder="0.6"
-                                                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500"
+                                                type="checkbox"
+                                                id="loopable"
+                                                checked={uploadForm.is_loopable}
+                                                onChange={e => setUploadForm(u => ({ ...u, is_loopable: e.target.checked }))}
+                                                className="w-5 h-5 rounded-lg border-slate-700 bg-slate-900 text-purple-600 focus:ring-purple-500/40"
                                             />
+                                            <label htmlFor="loopable" className="text-xs font-bold text-slate-400 uppercase tracking-widest cursor-pointer">Loop Enabled</label>
                                         </div>
                                     </div>
 
-                                    <div>
-                                        <label className="text-xs text-gray-400 block mb-1">Tags (comma-separated)</label>
-                                        <input
-                                            value={uploadForm.tags}
-                                            onChange={e => setUploadForm(u => ({ ...u, tags: e.target.value }))}
-                                            placeholder="diwali, aarti, bells, puja"
-                                            className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500"
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="text-xs text-gray-400 block mb-1">Attribution / Credit</label>
-                                        <input
-                                            value={uploadForm.attribution}
-                                            onChange={e => setUploadForm(u => ({ ...u, attribution: e.target.value }))}
-                                            placeholder="Traditional Indian music, public domain"
-                                            className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500"
-                                        />
-                                    </div>
-
-                                    <label className="flex items-center gap-2 cursor-pointer">
-                                        <input
-                                            type="checkbox"
-                                            checked={uploadForm.is_loopable}
-                                            onChange={e => setUploadForm(u => ({ ...u, is_loopable: e.target.checked }))}
-                                            className="rounded"
-                                        />
-                                        <span className="text-sm text-gray-300">Loop audio seamlessly</span>
-                                    </label>
-
-                                    <div className="flex gap-3 pt-2">
+                                    <div className="pt-4 flex gap-4">
                                         <button
                                             type="button"
                                             onClick={() => setShowUpload(false)}
-                                            className="flex-1 py-2.5 border border-gray-700 rounded-xl text-sm text-gray-400 hover:text-white transition-colors"
+                                            className="flex-1 py-4 border border-slate-800 rounded-2xl text-xs font-black text-slate-500 hover:text-white hover:bg-slate-800 transition-all uppercase tracking-widest"
                                         >
-                                            Cancel
+                                            Discard
                                         </button>
                                         <button
                                             type="submit"
                                             disabled={uploading}
-                                            className="flex-1 py-2.5 bg-purple-600 hover:bg-purple-500 disabled:opacity-50 rounded-xl text-sm font-medium transition-colors"
+                                            className="flex-[2] py-4 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl text-xs font-black text-white shadow-xl shadow-purple-600/20 hover:shadow-purple-600/40 transition-all active:scale-95 uppercase tracking-widest disabled:opacity-50"
                                         >
-                                            {uploading ? (uploadFile ? 'Uploading to S3...' : 'Creating...') : (uploadFile ? 'Create & Upload' : 'Create Record')}
+                                            {uploading ? "S3 BUFFERING..." : "COMMIT TO CLOUD"}
                                         </button>
                                     </div>
                                 </form>
-                            </div>
-                        </div>
+                            </motion.div>
+                        </motion.div>
                     )}
-
-                    {/* CLI hint at bottom */}
-                    <div className="mt-8 p-4 bg-gray-900 border border-gray-800 rounded-xl text-xs text-gray-500">
-                        <p className="font-medium text-gray-400 mb-1">💡 CLI Commands</p>
-                        <div className="grid grid-cols-2 gap-1 font-mono">
-                            <span><code className="text-purple-400">npm run seed:audio</code> — populate library from catalog</span>
-                            <span><code className="text-purple-400">npm run upload:audio</code> — push pending files to S3</span>
-                            <span><code className="text-purple-400">npm run seed:audio:clean</code> — reset and re-seed</span>
-                            <span><code className="text-purple-400">npm run upload:audio:force</code> — re-upload all</span>
-                        </div>
-                        <p className="mt-2">Place audio files in <code className="text-gray-400">backend/assets/audio/</code> before running upload.</p>
-                    </div>
-                </main>
+                </AnimatePresence>
             </div>
         </>
     );

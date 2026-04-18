@@ -67,16 +67,16 @@ class _VoidEmptyStateState extends State<VoidEmptyState>
                           width: 8,
                           height: 8,
                           decoration: BoxDecoration(
-                            color: AppColors.primary,
+                            color: AppColors.primaryAdaptive(context),
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
-                                color: AppColors.primary.withValues(alpha: 0.6),
+                                color: AppColors.primaryAdaptive(context).withValues(alpha: 0.6),
                                 blurRadius: 10,
                                 spreadRadius: 2,
                               ),
                               BoxShadow(
-                                color: AppColors.secondary.withValues(
+                                color: AppColors.secondaryAdaptive(context).withValues(
                                   alpha: 0.4,
                                 ),
                                 blurRadius: 20,
@@ -111,8 +111,8 @@ class _VoidEmptyStateState extends State<VoidEmptyState>
             // Text
             Text(
               widget.message.toUpperCase(),
-              style: AppTextStyles.titleMedium.copyWith(
-                color: Colors.white38,
+              style: AppTextStyles.titleMedium(context).copyWith(
+                color: AppColors.textAdaptiveSecondary(context).withValues(alpha: 0.5),
                 letterSpacing: 2,
               ),
               textAlign: TextAlign.center,
@@ -122,7 +122,9 @@ class _VoidEmptyStateState extends State<VoidEmptyState>
               const SizedBox(height: 8),
               Text(
                 widget.subMessage!,
-                style: AppTextStyles.bodySmall.copyWith(color: Colors.white24),
+                style: AppTextStyles.bodySmall(context).copyWith(
+                  color: AppColors.textAdaptiveSecondary(context).withValues(alpha: 0.3),
+                ),
                 textAlign: TextAlign.center,
               ).animate().fade(delay: 200.ms),
             ],

@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import '../services/ambient_audio_service.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:get_storage/get_storage.dart';
@@ -19,6 +19,7 @@ import '../models/trivia_model.dart';
 import '../models/gamification_config_model.dart';
 import 'json_provider.dart';
 import 'data_source.dart';
+import '../../widgets/smart_lottie.dart';
 
 class DataRepository extends GetxService {
   final DataSource _remoteProvider = JsonProvider();
@@ -28,6 +29,9 @@ class DataRepository extends GetxService {
   final useRemote =
       true.obs; // Always fetch from AWS/CDN (offline handled by Hive cache)
   final currentLang = 'en'.obs;
+  
+  // Phase 5: Splash Screen Progressive Loading Lock
+  final isReady = false.obs;
 
   // Sync cache for UI consumption
   Taxonomy? currentTaxonomy;
@@ -38,6 +42,10 @@ class DataRepository extends GetxService {
   final allGreetings = <GreetingModel>[].obs;
   final allQuotes = <QuoteModel>[].obs;
   final allMantras = <MantraModel>[].obs;
+  
+  // Master metadata maps for hydration
+  final _audioCache = <String, AmbientAudio>{};
+  final _mantraCache = <String, MantraModel>{};
 
   // Getters for compatibility
   List<EventModel> get events => allEvents;
@@ -57,19 +65,61 @@ class DataRepository extends GetxService {
     return this;
   }
 
-  /// Fetches deploy_health.json from S3 and clears Hive if the deploy hash changed.
+  /// Fetches deploy_health.json from S3 and selectively clears Hive based on file hashes.
   Future<void> _checkDeployHealth() async {
     try {
       final deployHealth = await _remoteProvider.getDeployHealth();
-      if (deployHealth == null) return;
+      if (deployHealth == null) {
+        return;
+      }
+      
       final remoteHash = deployHealth['deploy_hash'] as String?;
-      if (remoteHash == null) return;
+      if (remoteHash == null) {
+        return;
+      }
+      
       final localHash = _storage.read('deploy_hash') as String?;
-      if (localHash == remoteHash) return; // No new deploy
+      if (localHash == remoteHash) {
+        debugPrint('[DataRepository] Hash match. Cache is valid.');
+        return; // No new deploy
+      }
+
       debugPrint(
-        '[DataRepository] New deploy detected ($localHash → $remoteHash). Clearing Hive cache...',
+        '[DataRepository] New deploy detected ($localHash → $remoteHash). Running Selective Sync...',
       );
-      await _cacheBox.clear();
+
+      // Map of { 'home/home_feed_en.json' : 'abc123hash' }
+      final remoteFileHashes = deployHealth['file_hashes'] as Map<String, dynamic>?;
+      
+      if (remoteFileHashes != null) {
+        int clearedCount = 0;
+        final localFileHashes = _storage.read<Map<String, dynamic>>('file_hashes') ?? {};
+
+        // Compare each remote file hash against the local one
+        remoteFileHashes.forEach((filePath, newHash) {
+          final oldHash = localFileHashes[filePath];
+          
+          if (oldHash != newHash) {
+             // File changed! Determine the Hive cache key based on the file path
+             final hiveKey = _mapFilePathToHiveKey(filePath);
+             if (hiveKey != null) {
+                _cacheBox.delete(hiveKey);
+                clearedCount++;
+             }
+          }
+        });
+        
+        debugPrint('[DataRepository] Selective Sync cleared $clearedCount outdated cache items.');
+        
+        // Save the new hashes for next time
+        await _storage.write('file_hashes', remoteFileHashes);
+        
+      } else {
+        // Fallback to legacy full wipe if deploy_health misses file_hashes
+        debugPrint('[DataRepository] No file_hashes found, falling back to full cache wipe.');
+        await _cacheBox.clear();
+      }
+
       final remoteCache = await Hive.openBox('json_cache');
       await remoteCache.clear();
       await _storage.write('deploy_hash', remoteHash);
@@ -78,48 +128,236 @@ class DataRepository extends GetxService {
     }
   }
 
+  /// Maps an S3 JSON relative path to its corresponding Hive cache key
+  String? _mapFilePathToHiveKey(String filePath) {
+    // Example: 'home/home_feed_en.json' -> 'home_feed_en'
+    if (filePath.contains('home_feed_')) {
+      final lang = filePath.split('_').last.replaceAll('.json', '');
+      return 'home_feed_$lang';
+    }
+    if (filePath.contains('taxonomy_')) {
+      final lang = filePath.split('_').last.replaceAll('.json', '');
+      return 'taxonomy_$lang';
+    }
+    if (filePath.contains('calendar_')) {
+      final lang = filePath.split('_').last.replaceAll('.json', '');
+      return 'calendar_data_$lang';
+    }
+    if (filePath.contains('search_')) {
+      final lang = filePath.split('_').last.replaceAll('.json', '');
+      return 'search_index_$lang';
+    }
+    if (filePath.contains('greetings_')) {
+      final lang = filePath.split('_').last.replaceAll('.json', '');
+      return 'greetings_$lang';
+    }
+    if (filePath.contains('quotes_')) {
+      final lang = filePath.split('_').last.replaceAll('.json', '');
+      return 'quotes_$lang';
+    }
+    if (filePath.contains('mantras_')) {
+      final lang = filePath.split('_').last.replaceAll('.json', '');
+      return 'mantras_$lang';
+    }
+    if (filePath.contains('quiz_')) {
+      final lang = filePath.split('_').last.replaceAll('.json', '');
+      return 'quiz_$lang';
+    }
+    if (filePath.contains('trivia_')) {
+      final lang = filePath.split('_').last.replaceAll('.json', '');
+      return 'trivia_$lang';
+    }
+    if (filePath.contains('gamification_')) {
+      final lang = filePath.split('_').last.replaceAll('.json', '');
+      return 'gamification_$lang';
+    }
+    // Note: events catalog and image catalog are parsed directly from remoteCache and don't use 'app_data' box caching keys directly yet, 
+    // but the `json_cache` clear handles their network invalidation.
+    return null;
+  }
+
   Future<void> changeLanguage(String lang) async {
     if (currentLang.value == lang) return;
     currentLang.value = lang;
     await _storage.write('language', lang);
-    // Clear all in-memory caches — they are language-specific
-    allEvents.clear();
-    allImages.clear();
+    // Set loading flag
+    isReady.value = false;
+    
+    // Clear language-specific caches that have early-return guards.
+    // Events and Images are handled by _mergeDataInIsolate's assignAll (fetch-then-swap).
     allGreetings.clear();
     allQuotes.clear();
     allMantras.clear();
     currentTaxonomy = null;
+    
+    // Fetch new language data
     await _loadAllData();
   }
 
   Future<void> _loadAllData() async {
     final lang = currentLang.value;
 
-    // Pre-load taxonomy for synchronous UI access
-    await getTaxonomy(lang);
+    try {
+      // 1. Mandatory Core Data (Taxonomy)
+      // We await this outside the parallel block if it's strictly required for UI stability
+      await getTaxonomy(lang);
 
-    // Load Home Feed & Catalog in parallel to save time
-    final futures = await Future.wait([
-      getHomeFeed(lang),
-      getEventsCatalog(lang),
-      getImageCatalog(lang),
-    ]);
+      // 2. Parallel Loading of secondary content
+      final futures = await Future.wait([
+        getHomeFeed(lang),
+        getEventsCatalog(lang),
+        getImageCatalog(lang),
+        getGreetings(lang),
+        getQuotes(lang),
+      ], eagerError: false).catchError((e) {
+        debugPrint('[DataRepository] Partial load failure (secondary data): $e');
+        return [null, null, null, null, null];
+      });
 
-    final home = futures[0] as HomeFeed?;
-    final catalog = futures[1] as Map<String, EventModel>? ?? {};
-    final imgList = futures[2] as List<ImageModel>? ?? [];
+      final home = futures[0] as HomeFeed?;
+      final catalog = futures[1] as Map<String, EventModel>? ?? {};
+      final imgList = futures[2] as List<ImageModel>? ?? [];
 
-    // Offload the heavy merging of lists to a background Isolate
-    final mergedData = await compute(_mergeDataInIsolate, {
-      'home': home,
-      'catalog': catalog,
-      'imgList': imgList,
-      'existingEvents': allEvents.toList(),
-      'existingImages': allImages.toList(),
-    });
+      // 3. Background Isolate Merge
+      try {
+        final mergedData = await compute(_mergeDataInIsolate, {
+          'home': home,
+          'catalog': catalog,
+          'imgList': imgList,
+          'existingEvents': allEvents.toList(),
+          'existingImages': allImages.toList(),
+        });
 
-    allEvents.assignAll(mergedData['events'] as List<EventModel>);
-    allImages.assignAll(mergedData['images'] as List<ImageModel>);
+        allEvents.assignAll(mergedData['events'] as List<EventModel>);
+        allImages.assignAll(mergedData['images'] as List<ImageModel>);
+      } catch (e) {
+        debugPrint('[DataRepository] Isolate Merge failed: $e');
+      }
+      
+      // 4. Content Hydration
+      await _hydrateData().catchError((e) {
+        debugPrint('[DataRepository] Hydration failed: $e');
+      });
+
+    } catch (e) {
+      debugPrint('[DataRepository] Critical load failure: $e');
+    } finally {
+      // Release the splash screen UI lock regardless of secondary failures
+      isReady.value = true;
+      
+      // Post-load tasks (prime cache for tomorrow)
+      _prewarmNextMajorFestival();
+    }
+  }
+
+  /// Resolves slugs (like ambient_audio_slug) into full objects using master seeds.
+  Future<void> _hydrateData() async {
+    try {
+      // 1. Load Audio Seeds if not cached
+      if (_audioCache.isEmpty) {
+        final audioData = await _remoteProvider.getAmbientAudioSeeds();
+        if (audioData != null) {
+          for (var item in audioData) {
+            final audio = AmbientAudio.fromJson(item);
+            _audioCache[audio.slug] = audio;
+          }
+        }
+      }
+
+      // 2. Load Mantra Seeds if not cached
+      if (_mantraCache.isEmpty) {
+        final mantraData = await _remoteProvider.getMantraSeeds();
+        if (mantraData != null) {
+          for (var item in mantraData) {
+            final mantra = MantraModel.fromJson(item);
+            _mantraCache[mantra.slug] = mantra;
+          }
+        }
+      }
+
+      // 3. Hydrate allEvent objects
+      final hydratedEvents = allEvents.map((event) {
+        if (event.ambientAudioSlug == null || event.ambientAudioSlug!.isEmpty) {
+          return event;
+        }
+
+        final audio = _audioCache[event.ambientAudioSlug];
+        if (audio == null) return event;
+
+        // Return a copy of the event with the hydrated audio object
+        return event.copyWith(ambientAudio: audio);
+      }).toList();
+
+      allEvents.assignAll(hydratedEvents);
+      debugPrint('[DataRepository] Hydration Complete: ${allEvents.length} events processed.');
+    } catch (e) {
+      debugPrint('[DataRepository] Hydration Failed: $e');
+    }
+  }
+
+  /// Primes the local cache for festivals happening in the next 48 hours.
+  void _prewarmNextMajorFestival() {
+    final now = DateTime.now();
+    // Find events happening in the next 48 hours
+    final upcoming = allEvents.where((e) {
+      final dt = e.nextOccurrence ?? e.date;
+      return dt != null &&
+          dt.isAfter(now) &&
+          dt.difference(now).inHours <= 48;
+    }).toList();
+
+    if (upcoming.isEmpty) {
+      return;
+    }
+
+    // 1. Collect all unique Lottie keys/urls
+    final lotties = upcoming
+        .where((e) => e.lottieOverlay != null)
+        .map((e) => e.lottieOverlay!.s3Key.isNotEmpty
+            ? e.lottieOverlay!.s3Key
+            : e.lottieOverlay!.filename)
+        .toSet()
+        .toList();
+
+    if (lotties.isNotEmpty) {
+      debugPrint(
+        '[DataRepository] Proactively pre-warming ${lotties.length} Lottie assets for the next 48 hours...',
+      );
+      SmartLottie.preCache(lotties);
+    }
+
+    // 2. Collect and pre-warm Ambient Audio assets
+    final audioUrls = upcoming
+        .where((e) => e.ambientAudio?.s3Key.isNotEmpty == true)
+        .map((e) => e.ambientAudio!.s3Key)
+        .toSet()
+        .toList();
+
+    if (audioUrls.isNotEmpty) {
+      debugPrint(
+        '[DataRepository] Proactively pre-warming ${audioUrls.length} Audio assets for the next 48 hours...',
+      );
+      for (final url in audioUrls) {
+        AmbientAudioService.to.preCache(url);
+      }
+    }
+
+    // 3. Collect and pre-warm Mantra assets
+    final mantraUrls = upcoming
+        .expand((e) => e.mantras)
+        .where((m) => m.audioFile.isNotEmpty)
+        .map((m) => m.audioFile)
+        .toSet()
+        .toList();
+
+    if (mantraUrls.isNotEmpty) {
+      debugPrint(
+        '[DataRepository] Proactively pre-warming ${mantraUrls.length} Mantra assets for the next 48 hours...',
+      );
+      for (final url in mantraUrls) {
+        AmbientAudioService.to.preCache(url);
+      }
+    }
   }
 
   // Top-level function for Isolate explicitly
@@ -188,7 +426,9 @@ class DataRepository extends GetxService {
 
   Future<HomeFeed?> getHomeFeed(String lang) async {
     final remote = await _remoteProvider.getHomeFeed(lang);
-    if (remote != null) return remote;
+    if (remote != null) {
+      return remote;
+    }
 
     // Try Cache
     final cached = _cacheBox.get('home_feed_$lang');

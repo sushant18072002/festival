@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
@@ -15,6 +16,8 @@ class CalMonthMoodBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final adaptiveSecondary = AppColors.secondaryAdaptive(context);
+    
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.md,
@@ -26,11 +29,9 @@ class CalMonthMoodBanner extends StatelessWidget {
           horizontal: AppSpacing.md,
           vertical: 12,
         ),
-        color: isDark
-            ? AppColors.secondary.withValues(alpha: 0.08)
-            : AppColors.secondary.withValues(alpha: 0.06),
+        color: adaptiveSecondary.withValues(alpha: isDark ? 0.08 : 0.06),
         border: Border.all(
-          color: AppColors.secondary.withValues(alpha: isDark ? 0.25 : 0.2),
+          color: adaptiveSecondary.withValues(alpha: isDark ? 0.25 : 0.2),
         ),
         child: Row(
           children: [
@@ -40,7 +41,7 @@ class CalMonthMoodBanner extends StatelessWidget {
                 children: [
                   Text(
                     'month_mood'.tr,
-                    style: AppTextStyles.labelSmall.copyWith(
+                    style: AppTextStyles.labelSmall(context).copyWith(
                       color: isDark ? Colors.white38 : Colors.black38,
                       letterSpacing: 1.6,
                     ),
@@ -49,8 +50,8 @@ class CalMonthMoodBanner extends StatelessWidget {
                   Row(
                     children: [
                       Icon(
-                        Icons.sentiment_satisfied_alt_rounded,
-                        color: AppColors.secondary,
+                        LucideIcons.smile,
+                        color: adaptiveSecondary,
                         size: 18,
                       ),
                       const SizedBox(width: 6),
@@ -58,8 +59,8 @@ class CalMonthMoodBanner extends StatelessWidget {
                         child: Obx(
                           () => Text(
                             controller.monthMood,
-                            style: AppTextStyles.titleSmall.copyWith(
-                              color: AppColors.secondary,
+                            style: AppTextStyles.titleSmall(context).copyWith(
+                              color: adaptiveSecondary,
                               fontWeight: FontWeight.bold,
                             ),
                             maxLines: 1,
@@ -77,14 +78,14 @@ class CalMonthMoodBanner extends StatelessWidget {
               height: 40,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.secondary.withValues(alpha: 0.15),
+                color: adaptiveSecondary.withValues(alpha: 0.15),
                 border: Border.all(
-                  color: AppColors.secondary.withValues(alpha: 0.3),
+                  color: adaptiveSecondary.withValues(alpha: 0.3),
                 ),
               ),
-              child: const Icon(
-                Icons.auto_awesome_rounded,
-                color: AppColors.secondary,
+              child: Icon(
+                LucideIcons.sparkles,
+                color: adaptiveSecondary,
                 size: 20,
               ),
             ),

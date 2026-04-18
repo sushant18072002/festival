@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../../theme/app_text_styles.dart';
+import '../../../theme/app_colors.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../profile_controller.dart';
 
 class TrophyGrid extends StatelessWidget {
@@ -15,16 +17,23 @@ class TrophyGrid extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Icon(Icons.emoji_events, color: Colors.amber, size: 24),
+            Icon(
+              LucideIcons.award,
+              color: AppColors.accentAdaptive(context),
+              size: 24,
+            ),
             const SizedBox(width: 8),
             Text(
               'Trophy Case',
-              style: AppTextStyles.headlineMedium.copyWith(color: Colors.white),
+              style: AppTextStyles.titleLarge(context).copyWith(
+                color: AppColors.textAdaptive(context),
+              ),
             ),
           ],
         ).animate(delay: 800.ms).fade(),
         const SizedBox(height: 16),
         GridView.builder(
+          padding: EdgeInsets.zero,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -45,18 +54,20 @@ class TrophyGrid extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: earned
-                            ? Colors.amber.withValues(alpha: 0.15)
-                            : Colors.white.withValues(alpha: 0.05),
+                            ? AppColors.accentAdaptive(context).withValues(alpha: 0.15)
+                            : AppColors.glassBorder(context),
                         border: Border.all(
                           color: earned
-                              ? Colors.amber.withValues(alpha: 0.5)
-                              : Colors.white12,
+                              ? AppColors.accentAdaptive(context).withValues(alpha: 0.5)
+                              : AppColors.glassBorder(context),
                           width: earned ? 2 : 1,
                         ),
                         boxShadow: earned
                             ? [
                                 BoxShadow(
-                                  color: Colors.amber.withValues(alpha: 0.2),
+                                  color: AppColors.accentAdaptive(context).withValues(
+                                    alpha: 0.2,
+                                  ),
                                   blurRadius: 10,
                                   spreadRadius: 2,
                                 ),
@@ -64,18 +75,26 @@ class TrophyGrid extends StatelessWidget {
                             : null,
                       ),
                       alignment: Alignment.center,
-                      child: Text(
-                        earned ? trophy['icon'] : '🔒',
-                        style: const TextStyle(fontSize: 24),
-                      ),
+                      child: earned
+                          ? Text(
+                              trophy['icon'],
+                              style: const TextStyle(fontSize: 24),
+                            )
+                          : Icon(
+                              LucideIcons.lock,
+                              color: AppColors.textAdaptiveSecondary(context).withValues(alpha: 0.3),
+                              size: 24,
+                            ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       trophy['name'],
                       textAlign: TextAlign.center,
                       maxLines: 2,
-                      style: AppTextStyles.labelSmall.copyWith(
-                        color: earned ? Colors.white : Colors.white38,
+                      style: AppTextStyles.labelSmall(context).copyWith(
+                        color: earned
+                            ? AppColors.textAdaptive(context)
+                            : AppColors.textAdaptiveSecondary(context),
                         fontSize: 10,
                         fontWeight: earned
                             ? FontWeight.bold

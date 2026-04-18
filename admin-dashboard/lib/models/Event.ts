@@ -12,7 +12,12 @@ const EventSchema = new Schema({
     description: String,
     wiki_link: String,
     lottie_overlay: { type: Schema.Types.ObjectId, ref: 'LottieOverlay' },
-    notification_templates: [{ type: String }],
+    notification_templates: {
+        discovery: { type: String, trim: true },
+        countdown: { type: String, trim: true },
+        eve: { type: String, trim: true },
+        day_of: { type: String, trim: true }
+    },
     category: { type: Schema.Types.ObjectId, ref: 'Category' },
     date: Date,
     dates: [{ year: Number, date: Date }],

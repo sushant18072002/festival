@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'favorites_controller.dart';
@@ -19,7 +18,7 @@ class FavoritesView extends GetView<FavoritesController> {
     return NeoScaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text('Memory Lane', style: AppTextStyles.headlineMedium),
+        title: Text('Memory Lane', style: AppTextStyles.headlineMedium(context).copyWith(color: AppColors.textAdaptive(context))),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
@@ -43,7 +42,7 @@ class FavoritesView extends GetView<FavoritesController> {
                   padding: const EdgeInsets.all(AppSpacing.md),
                   child: Text(
                     "Saved Events",
-                    style: AppTextStyles.headlineSmall,
+                    style: AppTextStyles.headlineSmall(context).copyWith(color: AppColors.textAdaptive(context)),
                   ),
                 ),
               ),
@@ -62,8 +61,14 @@ class FavoritesView extends GetView<FavoritesController> {
                         ..rotateX(0.05), // Subtle 3D Tilt
                       child: FestivalCard(
                         event: event,
-                        onTap: () =>
-                            Get.toNamed(Routes.EVENT_DETAILS, arguments: event),
+                        heroTagPrefix: 'favorites',
+                        onTap: () => Get.toNamed(
+                          Routes.eventDetails,
+                          arguments: {
+                            'event': event,
+                            'heroTagPrefix': 'favorites',
+                          },
+                        ),
                       ),
                     ),
                   ).animate().fade(delay: (index * 50).ms).slideX(begin: 0.1);
@@ -82,7 +87,7 @@ class FavoritesView extends GetView<FavoritesController> {
                   ),
                   child: Text(
                     "Collected Moments",
-                    style: AppTextStyles.headlineSmall,
+                    style: AppTextStyles.headlineSmall(context).copyWith(color: AppColors.textAdaptive(context)),
                   ),
                 ),
               ),
@@ -115,7 +120,10 @@ class FavoritesView extends GetView<FavoritesController> {
                           gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
-                            colors: [Colors.transparent, Colors.black54],
+                            colors: [
+                              Colors.transparent,
+                              Colors.black.withValues(alpha: 0.7),
+                            ],
                           ),
                         ),
                         alignment: Alignment.bottomRight,

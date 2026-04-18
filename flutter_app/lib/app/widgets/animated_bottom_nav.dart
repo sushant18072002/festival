@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 import 'glass_container.dart';
@@ -27,39 +28,30 @@ class AnimatedBottomNav extends StatelessWidget {
         child:
             GlassContainer(
               borderRadius: BorderRadius.circular(32),
-              // Theme-aware glass background
-              color: isDark ? Colors.black : Colors.white,
-              opacity: isDark ? 0.65 : 0.85,
-              blur: 20,
-              border: Border.all(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.15)
-                    : Colors.black.withValues(alpha: 0.10),
-                width: 1,
-              ),
+              // Leverages new adaptive defaults for shadow/border/glow
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  _buildNavItem(context, 0, Icons.home_rounded, 'home', isDark),
+                  _buildNavItem(context, 0, LucideIcons.house, 'home', isDark),
                   _buildNavItem(
                     context,
                     1,
-                    Icons.calendar_month_rounded,
+                    LucideIcons.calendar,
                     'calendar',
                     isDark,
                   ),
                   _buildNavItem(
                     context,
                     2,
-                    Icons.grid_view_rounded,
+                    LucideIcons.layoutGrid,
                     'gallery',
                     isDark,
                   ),
                   _buildNavItem(
                     context,
                     3,
-                    Icons.settings_rounded,
+                    LucideIcons.settings,
                     'settings',
                     isDark,
                   ),
@@ -85,11 +77,11 @@ class AnimatedBottomNav extends StatelessWidget {
     final isSelected = currentIndex == index;
 
     // Unselected icon color: white70 in dark, dark54 in light
-    final unselectedColor = isDark ? Colors.white60 : Colors.black54;
-    // Selected icon color: gold accent
-    final selectedIconColor = AppColors.accent;
-    // Selected pill background
-    final pillColor = isSelected ? AppColors.primary : Colors.transparent;
+    final unselectedColor = AppColors.textAdaptiveSecondary(context);
+    // Selected icon color: adaptive deep primary in light mode, primary in dark mode
+    final selectedIconColor = AppColors.primaryAdaptive(context);
+    // Selected pill background: strongly translucent version of adaptive primary
+    final pillColor = isSelected ? AppColors.primaryAdaptive(context).withValues(alpha: 0.15) : Colors.transparent;
 
     return GestureDetector(
       onTap: () {
@@ -110,7 +102,7 @@ class AnimatedBottomNav extends StatelessWidget {
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.35),
+                    color: AppColors.primaryAdaptive(context).withValues(alpha: isDark ? 0.35 : 0.12),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -129,7 +121,7 @@ class AnimatedBottomNav extends StatelessWidget {
               const SizedBox(width: 6),
               Text(
                 translationKey.tr,
-                style: AppTextStyles.labelSmall.copyWith(
+                style: AppTextStyles.labelSmall(context).copyWith(
                   color: selectedIconColor,
                   fontWeight: FontWeight.w600,
                   fontSize: 12,

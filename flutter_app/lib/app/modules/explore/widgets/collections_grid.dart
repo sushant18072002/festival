@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_styles.dart';
@@ -76,8 +77,8 @@ class CollectionsGrid extends StatelessWidget {
               'Coming Soon',
               'The ${collection.title} collection is gathering magic...',
               snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: AppColors.primary,
-              colorText: Colors.white,
+              backgroundColor: AppColors.primaryAdaptive(context),
+              colorText: Theme.of(context).brightness == Brightness.dark ? Colors.black : Colors.white,
             );
           },
           child: Container(
@@ -87,18 +88,12 @@ class CollectionsGrid extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  AppColors.surfaceGlass,
-                  AppColors.surfaceGlass.withValues(alpha: 0.3),
+                  AppColors.surfaceGlass(context),
+                  AppColors.surfaceGlass(context).withValues(alpha: 0.3),
                 ],
               ),
-              border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.2),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
+              border: AppColors.adaptiveBorder(context),
+              boxShadow: AppColors.glassShadow(context),
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
@@ -107,12 +102,12 @@ class CollectionsGrid extends StatelessWidget {
                 children: [
                   // Placeholder for collection cover
                   Container(
-                    color: AppColors.accent.withValues(alpha: 0.1),
+                    color: AppColors.accentAdaptive(context).withValues(alpha: 0.1),
                     child: Center(
                       child: Icon(
-                        Icons.collections_rounded,
+                        LucideIcons.images,
                         size: 48,
-                        color: Colors.white.withValues(alpha: 0.2),
+                        color: AppColors.textAdaptive(context).withValues(alpha: 0.2),
                       ),
                     ),
                   ),
@@ -125,7 +120,9 @@ class CollectionsGrid extends StatelessWidget {
                         end: Alignment.bottomCenter,
                         colors: [
                           Colors.transparent,
-                          Colors.black.withValues(alpha: 0.8),
+                          Theme.of(context).brightness == Brightness.dark
+                              ? Colors.black.withValues(alpha: 0.8)
+                              : Colors.black.withValues(alpha: 0.5),
                         ],
                       ),
                     ),
@@ -141,8 +138,9 @@ class CollectionsGrid extends StatelessWidget {
                       children: [
                         Text(
                           collection.title,
-                          style: AppTextStyles.titleMedium.copyWith(
+                          style: AppTextStyles.titleMedium(context).copyWith(
                             fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -150,7 +148,7 @@ class CollectionsGrid extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(
                           collection.subtitle,
-                          style: AppTextStyles.labelMedium.copyWith(
+                          style: AppTextStyles.labelMedium(context).copyWith(
                             color: Colors.white70,
                           ),
                           maxLines: 1,

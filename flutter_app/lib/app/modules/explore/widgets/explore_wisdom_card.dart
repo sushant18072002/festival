@@ -11,6 +11,7 @@ class ExploreWisdomCard extends StatelessWidget {
   final String language;
   final bool isMantra;
   final bool isFeatured;
+  final VoidCallback? onTap;
 
   const ExploreWisdomCard({
     super.key,
@@ -19,32 +20,20 @@ class ExploreWisdomCard extends StatelessWidget {
     required this.language,
     this.isMantra = false,
     this.isFeatured = false,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bgColor = AppColors.surfaceGlass(context);
 
-    final bgColor = isDark
-        ? const Color(0xFF1A2B2C).withValues(alpha: 0.4) // Deep teal glass
-        : Colors.white;
+    final borderColor = AppColors.glassBorder(context);
 
-    final borderColor = isDark
-        ? AppColors.primary.withValues(alpha: 0.15)
-        : AppColors.primary.withValues(alpha: 0.05);
 
-    final shadow = isDark
-        ? const BoxShadow(color: Colors.transparent)
-        : BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.05),
-            blurRadius: 20,
-            offset: const Offset(0, 4),
-          );
+    final fontColor = AppColors.textAdaptive(context);
+    final authorColor = AppColors.textAdaptiveSecondary(context);
 
-    final fontColor = isDark ? Colors.white : const Color(0xFF1A0B2E);
-    final authorColor = isDark ? Colors.white70 : const Color(0xFF3D1F5C);
-
-    final textStyle = AppTextStyles.displaySmall.copyWith(
+    final textStyle = AppTextStyles.displaySmall(context).copyWith(
       fontStyle: FontStyle.italic,
       color: fontColor,
       height: 1.4,
@@ -55,6 +44,7 @@ class ExploreWisdomCard extends StatelessWidget {
       return GestureDetector(
         onTap: () {
           HapticFeedback.lightImpact();
+          if (onTap != null) onTap!();
         },
         child: Container(
           padding: const EdgeInsets.symmetric(
@@ -64,8 +54,8 @@ class ExploreWisdomCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: bgColor,
             borderRadius: BorderRadius.circular(32),
-            border: Border.all(color: borderColor),
-            boxShadow: [shadow],
+            border: AppColors.adaptiveBorder(context),
+            boxShadow: AppColors.glassShadow(context),
           ),
           child: Stack(
             clipBehavior: Clip.none,
@@ -76,7 +66,7 @@ class ExploreWisdomCard extends StatelessWidget {
                 child: Icon(
                   isMantra ? LucideIcons.sparkles : LucideIcons.quote,
                   size: 140,
-                  color: AppColors.primary.withValues(alpha: 0.05),
+                  color: AppColors.primaryAdaptive(context).withValues(alpha: 0.05),
                 ),
               ),
               Column(
@@ -85,7 +75,7 @@ class ExploreWisdomCard extends StatelessWidget {
                   Icon(
                     isMantra ? LucideIcons.sparkles : LucideIcons.quote,
                     size: 40,
-                    color: AppColors.primary,
+                    color: AppColors.primaryAdaptive(context),
                   ),
                   const SizedBox(height: AppSpacing.lg),
                   Text(text, style: textStyle),
@@ -116,8 +106,8 @@ class ExploreWisdomCard extends StatelessWidget {
                           children: [
                             Text(
                               author.isNotEmpty ? author : 'Unknown',
-                              style: AppTextStyles.labelLarge.copyWith(
-                                color: isDark ? Colors.white : Colors.black87,
+                              style: AppTextStyles.labelLarge(context).copyWith(
+                                color: AppColors.textAdaptive(context),
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -126,8 +116,8 @@ class ExploreWisdomCard extends StatelessWidget {
                               isMantra
                                   ? 'Ancient Mantra • ${language.toUpperCase()}'
                                   : 'Cultural Wisdom • ${language.toUpperCase()}',
-                              style: AppTextStyles.labelSmall.copyWith(
-                                color: AppColors.primary,
+                              style: AppTextStyles.labelSmall(context).copyWith(
+                                color: AppColors.primaryAdaptive(context),
                               ),
                             ),
                           ],
@@ -146,14 +136,15 @@ class ExploreWisdomCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         HapticFeedback.lightImpact();
+        if (onTap != null) onTap!();
       },
       child: Container(
         padding: const EdgeInsets.all(AppSpacing.lg),
         decoration: BoxDecoration(
           color: bgColor,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: borderColor),
-          boxShadow: [shadow],
+          border: AppColors.adaptiveBorder(context),
+          boxShadow: AppColors.glassShadow(context),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,7 +153,7 @@ class ExploreWisdomCard extends StatelessWidget {
             Icon(
               isMantra ? LucideIcons.sparkles : LucideIcons.quote,
               size: 24,
-              color: AppColors.primary.withValues(alpha: 0.5),
+              color: AppColors.primaryAdaptive(context).withValues(alpha: 0.5),
             ),
             const SizedBox(height: AppSpacing.md),
             Text(
@@ -185,7 +176,7 @@ class ExploreWisdomCard extends StatelessWidget {
                       author.isNotEmpty
                           ? "${author.toUpperCase()} • ${language.toUpperCase()}"
                           : "UNKNOWN • ${language.toUpperCase()}",
-                      style: AppTextStyles.labelSmall.copyWith(
+                      style: AppTextStyles.labelSmall(context).copyWith(
                         color: authorColor,
                         fontWeight: FontWeight.bold,
                       ),
@@ -197,7 +188,7 @@ class ExploreWisdomCard extends StatelessWidget {
                   Icon(
                     LucideIcons.arrowRight,
                     size: 14,
-                    color: isDark ? Colors.white30 : Colors.black38,
+                    color: AppColors.textAdaptiveSecondary(context).withValues(alpha: 0.5),
                   ),
                 ],
               ),

@@ -10,14 +10,38 @@ export default async function handler(
 
     if (req.method === 'GET') {
         try {
-            const { trash, featured } = req.query;
+            const { trash, featured, search, limit = '50', page = '1' } = req.query;
             let filter: any = trash === 'true' ? { is_deleted: true } : { is_deleted: { $ne: true } };
             if (featured === 'true') filter.is_featured = true;
+
+            if (search) {
+                filter.$or = [
+                    { text: { $regex: search, $options: 'i' } },
+                    { author: { $regex: search, $options: 'i' } },
+                    { slug: { $regex: search, $options: 'i' } }
+                ];
+            }
+
+            const limitInt = parseInt(limit as string);
+            const pageInt = parseInt(page as string);
+            const skip = (pageInt - 1) * limitInt;
+
             const total = await Quote.countDocuments(filter);
             const quotes = await Quote.find(filter)
                 .populate('category', 'code translations')
-                .sort({ createdAt: -1 });
-            res.status(200).json({ success: true, data: quotes, pagination: { total, page: 1, pages: 1 } });
+                .sort({ createdAt: -1 })
+                .skip(skip)
+                .limit(limitInt);
+                
+            res.status(200).json({ 
+                success: true, 
+                data: quotes, 
+                pagination: { 
+                    total, 
+                    page: pageInt, 
+                    pages: Math.ceil(total / limitInt) 
+                } 
+            });
         } catch (error) {
             res.status(400).json({ success: false, error: (error as Error).message });
         }

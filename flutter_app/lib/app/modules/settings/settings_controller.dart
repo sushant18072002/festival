@@ -5,8 +5,11 @@ import 'package:get_storage/get_storage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:add_2_calendar/add_2_calendar.dart' as calendar;
 import '../../data/providers/data_repository.dart';
+import '../../theme/app_colors.dart';
 import '../../data/services/notification_service.dart';
 import '../../data/services/notification_settings_model.dart';
+import '../../theme/app_spacing.dart';
+import '../../routes/app_pages.dart';
 import '../home/home_controller.dart';
 import '../calendar/calendar_controller.dart';
 import '../explore/explore_controller.dart';
@@ -89,6 +92,11 @@ class SettingsController extends GetxController {
     if (Get.isRegistered<CalendarController>()) {
       Get.find<CalendarController>().fetchCalendarData();
     }
+
+    // Refresh explore data in new language too
+    if (Get.isRegistered<ExploreController>()) {
+      Get.find<ExploreController>().fetchData();
+    }
   }
 
   // ─── Notification Toggles ─────────────────────────────────────────────────
@@ -153,9 +161,15 @@ class SettingsController extends GetxController {
 
   void toggleRemote(bool value) {
     Get.find<DataRepository>().toggleRemote(value);
-    Get.find<HomeController>().fetchFeed();
-    Get.find<CalendarController>().fetchCalendarData();
-    Get.find<ExploreController>().fetchData();
+    if (Get.isRegistered<HomeController>()) {
+      Get.find<HomeController>().fetchFeed();
+    }
+    if (Get.isRegistered<CalendarController>()) {
+      Get.find<CalendarController>().fetchCalendarData();
+    }
+    if (Get.isRegistered<ExploreController>()) {
+      Get.find<ExploreController>().fetchData();
+    }
   }
 
   // ─── Theme & Accessibility ────────────────────────────────────────────────
@@ -226,8 +240,10 @@ class SettingsController extends GetxController {
         'Cache Cleared',
         'Successfully freed space.',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.black87,
-        colorText: Colors.white,
+        backgroundColor: AppColors.surfaceGlass(Get.context!),
+        colorText: AppColors.textAdaptive(Get.context!),
+        margin: const EdgeInsets.all(AppSpacing.md),
+        borderRadius: 12,
       );
       _calculateCacheSize();
     } catch (e) {
@@ -250,8 +266,10 @@ class SettingsController extends GetxController {
         'Nothing to Export',
         'Add festivals to "My Festivals" first.',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.black87,
-        colorText: Colors.white,
+        backgroundColor: AppColors.surfaceGlass(Get.context!),
+        colorText: AppColors.textAdaptive(Get.context!),
+        margin: const EdgeInsets.all(AppSpacing.md),
+        borderRadius: 12,
       );
       return;
     }
@@ -260,8 +278,10 @@ class SettingsController extends GetxController {
       'Exporting',
       'Exporting ${myFestivals.length} festivals to calendar...',
       snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.black87,
-      colorText: Colors.white,
+      backgroundColor: AppColors.surfaceGlass(Get.context!),
+      colorText: AppColors.textAdaptive(Get.context!),
+      margin: const EdgeInsets.all(AppSpacing.md),
+      borderRadius: 12,
     );
 
     final repo = Get.find<DataRepository>();
@@ -281,5 +301,39 @@ class SettingsController extends GetxController {
         await calendar.Add2Calendar.addEvent2Cal(calEvent);
       }
     }
+  }
+
+  void clearAllData() async {
+    // 1. Wipe GetStorage
+    await _storage.erase();
+    
+    // 2. Clear Notification Settings
+    _notifSettings.festivalEvents = true;
+    _notifSettings.countdown = true;
+    _notifSettings.weeklyDigest = true;
+    _notifSettings.monthlyDigest = true;
+    
+    // 3. Clear file cache
+    try {
+      final dir = await getTemporaryDirectory();
+      if (await dir.exists()) {
+        await dir.delete(recursive: true);
+      }
+    } catch (e) {
+      // Ignore cache deletion errors
+    }
+
+    // 4. Restart app state by forcing reload
+    Get.offAllNamed(Routes.initialLoad);
+    
+    Get.snackbar(
+      'Data Cleared',
+      'All local data has been successfully deleted.',
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: AppColors.errorAdaptive(Get.context!).withValues(alpha: 0.15),
+      colorText: AppColors.errorAdaptive(Get.context!),
+      margin: const EdgeInsets.all(AppSpacing.md),
+      borderRadius: 12,
+    );
   }
 }

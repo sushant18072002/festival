@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_styles.dart';
-import '../../../widgets/glass_container.dart';
 import '../profile_controller.dart';
 
 class AvatarSelectorSheet extends StatelessWidget {
@@ -18,32 +18,57 @@ class AvatarSelectorSheet extends StatelessWidget {
       maxChildSize: 0.9,
       minChildSize: 0.5,
       builder: (_, scrollController) {
-        return GlassContainer(
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+        return Container(
+          decoration: BoxDecoration(
+            color: isDark ? AppColors.surfaceGlass(context) : AppColors.surfaceLight,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.1),
+                blurRadius: 20,
+                offset: const Offset(0, -5),
+              ),
+            ],
+          ),
           padding: const EdgeInsets.only(top: 24, left: 16, right: 16),
           child: Column(
             children: [
+              // Drag handle
+              Container(
+                width: 36,
+                height: 4,
+                margin: const EdgeInsets.only(bottom: 16),
+                decoration: BoxDecoration(
+                  color: AppColors.glassBorder(context),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
               Text(
                 'Choose Your Avatar',
-                style: AppTextStyles.headlineMedium.copyWith(
-                  color: Colors.white,
+                style: AppTextStyles.headlineMedium(context).copyWith(
+                  color: AppColors.textAdaptive(context),
                 ),
               ),
               const SizedBox(height: 8),
               Text(
                 'Unlock more by earning Karma!',
-                style: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.accent,
+                style: AppTextStyles.bodyMedium(context).copyWith(
+                  color: AppColors.accentAdaptive(context),
                 ),
               ),
               const SizedBox(height: 24),
               Expanded(
                 child: Obx(() {
-                  if (controller.avatarGroups.isEmpty)
+                  if (controller.avatarGroups.isEmpty) {
                     return const SizedBox.shrink();
+                  }
                   return ListView.builder(
                     controller: scrollController,
                     physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).padding.bottom + 16,
+                    ),
                     itemCount: controller.avatarGroups.length,
                     itemBuilder: (context, index) {
                       final rawName = controller.avatarGroups.keys.elementAt(
@@ -68,19 +93,19 @@ class AvatarSelectorSheet extends StatelessWidget {
                               children: [
                                 Text(
                                   groupName,
-                                  style: AppTextStyles.titleMedium.copyWith(
+                                  style: AppTextStyles.titleMedium(context).copyWith(
                                     color: isLocked
-                                        ? Colors.white38
-                                        : AppColors.primary,
+                                        ? AppColors.textAdaptiveSecondary(context).withValues(alpha: 0.5)
+                                        : AppColors.primaryAdaptive(context),
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 if (isLocked) ...[
                                   const SizedBox(width: 8),
-                                  const Icon(
-                                    Icons.lock_rounded,
+                                  Icon(
+                                    LucideIcons.lock,
                                     size: 16,
-                                    color: Colors.white38,
+                                    color: AppColors.textAdaptiveSecondary(context).withValues(alpha: 0.5),
                                   ),
                                 ],
                               ],
@@ -100,9 +125,11 @@ class AvatarSelectorSheet extends StatelessWidget {
                                       Get.snackbar(
                                         'Avatar Locked',
                                         'Earn more Karma to unlock this tier!',
-                                        backgroundColor: Colors.black87,
-                                        colorText: Colors.white,
+                                        backgroundColor: AppColors.surfaceGlass(context),
+                                        colorText: AppColors.textAdaptive(context),
                                         snackPosition: SnackPosition.BOTTOM,
+                                        margin: const EdgeInsets.all(16),
+                                        borderRadius: 14,
                                       );
                                     } else {
                                       HapticFeedback.lightImpact();
@@ -115,34 +142,46 @@ class AvatarSelectorSheet extends StatelessWidget {
                                     height: 70,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
+                                      // Added a solid background to fix the transparent asset issue
                                       color: isLocked
-                                          ? Colors.white10
-                                          : Colors.transparent,
+                                          ? AppColors.textAdaptive(context).withValues(alpha: 0.05)
+                                          : (isDark 
+                                              ? Colors.white.withValues(alpha: 0.08)
+                                              : Colors.black.withValues(alpha: 0.03)),
                                       border: Border.all(
                                         color: isSelected
-                                            ? AppColors.accent
+                                            ? AppColors.accentAdaptive(context)
                                             : (isLocked
                                                   ? Colors.transparent
-                                                  : Colors.white24),
-                                        width: isSelected ? 3 : 1,
+                                                  : AppColors.textAdaptive(context).withValues(alpha: 0.15)),
+                                        width: isSelected ? 3 : 1.5,
                                       ),
-                                      boxShadow: isSelected
-                                          ? [
-                                              BoxShadow(
-                                                color: AppColors.accent
-                                                    .withValues(alpha: 0.5),
-                                                blurRadius: 10,
-                                                spreadRadius: 2,
-                                              ),
-                                            ]
-                                          : null,
+                                      boxShadow: [
+                                        if (isSelected)
+                                          BoxShadow(
+                                            color: AppColors.accentAdaptive(context)
+                                                .withValues(alpha: 0.6),
+                                            blurRadius: 15,
+                                            spreadRadius: 2,
+                                          ),
+                                        // Subtle shadow for non-selected too for depth
+                                        if (!isLocked)
+                                          BoxShadow(
+                                            color: Colors.black.withValues(alpha: 0.1),
+                                            blurRadius: 4,
+                                            offset: const Offset(0, 2),
+                                          ),
+                                      ],
                                     ),
                                     child: Opacity(
                                       opacity: isLocked ? 0.3 : 1.0,
-                                      child: ClipOval(
-                                        child: Image.asset(
-                                          avatar,
-                                          fit: BoxFit.cover,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0), // Small padding so avatar stays inside border
+                                        child: ClipOval(
+                                          child: Image.asset(
+                                            avatar,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
                                     ),

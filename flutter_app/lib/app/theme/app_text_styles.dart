@@ -12,146 +12,126 @@ class AppTextStyles {
   // DISPLAY — Hero & Magazine Titles
   // ═══════════════════════════════════════════════════════════════════════════
 
-  static TextStyle get displayLarge => GoogleFonts.dmSerifDisplay(
-    fontSize: 48, // Massive scale
-    fontWeight: FontWeight.w400, // Regular weight is bold enough for serif
+  static TextStyle displayLarge(BuildContext? context, {Brightness? brightness}) => GoogleFonts.dmSerifDisplay(
+    fontSize: 48,
+    fontWeight: FontWeight.w400,
     letterSpacing: -0.5,
-    height: 1.0, // Tight leading for poster look
-    color: AppColors.textPrimary,
+    height: 1.0,
+    color: AppColors.textAdaptive(context, brightness: brightness),
   );
 
-  static TextStyle get displayMedium => GoogleFonts.dmSerifDisplay(
+  static TextStyle displayMedium(BuildContext? context, {Brightness? brightness}) => GoogleFonts.dmSerifDisplay(
     fontSize: 32,
     fontWeight: FontWeight.w400,
     letterSpacing: -0.25,
     height: 1.1,
-    color: AppColors.textPrimary,
+    color: AppColors.textAdaptive(context, brightness: brightness),
   );
 
-  static TextStyle get displaySmall => GoogleFonts.dmSerifDisplay(
+  static TextStyle displaySmall(BuildContext? context, {Brightness? brightness}) => GoogleFonts.dmSerifDisplay(
     fontSize: 24,
     fontWeight: FontWeight.w400,
-    color: AppColors.textPrimary,
+    color: AppColors.textAdaptive(context, brightness: brightness),
   );
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // HEADLINES — Section Headers
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  static TextStyle get headlineLarge => GoogleFonts.outfit(
+  static TextStyle headlineLarge(BuildContext? context, {Brightness? brightness}) => GoogleFonts.outfit(
     fontSize: 24,
     fontWeight: FontWeight.w600,
-    letterSpacing: -0.5, // Tighter for geometric fonts
-    color: AppColors.textPrimary,
+    letterSpacing: -0.5,
+    color: AppColors.textAdaptive(context, brightness: brightness),
   );
 
-  static TextStyle get headlineMedium => GoogleFonts.outfit(
+  static TextStyle headlineMedium(BuildContext? context, {Brightness? brightness}) => GoogleFonts.outfit(
     fontSize: 20,
     fontWeight: FontWeight.w600,
     letterSpacing: -0.25,
-    color: AppColors.textPrimary,
+    color: AppColors.textAdaptive(context, brightness: brightness),
   );
 
-  static TextStyle get headlineSmall => GoogleFonts.outfit(
+  static TextStyle headlineSmall(BuildContext? context, {Brightness? brightness}) => GoogleFonts.outfit(
     fontSize: 18,
     fontWeight: FontWeight.w500,
-    color: AppColors.textPrimary,
+    color: AppColors.textAdaptive(context, brightness: brightness),
   );
 
-  static TextStyle get titleLarge => GoogleFonts.outfit(
+  static TextStyle titleLarge(BuildContext? context, {Brightness? brightness}) => GoogleFonts.outfit(
     fontSize: 22,
     fontWeight: FontWeight.w500,
-    color: AppColors.textPrimary,
+    color: AppColors.textAdaptive(context, brightness: brightness),
   );
 
-  static TextStyle get titleMedium => GoogleFonts.outfit(
+  static TextStyle titleMedium(BuildContext? context, {Brightness? brightness}) => GoogleFonts.outfit(
     fontSize: 16,
     fontWeight: FontWeight.w500,
     letterSpacing: 0.15,
-    color: AppColors.textPrimary,
+    color: AppColors.textAdaptive(context, brightness: brightness),
   );
 
-  static TextStyle get titleSmall => GoogleFonts.outfit(
+  static TextStyle titleSmall(BuildContext? context, {Brightness? brightness}) => GoogleFonts.outfit(
     fontSize: 14,
     fontWeight: FontWeight.w500,
     letterSpacing: 0.1,
-    color: AppColors.textPrimary,
+    color: AppColors.textAdaptive(context, brightness: brightness),
   );
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // BODY — Clean, Readable, Modern
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  static TextStyle get bodyLarge => GoogleFonts.outfit(
+  static TextStyle bodyLarge(BuildContext? context, {Brightness? brightness}) => GoogleFonts.outfit(
     fontSize: 16,
     fontWeight: FontWeight.w400,
     height: 1.5,
-    color: AppColors.textPrimary,
+    color: AppColors.textAdaptive(context, brightness: brightness),
   );
 
-  static TextStyle get bodyMedium => GoogleFonts.outfit(
+  static TextStyle bodyMedium(BuildContext? context, {Brightness? brightness}) => GoogleFonts.outfit(
     fontSize: 14,
-    fontWeight: FontWeight.w400, // Outfit is legible at 400
+    fontWeight: FontWeight.w400,
     height: 1.5,
-    color: AppColors.textSecondary,
+    color: AppColors.textAdaptiveSecondary(context, brightness: brightness),
   );
 
-  static TextStyle get bodySmall => GoogleFonts.outfit(
+  static TextStyle bodySmall(BuildContext? context, {Brightness? brightness}) => GoogleFonts.outfit(
     fontSize: 12,
     fontWeight: FontWeight.w400,
     height: 1.4,
-    color: AppColors.textSecondary,
+    color: AppColors.textAdaptiveSecondary(context, brightness: brightness),
   );
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // LABELS — Caps & Functional Text
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  static TextStyle get labelLarge => GoogleFonts.outfit(
+  static TextStyle labelLarge(BuildContext? context, {Brightness? brightness}) => GoogleFonts.outfit(
     fontSize: 14,
-    fontWeight: FontWeight.w700, // Bold for buttons
-    letterSpacing: 1.0, // Wide spacing for caps
-    color: AppColors.textPrimary,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 1.0,
+    color: AppColors.textAdaptive(context, brightness: brightness),
   );
 
-  static TextStyle get labelMedium => GoogleFonts.outfit(
+  static TextStyle labelMedium(BuildContext? context, {Brightness? brightness}) => GoogleFonts.outfit(
     fontSize: 12,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.5,
-    color: AppColors.textSecondary,
+    color: AppColors.textAdaptiveSecondary(context, brightness: brightness),
   );
 
-  static TextStyle get labelSmall => GoogleFonts.outfit(
+  static TextStyle labelSmall(BuildContext? context, {Brightness? brightness}) => GoogleFonts.outfit(
     fontSize: 10,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.5,
-    color: AppColors.textTertiary,
+    color: AppColors.textAdaptiveSecondary(context, brightness: brightness).withValues(alpha: 0.7),
   );
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // SPECIAL — Festive & Decorative
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  static TextStyle get festive => GoogleFonts.pinyonScript(
+  static TextStyle festive(BuildContext? context, {Brightness? brightness}) => GoogleFonts.pinyonScript(
     fontSize: 42,
     fontWeight: FontWeight.w400,
-    color: AppColors.accent,
+    color: AppColors.accentAdaptive(context, brightness: brightness),
   );
 
-  static TextStyle get festiveLarge => GoogleFonts.pinyonScript(
+  static TextStyle festiveLarge(BuildContext? context, {Brightness? brightness}) => GoogleFonts.pinyonScript(
     fontSize: 64,
     fontWeight: FontWeight.w400,
-    color: AppColors.accent,
+    color: AppColors.accentAdaptive(context, brightness: brightness),
   );
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // NUMBERS — Big Data Points
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  static TextStyle get bigNumber => GoogleFonts.outfit(
+  static TextStyle bigNumber(BuildContext? context, {Brightness? brightness}) => GoogleFonts.outfit(
     fontSize: 56,
     fontWeight: FontWeight.w700,
-    letterSpacing: -2.0, // Tight tracking for stats
-    color: AppColors.textPrimary,
+    letterSpacing: -2.0,
+    color: AppColors.textAdaptive(context, brightness: brightness),
   );
 }

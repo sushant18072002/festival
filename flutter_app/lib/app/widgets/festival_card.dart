@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../data/models/event_model.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
@@ -18,6 +19,7 @@ class FestivalCard extends StatefulWidget {
   final bool isHero;
   final int? daysUntil;
   final String? muhuratTime;
+  final String heroTagPrefix;
 
   const FestivalCard({
     super.key,
@@ -26,6 +28,7 @@ class FestivalCard extends StatefulWidget {
     this.isHero = false,
     this.daysUntil,
     this.muhuratTime,
+    required this.heroTagPrefix,
   });
 
   @override
@@ -64,13 +67,7 @@ class _FestivalCardState extends State<FestivalCard> {
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.2),
-                blurRadius: 15,
-                offset: const Offset(0, 8),
-              ),
-            ],
+            boxShadow: AppColors.glassShadow(context),
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(24),
@@ -100,10 +97,7 @@ class _FestivalCardState extends State<FestivalCard> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(24),
-                    border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.1),
-                      width: 1,
-                    ),
+                    border: AppColors.adaptiveBorder(context),
                   ),
                 ),
 
@@ -117,7 +111,7 @@ class _FestivalCardState extends State<FestivalCard> {
                       // Title
                       Text(
                         widget.event.title,
-                        style: AppTextStyles.headlineMedium.copyWith(
+                        style: AppTextStyles.headlineMedium(context).copyWith(
                           color: Colors.white,
                           height: 1.1,
                         ),
@@ -132,21 +126,21 @@ class _FestivalCardState extends State<FestivalCard> {
                         Row(
                           children: [
                             Icon(
-                              Icons.calendar_today_rounded,
+                              LucideIcons.calendar,
                               size: 12,
-                              color: AppColors.accent,
+                              color: AppColors.accentAdaptive(context),
                             ),
                             const SizedBox(width: 4),
                             Text(
                               _formatDate(widget.event.date!),
-                              style: AppTextStyles.labelSmall.copyWith(
-                                color: AppColors.accent,
+                              style: AppTextStyles.labelSmall(context).copyWith(
+                                color: AppColors.accentAdaptive(context),
                               ),
                             ),
                             if (widget.muhuratTime != null) ...[
                               const SizedBox(width: 8),
                               Icon(
-                                Icons.access_time_filled,
+                                LucideIcons.clock,
                                 size: 12,
                                 color: Colors.orangeAccent,
                               ),
@@ -154,7 +148,7 @@ class _FestivalCardState extends State<FestivalCard> {
                               Expanded(
                                 child: Text(
                                   widget.muhuratTime!,
-                                  style: AppTextStyles.labelSmall.copyWith(
+                                  style: AppTextStyles.labelSmall(context).copyWith(
                                     color: Colors.orangeAccent,
                                   ),
                                   maxLines: 1,
@@ -176,7 +170,7 @@ class _FestivalCardState extends State<FestivalCard> {
                             child: Row(
                               children: [
                                 Icon(
-                                  Icons.location_on,
+                                  LucideIcons.mapPin,
                                   size: 12,
                                   color: Colors.white70,
                                 ),
@@ -184,7 +178,7 @@ class _FestivalCardState extends State<FestivalCard> {
                                 Expanded(
                                   child: Text(
                                     widget.event.location,
-                                    style: AppTextStyles.bodySmall.copyWith(
+                                    style: AppTextStyles.bodySmall(context).copyWith(
                                       color: Colors.white70,
                                     ),
                                     maxLines: 1,
@@ -211,7 +205,7 @@ class _FestivalCardState extends State<FestivalCard> {
                                 ),
                               ),
                               child: const Icon(
-                                Icons.share,
+                                LucideIcons.share2,
                                 size: 14,
                                 color: Colors.white,
                               ),
@@ -247,7 +241,7 @@ class _FestivalCardState extends State<FestivalCard> {
                             filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
                             child: Text(
                               widget.event.category!.name.toUpperCase(),
-                              style: AppTextStyles.labelSmall.copyWith(
+                              style: AppTextStyles.labelSmall(context).copyWith(
                                 color: Colors.white,
                                 fontSize: 10,
                               ),
@@ -276,24 +270,21 @@ class _FestivalCardState extends State<FestivalCard> {
   }
 
   Widget _buildImage(BuildContext context) {
-    final imageUrl = widget.event.thumbnail ?? widget.event.image?.thumbnail;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final imageUrl = widget.event.displayThumbnailUrl;
 
     if (imageUrl != null) {
       return Hero(
-        tag: 'festival_card_${widget.event.id}',
+        tag: '${widget.heroTagPrefix}_festival_card_${widget.event.id}',
         child: SmartImage(imageUrl, fit: BoxFit.cover),
       );
     }
     return Container(
-      color: isDark ? AppColors.surfaceGlass : const Color(0xFFF3EFFC),
+      color: AppColors.surfaceGlass(context),
       child: Center(
         child: Icon(
-          Icons.temple_hindu,
+          LucideIcons.landmark,
           size: 48,
-          color: isDark
-              ? Colors.white10
-              : const Color(0xFF3D1F5C).withValues(alpha: 0.1),
+          color: AppColors.glassBorder(context),
         ),
       ),
     );

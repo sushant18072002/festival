@@ -86,7 +86,10 @@ class _AutoRotatingCarouselState extends State<AutoRotatingCarousel> {
                   }
                   return Transform.scale(scale: value, child: child);
                 },
-                child: HeroBanner(event: widget.events[index]),
+                child: HeroBanner(
+                  event: widget.events[index],
+                  heroTagPrefix: 'home_carousel',
+                ),
               );
             },
           ),
@@ -105,10 +108,8 @@ class _AutoRotatingCarouselState extends State<AutoRotatingCarousel> {
                 height: 8,
                 decoration: BoxDecoration(
                   color: _currentPage == index
-                      ? AppColors.primary
-                      : Theme.of(context).brightness == Brightness.dark
-                      ? Colors.white.withValues(alpha: 0.3)
-                      : Colors.black.withValues(alpha: 0.22),
+                      ? AppColors.primaryAdaptive(context)
+                      : AppColors.textAdaptiveSecondary(context).withValues(alpha: 0.35),
                   borderRadius: BorderRadius.circular(4),
                 ),
               ),

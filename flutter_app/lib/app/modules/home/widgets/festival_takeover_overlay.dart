@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../data/models/event_model.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_styles.dart';
@@ -42,7 +43,7 @@ class FestivalTakeoverOverlay extends StatelessWidget {
               child:
                   GlassContainer(
                     borderRadius: BorderRadius.circular(28),
-                    color: AppColors.surfaceGlass,
+                    color: AppColors.surfaceGlass(context),
                     border: Border.all(
                       color: Colors.white.withValues(alpha: 0.15),
                       width: 1.5,
@@ -61,7 +62,7 @@ class FestivalTakeoverOverlay extends StatelessWidget {
 
                         Text(
                           'Today is',
-                          style: AppTextStyles.labelMedium.copyWith(
+                          style: AppTextStyles.labelMedium(context).copyWith(
                             color: Colors.white54,
                             letterSpacing: 2,
                           ),
@@ -72,7 +73,7 @@ class FestivalTakeoverOverlay extends StatelessWidget {
                         Text(
                           event.title,
                           textAlign: TextAlign.center,
-                          style: AppTextStyles.headlineLarge.copyWith(
+                          style: AppTextStyles.headlineLarge(context).copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.w800,
                             height: 1.2,
@@ -97,14 +98,14 @@ class FestivalTakeoverOverlay extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               const Icon(
-                                Icons.bolt_rounded,
+                                LucideIcons.zap,
                                 color: Colors.white,
                                 size: 18,
                               ),
                               const SizedBox(width: 6),
                               Text(
                                 '2× KARMA TODAY',
-                                style: AppTextStyles.labelMedium.copyWith(
+                                style: AppTextStyles.labelMedium(context).copyWith(
                                   color: Colors.white,
                                   letterSpacing: 1.5,
                                   fontWeight: FontWeight.bold,
@@ -160,14 +161,14 @@ class FestivalTakeoverOverlay extends StatelessWidget {
                                   }
                                   Get.find<HomeController>().dismissTakeover();
                                   Get.toNamed(
-                                    Routes.EVENT_DETAILS,
+                                    Routes.eventDetails,
                                     arguments: event,
                                   );
                                 },
                                 child: const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.celebration, size: 16),
+                                    Icon(LucideIcons.partyPopper, size: 16),
                                     SizedBox(width: 6),
                                     Text('Celebrate Now!'),
                                   ],
@@ -201,7 +202,7 @@ class FestivalTakeoverOverlay extends StatelessWidget {
                   color: Colors.white12,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.close, color: Colors.white70, size: 20),
+                child: const Icon(LucideIcons.x, color: Colors.white70, size: 20),
               ),
             ).animate().fade(delay: 200.ms),
           ),

@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../data/providers/data_repository.dart';
 import '../../data/models/gamification_config_model.dart';
+import '../../data/services/asset_service.dart';
 
 class ProfileController extends GetxController {
   final _storage = GetStorage();
@@ -71,8 +72,14 @@ class ProfileController extends GetxController {
   }
 
   void addKarma(int points, [String? reason]) {
+    final oldRank = rankTitle;
     karmaPoints.value += points;
     _storage.write('karma_points', karmaPoints.value);
+
+    // Detect Level Up (Rank Transition)
+    if (rankTitle != oldRank) {
+      AssetService.to.playSFX(GlobalAsset.levelUp);
+    }
   }
 
   // ── Stat Increment Methods ──────────────────────────────────────────────────

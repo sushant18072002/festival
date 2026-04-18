@@ -3,24 +3,29 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
+
 import 'explore_controller.dart';
 import '../../widgets/neo_scaffold.dart';
 import '../../widgets/glass_container.dart';
 import '../home/widgets/trending_image_card.dart';
 import '../../widgets/banner_ad_widget.dart';
-import '../../widgets/void_empty_state.dart';
 import '../../widgets/global_error_widget.dart';
 import '../../data/models/quote_model.dart';
 import '../../data/models/mantra_model.dart';
-import 'widgets/explore_event_card.dart';
-import 'widgets/explore_wisdom_card.dart';
-import '../home/widgets/vibe_pill.dart';
-import '../../theme/taxonomy_icon_resolver.dart';
+import '../home/widgets/grid_shimmer_loader.dart';
+import '../home/widgets/trivia_card.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_text_styles.dart';
 import '../../theme/app_spacing.dart';
-
 import '../../routes/app_pages.dart';
+
+import 'widgets/explore_event_card.dart';
+import 'widgets/explore_wisdom_card.dart';
+import 'widgets/explore_tabs.dart';
+import 'widgets/explore_filter_row.dart';
+import 'widgets/explore_quiz_card.dart';
+import 'widgets/explore_empty_state.dart';
 
 class ExploreView extends GetView<ExploreController> {
   const ExploreView({super.key});
@@ -36,8 +41,7 @@ class ExploreView extends GetView<ExploreController> {
         automaticallyImplyLeading: false,
         title: Text(
           'Explore'.tr,
-          style: AppTextStyles.headlineMedium.copyWith(
-            color: isDark ? Colors.white : const Color(0xFF1A0B2E),
+          style: AppTextStyles.headlineMedium(context).copyWith(
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -47,7 +51,7 @@ class ExploreView extends GetView<ExploreController> {
           Padding(
             padding: const EdgeInsets.only(right: 8),
             child: IconButton(
-              icon: const Icon(Icons.auto_awesome, color: AppColors.accent),
+              icon: Icon(LucideIcons.sparkles, color: AppColors.accentAdaptive(context)),
               onPressed: () => controller.surpriseMe(),
               tooltip: 'Surprise Me',
             ),
@@ -77,11 +81,11 @@ class ExploreView extends GetView<ExploreController> {
                   opacity: 0.2, // Tinted
                   child: Row(
                     children: [
-                      const Icon(Icons.close, size: 14, color: AppColors.error),
+                      const Icon(LucideIcons.x, size: 14, color: AppColors.error),
                       const SizedBox(width: 4),
                       Text(
                         'CLEAR',
-                        style: AppTextStyles.labelSmall.copyWith(
+                        style: AppTextStyles.labelSmall(context).copyWith(
                           color: AppColors.error,
                         ),
                       ),
@@ -99,48 +103,41 @@ class ExploreView extends GetView<ExploreController> {
           SizedBox(height: kToolbarHeight + MediaQuery.of(context).padding.top),
 
           // 1. Tabs (Explore vs Collections) - Phase 15
-          _buildTabs(context, isDark),
+          const ExploreTabs(),
           const SizedBox(height: AppSpacing.md),
 
           // 2. Search Bar (Floating Glass)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-            child: Hero(
-              tag: 'search_bar_hero',
-              child: GestureDetector(
-                onTap: () {
-                  HapticFeedback.lightImpact();
-                  Get.toNamed(Routes.SEARCH);
-                },
-                child: GlassContainer(
-                  borderRadius: BorderRadius.circular(16),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.md,
-                    vertical: 12,
-                  ),
-                  color: isDark ? AppColors.surfaceGlass : Colors.white,
-                  opacity: isDark ? 0.3 : 0.8,
-                  blur: 10,
-                  border: Border.all(
-                    color: isDark
-                        ? Colors.white.withValues(alpha: 0.1)
-                        : AppColors.primary.withValues(alpha: 0.1),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.search_rounded,
-                        color: isDark ? Colors.white70 : AppColors.primary,
+            child: GestureDetector(
+              onTap: () {
+                HapticFeedback.lightImpact();
+                Get.toNamed(Routes.search);
+              },
+              child: GlassContainer(
+                borderRadius: BorderRadius.circular(16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.md,
+                  vertical: 12,
+                ),
+                color: AppColors.surfaceGlass(context),
+                opacity: isDark ? 0.3 : 0.8,
+                blur: 10,
+                border: Border.all(color: AppColors.glassBorder(context)),
+                child: Row(
+                  children: [
+                    Icon(
+                      LucideIcons.search,
+                      color: isDark ? Colors.white70 : AppColors.primaryAdaptive(context),
+                    ),
+                    const SizedBox(width: 12),
+                    Text(
+                      'Ask the Oracle...',
+                      style: AppTextStyles.bodyMedium(context).copyWith(
+                        color: isDark ? Colors.white38 : Colors.black38,
                       ),
-                      const SizedBox(width: 12),
-                      Text(
-                        'Ask the Oracle...',
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: isDark ? Colors.white38 : Colors.black38,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -148,15 +145,13 @@ class ExploreView extends GetView<ExploreController> {
           const SizedBox(height: AppSpacing.sm),
 
           // 2. Filter Lists & Sort Dropdown
-          _buildFilterAndSortRow(context, isDark),
+          const ExploreFilterRow(),
 
-          // 3. Masonry Grid
+          // 3. Masonry Grid / Lists
           Expanded(
             child: Obx(() {
               if (controller.isLoading.value) {
-                return const Center(
-                  child: CircularProgressIndicator(color: AppColors.primary),
-                );
+                return const GridShimmerLoader();
               }
 
               if (controller.hasError.value) {
@@ -166,9 +161,9 @@ class ExploreView extends GetView<ExploreController> {
                 );
               }
 
-              if (controller.currentTab.value == 0) {
+              if (controller.currentTab.value == 0 && controller.isGridView.value) {
                 if (controller.filteredImages.isEmpty) {
-                  return _buildEmptyState();
+                  return const ExploreEmptyState();
                 }
                 return MasonryGridView.count(
                   crossAxisCount: 2,
@@ -186,12 +181,38 @@ class ExploreView extends GetView<ExploreController> {
                     return TrendingImageCard(
                       image: item,
                       index: index,
+                      isGrid: true,
+                      heroTagPrefix: 'explore_visuals',
                     ).animate().fade(delay: (index * 50).ms).slideY(begin: 0.1);
+                  },
+                );
+              } else if (controller.currentTab.value == 0 && !controller.isGridView.value) {
+                if (controller.filteredImages.isEmpty) {
+                  return const ExploreEmptyState();
+                }
+                return ListView.separated(
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.md,
+                    AppSpacing.sm,
+                    AppSpacing.md,
+                    120,
+                  ),
+                  itemCount: controller.filteredImages.length,
+                  separatorBuilder: (_, __) =>
+                      const SizedBox(height: AppSpacing.lg),
+                  itemBuilder: (context, index) {
+                    final item = controller.filteredImages[index];
+                    return TrendingImageCard(
+                      image: item,
+                      index: index,
+                      isGrid: false,
+                      heroTagPrefix: 'explore_visuals_list',
+                    ).animate().fade().slideY(begin: 0.1);
                   },
                 );
               } else if (controller.currentTab.value == 1) {
                 if (controller.filteredEvents.isEmpty) {
-                  return _buildEmptyState();
+                  return const ExploreEmptyState();
                 }
                 return ListView.separated(
                   padding: const EdgeInsets.fromLTRB(
@@ -207,8 +228,110 @@ class ExploreView extends GetView<ExploreController> {
                     final event = controller.filteredEvents[index];
                     return ExploreEventCard(
                       event: event,
+                      heroTagPrefix: 'explore_events',
                     ).animate().fade(delay: (index * 50).ms).slideY(begin: 0.1);
                   },
+                );
+              } else if (controller.currentTab.value == 3) {
+                // ── Play tab: Quizzes & Trivia ──────────────────────────────
+                final quizzes = controller.allQuizzes;
+                final trivia = controller.allTrivia;
+                if (quizzes.isEmpty && trivia.isEmpty) {
+                  return const ExploreEmptyState();
+                }
+                return CustomScrollView(
+                  slivers: [
+                    // Play Header
+                    SliverPadding(
+                      padding: const EdgeInsets.fromLTRB(
+                        AppSpacing.md, AppSpacing.sm, AppSpacing.md, AppSpacing.lg,
+                      ),
+                      sliver: SliverToBoxAdapter(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'play'.tr,
+                              style: AppTextStyles.headlineLarge(context).copyWith(
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              'play_subtitle'.tr,
+                              style: AppTextStyles.bodyMedium(context).copyWith(
+                                fontSize: 15,
+                                color: AppColors.textAdaptiveSecondary(context),
+                              ),
+                            ),
+                          ],
+                        ).animate().fade().slideX(begin: -0.1),
+                      ),
+                    ),
+                    // Quizzes Section
+                    if (quizzes.isNotEmpty)
+                      SliverPadding(
+                        padding: const EdgeInsets.fromLTRB(
+                          AppSpacing.md, 0, AppSpacing.md, AppSpacing.sm,
+                        ),
+                        sliver: SliverToBoxAdapter(
+                          child: Text(
+                            '🎲 ${'quick_quizzes'.tr}',
+                            style: AppTextStyles.titleMedium(context).copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    if (quizzes.isNotEmpty)
+                      SliverPadding(
+                        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                        sliver: SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              return ExploreQuizCard(quiz: quizzes[index], index: index)
+                                  .animate(delay: (index * 50).ms)
+                                  .fade()
+                                  .slideY(begin: 0.1);
+                            },
+                            childCount: quizzes.length,
+                          ),
+                        ),
+                      ),
+                    // Trivia Section
+                    if (trivia.isNotEmpty)
+                      SliverPadding(
+                        padding: const EdgeInsets.fromLTRB(
+                          AppSpacing.md, AppSpacing.xl, AppSpacing.md, AppSpacing.sm,
+                        ),
+                        sliver: SliverToBoxAdapter(
+                          child: Text(
+                            '🧠 ${'quick_trivia'.tr}',
+                            style: AppTextStyles.titleMedium(context).copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    if (trivia.isNotEmpty)
+                      SliverPadding(
+                        padding: const EdgeInsets.fromLTRB(
+                          AppSpacing.md, AppSpacing.sm, AppSpacing.md, 120,
+                        ),
+                        sliver: SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              final t = trivia[index];
+                              return TriviaCard(trivia: t)
+                                  .animate(delay: (index * 60).ms)
+                                  .fade()
+                                  .slideX(begin: 0.1);
+                            },
+                            childCount: trivia.length,
+                          ),
+                        ),
+                      ),
+                  ],
                 );
               } else {
                 // Wisdom (Quotes & Mantras)
@@ -216,7 +339,7 @@ class ExploreView extends GetView<ExploreController> {
                   ...controller.filteredQuotes,
                   ...controller.filteredMantras,
                 ];
-                if (items.isEmpty) return _buildEmptyState();
+                if (items.isEmpty) return const ExploreEmptyState();
 
                 return CustomScrollView(
                   slivers: [
@@ -233,16 +356,17 @@ class ExploreView extends GetView<ExploreController> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Daily Wisdom',
-                              style: AppTextStyles.headlineLarge.copyWith(
+                              'daily_wisdom'.tr,
+                              style: AppTextStyles.headlineLarge(context).copyWith(
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
                             const SizedBox(height: 6),
                             Text(
-                              'Discover timeless quotes and sayings from diverse cultures around the world.',
-                              style: AppTextStyles.bodyMedium.copyWith(
+                              'daily_wisdom_subtitle'.tr,
+                              style: AppTextStyles.bodyMedium(context).copyWith(
                                 fontSize: 15,
+                                color: AppColors.textAdaptiveSecondary(context),
                               ),
                             ),
                           ],
@@ -280,6 +404,14 @@ class ExploreView extends GetView<ExploreController> {
                               language: language,
                               isMantra: item is MantraModel,
                               isFeatured: true,
+                              onTap: () {
+                                Get.toNamed(
+                                  item is MantraModel
+                                      ? Routes.mantraDetails
+                                      : Routes.quoteDetails,
+                                  arguments: item,
+                                );
+                              },
                             ).animate().fade(delay: 100.ms).slideY(begin: 0.1);
                           },
                         ),
@@ -316,6 +448,14 @@ class ExploreView extends GetView<ExploreController> {
                                 language: language,
                                 isMantra: item is MantraModel,
                                 isFeatured: false,
+                                onTap: () {
+                                  Get.toNamed(
+                                    item is MantraModel
+                                        ? Routes.mantraDetails
+                                        : Routes.quoteDetails,
+                                    arguments: item,
+                                  );
+                                },
                               )
                               .animate()
                               .fade(delay: (actualIndex * 50).ms)
@@ -336,151 +476,5 @@ class ExploreView extends GetView<ExploreController> {
         ],
       ),
     );
-  }
-
-  Widget _buildTabs(BuildContext context, bool isDark) {
-    return Obx(
-      () => Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _buildTabButton('Visuals', 0, isDark),
-          const SizedBox(width: 12),
-          _buildTabButton('Festivals', 1, isDark),
-          const SizedBox(width: 12),
-          _buildTabButton('Wisdom', 2, isDark),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTabButton(String label, int index, bool isDark) {
-    final isSelected = controller.currentTab.value == index;
-    return GestureDetector(
-      onTap: () {
-        HapticFeedback.selectionClick();
-        controller.currentTab.value = index;
-      },
-      child: AnimatedContainer(
-        duration: 200.ms,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: isSelected
-              ? AppColors.primary.withValues(alpha: isDark ? 0.2 : 0.1)
-              : Colors.transparent,
-          border: Border.all(
-            color: isSelected ? AppColors.primary : Colors.transparent,
-          ),
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.labelLarge.copyWith(
-            color: isSelected
-                ? AppColors.primary
-                : (isDark ? Colors.white54 : Colors.black54),
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildEmptyState() {
-    return const VoidEmptyState(
-      message: "The void yielded nothing",
-      subMessage: "Try searching for 'Light' or 'Music'",
-    );
-  }
-
-  Widget _buildFilterAndSortRow(BuildContext context, bool isDark) {
-    return SizedBox(
-      height: 50,
-      child: Obx(() {
-        final tax = controller.taxonomy.value;
-        if (tax == null) return const SizedBox.shrink();
-
-        return ListView(
-          scrollDirection: Axis.horizontal,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-          children: [
-            // 'All' Categories
-            VibePill(
-              label: 'All'.tr,
-              vibeCode: 'all',
-              emoji: '🌟',
-              isDark: isDark,
-              isSelected: controller.selectedCategory.value.isEmpty,
-              onTap: () {
-                HapticFeedback.selectionClick();
-                controller.selectedCategory.value = '';
-                controller.filterItems();
-              },
-            ),
-            // Categories
-            ...tax.categories.map(
-              (cat) => VibePill(
-                label: cat.name,
-                vibeCode: cat.code,
-                iconData: TaxonomyIconResolver.resolve(cat.icon),
-                isDark: isDark,
-                isSelected: controller.selectedCategory.value == cat.code,
-                onTap: () {
-                  HapticFeedback.selectionClick();
-                  controller.selectedCategory.value =
-                      controller.selectedCategory.value == cat.code
-                      ? ''
-                      : cat.code;
-                  controller.filterItems();
-                },
-              ),
-            ),
-            // Sort Dropdown (Phase 15)
-            Container(
-              margin: const EdgeInsets.only(left: 8),
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              decoration: BoxDecoration(
-                color: isDark ? AppColors.surfaceGlass : Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: isDark
-                      ? Colors.white.withValues(alpha: 0.1)
-                      : const Color(0x1A1A0B2E),
-                ),
-              ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  value: controller.sortOption.value,
-                  dropdownColor: isDark ? AppColors.surfaceGlass : Colors.white,
-                  icon: Icon(
-                    Icons.sort_rounded,
-                    color: isDark ? Colors.white70 : AppColors.primary,
-                    size: 16,
-                  ),
-                  style: AppTextStyles.labelMedium.copyWith(
-                    color: isDark ? Colors.white : const Color(0xFF1A0B2E),
-                  ),
-                  onChanged: (String? newValue) {
-                    if (newValue != null) {
-                      HapticFeedback.selectionClick();
-                      controller.sortOption.value = newValue;
-                      controller.filterItems();
-                    }
-                  },
-                  items: const [
-                    DropdownMenuItem(value: 'newest', child: Text('Newest')),
-                    DropdownMenuItem(value: 'popular', child: Text('Popular')),
-                    DropdownMenuItem(value: 'liked', child: Text('Most Liked')),
-                    DropdownMenuItem(
-                      value: 'shared',
-                      child: Text('Most Shared'),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        );
-      }),
-    ).animate().fade().slideX(begin: 0.1);
   }
 }

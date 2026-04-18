@@ -33,6 +33,10 @@ const MantraSchema = new Schema({
     is_deleted: { type: Boolean, default: false },
     deleted_at: Date,
 
+    // --- S3 Metadata ---
+    is_s3_uploaded: { type: Boolean, default: false },
+    file_size_bytes: { type: Number, default: 0 },
+
     // --- Localization (8 languages) ---
     translations: {
         hi: LocalizedMantraContent,

@@ -10,7 +10,7 @@ import '../../../firebase_options.dart';
 class AnalyticsService extends GetxService {
   static AnalyticsService get instance => Get.find();
 
-  late final FirebaseAnalytics _analytics;
+  FirebaseAnalytics? _analytics;
 
   Future<AnalyticsService> init() async {
     try {
@@ -29,7 +29,7 @@ class AnalyticsService extends GetxService {
   Future<void> logEventView(String eventId, String title) async {
     _debugLog('Event View', {'id': eventId, 'title': title});
     try {
-      await _analytics.logEvent(
+      await _analytics?.logEvent(
         name: 'view_festival',
         parameters: {'festival_id': eventId, 'title': title},
       );
@@ -40,7 +40,7 @@ class AnalyticsService extends GetxService {
   Future<void> logShare(String itemId, String contentType) async {
     _debugLog('Share', {'item_id': itemId, 'type': contentType});
     try {
-      await _analytics.logShare(
+      await _analytics?.logShare(
         contentType: contentType,
         itemId: itemId,
         method: 'native_share',
@@ -52,7 +52,7 @@ class AnalyticsService extends GetxService {
   Future<void> logDownload(String imageId) async {
     _debugLog('Download Image', {'image_id': imageId});
     try {
-      await _analytics.logEvent(
+      await _analytics?.logEvent(
         name: 'download_media',
         parameters: {'image_id': imageId},
       );
@@ -63,7 +63,7 @@ class AnalyticsService extends GetxService {
   Future<void> logQuizCompleted(String quizId, int karmaEarned) async {
     _debugLog('Quiz Completed', {'quiz': quizId, 'karma': karmaEarned});
     try {
-      await _analytics.logEvent(
+      await _analytics?.logEvent(
         name: 'quiz_completed',
         parameters: {'quiz_id': quizId, 'karma_awarded': karmaEarned},
       );
@@ -74,7 +74,7 @@ class AnalyticsService extends GetxService {
   Future<void> logTriviaAnswered(bool isCorrect) async {
     _debugLog('Trivia Answered', {'correct': isCorrect});
     try {
-      await _analytics.logEvent(
+      await _analytics?.logEvent(
         name: 'trivia_answered',
         parameters: {'correct': isCorrect.toString()},
       );
@@ -85,7 +85,7 @@ class AnalyticsService extends GetxService {
   Future<void> logAdWatched(String adType) async {
     _debugLog('Ad Watched', {'type': adType});
     try {
-      await _analytics.logAdImpression(adUnitName: adType);
+      await _analytics?.logAdImpression(adUnitName: adType);
     } catch (_) {}
   }
 

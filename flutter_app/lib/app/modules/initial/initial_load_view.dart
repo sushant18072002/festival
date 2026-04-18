@@ -1,14 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import '../../data/services/asset_service.dart';
+import '../../widgets/smart_lottie.dart';
 import '../../routes/app_pages.dart';
-import '../../widgets/neo_scaffold.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_text_styles.dart';
 import '../../widgets/painters/particle_explosion_painter.dart';
 import 'package:get_storage/get_storage.dart' as get_storage;
 
-class InitialLoadController extends GetxController {}
+import 'dart:async';
+import '../../data/providers/data_repository.dart';
+
+class InitialLoadController extends GetxController {
+  final _trivia = [
+    "Did you know? Diwali is celebrated by over a billion people globally.",
+    "Fun Fact: Holi's colors are historically made from neem and turmeric.",
+    "Insight: Navratri celebrates nine nights of the divine feminine.",
+    "Did you know? The exact date of festivals changes based on the lunar calendar.",
+    "Fun Fact: Kumbh Mela is visible from space!",
+    "Gathering spiritual wisdom...",
+    "Aligning with the stars...",
+  ];
+  
+  final RxString currentTrivia = "Loading festival magic...".obs;
+  Timer? _timer;
+  int _triviaIndex = 0;
+
+  @override
+  void onInit() {
+    super.onInit();
+    _startTriviaRotator();
+  }
+
+  void _startTriviaRotator() {
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      _triviaIndex = (_triviaIndex + 1) % _trivia.length;
+      currentTrivia.value = _trivia[_triviaIndex];
+    });
+  }
+
+  @override
+  void onClose() {
+    _timer?.cancel();
+    super.onClose();
+  }
+}
 
 class InitialLoadView extends StatefulWidget {
   const InitialLoadView({super.key});
@@ -29,25 +66,44 @@ class _InitialLoadViewState extends State<InitialLoadView>
       duration: const Duration(milliseconds: 1500),
     );
 
+    Get.put(InitialLoadController());
     // Start Sequence
     _startSequence();
   }
 
   Future<void> _startSequence() async {
-    // 1. Wait for standard build
+    // 1. Wait for standard build & initial delay
+    await Future.delayed(const Duration(milliseconds: 1500));
+
+    // 2. Wait until DataRepository finishes background sync
+    final repo = Get.find<DataRepository>();
+    if (!repo.isReady.value) {
+      debugPrint('[InitialLoadView] Waiting for data sync...');
+      final completer = Completer<void>();
+      Worker? worker;
+      worker = ever(repo.isReady, (ready) {
+        if (ready && !completer.isCompleted) {
+          completer.complete();
+          worker?.dispose();
+        }
+      });
+      await completer.future;
+    }
+    
+    // Safety buffer
     await Future.delayed(const Duration(milliseconds: 500));
 
-    // 2. Trigger Big Bang (Particle Explosion)
+    // 3. Trigger Big Bang (Particle Explosion)
     await _bangController.forward();
 
-    // 3. Check first launch and navigate with Fade Transition
+    // 4. Check first launch and navigate with Fade Transition
     final storage = get_storage.GetStorage();
     final isFirstLaunch = storage.read<bool>('is_first_launch') ?? true;
 
     if (isFirstLaunch) {
-      Get.offAllNamed(Routes.ONBOARDING);
+      Get.offAllNamed(Routes.onboarding);
     } else {
-      Get.offAllNamed(Routes.DASHBOARD);
+      Get.offAllNamed(Routes.dashboard);
     }
   }
 
@@ -59,12 +115,28 @@ class _InitialLoadViewState extends State<InitialLoadView>
 
   @override
   Widget build(BuildContext context) {
-    return NeoScaffold(
-      hideNoise: true, // Clean look for splash
+    final controller = Get.find<InitialLoadController>();
+    return Scaffold(
+      backgroundColor: const Color(0xFF0A0214), // Deep OLED Purple-Black
       body: Center(
         child: Stack(
           alignment: Alignment.center,
           children: [
+            // ─────────────────────────────────────────────────────────────────
+            // Ambient Radial Glow
+            // ─────────────────────────────────────────────────────────────────
+            Container(
+              decoration: BoxDecoration(
+                gradient: RadialGradient(
+                  center: Alignment.center,
+                  radius: 1.2,
+                  colors: [
+                    AppColors.primary.withValues(alpha: 0.25),
+                    const Color(0xFF0A0214),
+                  ],
+                ),
+              ),
+            ),
             // ─────────────────────────────────────────────────────────────────
             // 1. The Big Bang (Particles)
             // ─────────────────────────────────────────────────────────────────
@@ -125,7 +197,7 @@ class _InitialLoadViewState extends State<InitialLoadView>
                 // Title
                 Text(
                       'UTSAV',
-                      style: AppTextStyles.festiveLarge.copyWith(
+                      style: AppTextStyles.festiveLarge(context).copyWith(
                         letterSpacing: 8,
                         color: Colors.white,
                         fontSize: 48,
@@ -140,8 +212,8 @@ class _InitialLoadViewState extends State<InitialLoadView>
                 // Subtitle
                 Text(
                   'The Spirit of Celebration',
-                  style: AppTextStyles.labelMedium.copyWith(
-                    color: AppColors.textSecondary,
+                  style: AppTextStyles.labelMedium(context).copyWith(
+                    color: Colors.white70,
                     letterSpacing: 4,
                   ),
                 ).animate().fade(delay: 400.ms).slideY(begin: 0.5),
@@ -150,8 +222,47 @@ class _InitialLoadViewState extends State<InitialLoadView>
               // Exit animation: Scale huge and fade out when bang happens
               target: _bangController.value > 0.1 ? 1 : 0,
             ),
-            // Note: flutter_animate's 'target' isn't simple boolean switch for complex sequence without controller binding
-            // Simplified: Just let it stay, the page transition will handle the exit feel.
+            
+            // ─────────────────────────────────────────────────────────────────
+            // 3. Rotating Trivia (Bottom Loading Indicator)
+            // ─────────────────────────────────────────────────────────────────
+            Positioned(
+              bottom: 60,
+              left: 24,
+              right: 24,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                   SizedBox(
+                    width: 48,
+                    height: 48,
+                    child: SmartLottie(
+                      url: AssetService.to.getLottie(GlobalAsset.loading),
+                      fallbackAsset: 'assets/lottie/loading_mandala.json',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Obx(
+                    () => AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 600),
+                      switchInCurve: Curves.easeOut,
+                      switchOutCurve: Curves.easeIn,
+                      child: Text(
+                        controller.currentTrivia.value,
+                        key: ValueKey<String>(controller.currentTrivia.value),
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.labelMedium(context).copyWith(
+                          color: Colors.white70,
+                          fontStyle: FontStyle.italic,
+                          height: 1.4,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ).animate().fade(delay: 1000.ms),
+            ),
           ],
         ),
       ),

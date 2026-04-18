@@ -3,13 +3,15 @@ import { IncomingForm } from 'formidable';
 import fs from 'fs-extra';
 import path from 'path';
 import dbConnect from '../../lib/dbConnect';
-import { Image, Event, Tag, Category } from '../../lib/models';
-import AWS from 'aws-sdk';
+import { Image, Event } from '../../lib/models';
+import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3';
 
-const s3 = new AWS.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_REGION
+const s3Client = new S3Client({
+    region: process.env.AWS_REGION,
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+    },
 });
 
 const BUCKET_NAME = process.env.AWS_BUCKET_NAME;
@@ -36,14 +38,13 @@ export default async function handler(
             if (search) filter.caption = { $regex: search, $options: 'i' };
 
             const page = parseInt(req.query.page as string) || 1;
-            const limit = parseInt(req.query.limit as string) || 100; // Default high for gallery
+            const limit = parseInt(req.query.limit as string) || 100;
             const skip = (page - 1) * limit;
 
             let images = [];
             let total = 0;
 
             if (req.query.event_id) {
-                // Schema Inversion Proxy: The frontend asks for images "belonging" to an event
                 const event = await Event.findById(req.query.event_id)
                     .populate({
                         path: 'images',
@@ -95,24 +96,18 @@ export default async function handler(
         }
     } else if (req.method === 'POST') {
         const form = new IncomingForm();
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         form.parse(req, async (err: any, fields: any, files: any) => {
-            if (err) {
-                return res.status(500).json({ success: false, error: 'File upload failed' });
-            }
+            if (err) return res.status(500).json({ success: false, error: 'File upload failed' });
 
             try {
                 const file = Array.isArray(files.file) ? files.file[0] : files.file;
                 if (!file) throw new Error('No file uploaded');
 
-                // Move file to backend/assets/raw
                 const rawDir = path.join(process.cwd(), '../backend/assets/raw');
                 await fs.ensureDir(rawDir);
 
                 const filename = `${Date.now()}_${file.originalFilename}`;
                 const newPath = path.join(rawDir, filename);
-
                 await fs.move(file.filepath, newPath);
 
                 const env = process.env.DEPLOY_ENV || 'stage';
@@ -141,21 +136,15 @@ export default async function handler(
             req.on('end', async () => {
                 const body = JSON.parse(Buffer.concat(chunks).toString());
                 const { _id, event_id, ...updateData } = body;
-
-                // Allow omitting _id if we want to do bulk operations eventually, but for now _id is required
                 const image = await Image.findByIdAndUpdate(_id, updateData, { new: true });
 
-                // Proxy relations to Event master array
                 if (event_id !== undefined) {
                     if (event_id === null) {
-                        // Unlink request: Pull this image ID from all Events
                         await Event.updateMany({}, { $pull: { images: _id } });
                     } else {
-                        // Link request: Push this image ID to the specific Event
                         await Event.findByIdAndUpdate(event_id, { $addToSet: { images: _id } });
                     }
                 }
-
                 res.status(200).json({ success: true, data: image });
             });
         } catch (error) {
@@ -167,37 +156,28 @@ export default async function handler(
 
             if (permanent === 'true') {
                 const image = await Image.findById(id);
-                if (image) {
-                    // 1. Delete from S3 explicitly if s3_key exists
-                    if (image.s3_key && BUCKET_NAME) {
-                        try {
-                            await s3.deleteObject({ Bucket: BUCKET_NAME, Key: image.s3_key }).promise();
-                            const thumbKey = image.s3_key.replace('/original/', '/thumb/').replace('.webp', '_thumb.webp');
-                            await s3.deleteObject({ Bucket: BUCKET_NAME, Key: thumbKey }).promise();
-                            console.log(`[AWS S3] Successfully deleted explicitly: ${image.s3_key}`);
-                        } catch (s3Err) {
-                            console.error('[AWS S3 Error] Failed to delete explicit object:', s3Err);
-                        }
-                    }
-
-                    // 2. Delete from local backend asset folders (raw/optimized) to prevent floating files
-                    if (image.filename) {
-                        const rawPath = path.join(process.cwd(), '../backend/assets/raw', image.filename);
-                        const optName = image.filename.replace(path.extname(image.filename), '.webp');
-                        const optPath = path.join(process.cwd(), '../backend/assets/optimized/original', optName);
-                        const thumbPath = path.join(process.cwd(), '../backend/assets/optimized/thumb', optName.replace('.webp', '_thumb.webp'));
-
-                        try {
-                            if (await fs.pathExists(rawPath)) await fs.remove(rawPath);
-                            if (await fs.pathExists(optPath)) await fs.remove(optPath);
-                            if (await fs.pathExists(thumbPath)) await fs.remove(thumbPath);
-                        } catch (fsErr) {
-                            console.error('[Local FS Error] Failed to wipe local images:', fsErr);
-                        }
+                if (image && image.s3_key && BUCKET_NAME) {
+                    try {
+                        await s3Client.send(new DeleteObjectCommand({ Bucket: BUCKET_NAME, Key: image.s3_key }));
+                        const thumbKey = image.s3_key.replace('/original/', '/thumb/').replace('.webp', '_thumb.webp');
+                        await s3Client.send(new DeleteObjectCommand({ Bucket: BUCKET_NAME, Key: thumbKey }));
+                    } catch (s3Err) {
+                        console.error('[AWS S3 Error] Failed to delete explicitly:', s3Err);
                     }
                 }
+
+                if (image?.filename) {
+                    const rawPath = path.join(process.cwd(), '../backend/assets/raw', image.filename);
+                    const optName = image.filename.replace(path.extname(image.filename), '.webp');
+                    const optPath = path.join(process.cwd(), '../backend/assets/optimized/original', optName);
+                    const thumbPath = path.join(process.cwd(), '../backend/assets/optimized/thumb', optName.replace('.webp', '_thumb.webp'));
+
+                    if (await fs.pathExists(rawPath)) await fs.remove(rawPath);
+                    if (await fs.pathExists(optPath)) await fs.remove(optPath);
+                    if (await fs.pathExists(thumbPath)) await fs.remove(thumbPath);
+                }
                 await Image.findByIdAndDelete(id);
-                res.status(200).json({ success: true, message: 'Permanently deleted from DB, Local Node, and S3' });
+                res.status(200).json({ success: true, message: 'Permanently deleted' });
             } else {
                 await Image.findByIdAndUpdate(id, { is_deleted: true, deleted_at: new Date() });
                 res.status(200).json({ success: true, message: 'Moved to trash' });

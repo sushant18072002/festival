@@ -56,7 +56,9 @@ class CalendarController extends GetxController {
     );
     final monthEvents =
         all.where((e) {
-          if (e.date == null) return false;
+          if (e.date == null) {
+        return false;
+      }
           final d = e.date!;
           return d.isAfter(start.subtract(const Duration(days: 1))) &&
               d.isBefore(end.add(const Duration(days: 1)));
@@ -154,7 +156,7 @@ class CalendarController extends GetxController {
         '🎉 *$title* — $dateStr\n\n$desc'
         '${link.isNotEmpty ? '\n\n🔗 $link' : ''}'
         '\n\n${'share_via_utsav'.tr} 🙏';
-    Share.share(text, subject: title);
+    SharePlus.instance.share(ShareParams(text: text, subject: title));
   }
 
   // Formatted day label (e.g., Mon 14)

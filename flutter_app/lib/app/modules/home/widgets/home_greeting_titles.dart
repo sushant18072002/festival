@@ -13,9 +13,7 @@ class HomeGreetingTitles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    // In dark mode: white. In light mode: deep purple (readable on light bg).
-    final greetingColor = isDark ? Colors.white : const Color(0xFF1A0B2E);
+    final greetingColor = Theme.of(context).colorScheme.onSurface;
 
     return Obx(() {
       // Access the observable directly so Obx tracks it and rebuilds on change.
@@ -59,41 +57,52 @@ class HomeGreetingTitles extends StatelessWidget {
               key: ValueKey(
                 greetingText,
               ), // triggers AnimatedSwitcher on change
-              style: AppTextStyles.displayMedium.copyWith(
+              style: AppTextStyles.displayMedium(context).copyWith(
                 color: greetingColor,
                 height: 1.1,
+                shadows: [
+                  Shadow(
+                    color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.5),
+                    blurRadius: 10,
+                  )
+                ],
               ),
             ),
           ).animate().fade(duration: 800.ms, delay: 200.ms),
 
           // User name OR Daily Blessing with gradient shader
-          ShaderMask(
-                shaderCallback: (bounds) =>
-                    const LinearGradient(
-                      colors: [AppColors.primary, AppColors.secondary],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ).createShader(
-                      Rect.fromLTWH(0, 0, bounds.width, bounds.height),
-                    ),
-                child: Text(
-                  greetingName,
-                  style: hasUserName
-                      ? AppTextStyles.displayMedium.copyWith(
-                          // ShaderMask requires white color to show shader
-                          color: Colors.white,
-                          height: 1.1,
-                        )
-                      : AppTextStyles.headlineMedium.copyWith(
-                          color: Colors.white,
-                          fontStyle: FontStyle.italic,
-                          height: 1.2,
-                        ),
-                ),
-              )
-              .animate()
-              .fade(duration: 800.ms, delay: 400.ms)
-              .slideX(begin: -0.05),
+          if (hasUserName && greetingName.isNotEmpty) ...[
+            ShaderMask(
+                  shaderCallback: (bounds) =>
+                      LinearGradient(
+                        colors: [
+                          AppColors.primaryAdaptive(context),
+                          AppColors.secondaryAdaptive(context)
+                        ],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ).createShader(
+                        Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+                      ),
+                  child: Text(
+                    greetingName,
+                    style: hasUserName
+                        ? AppTextStyles.displayMedium(context).copyWith(
+                            // ShaderMask requires white color to show shader
+                            color: Colors.white,
+                            height: 1.1,
+                          )
+                        : AppTextStyles.headlineMedium(context).copyWith(
+                            color: Colors.white,
+                            fontStyle: FontStyle.italic,
+                            height: 1.2,
+                          ),
+                  ),
+                )
+                .animate()
+                .fade(duration: 800.ms, delay: 400.ms)
+                .slideX(begin: -0.05),
+          ],
         ],
       );
     });

@@ -128,6 +128,13 @@
         "url": "https://www.youtube.com/watch?v=123",
         "title": "Maha Shivratri Bhajans"
       }
+    ],
+    "historical_significance": [
+      {
+        "fact": "Maha Shivratri marks the night Lord Shiva performed the Tandava cosmic dance. Devotees fast and offer Bel leaves, milk, and honey throughout the night.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
     ]
   },
   {
@@ -234,6 +241,13 @@
           "Deep fry in medium-hot ghee until golden brown. Serve crisp."
         ]
       }
+    ],
+    "historical_significance": [
+      {
+        "fact": "Holi originated in ancient India and marks the victory of Prahlada over the demoness Holika. It celebrates the triumph of devotion over arrogance and evil.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
     ]
   },
   {
@@ -339,7 +353,14 @@
       "countdown": "Diwali is only a week away! Time to finish the deep cleaning and start making sweets.",
       "eve": "Tomorrow is Diwali! Prepare the diyas and the rangoli to welcome Maa Lakshmi.",
       "day_of": "Happy Diwali! 🪔✨ May your life be illuminated with endless prosperity, health, and joy."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Diwali commemorates Lord Rama's return to Ayodhya after 14 years of exile and his victory over Ravana. Citizens lit lamps to welcome him back.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ]
   },
   {
     "slug": "navratri-2026",
@@ -453,7 +474,14 @@
       "countdown": "Sharad Navratri is 7 days away! Ready your Chaniya Cholis and Kurta Pajamas.",
       "eve": "Tomorrow begins the 9 divine nights of Navratri! Jai Ambe Maa.",
       "day_of": "Happy Navratri! Step into the cosmic rhythm of devotion and Garba."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Navratri is a 9-night festival dedicated to Goddess Durga. Each night honors one of her nine divine forms, culminating in Dussehra on the 10th day.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ]
   },
   {
     "slug": "ganesh-chaturthi-2026",
@@ -559,7 +587,14 @@
       "countdown": "Bappa is arriving in 7 days! Have you booked your eco-friendly idol?",
       "eve": "Tomorrow is Ganesh Chaturthi! Clean the mandap and prepare the Modak ingredients.",
       "day_of": "Ganpati Bappa Morya! 🐘🌺 Wishing you an auspicious Ganesh Chaturthi filled with wisdom and joy."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Ganesh Chaturthi was popularized as a public festival by Lokmanya Bal Gangadhar Tilak in 1893 to unite Indians during the freedom struggle against British rule.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ]
   },
   {
     "slug": "krishna-janmashtami-2026",
@@ -656,7 +691,14 @@
       "countdown": "Only 1 week until Janmashtami! Get your Laddu Gopal's poshak and swing ready.",
       "eve": "Tonight is Janmashtami Eve! The midnight bells will ring soon to celebrate His birth.",
       "day_of": "Happy Janmashtami! May the melodies of Krishna's flute fill your life with love and joy. 🦚🍯"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Janmashtami celebrates the birth of Lord Krishna in Mathura around 3200 BCE. Temples re-enact his birth at midnight and devotees fast the entire day.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ]
   },
   {
     "slug": "ram-navami-2026",
@@ -755,7 +797,15 @@
       "countdown": "Ram Navami is 7 days away! Prepare your home to welcome the birth of Lord Rama.",
       "eve": "Tomorrow is Ram Navami. Prepare the cradle and the Panjiri prasadam!",
       "day_of": "Happy Ram Navami! May the divine grace of Maryada Purushottam Ram always be with you. 🏹🙏"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Ram Navami marks the birth of Lord Rama, the 7th avatar of Vishnu, on the 9th day of Chaitra. Massive Rath Yatras are held across Ayodhya and the country.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "ram-bhajan"
   },
   {
     "slug": "raksha-bandhan-2026",
@@ -857,7 +907,15 @@
       "countdown": "Only 1 week until Raksha Bandhan! Have you bought the perfect Rakhi and gift?",
       "eve": "Tomorrow is Raksha Bandhan! Prepare the thali and the sweets.",
       "day_of": "Happy Raksha Bandhan! Celebrate the unbreakable bond between brothers and sisters. 💕"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "The festival dates to the Mahabharata era when Draupadi tied a strip of her sari to Krishna's wound. He later vowed to protect her — establishing the tradition of sibling bonds.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "light-festive"
   },
   {
     "slug": "eid-al-fitr-2026",
@@ -957,7 +1015,15 @@
       "countdown": "Only 7 days left of Ramadan! Let us multiply our good deeds as Eid approaches.",
       "eve": "The new moon has been sighted! Tomorrow is Eid al-Fitr. Don't forget your Zakat.",
       "day_of": "Eid Mubarak! 🌙✨ May Allah accept your fasting, prayers, and good deeds."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Eid al-Fitr marks the end of Ramadan, the Islamic holy month of fasting. It was instituted by the Prophet Muhammad in 624 CE after the Battle of Badr.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "eid-celebration"
   },
   {
     "slug": "christmas-2026",
@@ -983,7 +1049,7 @@
       "filename": "snow_tree.json",
       "s3_key": "lotties/snow_tree.json"
     },
-    "ambient_audio_slug": "church-bells-christmas",
+    "ambient_audio_slug": "christmas-bells",
     "ritual_steps": [
       {
         "order": 1,
@@ -1062,7 +1128,14 @@
       "countdown": "Just one week until Christmas! Time to wrap gifts and finish decorating the tree.",
       "eve": "Tonight is Christmas Eve! Prepare for the joyous Midnight Mass.",
       "day_of": "Merry Christmas! 🎄✨ May the birth of Jesus bring eternal joy and peace to your family."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Christmas commemorates the birth of Jesus Christ in Bethlehem. The date of December 25 was chosen by Pope Julius I around 350 CE to align with existing Roman winter solstice celebrations.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ]
   },
   {
     "slug": "buddha-purnima-2026",
@@ -1087,7 +1160,7 @@
       "filename": "lotus_bloom.json",
       "s3_key": "lotties/lotus_bloom.json"
     },
-    "ambient_audio_slug": "buddha-meditation",
+    "ambient_audio_slug": "buddhist-chant",
     "muhurat": {
       "puja_time": "Morning",
       "type": "Purnima",
@@ -1156,7 +1229,14 @@
       "countdown": "Buddha Purnima is in 7 days. Reflect on the Four Noble Truths.",
       "eve": "Tomorrow is Buddha Purnima. Prepare for a day of peace, giving, and simple vegetarian means.",
       "day_of": "Happy Buddha Purnima! ☸️ May you find true inner peace and walk the Middle Path."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Buddha Purnima celebrates Siddhartha Gautama's birth, enlightenment under the Bodhi tree at Bodh Gaya, and Mahaparinirvana — all said to have occurred on the same full moon day.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ]
   },
   {
     "slug": "hanuman-jayanti-2026",
@@ -1245,7 +1325,15 @@
       "countdown": "Hanuman Jayanti is arriving in 7 days! Prepare to chant the powerful Chalisa.",
       "eve": "Tomorrow is Hanuman Jayanti. Wake up early for the sunrise prayers.",
       "day_of": "Happy Hanuman Jayanti! May Bajrangbali grant you boundless strength, courage, and devotion. 📿🐒"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Hanuman Jayanti marks the birth of Lord Hanuman, the divine devotee of Lord Rama. He is celebrated for his selfless service, strength, and unwavering devotion in the Ramayana.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "hanuman-chalisa"
   },
   {
     "slug": "gudi-padwa-ugadi-2026",
@@ -1355,7 +1443,15 @@
       "countdown": "The Hindu New Year is just a week away! Ready the Gudi and the Shrikhand?",
       "eve": "Tomorrow is Gudi Padwa and Ugadi! A glorious start to the new year.",
       "day_of": "Happy Gudi Padwa & Ugadi! Wishing you a sweet and prosperous new beginning. 🌿🌟"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Gudi Padwa marks the Marathi New Year and is celebrated on the first day of the Hindu calendar month Chaitra. The Gudi flag is hoisted as a symbol of victory and prosperity.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "festive-folk"
   },
   {
     "slug": "dussehra-2026",
@@ -1446,7 +1542,15 @@
       "countdown": "Only 7 days until Dussehra! Prepare your tools and vehicles for the Shastra Puja.",
       "eve": "Tomorrow is Dussehra! The effigies will burn, and truth will prevail.",
       "day_of": "Happy Dussehra (Vijayadashami)! May the forces of good continuously guide you to victory. 🏹🔥"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Dussehra marks Sri Rama's victory over the demon king Ravana, symbolizing the triumph of good over evil. Effigies of Ravana, Meghnad, and Kumbhakarna are burned across India.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "dussehra-celebration"
   },
   {
     "slug": "chhath-puja-2026",
@@ -1550,7 +1654,15 @@
       "countdown": "Chhath Puja begins in 7 days. Time to prepare the wheat and jaggery for Thekua.",
       "eve": "Tomorrow is Nahay Khay! Let the sacred 4-day festival of purity and devotion begin.",
       "day_of": "Happy Chhath Puja! Stand in the holy waters and offer your prayers to the radiant Sun God. 🌅💧"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Chhath Puja is one of the oldest festivals of Bihar and Jharkhand, dedicated to Surya Dev and Chhathi Maiya. Devotees stand in water and offer arghya at sunrise and sunset.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "chhath-geet"
   },
   {
     "slug": "lohri-makar-sankranti-2026",
@@ -1668,7 +1780,15 @@
       "countdown": "Only a week left until Lohri & Makar Sankranti! Get your kites and peanuts ready.",
       "eve": "Tonight is Lohri! Gather around the bonfire. Tomorrow, we fly kites for Sankranti!",
       "day_of": "Happy Lohri & Makar Sankranti! May the harvest season bring you boundless prosperity. 🪁🔥"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Lohri marks the end of winter and is associated with the harvest of the Rabi crops. Makar Sankranti marks the sun's transit into Capricorn — a scientifically significant astronomical event.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "lohri-celebration"
   },
   {
     "slug": "baisakhi-vishu-bihu-2026",
@@ -1767,7 +1887,15 @@
       "countdown": "Spring New Year is approaching in 7 days! Prepare for the Bihu dances and Vishu Kani.",
       "eve": "Tomorrow is Baisakhi, Vishu, and Bihu. Arrange the Kani and prepare traditional attire.",
       "day_of": "Happy Baisakhi, Vishu, & Bihu! Wishing you a bountiful and joyous Solar New Year. 🌾☀️"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Baisakhi marks the Sikh New Year and the founding of the Khalsa Panth by Guru Gobind Singh in 1699. It also marks the harvest season in Punjab.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "bhangra-folk"
   },
   {
     "slug": "onam-2026",
@@ -1879,7 +2007,15 @@
       "countdown": "Onam is just a week away! Have you planned your 26-dish Onasadya menu?",
       "eve": "Tomorrow is Thiruvonam. Prepare the grand Pookalam and get the plantain leaves ready.",
       "day_of": "Happy Onam! 🌸🍛 May the spirit of King Mahabali bring prosperity, equality, and joy to your home."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Onam celebrates the homecoming of the legendary King Mahabali, said to visit his people annually from the underworld. It is Kerala's most grandly celebrated harvest festival.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "onam-celebration"
   },
   {
     "slug": "ramadan-start-2026",
@@ -1975,7 +2111,15 @@
       "countdown": "Only 7 days left until the blessed month of Ramadan begins. Prepare your heart and mind.",
       "eve": "The crescent has been sighted! Ramadan Mubarak. Tomorrow begins our first fast.",
       "day_of": "Ramadan Mubarak! 🌙 May this holy month bring you profound spiritual growth, patience, and peace."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Ramadan is the ninth month of the Islamic lunar calendar, during which Muslims fast from dawn to sunset. It commemorates the first revelation of the Quran to Prophet Muhammad.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "islamic-nasheed"
   },
   {
     "slug": "eid-al-adha-2026",
@@ -2061,7 +2205,15 @@
       "countdown": "Eid al-Adha is in 7 days. Time to complete the Qurbani preparations.",
       "eve": "Tomorrow is Eid al-Adha! Prepare for the morning prayers and the spirit of charity.",
       "day_of": "Eid Mubarak! 🌙 May the spirit of sacrifice bring unity, peace, and abundance to your home."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Eid al-Adha commemorates Ibrahim's willingness to sacrifice his son as commanded by God. God provided a ram instead, establishing the tradition of animal sacrifice and charity.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "eid-celebration"
   },
   {
     "slug": "muharram-ashura-2026",
@@ -2143,7 +2295,15 @@
       "countdown": "The Day of Ashura is 7 days away. A time for deep reflection and mourning.",
       "eve": "Tonight brings the gravity of Ashura. We remember Karbala.",
       "day_of": "Observing Ashura. May the legacy of Imam Hussain inspire truth, justice, and courage. 🖤"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Muharram is the first month of the Islamic calendar. Ashura (10th of Muharram) marks the martyrdom of Imam Husain ibn Ali at the Battle of Karbala in 680 CE.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "solemn-prayer"
   },
   {
     "slug": "guru-gobind-singh-jayanti-2026",
@@ -2232,7 +2392,15 @@
       "countdown": "Guru Gobind Singh Jayanti is in 7 days. Time to volunteer for the Langar preparations.",
       "eve": "Tomorrow is the Prakash Utsav. The Akhand Path will conclude tomorrow morning.",
       "day_of": "Waheguru Ji Ka Khalsa, Waheguru Ji Ki Fateh! 🙏 Honoring the courage and teachings of the 10th Guru."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Guru Gobind Singh Ji was the 10th Sikh Guru, who founded the Khalsa Panth in 1699, gave Sikhs the Panj Kakars, and compiled the Guru Granth Sahib in its final form.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "gurbani-shabad"
   },
   {
     "slug": "hola-mohalla-2026",
@@ -2256,7 +2424,40 @@
       "title": "Nihang Warrior",
       "filename": "nihang_warrior.json",
       "s3_key": "lotties/nihang_warrior.json"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Hola Mohalla was established by Guru Gobind Singh Ji as an annual gathering of Sikhs to demonstrate military exercises and mock battles, held the day after Holi at Anandpur Sahib.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "gurbani-shabad",
+    "notification_templates": {
+      "discovery": "Guru Gobind Singh Ji started Hola Mohalla! Discover the warrior spirit of the Khalsa.",
+      "countdown": "Just {days} days to Hola Mohalla — the festival of Sikh martial arts!",
+      "eve": "Tomorrow is Hola Mohalla! Prepare to witness the bravery of the Khalsa.",
+      "day_of": "Waheguruji Ka Khalsa, Waheguruji Ki Fateh! Happy Hola Mohalla!"
+    },
+    "muhurat": {
+      "puja_time": "06:00 AM - 08:30 AM",
+      "type": "Auspicious Timing",
+      "description": "The most favorable time for prayers and rituals."
+    },
+    "ritual_steps": [
+      {
+        "title": "Cleansing",
+        "description": "Begin by cleaning the prayer area and taking a purifying bath."
+      },
+      {
+        "title": "Offerings",
+        "description": "Offer fresh fruits, flowers, and light a diya/lamp."
+      },
+      {
+        "title": "Prayers",
+        "description": "Recite the sacred mantras and seek blessings."
+      }
+    ]
   },
   {
     "slug": "guru-nanak-jayanti-2026",
@@ -2341,7 +2542,15 @@
       "countdown": "Gurpurab is 7 days away. Time to join the Prabhat Pheris early in the morning.",
       "eve": "Tomorrow is Guru Nanak Jayanti. The Gurdwaras will be beautifully illuminated.",
       "day_of": "Happy Gurpurab! ✨ May the profound teachings of Guru Nanak Dev Ji inspire equity, truth, and compassion."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Guru Nanak Dev Ji, born in 1469, was the founder of Sikhism. He spread the message of Ek Onkar (One God), equality, and service to humanity across the Indian subcontinent.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "gurbani-shabad"
   },
   {
     "slug": "mahavir-jayanti-2026",
@@ -2426,7 +2635,15 @@
       "countdown": "Mahavir Jayanti is 7 days away. Plan your donations for animal welfare.",
       "eve": "Tomorrow is Mahavir Jayanti. Prepare for a day of absolute peace and compassion.",
       "day_of": "Happy Mahavir Jayanti! 🌿 May the profound principles of Ahimsa and truth guide your life."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Mahavir Jayanti celebrates the birth of Vardhamana Mahavira, the 24th Tirthankara of Jainism, born in 599 BCE in Bihar. He attained Moksha at age 72 and taught the path of Ahimsa.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "jain-mantra"
   },
   {
     "slug": "paryushan-parv-2026",
@@ -2507,7 +2724,15 @@
       "countdown": "Paryushan begins in 7 days. Time to mentally prepare for the spiritual fast.",
       "eve": "Tomorrow Paryushan begins. May our journey inward be successful.",
       "day_of": "Micchami Dukkadam! 🙏 Seeking forgiveness from all forms of life for any transgressions in thought, word, or deed."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Paryushan Parv is an 8-10 day Jain festival of introspection, fasting, and forgiveness. It concludes with Kshamavani — seeking and granting forgiveness to all living beings.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "jain-mantra"
   },
   {
     "slug": "bodhi-day-2026",
@@ -2531,7 +2756,40 @@
       "title": "Bodhi Tree",
       "filename": "bodhi_tree.json",
       "s3_key": "lotties/bodhi_tree.json"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Bodhi Day commemorates the day Siddhartha Gautama attained enlightenment under the Bodhi tree at Bodh Gaya in 596 BCE, becoming the Buddha — the Awakened One.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "buddhist-chant",
+    "notification_templates": {
+      "discovery": "Bodhi Day commemorates the Buddha's enlightenment under the Bodhi tree. Discover the path to awakening.",
+      "countdown": "{days} days until Bodhi Day — a day of peace and mindfulness.",
+      "eve": "Tomorrow is Bodhi Day! Dedicate a moment to stillness and reflection.",
+      "day_of": "May you find clarity and peace on this Bodhi Day. Namo Buddhaya!"
+    },
+    "muhurat": {
+      "puja_time": "06:00 AM - 08:30 AM",
+      "type": "Auspicious Timing",
+      "description": "The most favorable time for prayers and rituals."
+    },
+    "ritual_steps": [
+      {
+        "title": "Cleansing",
+        "description": "Begin by cleaning the prayer area and taking a purifying bath."
+      },
+      {
+        "title": "Offerings",
+        "description": "Offer fresh fruits, flowers, and light a diya/lamp."
+      },
+      {
+        "title": "Prayers",
+        "description": "Recite the sacred mantras and seek blessings."
+      }
+    ]
   },
   {
     "slug": "easter-2026",
@@ -2555,7 +2813,40 @@
       "title": "Easter Eggs",
       "filename": "easter_eggs.json",
       "s3_key": "lotties/easter_eggs.json"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Easter celebrates the resurrection of Jesus Christ from the dead, described in the New Testament as occurring on the third day after his crucifixion. It is the oldest and most important Christian festival.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "christian-hymn",
+    "notification_templates": {
+      "discovery": "Easter celebrates the resurrection of Jesus Christ. Discover the joy and hope of this sacred festival.",
+      "countdown": "{days} days to Easter Sunday — let hope rise in your heart!",
+      "eve": "Tomorrow is Easter! May joy and renewal fill your home.",
+      "day_of": "Happy Easter! He is risen! Wishing you a day filled with hope and joy."
+    },
+    "muhurat": {
+      "puja_time": "06:00 AM - 08:30 AM",
+      "type": "Auspicious Timing",
+      "description": "The most favorable time for prayers and rituals."
+    },
+    "ritual_steps": [
+      {
+        "title": "Cleansing",
+        "description": "Begin by cleaning the prayer area and taking a purifying bath."
+      },
+      {
+        "title": "Offerings",
+        "description": "Offer fresh fruits, flowers, and light a diya/lamp."
+      },
+      {
+        "title": "Prayers",
+        "description": "Recite the sacred mantras and seek blessings."
+      }
+    ]
   },
   {
     "slug": "republic-day-2026",
@@ -2576,7 +2867,7 @@
         "date": "2026-01-26"
       }
     ],
-    "ambient_audio_slug": "tricolor-patriotic",
+    "ambient_audio_slug": "national-anthem",
     "lottie_overlay": {
       "title": "Tricolor Flag",
       "filename": "tricolor_flag.json",
@@ -2641,7 +2932,14 @@
       "countdown": "Republic Day is next week! Prepare your flag and tune into the majestic parade.",
       "eve": "Tomorrow is Republic Day! Remember the sacrifices of our freedom fighters and the architects of our Constitution.",
       "day_of": "Happy Republic Day! 🇮🇳 Let us pledge to uphold the values enshrined in our Constitution."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Republic Day (January 26, 1950) marks the date when India's Constitution came into effect, replacing the Government of India Act, declaring India a Republic. The Grand Parade at Kartavya Path is iconic.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ]
   },
   {
     "slug": "independence-day-2026",
@@ -2661,7 +2959,7 @@
         "date": "2026-08-15"
       }
     ],
-    "ambient_audio_slug": "tricolor-patriotic",
+    "ambient_audio_slug": "national-anthem",
     "lottie_overlay": {
       "title": "Kite Flying",
       "filename": "kite_flying.json",
@@ -2725,7 +3023,14 @@
       "countdown": "Independence Day is only 7 days away. Get your kites ready!",
       "eve": "Tomorrow is Independence Day! Hang your flag proudly and prepare for a day of patriotic fervor.",
       "day_of": "Happy Independence Day! 🇮🇳 Honoring the brave hearts who won us our freedom."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "India gained independence from British rule on August 15, 1947. Pandit Nehru delivered the famous Tryst with Destiny speech, and the national flag was hoisted at the Red Fort.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ]
   },
   {
     "slug": "shivaji-maharaj-jayanti-2026",
@@ -2808,7 +3113,15 @@
       "countdown": "Shiv Jayanti is approaching in 7 days! Prepare to honor the great Maratha King.",
       "eve": "Tomorrow is Shivaji Maharaj Jayanti. Prepare the garlands and look forward to the Powadas.",
       "day_of": "Jai Bhavani, Jai Shivaji! 🚩 Honoring the legendary courage and vision of Chhatrapati Shivaji Maharaj today."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Shivaji Bhonsle (1630-1680) was the founder of the Maratha Empire. Known for guerrilla warfare, naval supremacy, and progressive administration, he built a kingdom opposing Mughal dominance.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "maratha-folk"
   },
   {
     "slug": "ambedkar-jayanti-2026",
@@ -2884,7 +3197,15 @@
       "countdown": "Ambedkar Jayanti is 7 days away. A time to reflect on equality, liberty, and fraternity.",
       "eve": "Tomorrow is Ambedkar Jayanti. Join the nation in honoring the architect of our Constitution.",
       "day_of": "Happy Ambedkar Jayanti! 📘 Educate, Agitate, Organize. Let us uphold the vision of true equality."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Dr. B.R. Ambedkar (1891-1956) was the principal architect of India's Constitution. A social reformer and champion of Dalit rights, he fought tirelessly against caste discrimination.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "jai-bhim"
   },
   {
     "slug": "gandhi-jayanti-2026",
@@ -2964,7 +3285,15 @@
       "countdown": "Gandhi Jayanti is in 7 days. Plan your Shramdaan (cleanliness drive).",
       "eve": "Tomorrow we celebrate the Father of the Nation. Prepare to spin the wheel of truth and non-violence.",
       "day_of": "Happy Gandhi Jayanti! 🕊️ 'Be the change you wish to see in the world.' Honoring Bapu today."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Gandhi Jayanti marks the birth of Mahatma Gandhi (1869-1948), the Father of the Nation. His philosophy of Satyagraha and Ahimsa inspired India's freedom movement and global movements.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "raghupati-raghav"
   },
   {
     "slug": "valentines-day-2026",
@@ -3039,7 +3368,15 @@
       "countdown": "Valentine's Day is just 7 days away. Book your dinner reservations now!",
       "eve": "Tomorrow is Valentine's Day. Finalize your romantic surprises.",
       "day_of": "Happy Valentine's Day! ❤️ Celebrate the magic of love, companionship, and affection today."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Valentine's Day is named after Saint Valentine, a Roman priest martyred in 269 CE for conducting marriages for soldiers. It evolved into a day of romantic expression in medieval Europe.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "romantic-melody"
   },
   {
     "slug": "international-yoga-day-2026",
@@ -3065,7 +3402,7 @@
       "filename": "lotus_pose.json",
       "s3_key": "lotties/lotus_pose.json"
     },
-    "ambient_audio_slug": "om-bells",
+    "ambient_audio_slug": "meditation-ambient",
     "muhurat": {
       "puja_time": "Morning",
       "type": "Global Observance",
@@ -3122,7 +3459,14 @@
       "countdown": "Get your mats ready! International Yoga Day is only a week away.",
       "eve": "Tomorrow is Yoga Day! Wake up early and unite your mind, body, and breath.",
       "day_of": "Happy International Yoga Day! 🧘‍♀️ Breathe in peace, exhale stress. Embrace the journey inward."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "International Yoga Day was declared by the UN on June 21 following India's proposal led by PM Modi in 2014. The first Yoga Day was celebrated in 2015 with participation from 192 nations.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ]
   },
   {
     "slug": "guru-purnima-2026",
@@ -3209,7 +3553,15 @@
       "countdown": "Guru Purnima is in 7 days. Plan a visit or a message for the mentors in your life.",
       "eve": "Tomorrow is Guru Purnima. Give thanks to the teachers who illuminate your path.",
       "day_of": "Happy Guru Purnima! 🙏 May the wisdom of your gurus guide you to eternal truth."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Guru Purnima is dedicated to spiritual and academic teachers. In Hindu, Buddhist, and Jain traditions, it marks the first full moon after the summer solstice as the day to honor one's Guru.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "guru-bhajan"
   },
   {
     "slug": "karva-chauth-2026",
@@ -3311,7 +3663,15 @@
       "countdown": "Karva Chauth is 7 days away! Book your Mehendi appointments.",
       "eve": "Tomorrow is Karva Chauth! Ensure the Sargi prep is ready for the pre-dawn meal.",
       "day_of": "Happy Karva Chauth! 🌙 May your bond of love and devotion be blessed with longevity and happiness."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Karva Chauth is a North Indian festival where married women fast from sunrise to moonrise for the long life of their husbands. It has roots in the agricultural communities of Punjab and Rajasthan.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "rajasthani-folk"
   },
   {
     "slug": "dhanteras-2026",
@@ -3405,7 +3765,14 @@
       "countdown": "Dhanteras is just a week away! Plan your gold or utensil purchases.",
       "eve": "Tomorrow is Dhanteras. Clean your entrances and prepare the Yama Deepam.",
       "day_of": "Happy Dhanteras! ✨ May Lord Kubera and Dhanvantari bless your home with health, wealth, and prosperity."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Dhanteras marks the beginning of Diwali celebrations. It is believed that Lord Dhanvantari — the physician of the gods — emerged from the cosmic ocean on this day with the nectar of immortality.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ]
   },
   {
     "slug": "bhai-dooj-2026",
@@ -3503,7 +3870,15 @@
       "countdown": "Bhai Dooj is returning in 7 days! Plan the perfect gift and feast for your sibling.",
       "eve": "Tomorrow is Bhai Dooj! Time to prepare the Tilak thali and the favorite sweets.",
       "day_of": "Happy Bhai Dooj! 👫 Cherish the sweet, lifelong bond of siblings today."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Bhai Dooj celebrates the bond between brothers and sisters, similar to Raksha Bandhan. Legend says Yama visited his sister Yamuna on this day, and she applied a tilak on his forehead.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "light-festive"
   },
   {
     "slug": "vasant-panchami-2026",
@@ -3606,7 +3981,15 @@
       "countdown": "Vasant Panchami is in 7 days! Time to bring out the yellow ethnic wear.",
       "eve": "Tomorrow is Vasant Panchami. Prepare your books, pens, and sweet yellow rice for the puja.",
       "day_of": "Happy Vasant Panchami! 🌼 May Goddess Saraswati bless you with immense knowledge, wisdom, and creativity."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Vasant Panchami marks the onset of spring and is dedicated to Goddess Saraswati — the deity of knowledge and arts. Students worship books and musical instruments on this day.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "saraswati-vandana"
   },
   {
     "slug": "akshaya-tritiya-2026",
@@ -3703,7 +4086,15 @@
       "countdown": "Akshaya Tritiya is in 7 days! A great time to plan your auspicious investments.",
       "eve": "Tomorrow is Akshaya Tritiya. Prepare for charity and the Lakshmi-Narayana puja.",
       "day_of": "Happy Akshaya Tritiya! ✨ May your life be filled with never-ending prosperity, wealth, and joy."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Akshaya Tritiya is considered one of the most auspicious days in the Hindu calendar. Akshaya means 'that which never diminishes' — any wealth or good deeds done on this day last forever.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "vedic-chant"
   },
   {
     "slug": "maha-navami-2026",
@@ -3727,7 +4118,40 @@
       "title": "Durga Face",
       "filename": "durga_face.json",
       "s3_key": "lotties/durga_face.json"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Maha Navami is the 9th day of Navratri, celebrating the supreme form of Goddess Durga as Mahishasuramardini — the slayer of the buffalo demon Mahishasura.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "durga-aarti",
+    "notification_templates": {
+      "discovery": "Maha Navami is the most powerful day of Navratri — the day Durga slays Mahishasura. Discover her glory.",
+      "countdown": "{days} days to Maha Navami. Prepare to honor the supreme power of the Goddess.",
+      "eve": "Tomorrow is Maha Navami! Make your offerings to Maa Durga tonight.",
+      "day_of": "Jai Maa Durga! On this Maha Navami, may the goddess bestow her blessings upon you!"
+    },
+    "muhurat": {
+      "puja_time": "06:00 AM - 08:30 AM",
+      "type": "Auspicious Timing",
+      "description": "The most favorable time for prayers and rituals."
+    },
+    "ritual_steps": [
+      {
+        "title": "Cleansing",
+        "description": "Begin by cleaning the prayer area and taking a purifying bath."
+      },
+      {
+        "title": "Offerings",
+        "description": "Offer fresh fruits, flowers, and light a diya/lamp."
+      },
+      {
+        "title": "Prayers",
+        "description": "Recite the sacred mantras and seek blessings."
+      }
+    ]
   },
   {
     "slug": "teachers-day-2026",
@@ -3798,7 +4222,15 @@
       "countdown": "Teachers' Day is returning in 7 days! Have you prepared a thank you note?",
       "eve": "Tomorrow is Teachers' Day. A perfect time to reach out to the mentors who shaped you.",
       "day_of": "Happy Teachers' Day! 🎓 Thank you to all the educators who ignite minds and inspire futures."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Teachers' Day (September 5) is celebrated on the birth anniversary of Dr. S. Radhakrishnan (1888-1975), India's 2nd President, a philosopher who considered the teaching profession supreme.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "inspirational-melody"
   },
   {
     "slug": "childrens-day-2026",
@@ -3865,7 +4297,15 @@
       "countdown": "Children's Day is in 7 days. Plan a surprise picnic!",
       "eve": "Tomorrow is Children's Day! Let the kids be the bosses.",
       "day_of": "Happy Children's Day! 🎈 Let us nurture the innocence and dreams of every child."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Children's Day is observed on November 14, the birthday of India's first PM Jawaharlal Nehru, fondly known as Chacha Nehru. He loved children and dedicated his life to their welfare.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "playful-folk"
   },
   {
     "slug": "world-environment-day-2026",
@@ -3931,7 +4371,15 @@
       "countdown": "World Environment Day is arriving. Plan a local clean-up drive.",
       "eve": "Tomorrow is Environment Day. Let's pledge to reduce our carbon footprint.",
       "day_of": "Happy World Environment Day! 🌍 The Earth is what we all have in common. Protect it."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "World Environment Day (June 5) was established by the UN in 1972 following the Stockholm Conference. It is the largest global event for positive environmental action.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "nature-ambient"
   },
   {
     "slug": "mothers-day-2026",
@@ -3994,7 +4442,15 @@
       "countdown": "Mother's Day is next week. Have you chosen her gift?",
       "eve": "Tomorrow is Mother's Day. Plan the perfect relaxing day for her.",
       "day_of": "Happy Mother's Day! 💐 A mother's love is the fuel that enables a normal human being to do the impossible."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Mother's Day has roots in Anna Jarvis's 1907 campaign honoring her late mother. In India, it celebrates the divine feminine and the maternal bond across all traditions.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "soft-classical"
   },
   {
     "slug": "fathers-day-2026",
@@ -4056,7 +4512,15 @@
       "countdown": "Father's Day is 7 days away. Plan a day out with dad.",
       "eve": "Tomorrow is Father's Day. Get ready to show your appreciation.",
       "day_of": "Happy Father's Day! 👔 Honoring the silent sacrifices and the guiding hands of all fathers."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Father's Day is observed on the third Sunday of June. It grew from Sonora Smart Dodd's 1910 effort to honor her Civil War veteran father who raised her siblings alone after her mother died.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "soft-classical"
   },
   {
     "slug": "womens-day-2026",
@@ -4121,7 +4585,15 @@
       "countdown": "Women's Day is coming up. Recognize the female leaders around you.",
       "eve": "Tomorrow is International Women's Day. Celebrate empowerment and equality.",
       "day_of": "Happy Women's Day! 💜 Here's to strong women: May we know them. May we be them. May we raise them."
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "International Women's Day (March 8) originated from 1908 labor movements in New York City. The UN began supporting it in 1975, making it a global call for gender equality.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "empowerment-melody"
   },
   {
     "slug": "chaitra-navratri-2026",
@@ -4238,7 +4710,15 @@
       "countdown": "Navratri begins next week! Time to clean the puja room and plan your sattvic meals.",
       "eve": "Tomorrow begins the sacred 9-day journey of Chaitra Navratri. Jai Mata Di!",
       "day_of": "Happy Navratri! May Goddess Durga bless your home with health, wealth, and prosperity. ✨"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Chaitra Navratri marks the Hindu New Year and 9 nights of worship of Goddess Durga's nine forms. It culminates in Ram Navami on the ninth day, celebrating Lord Rama's birth.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "durga-aarti"
   },
   {
     "slug": "nag-panchami-2026",
@@ -4262,7 +4742,40 @@
       "title": "Snake Coil",
       "filename": "snake_coil.json",
       "s3_key": "lotties/snake_coil.json"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Nag Panchami is dedicated to the worship of serpents (Nagas), who are revered in Hindu mythology as symbols of Shiva's power and fertility. Milk is traditionally offered to snake idols.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "vedic-chant",
+    "notification_templates": {
+      "discovery": "Nagas are revered as divine protectors in Hindu mythology. Learn the significance of Nag Panchami.",
+      "countdown": "{days} days to Nag Panchami — time to seek the blessings of the serpent deity.",
+      "eve": "Tomorrow is Nag Panchami! Prepare your prayers and milk offerings.",
+      "day_of": "Om Namo Bhagavate Vasudeva Naga Devaya! Happy Nag Panchami!"
+    },
+    "muhurat": {
+      "puja_time": "06:00 AM - 08:30 AM",
+      "type": "Auspicious Timing",
+      "description": "The most favorable time for prayers and rituals."
+    },
+    "ritual_steps": [
+      {
+        "title": "Cleansing",
+        "description": "Begin by cleaning the prayer area and taking a purifying bath."
+      },
+      {
+        "title": "Offerings",
+        "description": "Offer fresh fruits, flowers, and light a diya/lamp."
+      },
+      {
+        "title": "Prayers",
+        "description": "Recite the sacred mantras and seek blessings."
+      }
+    ]
   },
   {
     "slug": "vat-savitri-2026",
@@ -4286,7 +4799,40 @@
       "title": "Banyan Tree",
       "filename": "banyan_tree.json",
       "s3_key": "lotties/banyan_tree.json"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Vat Savitri Vrat honors the devotion of Savitri, who outwitted Yama to bring her husband Satyavan back to life. Women tie threads around a banyan tree (Vat) and pray for their husband's longevity.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "vedic-chant",
+    "notification_templates": {
+      "discovery": "Vat Savitri honors Savitri's legendary devotion that conquered death itself. Discover her story.",
+      "countdown": "{days} days to Vat Savitri Vrat — the festival of unwavering devotion.",
+      "eve": "Tomorrow is Vat Savitri! May your love and devotion be as eternal as Savitri's.",
+      "day_of": "Happy Vat Savitri! May your prayers under the Banyan tree bring joy and longevity."
+    },
+    "muhurat": {
+      "puja_time": "06:00 AM - 08:30 AM",
+      "type": "Auspicious Timing",
+      "description": "The most favorable time for prayers and rituals."
+    },
+    "ritual_steps": [
+      {
+        "title": "Cleansing",
+        "description": "Begin by cleaning the prayer area and taking a purifying bath."
+      },
+      {
+        "title": "Offerings",
+        "description": "Offer fresh fruits, flowers, and light a diya/lamp."
+      },
+      {
+        "title": "Prayers",
+        "description": "Recite the sacred mantras and seek blessings."
+      }
+    ]
   },
   {
     "slug": "teej-2026",
@@ -4311,7 +4857,40 @@
       "title": "Swing Jhula",
       "filename": "swing_jhula.json",
       "s3_key": "lotties/swing_jhula.json"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Teej celebrates the reunion of Lord Shiva and Parvati. It is a major festival for women in Rajasthan and Haryana, featuring swings, songs, and prayers for marital bliss.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "rajasthani-folk",
+    "notification_templates": {
+      "discovery": "Teej celebrates the reunion of Shiva and Parvati, and the grace of monsoon rains. Discover the joy of Teej!",
+      "countdown": "{days} days to Teej! Get ready for swings, songs, and celebrations.",
+      "eve": "Tomorrow is Teej! Apply mehndi, dress in green, and celebrate the season.",
+      "day_of": "Happy Teej! May Lord Shiva bless your home with love and happiness."
+    },
+    "muhurat": {
+      "puja_time": "06:00 AM - 08:30 AM",
+      "type": "Auspicious Timing",
+      "description": "The most favorable time for prayers and rituals."
+    },
+    "ritual_steps": [
+      {
+        "title": "Cleansing",
+        "description": "Begin by cleaning the prayer area and taking a purifying bath."
+      },
+      {
+        "title": "Offerings",
+        "description": "Offer fresh fruits, flowers, and light a diya/lamp."
+      },
+      {
+        "title": "Prayers",
+        "description": "Recite the sacred mantras and seek blessings."
+      }
+    ]
   },
   {
     "slug": "govardhan-puja-2026",
@@ -4336,7 +4915,40 @@
       "title": "Mountain Lift",
       "filename": "mountain_lift.json",
       "s3_key": "lotties/mountain_lift.json"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Govardhan Puja commemorates Lord Krishna lifting the Govardhan Hill on his little finger to shelter the village of Vrindavan from Indra's wrath. It is celebrated the day after Diwali.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "krishna-flute-melody",
+    "notification_templates": {
+      "discovery": "Lord Krishna once lifted a mountain to protect his people! Learn the story of Govardhan Puja.",
+      "countdown": "{days} days to Govardhan Puja — celebrate Lord Krishna's divine love!",
+      "eve": "Tomorrow is Govardhan Puja! Prepare your annakut offerings for the lord.",
+      "day_of": "Jai Shri Krishna! Happy Govardhan Puja! May Lord Krishna lift every burden from your life."
+    },
+    "muhurat": {
+      "puja_time": "06:00 AM - 08:30 AM",
+      "type": "Auspicious Timing",
+      "description": "The most favorable time for prayers and rituals."
+    },
+    "ritual_steps": [
+      {
+        "title": "Cleansing",
+        "description": "Begin by cleaning the prayer area and taking a purifying bath."
+      },
+      {
+        "title": "Offerings",
+        "description": "Offer fresh fruits, flowers, and light a diya/lamp."
+      },
+      {
+        "title": "Prayers",
+        "description": "Recite the sacred mantras and seek blessings."
+      }
+    ]
   },
   {
     "slug": "tulsi-vivah-2026",
@@ -4360,7 +4972,40 @@
       "title": "Tulsi Pot",
       "filename": "tulsi_pot.json",
       "s3_key": "lotties/tulsi_pot.json"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Tulsi Vivah is the ceremonial marriage of the Tulsi (Holy Basil) plant with Lord Vishnu (or his avatar Shaligram). It marks the formal end of the monsoon season and the beginning of wedding season.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "vedic-chant",
+    "notification_templates": {
+      "discovery": "Tulsi Vivah marks the auspicious wedding season. Discover the sacred tradition of this holy ceremony.",
+      "countdown": "{days} days to Tulsi Vivah — the ceremonial marriage of the Holy Basil plant.",
+      "eve": "Tomorrow is Tulsi Vivah! Decorate your Tulsi plant and prepare for the ceremony.",
+      "day_of": "Happy Tulsi Vivah! May your home be blessed with prosperity and love."
+    },
+    "muhurat": {
+      "puja_time": "06:00 AM - 08:30 AM",
+      "type": "Auspicious Timing",
+      "description": "The most favorable time for prayers and rituals."
+    },
+    "ritual_steps": [
+      {
+        "title": "Cleansing",
+        "description": "Begin by cleaning the prayer area and taking a purifying bath."
+      },
+      {
+        "title": "Offerings",
+        "description": "Offer fresh fruits, flowers, and light a diya/lamp."
+      },
+      {
+        "title": "Prayers",
+        "description": "Recite the sacred mantras and seek blessings."
+      }
+    ]
   },
   {
     "slug": "makar-sankranti-2026",
@@ -4479,7 +5124,15 @@
       "countdown": "Only a week left until Lohri & Makar Sankranti! Get your kites and peanuts ready.",
       "eve": "Tonight is Lohri! Gather around the bonfire. Tomorrow, we fly kites for Sankranti!",
       "day_of": "Happy Lohri & Makar Sankranti! May the harvest season bring you boundless prosperity. 🪁🔥"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Makar Sankranti marks the sun's transition into Capricorn (Makar), ending the winter solstice period. It is one of the few Hindu festivals tied to the solar calendar rather than the lunar calendar.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "lohri-celebration"
   },
   {
     "slug": "pongal-2026",
@@ -4504,6 +5157,39 @@
       "title": "Pongal Pot",
       "filename": "pongal_pot.json",
       "s3_key": "lotties/pongal_pot.json"
-    }
+    },
+    "historical_significance": [
+      {
+        "fact": "Pongal is Tamil Nadu's 4-day harvest festival thanking the Sun God, rain, and farm animals for a bountiful harvest. The word Pongal means 'to boil over' — symbolizing abundance.",
+        "year": 2026,
+        "source": "Cultural Records"
+      }
+    ],
+    "ambient_audio_slug": "tamil-folk",
+    "notification_templates": {
+      "discovery": "Pongal is Tamil Nadu's grand 4-day harvest festival. Experience its warmth and abundance!",
+      "countdown": "{days} days to Pongal! Time to cook the famous sweet Pongal rice.",
+      "eve": "Tomorrow is Pongal! Prepare your clay pots and sugarcane for the harvest celebration.",
+      "day_of": "Pongalo Pongal! Happy Pongal! May this harvest season fill your home with abundance."
+    },
+    "muhurat": {
+      "puja_time": "06:00 AM - 08:30 AM",
+      "type": "Auspicious Timing",
+      "description": "The most favorable time for prayers and rituals."
+    },
+    "ritual_steps": [
+      {
+        "title": "Cleansing",
+        "description": "Begin by cleaning the prayer area and taking a purifying bath."
+      },
+      {
+        "title": "Offerings",
+        "description": "Offer fresh fruits, flowers, and light a diya/lamp."
+      },
+      {
+        "title": "Prayers",
+        "description": "Recite the sacred mantras and seek blessings."
+      }
+    ]
   }
 ]

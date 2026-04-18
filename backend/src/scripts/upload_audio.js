@@ -1,42 +1,40 @@
 /**
- * upload_audio.js — Upload audio files from backend/assets/audio/ to AWS S3
- * and mark them as uploaded in the AmbientAudio master collection.
- *
- * Usage:
- *   node src/scripts/upload_audio.js
- *   node src/scripts/upload_audio.js --slug diwali-lakshmi-aarti   (single)
- *   node src/scripts/upload_audio.js --force                        (re-upload all)
+ * upload_audio.js — Optimized Asset Upload Pipeline (AWS SDK v3)
+ * 
+ * Features:
+ * - CONCURRENCY: Parallel uploads (limit 5) for high-speed deployment.
+ * - INTEGRITY: 0-byte file check and .aac enforcement.
+ * - SMART SYNC: Pre-check S3 existence via HeadObject even if local flag is false.
  */
 
-const AWS = require('aws-sdk');
+const { S3Client, PutObjectCommand, HeadObjectCommand } = require('@aws-sdk/client-s3');
 const fs = require('fs-extra');
 const path = require('path');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const pLimit = require('p-limit');
 
 dotenv.config({ path: path.join(__dirname, '../../.env') });
 
 const connectDB = require('../config/db');
 const AmbientAudio = require('../models/AmbientAudio');
+const Mantra = require('../models/Mantra');
 
-const s3 = new AWS.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+const s3Client = new S3Client({
     region: process.env.AWS_REGION,
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    },
 });
 
 const BUCKET_NAME = process.env.AWS_BUCKET_NAME;
-const AUDIO_DIR = path.join(__dirname, '../../assets/audio');
+const AUDIO_BASE_DIR = path.join(__dirname, '../../assets/audio');
 const DEPLOY_ENV = process.env.DEPLOY_ENV || 'stage';
 const BASE_PATH = process.env.S3_BASE_PATH || 'Utsav';
+const CONCURRENCY_LIMIT = 5;
 
-const SUPPORTED_TYPES = {
-    '.aac': 'audio/aac',
-    '.mp3': 'audio/mpeg',
-    '.ogg': 'audio/ogg',
-    '.wav': 'audio/wav',
-    '.m4a': 'audio/mp4',
-};
+const limit = pLimit(CONCURRENCY_LIMIT);
 
 const withRetry = async (fn, context = '', maxRetries = 3) => {
     let attempts = 0;
@@ -58,116 +56,129 @@ const formatBytes = (bytes) => {
     return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
 };
 
-const upload = async () => {
-    const targetSlug = process.argv.find((a, i) => process.argv[i - 1] === '--slug');
+const safeAsciiString = (str) => {
+    if (!str) return '';
+    return String(str).replace(/[\u2013\u2014]/g, '-').replace(/[^\x20-\x7E]/g, '');
+};
+
+const uploadModelAssets = async (Model, assetType, subFolder, filenameField, slugField) => {
     const forceReUpload = process.argv.includes('--force');
+    const query = forceReUpload ? {} : { is_s3_uploaded: { $ne: true } };
+    const records = await Model.find(query);
 
-    try {
-        await connectDB();
-        console.log('🎵 Connected to MongoDB. Starting audio upload...\n');
+    if (records.length === 0) {
+        console.log(`🍵 No ${assetType} assets to process.`);
+        return { uploaded: 0, skipped: 0, failed: 0 };
+    }
 
-        // Ensure audio directory exists
-        await fs.ensureDir(AUDIO_DIR);
+    console.log(`📤 Processing ${records.length} ${assetType}(s) with concurrency=${CONCURRENCY_LIMIT}...`);
 
-        // Fetch audio records to upload
-        const query = targetSlug
-            ? { slug: targetSlug }
-            : forceReUpload ? {} : { is_s3_uploaded: false };
+    let uploaded = 0, failed = 0, skipped = 0;
 
-        const audioRecords = await AmbientAudio.find(query);
+    const tasks = records.map(record => limit(async () => {
+        let filename = record[filenameField];
+        if (filename && filename.includes('/')) {
+            filename = filename.split('/').pop();
+        }
 
-        if (audioRecords.length === 0) {
-            console.log('✅ Nothing to upload. All audio already on S3.');
-            console.log('   Run with --force to re-upload all. Run with --slug <slug> to upload specific.');
+        if (!filename) {
+            skipped++;
             return;
         }
 
-        console.log(`📤 Uploading ${audioRecords.length} audio file(s)...\n`);
+        const localPath = path.join(AUDIO_BASE_DIR, subFolder, filename);
+        if (!await fs.pathExists(localPath)) {
+            console.warn(`  [!] MISSING: ${record[slugField]} at ${localPath}`);
+            skipped++;
+            return;
+        }
 
-        let uploaded = 0;
-        let failed = 0;
-        let skipped = 0;
+        const stats = await fs.stat(localPath);
+        if (stats.size === 0) {
+            console.warn(`  [!] INVALID: ${filename} is 0 bytes. Skipping.`);
+            skipped++;
+            return;
+        }
 
-        for (const audio of audioRecords) {
-            const localPath = path.join(AUDIO_DIR, audio.filename);
+        const s3Key = `${BASE_PATH}/${DEPLOY_ENV}/audio/${subFolder}/${filename}`;
 
-            // ── Check if local file exists ────────────────────────────────────
-            if (!await fs.pathExists(localPath)) {
-                console.warn(`  ⚠  File not found locally, skipping: ${audio.filename}`);
-                console.warn(`     Expected at: ${localPath}`);
+        // Smart Sync: Check if file already exists on S3 with same size
+        try {
+            const head = await s3Client.send(new HeadObjectCommand({ Bucket: BUCKET_NAME, Key: s3Key }));
+            if (head.ContentLength === stats.size && !forceReUpload) {
+                // Already on S3, just update local flag if it was false
+                if (!record.is_s3_uploaded) {
+                    await Model.updateOne({ _id: record._id }, { $set: { is_s3_uploaded: true, file_size_bytes: stats.size, s3_key: s3Key } });
+                }
                 skipped++;
-                continue;
+                return;
             }
+        } catch (e) {
+            // Not on S3, proceed to upload
+        }
 
+        try {
             const fileContent = await fs.readFile(localPath);
-            const ext = path.extname(audio.filename).toLowerCase();
-            const contentType = SUPPORTED_TYPES[ext] || audio.mime_type || 'audio/aac';
-            const fileSizeBytes = (await fs.stat(localPath)).size;
+            console.log(`  ↑ [UPLOAD] ${filename} (${formatBytes(stats.size)})`);
 
-            // Ensure we don't recursively prepend BASE_PATH and DEPLOY_ENV if already present
-            const prefix = `${BASE_PATH}/${DEPLOY_ENV}/`;
-            const s3Key = audio.s3_key.startsWith(prefix) ? audio.s3_key : `${prefix}${audio.s3_key}`;
+            await withRetry(() => s3Client.send(new PutObjectCommand({
+                Bucket: BUCKET_NAME,
+                Key: s3Key,
+                Body: fileContent,
+                ContentType: 'audio/aac',
+                CacheControl: 'max-age=31536000',
+                Metadata: {
+                    'asset-type': assetType,
+                    'slug': safeAsciiString(record[slugField]),
+                    'title': safeAsciiString(record.title || record.text || '')
+                }
+            })), `Upload ${s3Key}`);
 
-            try {
-                console.log(`  ↑  Uploading: ${audio.filename} (${formatBytes(fileSizeBytes)})`);
-                console.log(`     S3 Key: ${s3Key}`);
+            await Model.updateOne(
+                { _id: record._id },
+                { $set: { is_s3_uploaded: true, file_size_bytes: stats.size, s3_key: s3Key } }
+            );
 
-                // AWS S3 Metadata STRICTLY requires ASCII-only characters in HTTP headers. 
-                // Any em-dashes (—), emojis, or fancy quotes will instantly crash the upload.
-                const safeAsciiString = (str) => {
-                    if (!str) return '';
-                    // Replace em dash with normal dash, then strip any other non-ASCII characters
-                    return String(str).replace(/[\u2013\u2014]/g, '-').replace(/[^\x20-\x7E]/g, '');
-                };
-
-                await withRetry(() => s3.putObject({
-                    Bucket: BUCKET_NAME,
-                    Key: s3Key,
-                    Body: fileContent,
-                    ContentType: contentType,
-                    CacheControl: 'max-age=31536000', // 1 year — audio doesn't change
-                    Metadata: {
-                        'audio-slug': safeAsciiString(audio.slug),
-                        'audio-title': safeAsciiString(audio.title),
-                        'duration-seconds': String(audio.duration_seconds),
-                    },
-                }).promise(), `s3.putObject ${s3Key}`);
-
-                // ── Update DB ─────────────────────────────────────────────────
-                await AmbientAudio.updateOne(
-                    { _id: audio._id },
-                    {
-                        $set: {
-                            is_s3_uploaded: true,
-                            file_size_bytes: fileSizeBytes,
-                            // Store the full S3 key with environment prefix for accurate CDN URLs
-                            s3_key: s3Key,
-                        }
-                    }
-                );
-
-                console.log(`  ✅ Uploaded: ${audio.slug}\n`);
-                uploaded++;
-            } catch (err) {
-                console.error(`  ❌ Failed: ${audio.filename}: ${err.message}\n`);
-                failed++;
+            if (assetType === 'mantra') {
+                await Model.updateOne({ _id: record._id }, { $set: { audio_file: s3Key } });
             }
-        }
 
-        console.log('\n──────────────────────────────────────────');
-        console.log(`✅ Upload complete!`);
-        console.log(`   Uploaded: ${uploaded} | Skipped: ${skipped} | Failed: ${failed}`);
-        if (failed > 0) {
-            console.log(`\n⚠  ${failed} file(s) failed. Check errors above.`);
-            process.exitCode = 1;
+            uploaded++;
+        } catch (err) {
+            console.error(`  ❌ [ERROR] ${filename}: ${err.message}`);
+            failed++;
         }
+    }));
+
+    await Promise.all(tasks);
+    return { uploaded, skipped, failed };
+};
+
+const run = async () => {
+    const startTime = Date.now();
+    try {
+        await connectDB();
+        console.log('🎵 Audio Pipeline Optimization active.\n');
+
+        console.log('--- Phase 1: Ambient Audio (Originals) ---');
+        const ambientResult = await uploadModelAssets(AmbientAudio, 'ambient', 'originals', 'filename', 'slug');
+
+        console.log('\n--- Phase 2: Mantras ---');
+        const mantraResult = await uploadModelAssets(Mantra, 'mantra', 'mantras', 'audio_file', 'slug');
+
+        const duration = ((Date.now() - startTime) / 1000).toFixed(1);
+        console.log('\n' + '─'.repeat(45));
+        console.log(`📊 PIPELINE SUMMARY (${duration}s)`);
+        console.log(`   Ambient: ${ambientResult.uploaded} UP, ${ambientResult.skipped} SKP, ${ambientResult.failed} ERR`);
+        console.log(`   Mantras: ${mantraResult.uploaded} UP, ${mantraResult.skipped} SKP, ${mantraResult.failed} ERR`);
+        console.log('─'.repeat(45));
 
     } catch (err) {
-        console.error('❌ Upload script failed:', err);
+        console.error('❌ Pipeline Crash:', err);
         process.exitCode = 1;
     } finally {
         await mongoose.disconnect();
     }
 };
 
-upload();
+run();

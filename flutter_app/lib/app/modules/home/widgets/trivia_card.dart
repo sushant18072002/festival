@@ -10,11 +10,15 @@ import '../../../theme/app_spacing.dart';
 import '../../../widgets/glass_container.dart';
 import '../../profile/profile_controller.dart';
 import '../../../data/services/analytics_service.dart';
-import '../../../data/providers/data_repository.dart';
 import '../../../data/models/trivia_model.dart';
+import '../../../data/providers/data_repository.dart';
+import '../../../data/services/asset_service.dart';
+import '../home_controller.dart';
 
 class TriviaCard extends StatefulWidget {
-  const TriviaCard({super.key});
+  final bool isSecondary;
+  final TriviaModel? trivia;
+  const TriviaCard({super.key, this.isSecondary = false, this.trivia});
 
   @override
   State<TriviaCard> createState() => _TriviaCardState();
@@ -33,16 +37,21 @@ class _TriviaCardState extends State<TriviaCard> {
   @override
   void initState() {
     super.initState();
-    final repo = Get.find<DataRepository>();
-    _triviaFuture = repo.getTrivia(repo.currentLang.value).then((trivias) {
-      if (trivias == null || trivias.isEmpty) return null;
-      return trivias.first;
-    });
+    if (widget.trivia != null) {
+      _triviaFuture = Future.value(widget.trivia);
+    } else {
+      final repo = Get.find<DataRepository>();
+      _triviaFuture = repo.getTrivia(repo.currentLang.value).then((trivias) {
+        if (trivias == null || trivias.isEmpty) return null;
+        return trivias.first;
+      });
+    }
   }
 
   void _handleAnswer(int index) {
     if (isAnswered || _trivia == null) return;
 
+    Get.find<HomeController>().recordActivity('trivia');
     HapticFeedback.mediumImpact();
     setState(() {
       selectedIndex = index;
@@ -56,6 +65,7 @@ class _TriviaCardState extends State<TriviaCard> {
         _storage.read<bool>('trivia_answered_${_trivia!.id}') ?? false;
 
     if (isCorrect) {
+      AssetService.to.playSFX(GlobalAsset.success);
       if (!alreadyAnswered && Get.isRegistered<ProfileController>()) {
         Get.find<ProfileController>().addKarma(reward, 'Trivia Completed');
         _storage.write('trivia_answered_${_trivia!.id}', true);
@@ -66,20 +76,21 @@ class _TriviaCardState extends State<TriviaCard> {
             ? 'trivia_already_answered'.tr
             : '+$reward ${"karma_earned".tr}',
         snackPosition: SnackPosition.TOP,
-        backgroundColor: AppColors.primary,
-        colorText: Colors.black,
+        backgroundColor: AppColors.primaryAdaptive(context),
+        colorText: (Theme.of(context).brightness == Brightness.dark) ? Colors.black : Colors.white,
         margin: const EdgeInsets.all(16),
-        borderRadius: 20,
+        borderRadius: 14,
       );
     } else {
+      AssetService.to.playSFX(GlobalAsset.error);
       Get.snackbar(
         'trivia_wrong'.tr,
         '${'correct_answer_is'.tr} ${_trivia!.options[_trivia!.correctAnswerIndex]}',
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.black87,
-        colorText: Colors.white,
+        backgroundColor: AppColors.surfaceGlass(context),
+        colorText: AppColors.textAdaptive(context),
         margin: const EdgeInsets.all(16),
-        borderRadius: 20,
+        borderRadius: 14,
       );
     }
 
@@ -90,7 +101,9 @@ class _TriviaCardState extends State<TriviaCard> {
   Widget build(BuildContext context) {
     _isDark = Theme.of(context).brightness == Brightness.dark;
     final isDark = _isDark;
-    final cardBg = isDark ? AppColors.surfaceGlass : const Color(0xFFF3EFFC);
+    final adaptivePrimary = AppColors.primaryAdaptive(context);
+    final cardBg = isDark ? AppColors.surfaceGlass(context) : const Color(0xFFF3EFFC);
+    
     return Container(
       margin: const EdgeInsets.symmetric(
         horizontal: AppSpacing.md,
@@ -103,10 +116,10 @@ class _TriviaCardState extends State<TriviaCard> {
           future: _triviaFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Padding(
-                padding: EdgeInsets.all(AppSpacing.lg),
+              return Padding(
+                padding: const EdgeInsets.all(AppSpacing.lg),
                 child: Center(
-                  child: CircularProgressIndicator(color: AppColors.primary),
+                  child: CircularProgressIndicator(color: adaptivePrimary),
                 ),
               );
             }
@@ -117,8 +130,10 @@ class _TriviaCardState extends State<TriviaCard> {
             _trivia = snapshot.data;
             final reward = _trivia!.karmaReward > 0 ? _trivia!.karmaReward : 10;
 
-            return ClipRRect(
-              borderRadius: BorderRadius.circular(24),
+            return Opacity(
+              opacity: widget.isSecondary ? 0.8 : 1.0,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(24),
               child: Stack(
                 children: [
                   // Background decorative lightbulb
@@ -129,7 +144,7 @@ class _TriviaCardState extends State<TriviaCard> {
                         Icon(
                               LucideIcons.lightbulb,
                               size: 90,
-                              color: AppColors.primary.withValues(alpha: 0.05),
+                              color: adaptivePrimary.withValues(alpha: isDark ? 0.05 : 0.08),
                             )
                             .animate(onPlay: (c) => c.repeat(reverse: true))
                             .rotate(
@@ -147,15 +162,15 @@ class _TriviaCardState extends State<TriviaCard> {
                         // Header row
                         Row(
                           children: [
-                            const Icon(
+                            Icon(
                               LucideIcons.brain,
-                              color: AppColors.primary,
+                              color: adaptivePrimary,
                               size: 18,
                             ),
                             const SizedBox(width: 8),
                             Text(
                               'daily_trivia'.tr,
-                              style: AppTextStyles.titleMedium.copyWith(
+                              style: AppTextStyles.titleMedium(context).copyWith(
                                 color: isDark
                                     ? Colors.white
                                     : const Color(0xFF1A0B2E),
@@ -182,7 +197,7 @@ class _TriviaCardState extends State<TriviaCard> {
                                   selectedIndex == _trivia!.correctAnswerIndex
                                       ? '+$reward ${"karma".tr}'
                                       : 'try_tomorrow'.tr,
-                                  style: AppTextStyles.labelSmall.copyWith(
+                                  style: AppTextStyles.labelSmall(context).copyWith(
                                     color:
                                         selectedIndex ==
                                             _trivia!.correctAnswerIndex
@@ -199,20 +214,20 @@ class _TriviaCardState extends State<TriviaCard> {
                                   vertical: 4,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: AppColors.primary.withValues(
+                                  color: adaptivePrimary.withValues(
                                     alpha: 0.1,
                                   ),
                                   borderRadius: BorderRadius.circular(12),
                                   border: Border.all(
-                                    color: AppColors.primary.withValues(
+                                    color: adaptivePrimary.withValues(
                                       alpha: 0.3,
                                     ),
                                   ),
                                 ),
                                 child: Text(
                                   'culture_quiz'.tr,
-                                  style: AppTextStyles.labelSmall.copyWith(
-                                    color: AppColors.primary,
+                                  style: AppTextStyles.labelSmall(context).copyWith(
+                                    color: adaptivePrimary,
                                     letterSpacing: 0.5,
                                   ),
                                 ),
@@ -223,7 +238,7 @@ class _TriviaCardState extends State<TriviaCard> {
                         // Question text
                         Text(
                           _trivia!.question,
-                          style: AppTextStyles.bodyLarge.copyWith(
+                          style: AppTextStyles.bodyLarge(context).copyWith(
                             color: isDark
                                 ? Colors.white.withValues(alpha: 0.85)
                                 : const Color(0xFF251042),
@@ -240,20 +255,20 @@ class _TriviaCardState extends State<TriviaCard> {
                           // "Play Now" button
                           GestureDetector(
                             onTap: () {
-                              HapticFeedback.lightImpact();
+                              AssetService.to.playSFX(GlobalAsset.tick);
                               setState(() => _isPlaying = true);
                             },
                             child: Container(
                               width: double.infinity,
                               padding: const EdgeInsets.symmetric(vertical: 14),
                               decoration: BoxDecoration(
-                                color: AppColors.primary.withValues(
+                                color: adaptivePrimary.withValues(
                                   alpha: 0.08,
                                 ),
                                 borderRadius: BorderRadius.circular(16),
                                 border: Border.all(
-                                  color: AppColors.primary.withValues(
-                                    alpha: 0.35,
+                                  color: adaptivePrimary.withValues(
+                                    alpha: isDark ? 0.35 : 0.6,
                                   ),
                                 ),
                               ),
@@ -262,14 +277,14 @@ class _TriviaCardState extends State<TriviaCard> {
                                 children: [
                                   Text(
                                     'play_now'.tr,
-                                    style: AppTextStyles.labelLarge.copyWith(
-                                      color: AppColors.primary,
+                                    style: AppTextStyles.labelLarge(context).copyWith(
+                                      color: adaptivePrimary,
                                     ),
                                   ),
                                   const SizedBox(width: 8),
-                                  const Icon(
+                                  Icon(
                                     LucideIcons.arrowRight,
-                                    color: AppColors.primary,
+                                    color: adaptivePrimary,
                                     size: 16,
                                   ),
                                 ],
@@ -282,7 +297,8 @@ class _TriviaCardState extends State<TriviaCard> {
                   ),
                 ],
               ),
-            );
+            ),
+          );
           },
         ),
       ),
@@ -339,7 +355,7 @@ class _TriviaCardState extends State<TriviaCard> {
             Expanded(
               child: Text(
                 _trivia!.options[index],
-                style: AppTextStyles.bodyMedium.copyWith(color: textColor),
+                style: AppTextStyles.bodyMedium(context).copyWith(color: textColor),
               ),
             ),
             if (isAnswered && isCorrect)

@@ -4,9 +4,10 @@ import {
   Calendar, Image as ImageIcon, Upload, Activity,
   ArrowUpRight, Plus, Rocket, CheckCircle, AlertCircle,
   Clock, Server, Smartphone, MessageCircle, Quote, Sparkles,
-  ShieldCheck, BarChart2, GitMerge, TriangleAlert
+  ShieldCheck, BarChart2, GitMerge, TriangleAlert, Music, Layers, BookOpen,
+  RefreshCw, ChevronRight, Activity as ActivityIcon
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import clsx from 'clsx';
 import toast from 'react-hot-toast';
@@ -37,16 +38,19 @@ export default function Home() {
   const [backups, setBackups] = useState<any[]>([]);
   const [systemState, setSystemState] = useState<any>(null);
   const [mobileConfig, setMobileConfig] = useState<any>(null);
+  const [env, setEnv] = useState('LOCAL');
 
   useEffect(() => {
     fetchDashboardData();
+    setEnv(window.location.hostname === 'localhost' ? 'DEVELOPMENT' : 'PRODUCTION');
   }, []);
 
   const fetchDashboardData = async () => {
+    setLoading(true);
     try {
       const [eventsRes, imagesRes, imagesOptimizedRes, backupsRes, stateRes, configRes, greetRes, quoteRes, mantraRes] = await Promise.all([
         fetch('/api/events?limit=5'),
-        fetch('/api/images?limit=4'),
+        fetch('/api/images?limit=8'),
         fetch('/api/images?is_optimized=true&limit=1'),
         fetch('/api/backups'),
         fetch('/api/system/state'),
@@ -83,7 +87,7 @@ export default function Home() {
       if (quoteData.success) setStats(prev => ({ ...prev, quotes: quoteData.pagination?.total ?? quoteData.data?.length ?? 0 }));
       if (mantraData.success) setStats(prev => ({ ...prev, mantras: mantraData.pagination?.total ?? mantraData.data?.length ?? 0 }));
 
-      // Fetch coverage & health (best-effort, non-blocking)
+      // Fetch coverage & health 
       try {
         const coverageRes = await fetch('/api/analytics/coverage');
         const healthRes = await fetch('/api/analytics/health');
@@ -91,67 +95,21 @@ export default function Home() {
         const healthData = await healthRes.json();
         if (coverageData.success) setContentCoverage(coverageData.coverage);
         if (healthData.success) setDataHealth(healthData.health);
-      } catch (e) {
-        // analytics endpoints optional — ignore failure
-      }
+      } catch (e) {}
 
-      if (backupsData.success) {
-        setBackups(backupsData.backups);
-      }
+      if (backupsData.success) setBackups(backupsData.backups);
+      if (stateData.success) setSystemState(stateData.state);
+      if (configData.success) setMobileConfig(configData.config);
 
-      if (stateData.success) {
-        setSystemState(stateData.state);
-      }
-
-      if (configData.success) {
-        setMobileConfig(configData.config);
-      }
-    } catch (error) {
-      console.error('Failed to load dashboard data');
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      toast.error('Failed to load dashboard data');
     }
+    setLoading(false);
   };
-
-  const executeRestore = async (backupId: string, mode: 'wipe' | 'merge') => {
-    setModalOpen(false);
-    const toastId = toast.loading('Restoring backup...');
-    try {
-      const res = await fetch('/api/backups/restore', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ backupId, mode })
-      });
-      const data = await res.json();
-      if (data.success) {
-        toast.success('Restore successful!', { id: toastId });
-        fetchDashboardData();
-      } else {
-        toast.error(`Restore failed: ${data.error}`, { id: toastId });
-      }
-    } catch (error) {
-      toast.error('Network error', { id: toastId });
-    }
-  };
-
-  const handleRestore = (backupId: string, mode: 'wipe' | 'merge') => {
-    const isWipe = mode === 'wipe';
-    setModalConfig({
-      title: isWipe ? 'Wipe & Restore?' : 'Merge Backup?',
-      message: isWipe
-        ? 'WARNING: This will DELETE all current data and replace it with the backup.'
-        : 'This will merge the backup data into your current database.',
-      onConfirm: () => executeRestore(backupId, mode),
-      isDestructive: isWipe
-    });
-    setModalOpen(true);
-  };
-
-
 
   const toggleMaintenance = async () => {
     const newState = !systemState?.is_maintenance_mode;
-    const toastId = toast.loading(newState ? 'Entering maintenance mode...' : 'Going live...');
+    const toastId = toast.loading(`${newState ? 'Enabling' : 'Disabling'} maintenance mode...`);
     try {
       const res = await fetch('/api/system/state', {
         method: 'POST',
@@ -160,504 +118,362 @@ export default function Home() {
       });
       const data = await res.json();
       if (data.success) {
-        toast.success(newState ? 'Maintenance mode active' : 'System is live!', { id: toastId });
+        toast.success(`Maintenance mode ${newState ? 'ON' : 'OFF'}`, { id: toastId });
         setSystemState(data.state);
-      } else {
-        toast.error(`Failed: ${data.error}`, { id: toastId });
       }
-    } catch (error) {
-      toast.error('Network error', { id: toastId });
-    }
+    } catch (err) { toast.error('Error toggling state', { id: toastId }); }
   };
 
-  const executeScript = async (scriptName: string, label: string) => {
-    setModalOpen(false);
-    const toastId = toast.loading(`Running ${label}...`);
+  const handleRunPipeline = async (action: string) => {
+    const toastId = toast.loading(`Triggering ${action}...`);
     try {
-      const res = await fetch('/api/run-script', {
+      const res = await fetch('/api/pipeline', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ script: scriptName })
+        body: JSON.stringify({ action })
       });
       const data = await res.json();
-      if (data.success) {
-        toast.success(`${label} completed!`, { id: toastId });
-      } else {
-        toast.error(`Failed: ${data.error}`, { id: toastId });
-      }
-    } catch (error) {
-      toast.error('Network error', { id: toastId });
-    }
+      if (data.success) toast.success(data.message, { id: toastId });
+      else toast.error(data.error || 'Pipeline failed', { id: toastId });
+    } catch (e) { toast.error('Pipeline error', { id: toastId }); }
   };
 
-  const executeDeploy = async () => {
-    setModalOpen(false);
-    setIsDeploying(true);
-    setDeployLocked(false);
-    const toastId = toast.loading('Initiating deployment...');
-
-    try {
-      const res = await fetch('/api/deploy', { method: 'POST' });
-      const data = await res.json();
-      if (res.status === 423) {
-        setDeployLocked(true);
-        toast.error('Deploy already running. Use "Clear Lock" if it got stuck.', { id: toastId });
-      } else if (data.success) {
-        toast.success('Deployment completed successfully!', { id: toastId });
-        setDeployLocked(false);
-        fetchDashboardData();
-      } else {
-        toast.error('Deployment failed: ' + data.error, { id: toastId });
-      }
-    } catch (error) {
-      toast.error('Failed to trigger deployment', { id: toastId });
-    } finally {
-      setIsDeploying(false);
-    }
-  };
-
-  const clearDeployLock = async () => {
-    const toastId = toast.loading('Clearing deploy lock...');
-    try {
-      const res = await fetch('/api/deploy', { method: 'DELETE' });
-      const data = await res.json();
-      if (data.success) {
-        setDeployLocked(false);
-        toast.success('Lock cleared! You can deploy again.', { id: toastId });
-      }
-    } catch (e) {
-      toast.error('Failed to clear lock', { id: toastId });
-    }
-  };
-
-  const handleRunScript = (scriptName: string, label: string) => {
+  const triggerDeploy = () => {
     setModalConfig({
-      title: `Run ${label}?`,
-      message: `Are you sure you want to run the ${label} script?`,
-      onConfirm: () => executeScript(scriptName, label),
-      isDestructive: scriptName === 'seed-taxonomy'
+        title: "Initialize Production Push",
+        message: "This will push all current assets, feed data, and configurations to the production environment. Are you sure you wish to proceed with the synchronization?",
+        onConfirm: () => handleRunPipeline('deploy'),
+        isDestructive: true
     });
     setModalOpen(true);
   };
-
-  const handleDeploy = () => {
-    setModalConfig({
-      title: 'Deploy to Production?',
-      message: 'This will publish all recent changes to S3 and invalidate CloudFront.',
-      onConfirm: () => executeDeploy(),
-      isDestructive: false
-    });
-    setModalOpen(true);
-  };
-
-  const handleRunPipeline = () => {
-    setModalConfig({
-      title: 'Run Full Pipeline?',
-      message: 'This will run: Seed → Optimize → Generate Feeds → Deploy to Production in one shot. It may take a minute.',
-      onConfirm: async () => {
-        setModalOpen(false);
-        setIsPipelining(true);
-        const toastId = toast.loading('Running full pipeline...');
-        const scripts = ['seed-events', 'optimize', 'generate-feed'];
-        for (const script of scripts) {
-          const res = await fetch('/api/run-script', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ script }) });
-          const d = await res.json();
-          if (!d.success) { toast.error(`Pipeline failed at: ${script}`, { id: toastId }); setIsPipelining(false); return; }
-        }
-        // Finally sync
-        const deployRes = await fetch('/api/deploy', { method: 'POST' });
-        const deployData = await deployRes.json();
-        if (deployData.success) {
-          toast.success('Full pipeline complete!', { id: toastId });
-          fetchDashboardData();
-        } else {
-          toast.error('Pipeline failed at deploy step', { id: toastId });
-        }
-        setIsPipelining(false);
-      },
-      isDestructive: false
-    });
-    setModalOpen(true);
-  };
-
-  const handleSaveVersioning = async () => {
-    const toastId = toast.loading('Updating app versioning...');
-    try {
-      const res = await fetch('/api/system/state', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          min_app_version: systemState.min_app_version,
-          update_url: systemState.update_url
-        })
-      });
-      const data = await res.json();
-      if (data.success) {
-        toast.success('Versioning updated!', { id: toastId });
-        setSystemState(data.state);
-      } else {
-        toast.error('Failed to update', { id: toastId });
-      }
-    } catch (error) {
-      toast.error('Network error', { id: toastId });
-    }
-  };
-
-
 
   return (
-    <div className="flex h-screen bg-slate-950 font-sans text-white">
+    <div className="flex h-screen bg-slate-950 font-sans text-white overflow-hidden">
       <Sidebar />
       <ConfirmationModal
         isOpen={modalOpen}
         onCancel={() => setModalOpen(false)}
         title={modalConfig.title}
         message={modalConfig.message}
-        onConfirm={modalConfig.onConfirm}
+        onConfirm={() => {
+            modalConfig.onConfirm();
+            setModalOpen(false);
+        }}
         isDestructive={modalConfig.isDestructive}
       />
-      <main className="flex-1 p-8 overflow-y-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight text-white flex items-center gap-3">
-            <div className="p-2.5 bg-blue-500/10 rounded-xl border border-blue-500/20">
-              <BarChart2 className="w-6 h-6 text-blue-400" />
+      
+      <main className="flex-1 p-8 overflow-y-auto custom-scrollbar bg-slate-950 pb-20">
+        {/* Header Section */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+          <div className="flex items-center gap-5">
+            <div className="p-4 bg-blue-500/10 rounded-2xl border border-blue-500/20 shadow-inner group">
+              <Activity className="w-8 h-8 text-blue-400 group-hover:scale-110 transition-transform" />
             </div>
-            Dashboard
-          </h1>
-          <p className="text-slate-400 mt-2">Overview of your festival content and system status.</p>
+            <div>
+                <h1 className="text-3xl font-black tracking-tight text-white uppercase text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-indigo-400">
+                    Mission Control
+                </h1>
+                <p className="text-slate-500 mt-1 uppercase tracking-widest text-[10px] font-bold">
+                    Utsav Pro Admin · System Status: <span className="text-emerald-500">Live</span>
+                </p>
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-3">
+             <div className="flex flex-col items-end pr-5 border-r border-slate-800/50">
+                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] mb-0.5">Runtime Env</span>
+                <span className={clsx(
+                    "text-xs font-black px-2 py-0.5 rounded-md border",
+                    env === 'DEVELOPMENT' ? "text-amber-500 border-amber-500/20 bg-amber-500/5" : "text-rose-500 border-rose-500/20 bg-rose-500/5"
+                )}>{env}</span>
+             </div>
+             <button onClick={() => fetchDashboardData()} className="p-3 bg-slate-900 border border-slate-800 rounded-xl hover:bg-slate-800 transition-all shadow-lg active:scale-95">
+                <RefreshCw size={18} className={clsx(loading && "animate-spin text-blue-400")} />
+             </button>
+          </div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-4 gap-4 mb-8">
-          <StatCard title="Total Events" value={stats.events} icon={<Calendar className="w-5 h-5 text-blue-400" />} color="bg-blue-950" />
-          <StatCard title="Total Images" value={stats.images} icon={<ImageIcon className="w-5 h-5 text-purple-400" />} color="bg-purple-950" subValue={`${stats.optimizedImages} optimized`} />
-          <StatCard title="Total Greetings" value={stats.greetings} icon={<MessageCircle className="w-5 h-5 text-green-400" />} color="bg-green-950" />
-          <StatCard title="Total Quotes" value={stats.quotes} icon={<Quote className="w-5 h-5 text-amber-400" />} color="bg-amber-950" />
-          <StatCard title="Total Mantras" value={stats.mantras} icon={<Sparkles className="w-5 h-5 text-indigo-400" />} color="bg-indigo-950" />
-          <StatCard
-            title="System Status"
-            value={systemState?.is_maintenance_mode ? "Maintenance" : "Operational"}
-            icon={<Activity className={clsx("w-5 h-5", systemState?.is_maintenance_mode ? "text-amber-400" : "text-green-400")} />}
-            color={systemState?.is_maintenance_mode ? "bg-amber-950" : "bg-green-950"}
-            action={
-              <button
-                onClick={() => toggleMaintenance()}
-                className={clsx(
-                  "text-[10px] px-2 py-1 rounded-md font-bold text-white",
-                  systemState?.is_maintenance_mode ? "bg-green-600" : "bg-amber-600"
-                )}
-              >
-                {systemState?.is_maintenance_mode ? "Go Live" : "Maintenance"}
-              </button>
-            }
+        {/* Stats Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+          <StatCard title="Events" value={stats.events} icon={<Calendar size={20} />} color="blue" />
+          <StatCard title="Media" value={stats.images} icon={<ImageIcon size={20} />} color="purple" />
+          <StatCard title="Optimized" value={stats.optimizedImages} icon={<CheckCircle size={20} />} color="emerald" />
+          <StatCard 
+            title="S-Mode" 
+            value={systemState?.is_maintenance_mode ? "BLOCK" : "READY"} 
+            icon={<ShieldCheck size={20} />} 
+            color={systemState?.is_maintenance_mode ? "amber" : "slate"}
+            action={<button onClick={toggleMaintenance} className="text-[10px] font-black uppercase text-white/30 hover:text-amber-500 transition-colors">Toggle</button>}
           />
-          <StatCard title="Last Deployed" value={systemState?.last_deployed_at ? new Date(systemState.last_deployed_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }) : '—'} icon={<Rocket className="w-5 h-5 text-sky-400" />} color="bg-sky-950" subValue={systemState?.last_deployed_at ? new Date(systemState.last_deployed_at).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : 'Never deployed'} />
-          <StatCard title="Last Modified" value={systemState?.last_modified_at ? new Date(systemState.last_modified_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }) : '—'} icon={<GitMerge className="w-5 h-5 text-rose-400" />} color="bg-rose-950" subValue={systemState?.last_modified_at ? new Date(systemState.last_modified_at).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : 'No edits yet'} />
         </div>
-
-        {/* ── V2: Content Coverage + Data Health ─────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Content Coverage */}
-          <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6">
-            <div className="flex items-center gap-2 mb-5">
-              <BarChart2 className="w-4 h-4 text-slate-400" />
-              <h2 className="font-bold text-white">Content Coverage</h2>
-              <span className="ml-auto text-xs text-slate-500">{stats.events} total events</span>
-            </div>
-            <div className="space-y-3">
-              {[
-                { label: 'Events with Images', got: contentCoverage?.eventsWithImages ?? '—', total: stats.events, color: 'bg-blue-500' },
-                { label: 'Events with Greetings', got: contentCoverage?.eventsWithGreetings ?? '—', total: stats.events, color: 'bg-green-500' },
-                { label: 'Events with Ritual Guide', got: contentCoverage?.eventsWithRituals ?? '—', total: stats.events, color: 'bg-purple-500' },
-                { label: 'Events with Muhurat', got: contentCoverage?.eventsWithMuhurat ?? '—', total: stats.events, color: 'bg-amber-500' },
-                { label: 'Events with Ambient Audio', got: contentCoverage?.eventsWithAudio ?? '—', total: stats.events, color: 'bg-indigo-500' },
-              ].map(item => {
-                const pct = typeof item.got === 'number' && item.total > 0 ? Math.round((item.got / item.total) * 100) : null;
-                return (
-                  <div key={item.label}>
-                    <div className="flex justify-between text-xs text-slate-400 mb-1">
-                      <span>{item.label}</span>
-                      <span className="font-semibold text-white">{item.got}/{item.total}</span>
-                    </div>
-                    <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
-                      <div className={`h-full ${item.color} rounded-full transition-all`} style={{ width: pct !== null ? `${pct}%` : '0%' }} />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Data Health */}
-          <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6">
-            <div className="flex items-center gap-2 mb-5">
-              <ShieldCheck className="w-4 h-4 text-slate-400" />
-              <h2 className="font-bold text-white">Data Health</h2>
-            </div>
-            <div className="space-y-3">
-              {[
-                { label: 'Orphaned Images (no event)', count: dataHealth?.orphanedImages ?? '—', ok: dataHealth?.orphanedImages === 0, icon: TriangleAlert },
-                { label: 'Events Missing Images', count: dataHealth?.eventsMissingImages ?? '—', ok: dataHealth?.eventsMissingImages === 0, icon: TriangleAlert },
-                { label: 'Events Missing Translations', count: dataHealth?.eventsMissingTranslations ?? '—', ok: dataHealth?.eventsMissingTranslations === 0, icon: TriangleAlert },
-                { label: 'Quotes Missing Author', count: dataHealth?.quotesMissingAuthor ?? '—', ok: dataHealth?.quotesMissingAuthor === 0, icon: AlertCircle },
-                { label: 'Images Missing Caption', count: dataHealth?.imagesMissingCaption ?? '—', ok: dataHealth?.imagesMissingCaption === 0, icon: AlertCircle },
-              ].map(item => (
-                <div key={item.label} className="flex items-center justify-between p-3 rounded-xl bg-slate-800">
-                  <div className="flex items-center gap-2 text-sm text-slate-300">
-                    <item.icon className={`w-4 h-4 ${item.ok ? 'text-green-500' : 'text-amber-400'}`} />
-                    {item.label}
-                  </div>
-                  <span className={`text-sm font-bold ${item.ok ? 'text-green-400' : 'text-amber-400'}`}>
-                    {item.ok ? '✓' : item.count}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* ── LEFT: MAIN OPERATIONS (2/3) ────────────────── */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Recent Events */}
-            <div className="bg-slate-900 rounded-2xl shadow-md shadow-black/20 border border-slate-800 overflow-hidden">
-              <div className="p-6 border-b border-slate-800 flex justify-between items-center">
-                <h2 className="font-bold text-white flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-slate-400" />
-                  Recent Events
-                </h2>
-                <Link href="/events" className="text-sm text-blue-600 font-medium hover:underline flex items-center gap-1">
-                  View All <ArrowUpRight className="w-3 h-3" />
-                </Link>
+            
+            {/* Mission Control: Pipeline center */}
+            <div className="bg-slate-900 border border-slate-800 rounded-[2.5rem] p-10 shadow-2xl relative overflow-hidden group border-t-rose-500/30">
+              <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-rose-500/5 blur-[120px] -mr-48 -mt-48 transition-all group-hover:bg-rose-500/10 pointer-events-none" />
+              
+              <div className="flex items-center justify-between mb-10 relative z-10">
+                <div>
+                  <h3 className="text-2xl font-black text-white flex items-center gap-3 uppercase tracking-tight">
+                    <Rocket className="text-rose-500" size={28} />
+                    Pipeline Operations
+                  </h3>
+                  <p className="text-[10px] text-slate-500 mt-1 uppercase tracking-[0.2em] font-bold">Encapsulated Deployment & Integrity Engine</p>
+                </div>
+                <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-slate-950 rounded-2xl border border-slate-800 text-[9px] font-black text-slate-400 shadow-inner">
+                  <ActivityIcon size={12} className="animate-pulse text-rose-500" /> V3.2 SECTOR READY
+                </div>
               </div>
-              <div className="divide-y divide-slate-800">
-                {loading ? (
-                  <div className="p-6 text-center text-slate-400">Loading...</div>
-                ) : recentEvents.map(evt => (
-                  <div key={evt._id} className="p-4 hover:bg-slate-950 transition-colors flex items-center justify-between group">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 font-bold text-xs">
-                        {new Date(evt.date || Date.now()).getDate()}
-                      </div>
-                      <div>
-                        <div className="font-medium text-white">{evt.title}</div>
-                        <div className="text-xs text-slate-400">
-                          {new Date(evt.date || Date.now()).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })}
-                        </div>
-                      </div>
-                    </div>
-                    <Link href={`/events?edit=${evt._id}`} className="opacity-0 group-hover:opacity-100 p-2 text-slate-400 hover:text-blue-600">
-                      <ArrowUpRight className="w-4 h-4" />
-                    </Link>
-                  </div>
-                ))}
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+                <PipelineButton 
+                  label="Deep Health" 
+                  desc="Sync S3 & MongoDB" 
+                  icon={<ShieldCheck size={32} />} 
+                  color="emerald" 
+                  onClick={() => handleRunPipeline('health_deep')} 
+                />
+                <PipelineButton 
+                  label="Archive" 
+                  desc="Snap Daily Snapshot" 
+                  icon={<Server size={32} />} 
+                  color="blue" 
+                  onClick={() => handleRunPipeline('backup')} 
+                />
+                <PipelineButton 
+                  label="Push Live" 
+                  desc="Synchronize Global Feed" 
+                  icon={<Rocket size={32} />} 
+                  color="rose" 
+                  primary 
+                  onClick={triggerDeploy} 
+                />
               </div>
             </div>
 
-            {/* Recent Images */}
-            <div className="bg-slate-900 rounded-2xl shadow-md shadow-black/20 border border-slate-800 overflow-hidden">
-              <div className="p-6 border-b border-slate-800 flex justify-between items-center">
-                <h2 className="font-bold text-white flex items-center gap-2">
-                  <ImageIcon className="w-4 h-4 text-slate-400" />
-                  Recent Uploads
-                </h2>
-                <Link href="/images" className="text-sm text-blue-600 font-medium hover:underline flex items-center gap-1">
-                  View All <ArrowUpRight className="w-3 h-3" />
-                </Link>
-              </div>
-              <div className="p-6 grid grid-cols-2 md:grid-cols-4 gap-4">
-                {recentImages.map(img => (
-                  <div key={img._id} className="group relative rounded-xl overflow-hidden border border-slate-700 bg-slate-800 hover:border-slate-500 transition-colors">
-                    <div className="aspect-square relative">
-                      <img src={getImageUrl(img.s3_key)} className="w-full h-full object-cover" alt={img.caption || ''} />
+            {/* Middle Section: Coverage + Recent */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Health Coverage mini view */}
+                <div className="bg-slate-900 rounded-[2rem] p-8 border border-slate-800 shadow-xl">
+                    <div className="flex items-center justify-between mb-8">
+                       <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                          <BarChart2 size={16} className="text-blue-500" /> Integrity Coverage
+                       </h4>
+                       <span className="text-[9px] font-black text-slate-700 bg-slate-950 px-2 py-0.5 rounded border border-slate-800">SYNCED</span>
                     </div>
-                    <div className="px-2 py-1.5 bg-slate-800">
-                      <p className="text-[11px] text-slate-300 font-medium truncate">{img.caption || img.filename || 'Untitled'}</p>
-                      {img.event_id && <p className="text-[10px] text-slate-500 truncate">{img.is_s3_uploaded ? '🟢 On CDN' : '⚫ Local'}</p>}
+                    <div className="space-y-6">
+                        <HealthBar label="Events & Media" got={contentCoverage?.eventsWithImages} total={stats.events} color="bg-blue-600" />
+                        <HealthBar label="Audio Channels" got={contentCoverage?.eventsWithAudio} total={stats.events} color="bg-indigo-600" />
+                        <HealthBar label="Sacred Rituals" got={contentCoverage?.eventsWithRituals} total={stats.events} color="bg-purple-600" />
                     </div>
-                  </div>
-                ))}
-              </div>
+                </div>
+
+                {/* Recent Events shortcut */}
+                <div className="bg-slate-900 rounded-[2rem] p-8 border border-slate-800 shadow-xl overflow-hidden flex flex-col">
+                    <div className="flex items-center justify-between mb-6">
+                       <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                          <Clock size={16} className="text-amber-500" /> Delta Content
+                       </h4>
+                       <Link href="/events" className="text-[10px] font-black text-amber-500 hover:text-amber-400 transition-colors uppercase tracking-widest">Archive</Link>
+                    </div>
+                    <div className="flex-1 space-y-2">
+                        {recentEvents.slice(0, 4).map(evt => (
+                            <Link key={evt._id} href={`/events?edit=${evt._id}`} className="group flex items-center justify-between p-3 rounded-[1rem] hover:bg-slate-950 border border-transparent hover:border-slate-800 transition-all">
+                                <span className="text-sm text-slate-300 font-bold truncate group-hover:text-white transition-colors uppercase tracking-tight">{evt.title}</span>
+                                <ArrowUpRight size={14} className="text-slate-700 group-hover:text-blue-400 transition-colors" />
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* Bottom Gallery Grid */}
+            <div className="bg-slate-900 rounded-[2.5rem] border border-slate-800 shadow-2xl overflow-hidden">
+                <div className="px-8 py-6 border-b border-slate-800 flex justify-between items-center bg-slate-950/20">
+                    <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] flex items-center gap-3">
+                        <ImageIcon size={18} className="text-purple-500" /> Visual Frequency Stream
+                    </h3>
+                    <Link href="/images" className="text-[10px] font-black text-purple-500 hover:text-purple-400 uppercase tracking-widest">Access Vault</Link>
+                </div>
+                <div className="p-8 grid grid-cols-4 md:grid-cols-8 gap-4">
+                    {recentImages.map(img => (
+                        <div key={img._id} className="aspect-square rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-lg group/img relative">
+                            <img src={getImageUrl(img.s3_key)} className="w-full h-full object-cover opacity-40 group-hover/img:opacity-100 transition-all duration-700 group-hover/img:scale-125 group-hover/img:rotate-3" alt="" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity" />
+                        </div>
+                    ))}
+                </div>
             </div>
           </div>
 
+          {/* ── RIGHT: TOOLS & CONFIG (1/3) ────────────────── */}
           <div className="space-y-8">
-            {/* Quick Actions */}
-            <div className="bg-slate-900 rounded-2xl shadow-md shadow-black/20 border border-slate-800 p-6">
-              <h2 className="font-bold text-white mb-4">Quick Actions</h2>
-              <div className="space-y-3">
-                <Link href="/events" className="flex items-center gap-3 p-3 rounded-xl border border-slate-800 hover:bg-blue-50 transition-all group">
-                  <div className="p-2 bg-blue-100 text-blue-600 rounded-lg"><Plus className="w-4 h-4" /></div>
-                  <div className="font-medium text-white">Add New Event</div>
-                </Link>
-                <Link href="/images" className="flex items-center gap-3 p-3 rounded-xl border border-slate-800 hover:bg-purple-50 transition-all group">
-                  <div className="p-2 bg-purple-100 text-purple-600 rounded-lg"><Upload className="w-4 h-4" /></div>
-                  <div className="font-medium text-white">Upload Image</div>
-                </Link>
-                <Link href="/greetings" className="flex items-center gap-3 p-3 rounded-xl border border-slate-800 hover:bg-green-900 transition-all group">
-                  <div className="p-2 bg-green-900 text-green-400 rounded-lg"><MessageCircle className="w-4 h-4" /></div>
-                  <div className="font-medium text-white">Add Greeting</div>
-                </Link>
-                <Link href="/quotes" className="flex items-center gap-3 p-3 rounded-xl border border-slate-800 hover:bg-amber-900 transition-all group">
-                  <div className="p-2 bg-amber-900 text-amber-400 rounded-lg"><Quote className="w-4 h-4" /></div>
-                  <div className="font-medium text-white">Add Quote</div>
-                </Link>
-                <Link href="/mantras" className="flex items-center gap-3 p-3 rounded-xl border border-slate-800 hover:bg-indigo-900 transition-all group">
-                  <div className="p-2 bg-indigo-900 text-indigo-400 rounded-lg"><Sparkles className="w-4 h-4" /></div>
-                  <div className="font-medium text-white">Add Mantra</div>
-                </Link>
-              </div>
+            {/* Quick Navigation Hub */}
+            <div className="grid grid-cols-1 gap-4">
+              <QuickActionLink href="/audio" title="Acoustic Library" sub="Ambient Layers" icon={<Music size={24} />} color="purple" />
+              <QuickActionLink href="/lotties" title="Lottie Overlays" sub="Kinetic Media" icon={<Layers size={24} />} color="indigo" />
+              <QuickActionLink href="/mantras" title="Vocal Registry" sub="Sacred Scripts" icon={<BookOpen size={24} />} color="amber" />
             </div>
 
-            {/* System Scripts */}
-            <div className="bg-slate-900 rounded-2xl shadow-md shadow-black/20 border border-slate-800 p-6">
-              <h2 className="font-bold text-white mb-4">System Scripts</h2>
-              <div className="space-y-3">
-                <button onClick={() => handleRunScript('optimize', 'Image Optimization')} className="w-full flex items-center gap-3 p-3 rounded-xl border border-slate-800 hover:bg-green-50 transition-all text-left">
-                  <div className="p-2 bg-green-100 text-green-600 rounded-lg"><ImageIcon className="w-4 h-4" /></div>
-                  <div className="font-medium text-white">Optimize Images</div>
-                </button>
-                <button onClick={() => handleRunScript('generate-feed', 'Generate Feed')} className="w-full flex items-center gap-3 p-3 rounded-xl border border-slate-800 hover:bg-blue-50 transition-all text-left">
-                  <div className="p-2 bg-blue-100 text-blue-600 rounded-lg"><Activity className="w-4 h-4" /></div>
-                  <div className="font-medium text-white">Generate Feed</div>
-                </button>
-              </div>
+            {/* Quick Add Bar */}
+            <div className="bg-slate-900/40 border border-slate-800 rounded-[2rem] p-8 shadow-inner">
+               <h4 className="text-[9px] font-black text-slate-700 uppercase tracking-[0.3em] mb-6 text-center">Protocol Shortcuts</h4>
+               <div className="grid grid-cols-2 gap-4">
+                  <Link href="/events" className="flex flex-col items-center justify-center p-5 bg-slate-950 border border-slate-800 rounded-2xl hover:border-blue-500/30 group/btn transition-all gap-2 shadow-xl hover:-translate-y-1">
+                    <Plus size={20} className="text-slate-700 group-hover/btn:text-blue-500 transition-colors" />
+                    <span className="text-[9px] font-black text-slate-600 group-hover/btn:text-white uppercase tracking-widest">Event</span>
+                  </Link>
+                  <Link href="/images" className="flex flex-col items-center justify-center p-5 bg-slate-950 border border-slate-800 rounded-2xl hover:border-purple-500/30 group/btn transition-all gap-2 shadow-xl hover:-translate-y-1">
+                    <Upload size={20} className="text-slate-700 group-hover/btn:text-purple-500 transition-colors" />
+                    <span className="text-[9px] font-black text-slate-600 group-hover/btn:text-white uppercase tracking-widest">Media</span>
+                  </Link>
+               </div>
             </div>
 
-            {/* App Versioning */}
-            <div className="bg-slate-900 rounded-2xl shadow-md shadow-black/20 border border-slate-800 p-6">
-              <h2 className="font-bold text-white mb-4">App Versioning</h2>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-xs font-medium text-slate-400 mb-1">Min App Version</label>
-                  <input
-                    type="text"
-                    className="w-full border border-slate-800 p-2 rounded-lg text-sm"
-                    value={systemState?.min_app_version || ''}
-                    onChange={(e) => setSystemState({ ...systemState, min_app_version: e.target.value })}
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-slate-400 mb-1">Update URL</label>
-                  <input
-                    type="text"
-                    className="w-full border border-slate-800 p-2 rounded-lg text-sm"
-                    value={systemState?.update_url || ''}
-                    onChange={(e) => setSystemState({ ...systemState, update_url: e.target.value })}
-                  />
-                </div>
-                <button onClick={handleSaveVersioning} className="w-full py-2 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 transition-colors">
-                  Save Versioning
-                </button>
-              </div>
-            </div>
-
-            {/* Mobile Configuration */}
-            <div className="bg-slate-900 rounded-2xl shadow-md shadow-black/20 border border-slate-800 p-6">
-              <h2 className="font-bold text-white mb-4">Mobile Configuration</h2>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-xs font-medium text-slate-400 mb-1">Support Email</label>
-                  <input
-                    type="text"
-                    className="w-full border border-slate-800 p-2 rounded-lg text-sm"
-                    placeholder="support@example.com"
-                    value={mobileConfig?.support_email || ''}
-                    onChange={(e) => setMobileConfig({ ...mobileConfig, support_email: e.target.value })}
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-slate-400 mb-1">Instagram URL</label>
-                  <input
-                    type="text"
-                    className="w-full border border-slate-800 p-2 rounded-lg text-sm"
-                    placeholder="https://instagram.com/..."
-                    value={mobileConfig?.social_links?.instagram || ''}
-                    onChange={(e) => setMobileConfig({ ...mobileConfig, social_links: { ...mobileConfig.social_links, instagram: e.target.value } })}
-                  />
-                </div>
-                <button
-                  onClick={async () => {
-                    const toastId = toast.loading('Updating mobile config...');
-                    try {
-                      const res = await fetch('/api/system/config', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(mobileConfig)
-                      });
-                      const data = await res.json();
-                      if (data.success) {
-                        toast.success('Config updated!', { id: toastId });
-                        setMobileConfig(data.config);
-                      } else {
-                        toast.error('Failed to update', { id: toastId });
-                      }
-                    } catch (error) {
-                      toast.error('Network error', { id: toastId });
-                    }
-                  }}
-                  className="w-full py-2 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 transition-colors"
-                >
-                  Save Config
-                </button>
-              </div>
-            </div>
-
-            {/* Deployment Card */}
-            <div className="rounded-2xl p-6 text-white transition-colors bg-blue-900 border border-blue-800 shadow-md shadow-black/20">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 bg-blue-800 rounded-lg">
-                  <Server className="w-5 h-5 text-blue-300" />
-                </div>
-                <h2 className="font-bold text-lg">Production Deploy</h2>
-              </div>
-              <div className="space-y-3">
-                <p className="text-sm text-blue-200 mb-4">
-                  Publish changes to AWS S3 and serve via CDN.
-                </p>
-                <button
-                  onClick={handleDeploy}
-                  disabled={isDeploying}
-                  className={clsx(
-                    "w-full py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all",
-                    isDeploying ? "bg-slate-700 text-slate-400" : "bg-blue-600 hover:bg-blue-500"
-                  )}
-                >
-                  {isDeploying ? "Deploying..." : "Deploy to Production"}
-                </button>
-                {deployLocked && (
-                  <button
-                    onClick={clearDeployLock}
-                    className="w-full py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all bg-amber-600 hover:bg-amber-500 text-white"
+            {/* Version & Environment Control */}
+            <div className="bg-slate-900 border border-slate-800 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden">
+               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600/50 to-indigo-600/50" />
+               <div className="flex items-center justify-between mb-8">
+                  <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Global Variables</h4>
+                  <Server size={14} className="text-slate-800" />
+               </div>
+               
+               <div className="space-y-6">
+                  <div className="space-y-3">
+                    <label className="text-[9px] font-black text-slate-600 uppercase tracking-widest ml-1">Legacy App Threshold</label>
+                    <input 
+                      type="text" 
+                      value={systemState?.min_app_version || ''} 
+                      onChange={(e) => setSystemState({ ...systemState, min_app_version: e.target.value })}
+                      className="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-sm text-blue-400 font-mono focus:border-blue-500/50 transition-all outline-none shadow-inner" 
+                    />
+                  </div>
+                  <div className="space-y-3">
+                    <label className="text-[9px] font-black text-slate-600 uppercase tracking-widest ml-1">Social Feed Connector</label>
+                    <input 
+                      type="text" 
+                      placeholder="https://instagram.com/utsavpro"
+                      value={mobileConfig?.social_links?.instagram || ''} 
+                      onChange={(e) => setMobileConfig({ ...mobileConfig, social_links: { ...mobileConfig.social_links, instagram: e.target.value } })}
+                      className="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-sm text-white focus:border-blue-500/50 transition-all outline-none shadow-inner" 
+                    />
+                  </div>
+                  <button 
+                    onClick={async () => {
+                        const tid = toast.loading('Syncing Core Parameters...');
+                        try {
+                            const res = await fetch('/api/system/state', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(systemState) });
+                            const data = await res.json();
+                            if (data.success) toast.success('Core Synchronized', { id: tid });
+                        } catch(e) { toast.error('Sync Error: Terminal Failure', { id: tid }); }
+                    }}
+                    className="w-full py-5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl text-[10px] font-black text-white shadow-xl shadow-blue-600/20 active:scale-95 transition-all uppercase tracking-[0.2em]"
                   >
-                    <TriangleAlert className="w-4 h-4" />
-                    Clear Stale Lock
+                    Commit Parameters
                   </button>
-                )}
-              </div>
+               </div>
             </div>
+
           </div>
         </div>
-      </main >
-    </div >
+      </main>
+    </div>
   );
 }
 
-function StatCard({ title, value, icon, color, subValue, action }: any) {
-  return (
-    <div className="group relative bg-slate-900/80 backdrop-blur-xl overflow-hidden p-6 rounded-3xl shadow-lg shadow-black/40 border border-slate-800 hover:border-slate-600 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-      {/* Background Animated Glow */}
-      <div className={clsx("absolute -right-8 -top-8 w-32 h-32 rounded-full blur-3xl opacity-30 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none", color.replace('950', '600'))} />
+// ── Components ────────────────────────────────────────────────────────────
 
-      <div className="flex justify-between items-start mb-4 relative z-10">
-        <div className={clsx("p-3 rounded-2xl shadow-inner backdrop-blur-sm border border-slate-800", color)}>{icon}</div>
-        {action && <div className="relative z-20">{action}</div>}
+function StatCard({ title, value, icon, color, action }: any) {
+  const colorMap: any = {
+    blue: "from-blue-600 to-blue-700 bg-blue-500/10 text-blue-400 border-blue-500/20",
+    purple: "from-purple-600 to-purple-700 bg-purple-500/10 text-purple-400 border-purple-500/20",
+    emerald: "from-emerald-600 to-emerald-700 bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    amber: "from-amber-600 to-amber-700 bg-amber-500/10 text-amber-500 border-amber-500/20",
+    slate: "from-slate-600 to-slate-700 bg-slate-800 text-slate-400 border-slate-700/50"
+  };
+
+  return (
+    <div className="relative group bg-slate-900 border border-slate-800 rounded-[2rem] p-8 hover:border-slate-700 transition-all overflow-hidden shadow-2xl flex flex-col justify-between">
+      <div className={clsx("absolute -top-12 -right-12 w-32 h-32 blur-[60px] opacity-20 group-hover:opacity-30 transition-all rounded-full bg-gradient-to-br", colorMap[color])} />
+      <div className="flex justify-between items-start mb-6 relative z-10">
+        <div className={clsx("p-3 rounded-2xl border", colorMap[color])}>{icon}</div>
+        {action}
       </div>
       <div className="relative z-10">
-        <p className="text-slate-400 text-sm font-semibold mb-1 tracking-wide uppercase">{title}</p>
-        <h3 className="text-3xl font-black text-white tracking-tight drop-shadow-md">{value}</h3>
-        {subValue && <p className="text-xs text-slate-500 mt-1.5 font-medium">{subValue}</p>}
+         <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-1">{title}</p>
+         <h4 className="text-3xl font-black text-white tracking-tighter">{value}</h4>
       </div>
     </div>
   );
 }
+
+function PipelineButton({ label, desc, icon, color, primary, onClick }: any) {
+    const colorClasses: any = {
+        emerald: "text-emerald-500 group-hover:text-emerald-400",
+        blue: "text-blue-500 group-hover:text-blue-400",
+        rose: "text-rose-500 group-hover:text-rose-400"
+    };
+
+    return (
+        <button 
+          onClick={onClick}
+          className={clsx(
+            "flex flex-col items-center justify-center p-8 rounded-[2rem] border transition-all active:scale-95 group/p shadow-xl",
+            primary 
+                ? "bg-rose-600 border-rose-500 text-white hover:bg-rose-500" 
+                : "bg-slate-950 border-slate-800 text-white hover:bg-slate-900 hover:border-slate-700"
+          )}
+        >
+            <div className={clsx("mb-4 transition-transform group-hover/p:scale-110", primary ? "text-white" : colorClasses[color])}>
+                {icon}
+            </div>
+            <span className="text-[11px] font-black uppercase tracking-widest">{label}</span>
+            <span className={clsx("text-[9px] font-bold mt-2 uppercase tracking-tight", primary ? "text-white/60" : "text-slate-700")}>{desc}</span>
+        </button>
+    );
+}
+
+function HealthBar({ label, got, total, color }: any) {
+    const pct = (got && total) ? Math.round((got/total) * 100) : 0;
+    return (
+        <div className="group">
+            <div className="flex justify-between text-[9px] font-black uppercase tracking-widest text-slate-600 mb-3 ml-1 group-hover:text-slate-400 transition-colors">
+                <span>{label}</span>
+                <span className="text-white/70">{got || 0}/{total || 0}</span>
+            </div>
+            <div className="h-3 bg-slate-950 rounded-full p-0.5 border border-slate-800 shadow-inner overflow-hidden">
+                <motion.div 
+                    initial={{ width: 0 }}
+                    animate={{ width: `${pct}%` }}
+                    transition={{ duration: 1.5, ease: "easeOut" }}
+                    className={clsx("h-full rounded-full shadow-lg", color)} 
+                />
+            </div>
+        </div>
+    );
+}
+
+function QuickActionLink({ href, title, sub, icon, color }: any) {
+    const colorMap: any = {
+        purple: "text-purple-500 bg-purple-500/10 border-purple-500/20",
+        indigo: "text-indigo-500 bg-indigo-500/10 border-indigo-500/20",
+        amber: "text-amber-500 bg-amber-500/10 border-amber-500/20"
+    };
+
+    return (
+        <Link href={href} className="flex items-center gap-5 p-6 bg-slate-900 border border-slate-800 rounded-[2rem] hover:border-slate-600 transition-all group shadow-xl hover:-translate-y-1">
+            <div className={clsx("p-4 rounded-2xl border transition-transform group-hover:scale-110 shadow-lg", colorMap[color])}>
+                {icon}
+            </div>
+            <div>
+                <h4 className="text-sm font-black text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-slate-400 transition-all uppercase tracking-tight">{title}</h4>
+                <p className="text-[9px] text-slate-600 uppercase font-black tracking-widest mt-1">{sub}</p>
+            </div>
+        </Link>
+    );
+}
+

@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:flutter/material.dart' show TextEditingController;
+import 'package:flutter/material.dart';
+import '../../theme/app_colors.dart';
 import '../../data/providers/data_repository.dart';
 
 class SearchController extends GetxController {
@@ -57,6 +58,11 @@ class SearchController extends GetxController {
       Get.snackbar(
         'Microphone Disabled',
         'Please grant microphone permissions.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: AppColors.error,
+        colorText: Colors.white,
+        margin: const EdgeInsets.all(16),
+        borderRadius: 14,
       );
     }
   }

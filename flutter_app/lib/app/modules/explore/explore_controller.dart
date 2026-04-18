@@ -6,6 +6,8 @@ import '../../data/models/image_model.dart';
 import '../../data/models/event_model.dart';
 import '../../data/models/quote_model.dart';
 import '../../data/models/mantra_model.dart';
+import '../../data/models/quiz_model.dart';
+import '../../data/models/trivia_model.dart';
 import '../../data/models/taxonomy_model.dart';
 import '../../data/providers/data_repository.dart';
 import '../../routes/app_pages.dart';
@@ -26,9 +28,12 @@ class ExploreController extends GetxController {
   final allMantras = <MantraModel>[].obs;
   final filteredMantras = <MantraModel>[].obs;
 
+  final allQuizzes = <QuizModel>[].obs;
+  final allTrivia = <TriviaModel>[].obs;
+
   final taxonomy = Rxn<Taxonomy>();
 
-  final currentTab = 0.obs; // 0 = Visuals, 1 = Festivals, 2 = Wisdom
+  final currentTab = 0.obs; // 0 = Visuals, 1 = Festivals, 2 = Wisdom, 3 = Play
   final searchQuery = ''.obs;
 
   // Phase 15 Filters
@@ -37,6 +42,9 @@ class ExploreController extends GetxController {
   final selectedFestival = ''.obs;
   final selectedSeason = ''.obs;
   final sortOption = 'newest'.obs; // newest, popular, liked, shared
+
+  final isGridView = true.obs;
+  void toggleViewMode() => isGridView.value = !isGridView.value;
 
   final isLoading = true.obs;
   final hasError = false.obs;
@@ -78,12 +86,13 @@ class ExploreController extends GetxController {
   Future<void> fetchData() async {
     isLoading.value = true;
     hasError.value = false;
+    final lang = _repository.currentLang.value;
     try {
       // Fetch Taxonomy for filters (using fast cache if available)
       if (_repository.currentTaxonomy != null) {
         taxonomy.value = _repository.currentTaxonomy;
       } else {
-        final tax = await _repository.getTaxonomy('en');
+        final tax = await _repository.getTaxonomy(lang);
         if (tax != null) {
           taxonomy.value = tax;
         }
@@ -91,8 +100,8 @@ class ExploreController extends GetxController {
 
       // Explicitly load Wisdom data (lazy loaded in repository)
       await Future.wait([
-        _repository.getQuotes('en'),
-        _repository.getMantras('en'),
+        _repository.getQuotes(lang),
+        _repository.getMantras(lang),
       ]);
 
       // Load all available Resources
@@ -100,6 +109,12 @@ class ExploreController extends GetxController {
       allEvents.value = _repository.allEvents;
       allQuotes.value = _repository.allQuotes;
       allMantras.value = _repository.allMantras;
+
+      // Load Quiz & Trivia for Play tab
+      final quizzes = await _repository.getQuizzes(lang);
+      if (quizzes != null) allQuizzes.value = quizzes;
+      final trivia = await _repository.getTrivia(lang);
+      if (trivia != null) allTrivia.value = trivia;
 
       filteredImages.value = allImages.toList();
       filteredEvents.value = allEvents.toList();
@@ -160,14 +175,19 @@ class ExploreController extends GetxController {
       final validImageIds = eventsInCat.expand((e) => e.images).toSet();
 
       items = items.where((img) {
-        if (img.categories.any((c) => c.toLowerCase() == selectedCatLower))
+        if (img.categories.any((c) => c.toLowerCase() == selectedCatLower)) {
           return true;
-        if (img.tags.any((v) => v.toLowerCase() == selectedCatLower))
+        }
+        if (img.tags.any((v) => v.toLowerCase() == selectedCatLower)) {
           return true;
-        if (img.standaloneCategory?.toLowerCase() == selectedCatLower)
+        }
+        if (img.standaloneCategory?.toLowerCase() == selectedCatLower) {
           return true;
+        }
         // Images that belong to an event of this category
-        if (validImageIds.contains(img.id)) return true;
+        if (validImageIds.contains(img.id)) {
+          return true;
+        }
         return false;
       }).toList();
     }
@@ -251,16 +271,22 @@ class ExploreController extends GetxController {
       final selectedCatLower = selectedCategory.value.toLowerCase();
 
       quoteList = quoteList.where((q) {
-        if (q.category?.code.toLowerCase() == selectedCatLower) return true;
-        if (q.vibes.any((v) => v.code.toLowerCase() == selectedCatLower))
+        if (q.category?.code.toLowerCase() == selectedCatLower) {
           return true;
+        }
+        if (q.vibes.any((v) => v.code.toLowerCase() == selectedCatLower)) {
+          return true;
+        }
         return false;
       }).toList();
 
       mantraList = mantraList.where((m) {
-        if (m.category?.code.toLowerCase() == selectedCatLower) return true;
-        if (m.vibes.any((v) => v.code.toLowerCase() == selectedCatLower))
+        if (m.category?.code.toLowerCase() == selectedCatLower) {
           return true;
+        }
+        if (m.vibes.any((v) => v.code.toLowerCase() == selectedCatLower)) {
+          return true;
+        }
         return false;
       }).toList();
     }
@@ -324,11 +350,11 @@ class ExploreController extends GetxController {
     if (allImages.isNotEmpty) {
       final random = math.Random();
       final randomImage = allImages[random.nextInt(allImages.length)];
-      Get.toNamed(Routes.IMAGE_DETAILS, arguments: randomImage);
+      Get.toNamed(Routes.imageDetails, arguments: randomImage);
     }
   }
 
   void navigateToDetails(ImageModel item) {
-    Get.toNamed(Routes.IMAGE_DETAILS, arguments: item);
+    Get.toNamed(Routes.imageDetails, arguments: item);
   }
 }

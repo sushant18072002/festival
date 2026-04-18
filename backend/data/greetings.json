@@ -11,7 +11,7 @@
             "spiritual",
             "joyful"
         ],
-        "event_slug": "deepavali-festival-of-lights",
+        "event_slug": "diwali-2026",
         "translations": {
             "hi": {
                 "text": "दीवाली का दिव्य प्रकाश आपके जीवन में शांति, समृद्धि और खुशियां लेकर आए। शुभ दीवाली!"
@@ -39,7 +39,7 @@
             "joyful",
             "spiritual"
         ],
-        "event_slug": "deepavali-festival-of-lights",
+        "event_slug": "diwali-2026",
         "translations": {
             "hi": {
                 "text": "दीपावली के इस शुभ अवसर पर, आपका घर प्रेम, हँसी और अनंत आशीर्वाद से भरा रहे। हैप्पी दीवाली!"
@@ -57,7 +57,7 @@
         "vibes": [
             "patriotic"
         ],
-        "event_slug": "republic-independence-day",
+        "event_slug": "republic-day-2026",
         "translations": {
             "hi": {
                 "text": "आइए हम अपने संविधान का सम्मान करें और एक स्वतंत्र भारत की भावना का जश्न मनाएं। गणतंत्र दिवस की शुभकामनाएं!"
@@ -79,7 +79,7 @@
         "vibes": [
             "patriotic"
         ],
-        "event_slug": "republic-independence-day",
+        "event_slug": "republic-day-2026",
         "translations": {
             "hi": {
                 "text": "भारतीय होने पर गर्व है! हमारा देश हमेशा फले-फूले और हमारा तिरंगा ऊंचा लहरे। जय हिन्द!"
@@ -98,7 +98,7 @@
             "joyful",
             "cultural"
         ],
-        "event_slug": "holi-festival-of-colors",
+        "event_slug": "holi-2026",
         "translations": {
             "hi": {
                 "text": "आपका जीवन होली के त्योहार की तरह ही रंगीन और आनंदमय हो। होली की शुभकामनाएं!"
@@ -120,7 +120,7 @@
             "joyful",
             "romantic"
         ],
-        "event_slug": "holi-festival-of-colors",
+        "event_slug": "holi-2026",
         "translations": {
             "hi": {
                 "text": "होली के रंग आपके जीवन में प्रेम, आनंद और खुशियां फैलाएं। होली की हार्दिक शुभकामनाएं!"
@@ -178,7 +178,7 @@
             "spiritual",
             "joyful"
         ],
-        "event_slug": "eid-al-fitr",
+        "event_slug": "eid-al-fitr-2026",
         "translations": {
             "hi": {
                 "text": "आपको और आपके परिवार को ईद की ढेर सारी बधाइयाँ। अल्लाह आप पर खुशियाँ और चैन बरसाए। ईद मुबारक!"
@@ -198,7 +198,7 @@
             "joyful",
             "spiritual"
         ],
-        "event_slug": "christmas",
+        "event_slug": "christmas-2026",
         "translations": {
             "hi": {
                 "text": "क्रिसमस की भावना आपके दिल और घर में खुशी, शांति और गर्माहट लेकर आए। मेरी क्रिसमस!"
@@ -217,7 +217,7 @@
             "spiritual",
             "cultural"
         ],
-        "event_slug": "navratri-durga-puja",
+        "event_slug": "navratri-2026",
         "translations": {
             "hi": {
                 "text": "देवी दुर्गा आपको शक्ति, विवेक और समृद्धि से आशीर्वाद दें। शुभ नवरात्रि!"
@@ -239,7 +239,7 @@
             "spiritual",
             "joyful"
         ],
-        "event_slug": "ganesh-chaturthi",
+        "event_slug": "ganesh-chaturthi-2026",
         "translations": {
             "hi": {
                 "text": "भगवान गणेश आपके मार्ग से सभी बाधाएं दूर करें और आपको बुद्धि और समृद्धि का आशीर्वाद दें। गणपति बप्पा मोरया!"
@@ -261,7 +261,7 @@
             "spiritual",
             "solemn"
         ],
-        "event_slug": "maha-shivratri",
+        "event_slug": "maha-shivratri-2026",
         "translations": {
             "hi": {
                 "text": "भगवान शिव आपको शांति, समृद्धि और ज्ञान का आशीर्वाद दें। महाशिवरात्रि की हार्दिक शुभकामनाएं!"
@@ -280,7 +280,7 @@
         "vibes": [
             "patriotic"
         ],
-        "event_slug": "republic-independence-day",
+        "event_slug": "republic-day-2026",
         "translations": {
             "hi": {
                 "text": "आजादी हमारी शान और हमारी सबसे बड़ी धरोहर है। स्वतंत्रता दिवस की बधाई! जय हिन्द!"
@@ -299,7 +299,7 @@
             "romantic",
             "joyful"
         ],
-        "event_slug": "raksha-bandhan",
+        "event_slug": "raksha-bandhan-2026",
         "translations": {
             "hi": {
                 "text": "भाई-बहन के प्रेम का बंधन समय के साथ मजबूत होता रहे। रक्षाबंधन की हार्दिक शुभकामनाएं!"
@@ -321,7 +321,7 @@
             "spiritual",
             "morning"
         ],
-        "event_slug": "buddha-purnima",
+        "event_slug": "buddha-purnima-2026",
         "translations": {
             "hi": {
                 "text": "सुप्रभात! बुद्ध की शिक्षाएं आज आपको शांति और आनंद की ओर ले जाएं।"
@@ -340,7 +340,7 @@
             "spiritual",
             "solemn"
         ],
-        "event_slug": "buddha-purnima",
+        "event_slug": "buddha-purnima-2026",
         "translations": {
             "hi": {
                 "text": "बुद्ध का दिव्य प्रकाश आपके जीवन में स्पष्टता और शांति लाए।"
@@ -359,7 +359,7 @@
             "joyful",
             "cultural"
         ],
-        "event_slug": "onam",
+        "event_slug": "onam-2026",
         "translations": {
             "hi": {
                 "text": "ओणम का उत्सव आपके परिवार में खुशी, शांति और समृद्धि लेकर आए। ओणम की शुभकामनाएं!"
@@ -381,7 +381,7 @@
             "spiritual",
             "morning"
         ],
-        "event_slug": "international-yoga-day",
+        "event_slug": "international-yoga-day-2026",
         "translations": {
             "hi": {
                 "text": "योग आपके शरीर, मन और आत्मा को एक करे। अंतर्राष्ट्रीय योग दिवस पर स्वास्थ्य और सामंजस्य की कामना!"
@@ -400,7 +400,7 @@
             "patriotic",
             "joyful"
         ],
-        "event_slug": "international-womens-day",
+        "event_slug": "womens-day-2026",
         "translations": {
             "hi": {
                 "text": "सशक्त महिलाओं के लिए — हम उन्हें जानें, हम उन जैसी बनें, हम उन्हें पाल-पोसकर बड़ा करें। महिला दिवस की शुभकामनाएं!"

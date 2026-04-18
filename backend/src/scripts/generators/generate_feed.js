@@ -12,6 +12,7 @@ const Category = require('../../models/Category');
 const Tag = require('../../models/Tag');
 const DeployConfig = require('../../models/DeployConfig');
 const AppConfig = require('../../models/AppConfig');
+const HomeGreeting = require('../../models/HomeGreeting');
 
 dotenv.config({ path: path.join(__dirname, '../../.env') });
 
@@ -74,7 +75,7 @@ const buildHistoryCard = (allEvents, lang, today) => {
 
 const buildTrendingGrid = async (lang) => {
     const trendingImagesDeep = await Image.find({ is_deleted: { $ne: true }, language: { $in: ['neutral', lang] } })
-        .select(`s3_key share_text media_type downloads_count is_standalone standalone_category has_overlay greeting_id greeting_config quote_id quote_config is_s3_uploaded translations.en translations.${lang}`)
+        .select(`s3_key caption aspect_ratio dominant_colors share_text media_type downloads_count is_standalone standalone_category has_overlay greeting_id greeting_config quote_id quote_config is_s3_uploaded translations.en translations.${lang}`)
         .sort({ downloads_count: -1 })
         .limit(50);
 
@@ -83,9 +84,21 @@ const buildTrendingGrid = async (lang) => {
     const trendingItems = trendingImagesDeep.map(img => ({
         id: img._id,
         url: img.s3_key,
+        thumbnail: img.s3_key.replace('/original/', '/thumb/').replace('.webp', '_thumb.webp'),
+        caption: getStr(img, 'caption', lang),
+        share_text: getStr(img, 'share_text', lang),
+        has_overlay: img.has_overlay || false,
+        greeting_id: img.greeting_id ? img.greeting_id.toString() : null,
         greeting_config: img.greeting_config || null,
         quote_id: img.quote_id ? img.quote_id.toString() : null,
         quote_config: img.quote_config || null,
+        dominant_colors: img.dominant_colors || [],
+        aspect_ratio: img.aspect_ratio || 1.0,
+        language: img.language || 'neutral',
+        is_s3_uploaded: img.is_s3_uploaded || false,
+        is_standalone: img.is_standalone || false,
+        standalone_category: img.standalone_category || null,
+        downloads_count: img.downloads_count || 0,
         vibes: [] // Images no longer inherit event vibes natively via population
     }));
 
@@ -240,6 +253,20 @@ const buildTaxonomy = async (lang) => {
     };
 };
 
+// ─── Greetings Builder ───────────────────────────────────────────────────────
+
+const buildGreetingsMap = async (lang) => {
+    const homeGreetings = await HomeGreeting.find({ is_active: true, is_deleted: { $ne: true } }).lean();
+    const groups = { morning: [], afternoon: [], evening: [], night: [], festival: [], general: [] };
+    for (const hg of homeGreetings) {
+        const type = hg.type || 'general';
+        if (!groups[type]) continue;
+        const text = (lang !== 'en' && hg.translations?.[lang]?.text) ? hg.translations[lang].text : hg.text;
+        if (text) groups[type].push(text);
+    }
+    return groups;
+};
+
 // ─── Main Generator Output ───────────────────────────────────────────────────
 
 /**
@@ -252,11 +279,20 @@ const generateFeedMemory = async (lang = 'en') => {
     today.setHours(0, 0, 0, 0);
 
     const allEvents = await Event.find({ is_active: true, is_deleted: { $ne: true } })
-        .select(`title slug description date dates priority lottie_overlay historical_significance category tags vibes translations.en translations.${lang}`)
+        .select(`title slug description date dates priority lottie_overlay historical_significance category tags vibes images translations.en translations.${lang}`)
         .populate('category', `code icon color translations.en translations.${lang}`)
         .populate('tags', `code translations.en translations.${lang}`)
         .populate('vibes', `code icon color translations.en translations.${lang}`)
-        .populate('lottie_overlay', 'filename s3_key title');
+        .populate('lottie_overlay', 'filename s3_key title')
+        .populate({
+            path: 'images',
+            match: { is_deleted: { $ne: true } },
+            options: { sort: { created_at: 1 } },
+            populate: [
+                { path: 'categories', select: 'code' },
+                { path: 'tags', select: 'code' }
+            ]
+        });
 
     // 1. Core Feed structure
     const feed = {
@@ -274,6 +310,9 @@ const generateFeedMemory = async (lang = 'en') => {
 
     const upcomingSection = await buildUpcomingHorizontal(allEvents, lang, today);
     if (upcomingSection) feed.sections.push(upcomingSection);
+
+    // Inject HomeGreeting grouped map so Flutter's HomeFeed.fromJson can populate 'greetings'
+    feed.greetings = await buildGreetingsMap(lang);
 
     outputs[`home/home_feed_${lang}.json`] = JSON.stringify(feed);
 
@@ -307,9 +346,19 @@ const generateFeedMemory = async (lang = 'en') => {
     // 3. Subsidiary Outputs
     outputs[`home/notifications_${lang}.json`] = JSON.stringify(buildNotifications(allEvents, lang, today));
 
-    const appConfig = await AppConfig.findOne({ key: 'mobile_app' })
-        || await AppConfig.create({ key: 'mobile_app' });
-    outputs[`home/app_config_${lang}.json`] = JSON.stringify(appConfig);
+    const appConfig = await AppConfig.findOne({ key: 'mobile_app' }).lean()
+        || await (async () => { await AppConfig.create({ key: 'mobile_app' }); return AppConfig.findOne({ key: 'mobile_app' }).lean(); })();
+    const appConfigDto = {
+        support_url: appConfig.support_url || '',
+        privacy_policy_url: appConfig.privacy_policy_url || '',
+        terms_url: appConfig.terms_url || '',
+        contact_email: appConfig.contact_email || '',
+        social_links: appConfig.social_links || {},
+        store_urls: appConfig.store_urls || {},
+        feature_flags: appConfig.feature_flags || {},
+        generated_at: new Date().toISOString()
+    };
+    outputs[`home/app_config_${lang}.json`] = JSON.stringify(appConfigDto);
 
     outputs[`home/taxonomy_${lang}.json`] = JSON.stringify(await buildTaxonomy(lang));
 

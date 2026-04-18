@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_text_styles.dart';
 import '../../theme/app_spacing.dart';
@@ -20,24 +21,27 @@ class OnboardingView extends GetView<OnboardingController> {
             onPageChanged: controller.onPageChanged,
             children: [
               _buildSlide(
+                context: context,
                 title: 'Discover Festivals',
                 description:
                     "Explore India's rich cultural tapestry. Learn about traditions, rituals, and stories behind every celebration.",
                 icon: '🪔',
               ),
               _buildSlide(
+                context: context,
                 title: 'Earn Karma & Trophies',
                 description:
                     'Participate in quizzes, daily trivia, and mark festivals as celebrated to rank up and unlock exclusive avatars.',
                 icon: '🏆',
               ),
               _buildSlide(
+                context: context,
                 title: 'Share Beautiful Greetings',
                 description:
                     'Create and share stunning, personalized festival wishes with your friends and family.',
                 icon: '✨',
               ),
-              _buildFinalSlide(),
+              _buildFinalSlide(context),
             ],
           ),
           Positioned(
@@ -55,8 +59,8 @@ class OnboardingView extends GetView<OnboardingController> {
                     onPressed: controller.skip,
                     child: Text(
                       'Skip',
-                      style: AppTextStyles.labelLarge.copyWith(
-                        color: Colors.white54,
+                      style: AppTextStyles.labelLarge(context).copyWith(
+                        color: AppColors.textAdaptiveSecondary(context),
                       ),
                     ),
                   ),
@@ -70,8 +74,8 @@ class OnboardingView extends GetView<OnboardingController> {
                         height: 8,
                         decoration: BoxDecoration(
                           color: controller.currentPage.value == index
-                              ? AppColors.primary
-                              : Colors.white24,
+                              ? AppColors.primaryAdaptive(context)
+                              : AppColors.glassBorder(context),
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
@@ -79,12 +83,12 @@ class OnboardingView extends GetView<OnboardingController> {
                   ),
                   IconButton(
                     onPressed: controller.nextPage,
-                    icon: const Icon(
-                      Icons.arrow_forward_rounded,
-                      color: AppColors.primary,
+                    icon: Icon(
+                      LucideIcons.arrowRight,
+                      color: AppColors.primaryAdaptive(context),
                     ),
                     style: IconButton.styleFrom(
-                      backgroundColor: AppColors.primary.withValues(alpha: 0.1),
+                      backgroundColor: AppColors.primaryAdaptive(context).withValues(alpha: 0.1),
                       padding: const EdgeInsets.all(12),
                     ),
                   ),
@@ -98,6 +102,7 @@ class OnboardingView extends GetView<OnboardingController> {
   }
 
   Widget _buildSlide({
+    required BuildContext context,
     required String title,
     required String description,
     required String icon,
@@ -114,8 +119,8 @@ class OnboardingView extends GetView<OnboardingController> {
           const SizedBox(height: AppSpacing.xxl),
           Text(
             title,
-            style: AppTextStyles.displayMedium.copyWith(
-              color: Colors.white,
+            style: AppTextStyles.displayMedium(context).copyWith(
+              color: AppColors.textAdaptive(context),
               height: 1.2,
             ),
             textAlign: TextAlign.center,
@@ -123,8 +128,8 @@ class OnboardingView extends GetView<OnboardingController> {
           const SizedBox(height: AppSpacing.lg),
           Text(
             description,
-            style: AppTextStyles.bodyLarge.copyWith(
-              color: Colors.white70,
+            style: AppTextStyles.bodyLarge(context).copyWith(
+              color: AppColors.textAdaptiveSecondary(context),
               height: 1.6,
             ),
             textAlign: TextAlign.center,
@@ -134,7 +139,7 @@ class OnboardingView extends GetView<OnboardingController> {
     );
   }
 
-  Widget _buildFinalSlide() {
+  Widget _buildFinalSlide(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.xxl),
       child: Column(
@@ -149,33 +154,35 @@ class OnboardingView extends GetView<OnboardingController> {
           const SizedBox(height: AppSpacing.xl),
           Text(
             'Ready to Begin?',
-            style: AppTextStyles.displayMedium.copyWith(
-              color: AppColors.accent,
+            style: AppTextStyles.displayMedium(context).copyWith(
+              color: AppColors.accentAdaptive(context),
             ),
             textAlign: TextAlign.center,
           ).animate().fade(delay: 300.ms),
           const SizedBox(height: AppSpacing.lg),
           Text(
             'Start your cultural journey today.',
-            style: AppTextStyles.bodyLarge.copyWith(color: Colors.white70),
+            style: AppTextStyles.bodyLarge(context).copyWith(
+              color: AppColors.textAdaptiveSecondary(context),
+            ),
             textAlign: TextAlign.center,
           ).animate().fade(delay: 500.ms),
           const SizedBox(height: AppSpacing.xxl * 2),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: Colors.white,
+              backgroundColor: AppColors.primaryAdaptive(context),
+              foregroundColor: Theme.of(context).brightness == Brightness.dark ? Colors.black : Colors.white,
               padding: const EdgeInsets.symmetric(vertical: 20),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
               elevation: 8,
-              shadowColor: AppColors.primary.withValues(alpha: 0.5),
+              shadowColor: AppColors.primaryAdaptive(context).withValues(alpha: 0.5),
             ),
             onPressed: controller.completeOnboarding,
             child: Text(
               'START EXPLORING',
-              style: AppTextStyles.labelLarge.copyWith(
+              style: AppTextStyles.labelLarge(context).copyWith(
                 fontWeight: FontWeight.bold,
                 letterSpacing: 1.5,
               ),

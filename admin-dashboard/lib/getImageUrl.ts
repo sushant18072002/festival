@@ -14,12 +14,21 @@ export function getImageUrl(s3Key?: string): string {
 }
 
 /**
+ * getAudioUrl — Returns the correct URL to play an audio track in the admin dashboard.
+ */
+export function getAudioUrl(s3Key?: string): string {
+    if (!s3Key) return '';
+    // Route through the same proxy, which handles audio paths
+    return `/api/image-proxy?key=${encodeURIComponent(s3Key)}&type=audio`;
+}
+
+/**
  * getS3PublicUrl — Returns the direct S3 public URL (for sharing / copying live links).
  * Only works if the bucket has public read access.
  */
 export function getS3PublicUrl(s3Key?: string): string {
     if (!s3Key) return '';
-    const bucket = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME || 'turntaptravel-s3';
-    const region = process.env.NEXT_PUBLIC_AWS_REGION || 'us-east-1';
+    const bucket = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME || 'sushant-2026';
+    const region = process.env.NEXT_PUBLIC_AWS_REGION || 'ap-south-1';
     return `https://${bucket}.s3.${region}.amazonaws.com/${s3Key}`;
 }

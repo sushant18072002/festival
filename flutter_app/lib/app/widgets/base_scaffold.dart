@@ -45,10 +45,10 @@ class BaseScaffold extends StatelessWidget {
                   height: 300,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: AppColors.primary.withValues(alpha: 0.1),
+                    color: AppColors.primaryAdaptive(context).withValues(alpha: 0.1),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.primary.withValues(alpha: 0.2),
+                        color: AppColors.primaryAdaptive(context).withValues(alpha: 0.2),
                         blurRadius: 100,
                         spreadRadius: 50,
                       ),

@@ -1,48 +1,93 @@
 /**
- * health.js — Checks the health of the full pipeline: DB counts, S3 counts, JSON feed freshness.
- * Run: npm run health (from backend/)
+ * health.js — Optimized Backend Health & Deep Audit Tool
  * 
- * Outputs:
- *   - MongoDB collection counts
- *   - S3 image counts (original, thumb)
- *   - Sync status: images in DB vs S3
- *   - Last deploy time from SystemState
+ * Usage:
+ *   node src/scripts/utils/health.js          (Shallow count comparison)
+ *   node src/scripts/utils/health.js --deep   (Deep per-asset verification)
  */
+
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '../../../.env') });
 const mongoose = require('mongoose');
-const AWS = require('aws-sdk');
+const { S3Client, ListObjectsV2Command, HeadObjectCommand } = require('@aws-sdk/client-s3');
+const pLimit = require('p-limit');
 
-const s3 = new AWS.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_REGION
+const s3Client = new S3Client({
+    region: process.env.AWS_REGION,
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    },
 });
 
 const BUCKET = process.env.AWS_BUCKET_NAME;
 const ENV = process.env.DEPLOY_ENV || 'stage';
 const BASE = process.env.S3_BASE_PATH || 'Utsav';
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/utsav_share';
+const CONCURRENCY = 10;
+const limit = pLimit(CONCURRENCY);
+
+// Load models for deep audit
+const Image = require('../../models/Image');
+const Mantra = require('../../models/Mantra');
+const AmbientAudio = require('../../models/AmbientAudio');
+const LottieOverlay = require('../../models/LottieOverlay');
 
 const countS3Objects = async (prefix) => {
     let total = 0, token;
     do {
-        const res = await s3.listObjectsV2({ Bucket: BUCKET, Prefix: prefix, ContinuationToken: token }).promise();
+        const res = await s3Client.send(new ListObjectsV2Command({
+            Bucket: BUCKET, Prefix: prefix, ContinuationToken: token
+        }));
         total += (res.Contents || []).length;
         token = res.IsTruncated ? res.NextContinuationToken : undefined;
     } while (token);
     return total;
 };
 
+const verifyObject = async (key) => {
+    if (!key) return false;
+    try {
+        await s3Client.send(new HeadObjectCommand({ Bucket: BUCKET, Key: key }));
+        return true;
+    } catch (e) {
+        return false;
+    }
+};
+
 const statusIcon = (ok) => ok ? '✅' : '❌';
 const warnIcon = (ok) => ok ? '✅' : '⚠️ ';
 
+const performDeepAudit = async () => {
+    console.log('🔍 Starting Deep Integrity Audit...');
+    const results = { images: 0, mantras: 0, ambient: 0, lotties: 0, broken: [] };
+
+    const auditModel = async (Model, label, keyField, slugField) => {
+        const records = await Model.find({ is_deleted: { $ne: true } });
+        console.log(`  Checking ${records.length} ${label}...`);
+        
+        const tasks = records.map(r => limit(async () => {
+            const ok = await verifyObject(r[keyField]);
+            if (!ok) results.broken.push(`${label}: ${r[slugField]} (Key: ${r[keyField]})`);
+            else results[label.toLowerCase()]++;
+        }));
+        await Promise.all(tasks);
+    };
+
+    await auditModel(Image, 'Images', 's3_key', 'filename');
+    await auditModel(Mantra, 'Mantras', 'audio_file', 'slug');
+    await auditModel(AmbientAudio, 'Ambient', 's3_key', 'slug');
+    await auditModel(LottieOverlay, 'Lotties', 's3_key', 'filename');
+
+    return results;
+};
+
 const health = async () => {
+    const isDeep = process.argv.includes('--deep');
     try {
         await mongoose.connect(MONGO_URI);
-
-        // ── DB Counts ─────────────────────────────────────────────────────────
         const db = mongoose.connection.db;
+        
         const [events, images, greetings, quotes, mantras, categories, tags, vibes] = await Promise.all([
             db.collection('events').countDocuments({ is_deleted: { $ne: true } }),
             db.collection('images').countDocuments({ is_deleted: { $ne: true } }),
@@ -56,7 +101,6 @@ const health = async () => {
 
         const imagesUploaded = await db.collection('images').countDocuments({ is_s3_uploaded: true });
 
-        // ── S3 Counts ─────────────────────────────────────────────────────────
         let s3Original = 0, s3Thumb = 0;
         try {
             [s3Original, s3Thumb] = await Promise.all([
@@ -67,47 +111,35 @@ const health = async () => {
             console.warn('  ⚠️  Could not reach S3:', e.message);
         }
 
-        // ── SystemState ───────────────────────────────────────────────────────
-        let lastDeploy = 'Never', lastFeed = 'Never';
-        try {
-            const state = await db.collection('systemstates').findOne({ key: 'main' });
-            if (state) {
-                lastDeploy = state.last_deployed_at ? new Date(state.last_deployed_at).toLocaleString() : 'Never';
-                lastFeed = state.last_feed_generated_at ? new Date(state.last_feed_generated_at).toLocaleString() : 'Never';
-            }
-        } catch (e) { /* ignore */ }
+        let auditResults = null;
+        if (isDeep) auditResults = await performDeepAudit();
 
-        // ── Report ────────────────────────────────────────────────────────────
         console.log('\n╔══════════════════════════════════════════════════╗');
         console.log('║           🏥  UTSAV BACKEND HEALTH CHECK          ║');
         console.log('╠══════════════════════════════════════════════════╣');
         console.log('║  DATABASE                                         ║');
-        console.log(`║  ${statusIcon(events > 0)} Events:       ${String(events).padEnd(4)} (active)              ║`);
-        console.log(`║  ${statusIcon(images > 0)} Images:       ${String(images).padEnd(4)} (active, ${imagesUploaded} on S3)      ║`);
-        console.log(`║  ${statusIcon(greetings > 0)} Greetings:   ${String(greetings).padEnd(4)}                          ║`);
-        console.log(`║  ${statusIcon(quotes > 0)} Quotes:      ${String(quotes).padEnd(4)}                          ║`);
+        console.log(`║  ${statusIcon(events > 0)} Events:       ${String(events).padEnd(4)}                          ║`);
+        console.log(`║  ${statusIcon(images > 0)} Images:       ${String(images).padEnd(4)} (on S3: ${imagesUploaded})      ║`);
         console.log(`║  ${statusIcon(mantras > 0)} Mantras:     ${String(mantras).padEnd(4)}                          ║`);
-        console.log(`║  ${statusIcon(categories > 0)} Categories:  ${String(categories).padEnd(4)}                          ║`);
-        console.log(`║  ${warnIcon(tags > 0)} Tags:        ${String(tags).padEnd(4)}                          ║`);
-        console.log(`║  ${warnIcon(vibes > 0)} Vibes:       ${String(vibes).padEnd(4)}                          ║`);
         console.log('╠══════════════════════════════════════════════════╣');
         console.log('║  S3 STORAGE                                       ║');
-        console.log(`║  ${statusIcon(s3Original > 0)} Originals:   ${String(s3Original).padEnd(4)} in ${BASE}/${ENV}/image/original/  ║`);
-        console.log(`║  ${warnIcon(s3Thumb > 0)} Thumbnails:  ${String(s3Thumb).padEnd(4)} in ${BASE}/${ENV}/image/thumb/     ║`);
+        console.log(`║  ${statusIcon(s3Original > 0)} Originals:   ${String(s3Original).padEnd(4)}                          ║`);
         const synced = images === s3Original;
-        console.log(`║  ${warnIcon(synced)} DB↔S3 Sync: ${synced ? 'In Sync' : `OUT OF SYNC (DB:${images} S3:${s3Original})`}${''.padEnd(synced ? 14 : 2)} ║`);
-        console.log('╠══════════════════════════════════════════════════╣');
-        console.log('║  DEPLOYMENT                                       ║');
-        console.log(`║  Last Deploy:  ${lastDeploy.slice(0, 34).padEnd(34)} ║`);
-        console.log(`║  Last Feed:    ${lastFeed.slice(0, 34).padEnd(34)} ║`);
+        console.log(`║  ${warnIcon(synced)} DB↔S3 Sync: ${synced ? 'In Sync' : 'MISMATCH'}                    ║`);
+        
+        if (isDeep) {
+            console.log('╠══════════════════════════════════════════════════╣');
+            console.log('║  DEEP INTEGRITY RESULTS                           ║');
+            console.log(`║  Verified Assets: ${String(auditResults.images + auditResults.mantras + auditResults.ambient + auditResults.lotties).padEnd(4)}                    ║`);
+            console.log(`║  Broken Links:    ${String(auditResults.broken.length).padEnd(4)} ${auditResults.broken.length > 0 ? '❌' : '✅'}                  ║`);
+            if (auditResults.broken.length > 0) {
+                console.log('║  Listing up to 3 broken links:                    ║');
+                auditResults.broken.slice(0, 3).forEach(b => {
+                    console.log(`║  ! ${b.slice(0, 45).padEnd(45)} ║`);
+                });
+            }
+        }
         console.log('╚══════════════════════════════════════════════════╝');
-
-        if (!synced) {
-            console.log('\n💡 Run `npm run seed:images` to sync S3 images into DB.');
-        }
-        if (images === 0) {
-            console.log('💡 No images! Add images to backend/assets/raw/ then run: npm run optimize && npm run deploy && npm run seed:images');
-        }
 
         process.exit(0);
     } catch (err) {

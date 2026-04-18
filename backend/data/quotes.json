@@ -14,7 +14,7 @@
             "patriotic"
         ],
         "is_featured": true,
-        "event_slug": "gandhi-jayanti",
+        "event_slug": "gandhi-jayanti-2026",
         "translations": {
             "hi": {
                 "text": "वह बदलाव बनें जो आप दुनिया में देखना चाहते हैं।",
@@ -40,7 +40,7 @@
             "spiritual"
         ],
         "is_featured": false,
-        "event_slug": "gandhi-jayanti",
+        "event_slug": "gandhi-jayanti-2026",
         "translations": {
             "hi": {
                 "text": "ताकत शारीरिक क्षमता से नहीं आती। यह एक अदम्य इच्छाशक्ति से आती है।",
@@ -144,7 +144,7 @@
             "solemn"
         ],
         "is_featured": true,
-        "event_slug": "buddha-purnima",
+        "event_slug": "buddha-purnima-2026",
         "translations": {
             "hi": {
                 "text": "शांति भीतर से आती है। इसे बाहर मत खोजो।",
@@ -166,7 +166,7 @@
             "spiritual"
         ],
         "is_featured": true,
-        "event_slug": "buddha-purnima",
+        "event_slug": "buddha-purnima-2026",
         "translations": {
             "hi": {
                 "text": "तीन चीजें लंबे समय तक नहीं छिप सकतीं: सूरज, चंद्रमा और सत्य।",
@@ -189,7 +189,7 @@
             "joyful"
         ],
         "is_featured": true,
-        "event_slug": "buddha-purnima",
+        "event_slug": "buddha-purnima-2026",
         "translations": {
             "hi": {
                 "text": "पूरी दुनिया के प्रति असीम प्रेम बिखेरें।",

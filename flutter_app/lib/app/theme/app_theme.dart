@@ -6,184 +6,67 @@ import 'app_spacing.dart';
 
 class AppTheme {
   /// The primary "Neo-Modern" Dark Theme
-  /// Uses Void Purple backgrounds + Neon Accents + Glassmorphism
-  static ThemeData get darkTheme {
+  static ThemeData get darkTheme => _buildTheme(Brightness.dark);
+
+  static ThemeData get lightTheme => _buildTheme(Brightness.light);
+
+  static ThemeData _buildTheme(Brightness brightness) {
+    final isDark = brightness == Brightness.dark;
+    final primaryColor = AppColors.primary;
+    final backgroundColor = AppColors.background(null, brightness: brightness);
+    final surfaceColor = AppColors.surface(null, brightness: brightness);
+    final textColor = AppColors.textAdaptive(null, brightness: brightness);
+
     return ThemeData(
       useMaterial3: true,
-      brightness: Brightness.dark,
-      primaryColor: AppColors.primary,
-      scaffoldBackgroundColor: AppColors.backgroundDark,
-
-      // ════════════════════════════════════════════════════════════════════════
-      // TYPOGRAPHY
-      // ════════════════════════════════════════════════════════════════════════
-      fontFamily: 'Outfit', // Default font
-      textTheme: TextTheme(
-        displayLarge: AppTextStyles.displayLarge,
-        displayMedium: AppTextStyles.displayMedium,
-        displaySmall: AppTextStyles.displaySmall,
-        headlineLarge: AppTextStyles.headlineLarge,
-        headlineMedium: AppTextStyles.headlineMedium,
-        headlineSmall: AppTextStyles.headlineSmall,
-        titleLarge: AppTextStyles.titleLarge,
-        titleMedium: AppTextStyles.titleMedium,
-        titleSmall: AppTextStyles.titleSmall,
-        bodyLarge: AppTextStyles.bodyLarge,
-        bodyMedium: AppTextStyles.bodyMedium,
-        bodySmall: AppTextStyles.bodySmall,
-        labelLarge: AppTextStyles.labelLarge,
-        labelMedium: AppTextStyles.labelMedium,
-        labelSmall: AppTextStyles.labelSmall,
-      ),
-
-      // ════════════════════════════════════════════════════════════════════════
-      // COMPONENT THEMES
-      // ════════════════════════════════════════════════════════════════════════
-      appBarTheme: AppBarTheme(
-        backgroundColor:
-            Colors.transparent, // Glass effect usually handled manually
-        elevation: 0,
-        centerTitle: true,
-        scrolledUnderElevation: 0,
-        titleTextStyle: AppTextStyles.headlineMedium.copyWith(
-          color: AppColors.textPrimary,
-        ),
-        iconTheme: const IconThemeData(color: AppColors.textPrimary),
-        systemOverlayStyle: SystemUiOverlayStyle.light,
-      ),
-
-      colorScheme: const ColorScheme.dark(
-        primary: AppColors.primary,
-        secondary: AppColors.secondary,
-        surface: AppColors.surfaceDark,
-        error: AppColors.error,
-        onPrimary: Colors.black, // Neon text should be black for contrast
-        onSecondary: Colors.white,
-        onSurface: AppColors.textPrimary,
-      ),
-
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          foregroundColor: Colors.black, // Contrast on neon
-          elevation: 0,
-          textStyle: AppTextStyles.labelLarge,
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.lg,
-            vertical: AppSpacing.md,
-          ),
-          shape: RoundedRectangleBorder(borderRadius: AppRadius.pillRadius),
-        ),
-      ),
-
-      cardTheme: CardThemeData(
-        color: AppColors.surfaceGlass,
-        elevation: 0,
-        margin: EdgeInsets.zero,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadius.cardRadius,
-          side: const BorderSide(
-            color: AppColors.border,
-            width: 1,
-          ), // Glass border
-        ),
-      ),
-
-      iconTheme: const IconThemeData(color: AppColors.textPrimary, size: 24),
-
-      dividerTheme: const DividerThemeData(
-        color: AppColors.border,
-        thickness: 1,
-      ),
-    );
-  }
-
-  /// Warm "Daylight Festival" Light Theme
-  /// Bright backgrounds, high contrast dark text, same vibrant accent colors
-  static ThemeData get lightTheme {
-    return ThemeData(
-      useMaterial3: true,
-      brightness: Brightness.light,
-      primaryColor: AppColors.primary,
-      scaffoldBackgroundColor: AppColors.backgroundLight,
-
+      brightness: brightness,
+      primaryColor: primaryColor,
+      scaffoldBackgroundColor: backgroundColor,
       fontFamily: 'Outfit',
       textTheme: TextTheme(
-        displayLarge: AppTextStyles.displayLarge.copyWith(
-          color: const Color(0xFF1A0B2E),
-        ),
-        displayMedium: AppTextStyles.displayMedium.copyWith(
-          color: const Color(0xFF1A0B2E),
-        ),
-        displaySmall: AppTextStyles.displaySmall.copyWith(
-          color: const Color(0xFF1A0B2E),
-        ),
-        headlineLarge: AppTextStyles.headlineLarge.copyWith(
-          color: const Color(0xFF1A0B2E),
-        ),
-        headlineMedium: AppTextStyles.headlineMedium.copyWith(
-          color: const Color(0xFF1A0B2E),
-        ),
-        headlineSmall: AppTextStyles.headlineSmall.copyWith(
-          color: const Color(0xFF1A0B2E),
-        ),
-        titleLarge: AppTextStyles.titleLarge.copyWith(
-          color: const Color(0xFF1A0B2E),
-        ),
-        titleMedium: AppTextStyles.titleMedium.copyWith(
-          color: const Color(0xFF1A0B2E),
-        ),
-        titleSmall: AppTextStyles.titleSmall.copyWith(
-          color: const Color(0xFF251042),
-        ),
-        bodyLarge: AppTextStyles.bodyLarge.copyWith(
-          color: const Color(0xFF251042),
-        ),
-        bodyMedium: AppTextStyles.bodyMedium.copyWith(
-          color: const Color(0xFF251042),
-        ),
-        bodySmall: AppTextStyles.bodySmall.copyWith(
-          color: const Color(0xFF3D1F5C),
-        ),
-        labelLarge: AppTextStyles.labelLarge.copyWith(
-          color: const Color(0xFF1A0B2E),
-        ),
-        labelMedium: AppTextStyles.labelMedium.copyWith(
-          color: const Color(0xFF251042),
-        ),
-        labelSmall: AppTextStyles.labelSmall.copyWith(
-          color: const Color(0xFF3D1F5C),
-        ),
+        displayLarge: AppTextStyles.displayLarge(null, brightness: brightness),
+        displayMedium: AppTextStyles.displayMedium(null, brightness: brightness),
+        displaySmall: AppTextStyles.displaySmall(null, brightness: brightness),
+        headlineLarge: AppTextStyles.headlineLarge(null, brightness: brightness),
+        headlineMedium: AppTextStyles.headlineMedium(null, brightness: brightness),
+        headlineSmall: AppTextStyles.headlineSmall(null, brightness: brightness),
+        titleLarge: AppTextStyles.titleLarge(null, brightness: brightness),
+        titleMedium: AppTextStyles.titleMedium(null, brightness: brightness),
+        titleSmall: AppTextStyles.titleSmall(null, brightness: brightness),
+        bodyLarge: AppTextStyles.bodyLarge(null, brightness: brightness),
+        bodyMedium: AppTextStyles.bodyMedium(null, brightness: brightness),
+        bodySmall: AppTextStyles.bodySmall(null, brightness: brightness),
+        labelLarge: AppTextStyles.labelLarge(null, brightness: brightness),
+        labelMedium: AppTextStyles.labelMedium(null, brightness: brightness),
+        labelSmall: AppTextStyles.labelSmall(null, brightness: brightness),
       ),
 
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.backgroundLight,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
         scrolledUnderElevation: 0,
-        titleTextStyle: AppTextStyles.headlineMedium.copyWith(
-          color: const Color(0xFF1A0B2E),
-        ),
-        iconTheme: const IconThemeData(color: Color(0xFF1A0B2E)),
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        iconTheme: IconThemeData(color: textColor),
+        systemOverlayStyle: isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
       ),
 
-      colorScheme: const ColorScheme.light(
-        primary: AppColors.primary,
-        secondary: AppColors.secondary,
-        surface: AppColors.surfaceLight,
-        error: AppColors.error,
+      colorScheme: ColorScheme(
+        brightness: brightness,
+        primary: primaryColor,
         onPrimary: Colors.black,
+        secondary: AppColors.secondary,
         onSecondary: Colors.white,
-        onSurface: Color(0xFF1A0B2E),
+        error: AppColors.error,
+        onError: Colors.white,
+        surface: surfaceColor,
+        onSurface: textColor,
       ),
 
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
+          backgroundColor: primaryColor,
           foregroundColor: Colors.black,
           elevation: 0,
-          textStyle: AppTextStyles.labelLarge,
           padding: const EdgeInsets.symmetric(
             horizontal: AppSpacing.lg,
             vertical: AppSpacing.md,
@@ -193,21 +76,29 @@ class AppTheme {
       ),
 
       cardTheme: CardThemeData(
-        color: Colors.white,
+        color: surfaceColor,
         elevation: 0,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: AppRadius.cardRadius,
-          side: const BorderSide(color: Color(0x1A1A0B2E), width: 1),
+          side: BorderSide(
+            color: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.black.withValues(alpha: 0.05),
+            width: 1,
+          ),
         ),
       ),
 
-      iconTheme: const IconThemeData(color: Color(0xFF1A0B2E), size: 24),
+      iconTheme: IconThemeData(color: textColor, size: 24),
 
-      dividerTheme: const DividerThemeData(
-        color: Color(0x1A1A0B2E),
+      dividerTheme: DividerThemeData(
+        color: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.black.withValues(alpha: 0.05),
         thickness: 1,
       ),
     );
   }
+}
+
+// Simple helper to get context-aware text theme without manual calls everywhere
+extension ThemeContext on BuildContext {
+  TextTheme get appTextTheme => Theme.of(this).textTheme;
 }

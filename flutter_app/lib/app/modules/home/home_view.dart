@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:lottie/lottie.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 // Removed unused data_repository import
 import 'home_controller.dart';
+import '../../widgets/smart_lottie.dart';
 import '../../data/models/event_model.dart';
 import '../../widgets/neo_scaffold.dart';
 import '../../theme/app_colors.dart';
@@ -41,8 +42,8 @@ class HomeView extends GetView<HomeController> {
       // For "Portal" effect, we want it transparent.
       body: Obx(() {
         if (controller.isLoading.value) {
-          return const Center(
-            child: CircularProgressIndicator(color: AppColors.primary),
+          return Center(
+            child: CircularProgressIndicator(color: AppColors.primaryAdaptive(context)),
           );
         }
 
@@ -85,7 +86,7 @@ class HomeView extends GetView<HomeController> {
                                   padding: const EdgeInsets.only(
                                     left: AppSpacing.md,
                                     bottom: AppSpacing.sm,
-                                    top: AppSpacing.md,
+                                    //top: AppSpacing.md,
                                   ),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
@@ -111,16 +112,19 @@ class HomeView extends GetView<HomeController> {
                                         happeningNow.category?.name
                                                 .toUpperCase() ??
                                             'FESTIVAL',
-                                        style: AppTextStyles.labelSmall
+                                        style: AppTextStyles.labelSmall(context)
                                             .copyWith(
-                                              color: AppColors.primary,
+                                              color: AppColors.primaryAdaptive(context),
                                               letterSpacing: 1.2,
                                             ),
                                       ),
                                     ],
                                   ),
                                 ),
-                                HeroBanner(event: happeningNow),
+                                HeroBanner(
+                                  event: happeningNow,
+                                  heroTagPrefix: 'home_happening_now',
+                                ),
                               ],
                             )
                             .animate()
@@ -145,17 +149,35 @@ class HomeView extends GetView<HomeController> {
                   ),
 
                 // 2.5 Engagement Cards (Trivia & Quiz)
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: Padding(
-                    padding: EdgeInsets.only(top: AppSpacing.md),
-                    child: TriviaCard(),
+                    padding: const EdgeInsets.only(top: AppSpacing.md),
+                    child: Builder(builder: (context) {
+                      if (!controller.showEngagementCards.value) {
+                        return const SizedBox.shrink();
+                      }
+
+                      if (controller.primaryCard.value == 'trivia') {
+                        return Column(
+                          children: [
+                            const _HeroBadge(textKey: 'recommended_for_you'),
+                            const TriviaCard(),
+                            const SizedBox(height: AppSpacing.sm),
+                            CompatibilityQuizCard(isSecondary: true),
+                          ],
+                        );
+                      } else {
+                        return Column(
+                          children: [
+                            const _HeroBadge(textKey: 'recommended_for_you'),
+                            const CompatibilityQuizCard(),
+                            const SizedBox(height: AppSpacing.sm),
+                            TriviaCard(isSecondary: true),
+                          ],
+                        );
+                      }
+                    }),
                   ),
-                ),
-
-                const SliverToBoxAdapter(child: CompatibilityQuizCard()),
-
-                const SliverToBoxAdapter(
-                  child: SizedBox(height: AppSpacing.lg),
                 ),
 
                 // Glassmorphism Vibe Bar (Sticky)
@@ -187,14 +209,13 @@ class HomeView extends GetView<HomeController> {
                     effects: const [
                       FadeEffect(duration: Duration(milliseconds: 1500)),
                     ],
-                    child: Lottie.asset(
-                      'assets/lottie/${activeLottie.filename}',
+                    child: SmartLottie(
+                      url: activeLottie.s3Key.isNotEmpty 
+                        ? activeLottie.s3Key 
+                        : activeLottie.filename,
+                      fallbackAsset: 'assets/lottie/${activeLottie.filename}',
                       fit: BoxFit.cover,
                       repeat: true,
-                      errorBuilder: (context, error, stackTrace) {
-                        debugPrint('Lottie Takeover Error: $error');
-                        return const SizedBox.shrink();
-                      },
                     ),
                   ),
                 ),
@@ -233,41 +254,41 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget _buildTrendingGrid() {
-    return Obx(() {
-      final images = controller.filteredImages;
-      if (images.isEmpty) return _buildEmptyState();
+    final images = controller.filteredImages;
+    if (images.isEmpty) return _buildEmptyState();
 
-      return SliverPadding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.md,
-          vertical: AppSpacing.sm,
-        ),
-        sliver: controller.isGridView.value
-            ? SliverMasonryGrid.count(
-                crossAxisCount: 2,
-                mainAxisSpacing: AppSpacing.sm,
-                crossAxisSpacing: AppSpacing.sm,
-                childCount: images.length,
-                itemBuilder: (context, index) {
-                  return TrendingImageCard(
-                    image: images[index],
-                    index: index,
-                  ).animate(delay: (50 * index).ms).fade().slideY(begin: 0.2);
-                },
-              )
-            : SliverList.separated(
-                itemCount: images.length,
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: AppSpacing.lg),
-                itemBuilder: (context, index) {
-                  return TrendingImageCard(
-                    image: images[index],
-                    index: index,
-                  ).animate(delay: (50 * index).ms).fade().slideY(begin: 0.2);
-                },
-              ),
-      );
-    });
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
+      sliver: controller.isGridView.value
+          ? SliverMasonryGrid.count(
+              crossAxisCount: 2,
+              mainAxisSpacing: AppSpacing.sm,
+              crossAxisSpacing: AppSpacing.sm,
+              childCount: images.length,
+              itemBuilder: (context, index) {
+                return TrendingImageCard(
+                  image: images[index],
+                  index: index,
+                  heroTagPrefix: 'home_trending_grid',
+                ).animate(delay: (50 * index).ms).fade().slideY(begin: 0.2);
+              },
+            )
+          : SliverList.separated(
+              itemCount: images.length,
+              separatorBuilder: (context, index) =>
+                  const SizedBox(height: AppSpacing.lg),
+              itemBuilder: (context, index) {
+                return TrendingImageCard(
+                  image: images[index],
+                  index: index,
+                  heroTagPrefix: 'home_trending_list',
+                ).animate(delay: (50 * index).ms).fade().slideY(begin: 0.2);
+              },
+            ),
+    );
   }
 
   Widget _buildEmptyState() {
@@ -285,11 +306,11 @@ class HomeView extends GetView<HomeController> {
             padding: const EdgeInsets.all(AppSpacing.xxl),
             child: Column(
               children: [
-                Icon(Icons.nightlight_round, size: 64, color: emptyIconColor),
+                Icon(LucideIcons.moon, size: 64, color: emptyIconColor),
                 AppSpacing.verticalMd,
                 Text(
                   'no_festivals'.tr,
-                  style: AppTextStyles.headlineSmall.copyWith(
+                  style: AppTextStyles.headlineSmall(context).copyWith(
                     color: emptyTextColor,
                   ),
                 ),
@@ -299,5 +320,40 @@ class HomeView extends GetView<HomeController> {
         },
       ),
     );
+  }
+}
+
+class _HeroBadge extends StatelessWidget {
+  final String textKey;
+  const _HeroBadge({required this.textKey});
+
+  @override
+  Widget build(BuildContext context) {
+    final adaptiveColor = AppColors.primaryAdaptive(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
+    return Container(
+      margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      decoration: BoxDecoration(
+        color: adaptiveColor.withValues(alpha: isDark ? 0.15 : 0.10),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: adaptiveColor.withValues(alpha: isDark ? 0.3 : 0.6)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(LucideIcons.sparkles, size: 14, color: adaptiveColor),
+          const SizedBox(width: AppSpacing.xs),
+          Text(
+            textKey.tr,
+            style: AppTextStyles.labelSmall(context).copyWith(
+              color: adaptiveColor,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    ).animate().fade().slideY(begin: 0.2, end: 0);
   }
 }
